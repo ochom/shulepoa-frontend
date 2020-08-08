@@ -97,7 +97,7 @@ export class Prescription extends Component {
                 <div className="col-12">
                   <table className="table table-sm table-bordered">
                     <caption>Drugs list</caption>
-                    <thead className="custom-bg-primary">
+                    <thead className="cu-bg-primary">
                       <tr><td>Drug name</td><td>Cost</td></tr>
                     </thead>
                     <tbody>
@@ -174,12 +174,10 @@ export class Prescription extends Component {
       <>
         {prescription_view}
         <div className="card">
-          <div className="card-header custom-bg-secondary py-1 px-3">
-            <div
-              style={{ fontSize: "1vw", float: "left" }} className="py-1 px-2">Drug  &nbsp; &amp; &nbsp; Medicine Prescriptions</div>
+          <div className="card-header py-1 px-3">
+            <div className="py-1 px-2"><b>Drug  &nbsp; &amp; &nbsp; Medicine Prescriptions</b></div>
             <button
-              style={{ float: "right" }}
-              className="btn btn-sm bg-light text-dark py-0 px-2 mr-auto mt-1"
+              className="btn btn-sm "
               onClick={this.onNewPrescription}><i className="fa fa-plus-circle mr-2"></i> Add
               </button>
           </div>

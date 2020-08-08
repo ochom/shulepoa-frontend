@@ -57,7 +57,7 @@ export class CashPoint extends Component {
 
 
   render() {
-    const { stores } = this.props.procurement;
+    const { stores } = this.props.inventory;
     const store_modal_view =
       <Modal isOpen={this.state.showModal} size="md">
         <ModalHeader toggle={this.toggleModal}>
@@ -86,32 +86,19 @@ export class CashPoint extends Component {
       </Modal >
 
     return (
-      <div className="col-md-12 mx-auto mt-3">
+      <div className="col-md-10 mx-auto mt-3">
         {store_modal_view}
-        <div className="card card-header bg-white py-1 px-3">
-          <div
-            style={{ fontSize: "1vw", width: "300px", float: "left" }}
-            className="py-1 px-2">
-            <Link to="/stores">stores</Link> &nbsp;
-              <i className="fa fa-angle-right"></i> &nbsp;
-              <Link to="/stores/cashpoint">Cashpoint</Link> &nbsp;
-              <i className="fa fa-angle-right"></i> &nbsp;
-              <Link to="/stores/cashpoint/Store-store">Store store</Link>
-          </div>
-        </div>
         <div className="card mt-3">
-          <div className="card-header custom-bg-secondary py-1 px-3">
-            <div
-              style={{ fontSize: "1vw", float: "left" }} className="py-1 px-2">Store Management</div>
+          <div className="card-header py-1 px-3">
+            <div className="py-1 px-2">Store Management</div>
             <button
-              style={{ float: "right" }}
-              className="btn btn-sm bg-light text-dark py-0 px-2 mr-auto mt-1"
+              className="btn btn-sm "
               onClick={this.onNewStore}><i className="fa fa-plus-circle mr-2"></i> Add Store
               </button>
           </div>
           <div className="card-body p-0 pb-2">
             <table className="table table-sm table-striped table-bordered">
-              <thead className="custom-text-primary">
+              <thead className="cu-text-primary">
                 <tr>
                   <th>#</th>
                   <th>Store name</th>
@@ -134,12 +121,11 @@ export class CashPoint extends Component {
             </table>
           </div>
         </div>
-
       </div>
     )
   }
 }
 
 export default connect(state => ({
-  procurement: state.procurement,
+  inventory: state.inventory,
 }), { getStores, addStore, updateStore, deleteStore })(CashPoint)

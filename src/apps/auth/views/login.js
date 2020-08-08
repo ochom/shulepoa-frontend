@@ -1,52 +1,59 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { login } from '../actions';
 
 export class Login extends Component {
   state = {
-    username: '',
-    password: '',
+    username: "",
+    password: "",
   }
 
   onChange = (e) => this.setState({ [e.target.name]: e.target.value });
 
-  onSubmit = (e) => {
+  onSubmmit = (e) => {
     e.preventDefault();
     const { username, password } = this.state;
-    const data = { username, password };
+    var data = { username, password }
     this.props.login(data);
+  }
+
+  onNoAccount = () => {
+    this.props.history.push("/auth/signup");
   }
 
   render() {
     return (
-      <div className="card card-body">
-        <h6 className="card-title text-center custom-text-primary mb-3">
-          <i className=" fa fa-user-circle mb-2"
-            style={{ fontSize: "3vw" }}></i><br />
-          Sign In</h6>
-        <form onSubmit={this.onSubmit}>
+      <div>
+        <div className="pb-3">
+          <h1><i className="fa fa-user-circle"></i></h1>
+          <h5>Sign In</h5>
+        </div>
+        <form onSubmit={this.onSubmmit}>
           <div className="form-group col-12">
             <label>Email</label>
-            <input type="email" className="form-control" name="username"
-              value={this.state.username} onChange={this.onChange}
-              placeholder="Email address" />
+            <input type="email" className="form-control" required={true}
+              name="username" onChange={this.onChange} value={this.state.username} />
           </div>
           <div className="form-group col-12">
             <label>Password</label>
-            <input type="password"
-              className="form-control" name="password"
-              value={this.state.password} onChange={this.onChange}
-              placeholder="Password" />
+            <input type="password" className="form-control" required={true}
+              name="password" onChange={this.onChange} value={this.state.password} />
           </div>
-          <div className="form-group col-12">
-            <button type="submit" className="btn custom-bg-primary"
-              disabled={(this.state.username === "" || this.state.password === "")}>Enter</button>
+          <div className="form-group col-12 mt-4">
+            <button className="btn btn-block cu-bg-primary"
+              type="submit" onSubmit={this.onSubmmit}>
+              {`Login`}
+            </button>
           </div>
         </form>
-        <h6 className="text-center">Forgot password? <a href="/password/reset">Reset</a></h6>
+        <div className="form-group col-12 mt-4">
+          <h6>Don't have account?
+            <b onClick={this.onNoAccount}>{` Sign Up`}</b>
+          </h6>
+        </div>
       </div>
     )
   }
 }
 
-export default connect(null, { login })(Login)
+export default connect(state => ({ auth: state.auth }), { login })(Login)

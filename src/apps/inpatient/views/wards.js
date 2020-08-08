@@ -129,35 +129,29 @@ export class Wards extends Component {
         <td className="text-center">
           <button className="btn btn-sm p-0 border-none text-primary"
             onClick={() => this.onEditWard(ward)}><i className="fa fa-edit"></i> Edit</button> {` | `}
-          <Link className="btn btn-sm p-0 border-none custom-text-primary"
+          <Link className="btn btn-sm p-0 border-none cu-text-primary"
             to={`/inpatient/wards/${ward.id}/patients`}><i className="fa fa-users"></i> Patients</Link>
         </td>
       </tr >)
     return (
-      <div className="col-12 mx-auto mt-3">
+      <div className="col-md-10 mx-auto mt-3">
         {ward_details_view}
-        <div className="card card-header bg-white py-1 px-3">
-          <div className="py-1 px-2">
-            <Link to="/">Home</Link>  &nbsp;
-            <i className="fa fa-angle-right"></i> &nbsp;
-            <Link to="/inpatient">Inpatient</Link> &nbsp;
-            <i className="fa fa-angle-right"></i> &nbsp;
-            <Link to="/inpatient/wards">Wards</Link>
-          </div>
-        </div>
-        <div className="card mt-2">
-          <div className="card-header bg-white py-1 px-3">
-            <button style={{ float: "right" }} className="btn btn-sm custom-bg-primary py-1 px-2 mr-auto mt-1"
+        <div className="card">
+          <div className="card-header py-1 px-3">
+            <div className="py-1 px-2"><i className="fa fa-search mr-3"></i> Search admited patients
+              </div>
+            <button className="btn btn-sm"
               onClick={this.onNewWard}><i className="fa fa-plus-circle"></i> Add Ward</button>
+
           </div>
           <div className="card-body p-0">
             <table className="table table-sm table-bordered">
-              <thead className="custom-bg-secondary">
+              <thead className="">
                 <tr>
                   <th>#</th>
                   <th>Ward Name</th>
                   <th>Beds</th>
-                  <th>Admissions</th>
+                  <th>Active</th>
                   <th>Adm. Fee</th>
                   <th>Daily. Fee</th>
                   <th>Description</th>

@@ -4,6 +4,7 @@ import Sidenav from '../common/sidenav'
 import { connect } from 'react-redux'
 import { loadService, loadInsurance } from '../hospital/actions'
 import CashPoint from './views/payments_queue'
+import Topnav from '../common/topnav'
 
 export class Revenue extends Component {
 
@@ -23,18 +24,21 @@ export class Revenue extends Component {
     return (
       <>
         <Sidenav menus={menu_list} />
-        <div className="row col-12 mx-auto page-container">
-          <Route
-            path="/revenue"
-            render={({ match: { url } }) => (
-              <>
-                <Route path={`${url}`} component={CashPoint} exact />
-                <Route path={`${url}/cashpoint`} component={CashPoint} exact />
-                <Route path={`${url}/cashpoint/payment-queue`} component={CashPoint} />
-                <Route path={`${url}/cashpoint/custom-payments`} component={CashPoint} />
-              </>
-            )}
-          />
+        <div className="page_container">
+          <Topnav page="Revenue &amp; Accounts" />
+          <div className="page_body">
+            <Route
+              path="/revenue"
+              render={({ match: { url } }) => (
+                <>
+                  <Route path={`${url}`} component={CashPoint} exact />
+                  <Route path={`${url}/cashpoint`} component={CashPoint} exact />
+                  <Route path={`${url}/cashpoint/payment-queue`} component={CashPoint} />
+                  <Route path={`${url}/cashpoint/custom-payments`} component={CashPoint} />
+                </>
+              )}
+            />
+          </div>
         </div>
       </>
     )

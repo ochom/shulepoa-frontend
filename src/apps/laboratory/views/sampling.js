@@ -72,24 +72,16 @@ export class Sampling extends Component {
 
 
     return (
-      <div className="col-12 mx-auto mt-3">
-        <div className="card card-header bg-white py-1 px-3">
-          <div className="py-1 px-2">
-            <Link to="/">Home</Link>  &nbsp;
-            <i className="fa fa-angle-right"></i> &nbsp;
-            <Link to="/laboratory">Laboratory</Link> &nbsp;
-            <i className="fa fa-angle-right"></i> &nbsp;
-            <Link to="/laboratory/sampling">Sampling Queue</Link>
-          </div>
-        </div>
-        <div className="row col-12 mt-2">
-          <div className={`${this.state.selected_queue_data ? 'col-7' : 'col-12'} mx-auto`}>
-            <div className="card card-body p-0 pb-2">
+      <div className="row col-12 mt-2">
+        <div className={`${this.state.selected_queue_data ? 'col-7' : 'col-12'} mx-auto`}>
+          <div className="card">
+            <div className="card-header py-1 px-3">Sampling Queue</div>
+            <div className="card-body p-0">
               {this.props.common.silent_processing ?
                 <span className="text-success"><i className="fa fa-refresh fa-spin"></i></span> : null
               }
               <table className="table table-sm table-striped table-bordered">
-                <thead className="custom-bg-primary">
+                <thead className="">
                   <tr>
                     <th>Patient's Name</th>
                     <th># Reg.</th>
@@ -104,56 +96,54 @@ export class Sampling extends Component {
               </table>
             </div>
           </div>
-          {this.state.selected_queue_data ?
-            <div className="col-5 mx-auto">
-              <div className="card">
-                <div className="card-header custom-bg-secondary py-1 px-3">
-                  <div className="py-1 px-2">Sample details</div>
-                </div>
-                <div className="card-body" style={{ maxHeight: "75vh", overflowY: "auto" }}>
-                  {this.state.investigation_list.map((investigation, index) =>
-                    <div key={index} >
-                      <div className="form-row">
-                        <div className="form-group col-8">
-                          <label>Patient name</label>
-                          <input className="form-control form-control-sm" readOnly={true}
-                            value={this.state.selected_queue_data.patient_details.fullname} />
-                        </div>
-                        <div className="form-group col-4">
-                          <label>Sex</label>
-                          <input className="form-control form-control-sm" readOnly={true}
-                            value={GENDERS[this.state.selected_queue_data.patient_details.sex]} />
-                        </div>
-
-                        <div className="form-group col-8">
-                          <label>Investigation</label>
-                          <input className="form-control form-control-sm" readOnly={true}
-                            value={this.props.service_list.filter(service => service.id === investigation.service)[0].name} />
-                        </div>
-                        <div className="form-group col-4">
-                          <label>Specimen <sup>*</sup></label>
-                          <input className="form-control form-control-sm" name="specimen"
-                            value={this.state.specimen} onChange={this.onChange} />
-                        </div>
-                        <div className="form-group col-12">
-                          <label>Sampling Note:</label>
-                          <textarea className="form-control form-control-sm" name="sampling_comment"
-                            value={this.state.sampling_comment} onChange={this.onChange} ></textarea>
-                        </div>
-                        <div className="form-group col-12">
-                          <Button size="sm" color="primary"
-                            onClick={() => this.onSubmit(investigation)}>Submit</Button>
-                        </div>
+        </div>
+        {this.state.selected_queue_data ?
+          <div className="col-5 mx-auto">
+            <div className="card">
+              <div className="card-header py-1 px-3">Sample details</div>
+              <div className="card-body" style={{ maxHeight: "75vh", overflowY: "auto" }}>
+                {this.state.investigation_list.map((investigation, index) =>
+                  <div key={index} >
+                    <div className="form-row">
+                      <div className="form-group col-8">
+                        <label>Patient name</label>
+                        <input className="form-control form-control-sm" readOnly={true}
+                          value={this.state.selected_queue_data.patient_details.fullname} />
                       </div>
-                      <hr className="border-primary" />
+                      <div className="form-group col-4">
+                        <label>Sex</label>
+                        <input className="form-control form-control-sm" readOnly={true}
+                          value={GENDERS[this.state.selected_queue_data.patient_details.sex]} />
+                      </div>
+
+                      <div className="form-group col-8">
+                        <label>Investigation</label>
+                        <input className="form-control form-control-sm" readOnly={true}
+                          value={this.props.service_list.filter(service => service.id === investigation.service)[0].name} />
+                      </div>
+                      <div className="form-group col-4">
+                        <label>Specimen <sup>*</sup></label>
+                        <input className="form-control form-control-sm" name="specimen"
+                          value={this.state.specimen} onChange={this.onChange} />
+                      </div>
+                      <div className="form-group col-12">
+                        <label>Sampling Note:</label>
+                        <textarea className="form-control form-control-sm" name="sampling_comment"
+                          value={this.state.sampling_comment} onChange={this.onChange} ></textarea>
+                      </div>
+                      <div className="form-group col-12">
+                        <Button size="sm" color="primary"
+                          onClick={() => this.onSubmit(investigation)}>Submit</Button>
+                      </div>
                     </div>
-                  )}
-                </div>
+                    <hr className="border-primary" />
+                  </div>
+                )}
               </div>
             </div>
-            : null}
-        </div>
-      </div >
+          </div>
+          : null}
+      </div>
     )
   }
 }

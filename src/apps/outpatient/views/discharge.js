@@ -28,9 +28,8 @@ export class Discharge extends Component {
     return (
       <>
         <div className="card m-0">
-          <div className="card-header custom-bg-secondary py-1 px-3">
-            <div
-              style={{ fontSize: "1vw", float: "left" }} className="py-1 px-2">Discharge</div>
+          <div className="card-header py-1 px-3">
+            <div className="py-1 px-2"><b>Discharge</b></div>
           </div>
           <div className="card-body p-0 mt-0">
             <form onSubmit={this.onSubmit}>

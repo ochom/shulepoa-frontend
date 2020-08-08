@@ -8,6 +8,7 @@ import Sampling from './views/sampling'
 import verifications from './views/verifications'
 import logbooks from './views/logbooks'
 import logbook from './views/logbook'
+import Topnav from '../common/topnav'
 
 export class Laboratory extends Component {
   componentDidMount() {
@@ -24,20 +25,23 @@ export class Laboratory extends Component {
     return (
       <>
         <Sidenav menus={menu_list} />
-        <div className="row col-12 mx-auto page-container">
-          <Route
-            path="/laboratory"
-            render={({ match: { url } }) => (
-              <>
-                <Route path={`${url}`} component={Sampling} exact />
-                <Route path={`${url}/sampling`} component={Sampling} />
-                <Route path={`${url}/results`} component={Results} />
-                <Route path={`${url}/result-verification`} component={verifications} />
-                <Route path={`${url}/logbooks`} component={logbooks} exact />
-                <Route path={`${url}/logbooks/:pk`} component={logbook} />
-              </>
-            )}
-          />
+        <div className="page_container">
+          <Topnav page="Laboratory" />
+          <div className="page_body">
+            <Route
+              path="/laboratory"
+              render={({ match: { url } }) => (
+                <>
+                  <Route path={`${url}`} component={Sampling} exact />
+                  <Route path={`${url}/sampling`} component={Sampling} />
+                  <Route path={`${url}/results`} component={Results} />
+                  <Route path={`${url}/result-verification`} component={verifications} />
+                  <Route path={`${url}/logbooks`} component={logbooks} exact />
+                  <Route path={`${url}/logbooks/:pk`} component={logbook} />
+                </>
+              )}
+            />
+          </div>
         </div>
       </>
     )

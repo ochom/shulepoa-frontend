@@ -36,24 +36,13 @@ export class LogBook extends Component {
     }
     return (
       <div className="row col-12 mx-auto mt-3">
-        <div className="card col-12 card-header bg-white py-1 px-3">
-          <div className="py-1 px-2">
-            <Link to="/">Home</Link>  &nbsp;
-            <i className="fa fa-angle-right"></i> &nbsp;
-            <Link to="/laboratory">Laboratory</Link>  &nbsp;
-            <i className="fa fa-angle-right"></i> &nbsp;
-            <Link to="/laboratory/logbooks">Logbooks</Link> &nbsp;
-            <i className="fa fa-angle-right"></i> &nbsp;
-            <Link to={`/laboratory/logbooks/${this.props.match.params.pk}`}>{logbook.patient_details.fullname}</Link>
-          </div>
-        </div>
         <div className="row col-12 mx-auto mt-2" style={{ minHeight: "80vh" }}>
           <div className="col-3">
             <div className="patient_profile row border border-light rounded ">
               <div className="row col-12 mx-auto justify-content-center"
                 style={{ marginTop: "2vw", zIndex: "1" }}>
                 <img src={person_icon} alt="DP" style={{ height: "5vw", width: "5vw", borderRadius: "50%" }} />
-                <p className="custom-text-primary col-12 text-center text-white mt-2">Patient Profile</p>
+                <p className="cu-text-primary col-12 text-center text-white mt-2">Patient Profile</p>
               </div>
               <ul className="w-100 mx-auto list-group mt-2">
                 <li className="list-group-item">
@@ -82,7 +71,7 @@ export class LogBook extends Component {
             <div style={{ maxHeight: "75vh", overflowY: "auto" }} className="row bg-transparent pb-3 rounded ">
               <div className="col-12">
                 <div className="card">
-                  <div className="card-header custom-bg-secondary py-1 px-3">
+                  <div className="card-header cu-bg-secondary py-1 px-3">
                     <div className="py-1 px-2"><b>Logbook Details</b></div>
                   </div>
                   <div className="card-body p-0">
@@ -113,7 +102,7 @@ export class LogBook extends Component {
               </div>
               <div className="col-12 mt-2">
                 <div className="card">
-                  <div className="card-header custom-bg-secondary py-1 px-3">
+                  <div className="card-header cu-bg-secondary py-1 px-3">
                     <div className="py-1 px-2"><b>Result Data</b></div>
                   </div>
                   <div className="card-body p-0">
@@ -140,7 +129,7 @@ export class LogBook extends Component {
               </div>
               <div className="col-12 mt-2">
                 <div className="card">
-                  <div className="card-header custom-bg-secondary py-1 px-3">
+                  <div className="card-header cu-bg-secondary py-1 px-3">
                     <div className="py-1 px-2"><b>Data Verification</b></div>
                   </div>
                   <div className="card-body p-0">

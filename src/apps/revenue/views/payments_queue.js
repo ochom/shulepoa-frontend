@@ -99,7 +99,7 @@ export class CashPoint extends Component {
       </tr>
     );
 
-    const edit_vitals_view =
+    const payment_modal =
       <Modal isOpen={this.state.showModal} size="md">
         <ModalHeader toggle={this.toggleModal}>
           {this.state.receipt ? 'Print Receipt' : 'Requested Services'}
@@ -165,23 +165,15 @@ export class CashPoint extends Component {
       </Modal >
 
     return (
-      <div className="col-md-12 mx-auto mt-3">
-        {edit_vitals_view}
+      <div className="col-md-10 mx-auto mt-3">
+        {payment_modal}
         <div className="card">
-          <div className="card-header bg-white py-1 px-3">
-            <div
-              style={{ fontSize: "1vw", width: "300px", float: "left" }}
-              className="py-1 px-2">
-              <Link to="/revenue">Revenue</Link> &nbsp;
-              <i className="fa fa-angle-right"></i> &nbsp;
-              <Link to="/revenue/cashpoint">Cashpoint</Link> &nbsp;
-              <i className="fa fa-angle-right"></i> &nbsp;
-              <Link to="/revenue/cashpoint/payment-queue">Payment Queue</Link>
-            </div>
+          <div className="card-header py-1 px-3">
+            <div>Payment Queue</div>
           </div>
           <div className="card-body p-0 pb-2">
             <table className="table table-sm table-striped table-bordered">
-              <thead className="custom-text-primary">
+              <thead className="cu-text-primary">
                 <tr>
                   <th>Patient's Name</th>
                   <th># Reg.</th>

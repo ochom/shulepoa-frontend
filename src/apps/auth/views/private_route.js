@@ -8,22 +8,20 @@ const PrivateRoute = ({ component: Component, auth, ...rest }) => (
     render={(props) => {
       if (auth.isAuthenticated) {
         const { user } = auth;
-        if (user) {
-          if (user.is_staff || user.is_admin) {
-            return <Component {...props} />;
-          } else {
-            return <Redirect to="/public/page" />;
-          }
+        if (user && user.is_admin) {
+          return <Component {...props} />;
+        } else {
+          return <Redirect to={{ pathname: '/auth', state: { from: props.location } }} />;
         }
       } else {
-        return <Redirect to={{ pathname: '/user/authentication', state: { from: props.location } }} />;
+
+        return <Redirect to={{ pathname: '/auth', state: { from: props.location } }} />;
       }
     }}
   />
 );
 
-const mapStateToProps = (state) => ({
-  auth: state.auth,
-});
 
-export default connect(mapStateToProps)(PrivateRoute);
+export default connect(state => ({
+  auth: state.auth,
+}), null)(PrivateRoute);

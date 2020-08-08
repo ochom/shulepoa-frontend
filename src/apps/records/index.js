@@ -7,6 +7,7 @@ import Schemes from './views/schemes'
 import HealthFiles from './views/health_files'
 import HealthFileDetails from './views/health_file_details'
 import { loadService, loadInsurance } from '../hospital/actions'
+import Topnav from '../common/topnav'
 
 export class Records extends Component {
 
@@ -24,18 +25,21 @@ export class Records extends Component {
     return (
       <>
         <Sidenav menus={menu_list} />
-        <div className="row col-12 mx-auto page-container">
-          <Route
-            path="/records"
-            render={({ match: { url } }) => (
-              <>
-                <Route path={`${url}`} component={Patients} exact />
-                <Route path={`${url}/patients/:patient_id/insurance`} component={Schemes} />
-                <Route path={`${url}/patients/:patient_id/health-files`} component={HealthFiles} exact />
-                <Route path={`${url}/patients/:patient_id/health-files/:pk`} component={HealthFileDetails} />
-              </>
-            )}
-          />
+        <div className="page_container">
+          <Topnav page="Records" />
+          <div className="page_body">
+            <Route
+              path="/records"
+              render={({ match: { url } }) => (
+                <>
+                  <Route path={`${url}`} component={Patients} exact />
+                  <Route path={`${url}/patients/:patient_id/insurance`} component={Schemes} />
+                  <Route path={`${url}/patients/:patient_id/health-files`} component={HealthFiles} exact />
+                  <Route path={`${url}/patients/:patient_id/health-files/:pk`} component={HealthFileDetails} />
+                </>
+              )}
+            />
+          </div>
         </div>
       </>
     )

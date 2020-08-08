@@ -134,7 +134,7 @@ export class Triage extends Component {
         <ModalHeader toggle={this.toggleModal}>Create patient vitals</ModalHeader>
         <form onSubmit={this.onSubmitVitals}>
           <ModalBody>
-            <div className="custom-bg-primary py-1 px-3 my-2 rounded">Hypertension Screening/Blood Pressure</div>
+            <div className="cu-bg-primary py-1 px-3 my-2 rounded">Hypertension Screening/Blood Pressure</div>
             <div className="row col-12 mx-auto">
               <div className="form-group col-3">
                 <label>BP Systolic</label>
@@ -159,7 +159,7 @@ export class Triage extends Component {
                 <div className={`form-control form-control-sm bg-${this.state.hypertension}`}></div>
               </div>
             </div>
-            <div className="custom-bg-primary py-1 px-3 my-2 rounded">Physical Vitals</div>
+            <div className="cu-bg-primary py-1 px-3 my-2 rounded">Physical Vitals</div>
             <div className="row col-12 mx-auto">
               <div className="form-group col-3">
                 <label>Temperature <small>(<sup>o</sup>C)</small></label>
@@ -184,7 +184,7 @@ export class Triage extends Component {
                 <div className={`form-control form-control-sm bg-${this.state.bmi}`}></div>
               </div>
             </div>
-            <div className="custom-bg-primary py-1 px-3 my-2 rounded">Nursing/Vitals Notes</div>
+            <div className="cu-bg-primary py-1 px-3 my-2 rounded">Nursing/Vitals Notes</div>
             <div className="row col-12 mx-auto">
               <div className="form-group col-12">
                 <label>Nursing notes</label>
@@ -208,21 +208,15 @@ export class Triage extends Component {
 
 
     return (
-      <div className="col-md-12 mx-auto mt-3">
+      <div className="col-md-10 mx-auto mt-3">
         {edit_vitals_view}
-        <div className="card card-header bg-white py-1 px-3">
-          <div className="py-1 px-2">
-            <Link to="/">Home</Link>  &nbsp;
-            <i className="fa fa-angle-right"></i> &nbsp;
-            <Link to="/outpatient">Outpatient</Link> &nbsp;
-            <i className="fa fa-angle-right"></i> &nbsp;
-            <Link to="/outpatient/triage">Triage Queue</Link>
+        <div className="card">
+          <div className="card-header py-1 px-3">
+            <div className="py-1 px-2">Triage Queue</div>
           </div>
-        </div>
-        <div className="card mt-3">
-          <div className="card-body p-0 pb-2">
+          <div className="card-body p-0">
             <table className="table table-sm table-striped table-bordered">
-              <thead className="custom-text-primary">
+              <thead className="cu-text-primary">
                 <tr>
                   <th>Patient's Name</th>
                   <th># Reg.</th>

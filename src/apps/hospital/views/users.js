@@ -153,19 +153,10 @@ export class Users extends Component {
     return (
       <>
         {users_details}
-        <div className="row col-12 mx-auto mt-3">
-          <div className="card card-header bg-white py-1 px-3 col-12">
-            <div className="py-1 px-2">
-              <Link to="/">Home</Link>  &nbsp;
-              <i className="fa fa-angle-right"></i> &nbsp;
-              <Link to="/hospital">Hospital</Link>  &nbsp;
-              <i className="fa fa-angle-right"></i> &nbsp;
-              <Link to="/hospital/users">Users</Link>
-            </div>
-          </div>
+        <div className="row col-sm-11 col-md-8 mx-auto mt-3">
           <div className="card col-12 p-0 mt-2">
             <div className="card-header py-1 px-3">
-              <div className="py-1 px-2"><i className="fa fa-globe"></i> Browse system users</div>
+              <div className="py-1 px-2"><i className="fa fa-globe"></i> manage Users</div>
             </div>
             <div className="card-body p-0 pb-2">
               <div className="row col-12 mx-auto mt-3">
@@ -188,7 +179,7 @@ export class Users extends Component {
               </div>
               <div className="row col-12 mx-auto">
                 <button
-                  className="btn btn-sm btn-outline-success custom-text-primary ml-4"
+                  className="btn btn-sm btn-outline-success cu-text-primary ml-4"
                   onClick={this.onsearchUser}
                   disabled={this.props.common.isProcessing}><i className="fa fa-search mr-2"></i> Find User</button>
               </div>
@@ -198,7 +189,7 @@ export class Users extends Component {
           <div className="card card-body mt-4 p-0">
             <table className="table table-sm table-striped table-bordered table-responsive-sm m-0">
               <caption className="px-2"><i>Recent users | Search results</i></caption>
-              <thead className="custom-bg-secondary">
+              <thead className="cu-bg-secondary">
                 <tr><th>#</th><th>Name</th>
                   <th>Email</th><th>Mobile</th>
                   <th>IS ADMIN</th><th>IS STAFF</th>

@@ -26,7 +26,7 @@ export class Queue extends Component {
         <td>{GENDERS[queue.patient_details.sex]}</td>
         <td>{queue.patient_details.phone}</td>
         <td className="text-center">
-          <button className="btn btn-sm p-0 border-none custom-text-primary"
+          <button className="btn btn-sm p-0 border-none cu-text-primary"
             onClick={() => this.selectQueue(queue)}
             to={`/pharmacy/queue/patient/${queue.patient_details.id}`}><i className="fa fa-edit"></i> Servce</button>
         </td>
@@ -35,34 +35,28 @@ export class Queue extends Component {
 
 
     return (
-      <div className="row col-md-12 mx-auto mt-3">
-        <div className="card card-header bg-white py-1 px-3 col-12">
-          <div className="py-1 px-2">
-            <Link to="/">Home</Link>  &nbsp;
-            <i className="fa fa-angle-right"></i> &nbsp;
-            <Link to="/pharmacy">Pharmacy</Link> &nbsp;
-            <i className="fa fa-angle-right"></i> &nbsp;
-            <Link to="/pharmacy/queue">Queue</Link>
+      <div className="col-md-10 mx-auto mt-3">
+        <div className="card">
+          <div className="card-header py-1 px-3">Pharmacy Service Queue</div>
+          <div className="card-body p-0">
+            {this.props.common.silent_processing ?
+              <span className="text-success"><i className="fa fa-refresh fa-spin"></i></span> : null
+            }
+            <table className="table table-sm table-striped table-bordered">
+              <thead className="">
+                <tr>
+                  <th>Patient's Name</th>
+                  <th># Reg.</th>
+                  <th>Sex</th>
+                  <th>Mobile</th>
+                  <th className="text-center">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {queue_list}
+              </tbody>
+            </table>
           </div>
-        </div>
-        <div className="card card-body mt-3 p-0 pb-2">
-          {this.props.common.silent_processing ?
-            <span className="text-success"><i className="fa fa-refresh fa-spin"></i></span> : null
-          }
-          <table className="table table-sm table-striped table-bordered">
-            <thead className="custom-text-primary">
-              <tr>
-                <th>Patient's Name</th>
-                <th># Reg.</th>
-                <th>Sex</th>
-                <th>Mobile</th>
-                <th className="text-center">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {queue_list}
-            </tbody>
-          </table>
         </div>
       </div>
     )

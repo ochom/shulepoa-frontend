@@ -53,22 +53,11 @@ export class Wards extends Component {
         </td>
       </tr >)
     return (
-      <div className="col-12 mx-auto mt-3">
-        <div className="card card-header bg-white py-1 px-3">
-          <div className="py-1 px-2">
-            <Link to="/">Home</Link>  &nbsp;
-            <i className="fa fa-angle-right"></i> &nbsp;
-            <Link to="/inpatient">Inpatient</Link> &nbsp;
-            <i className="fa fa-angle-right"></i> &nbsp;
-            <Link to="/inpatient/patients">Patients</Link>
-          </div>
-        </div>
-        <div className="card mt-2">
-          <div className="card-header custom-bg-primary py-1 px-3">
-            <div
-              style={{ fontSize: "1.2vw", }} className="py-1 px-2">
-              <i className="fa fa-search mr-3"></i> Search admited patients
-                </div>
+      <div className="col-md-10 mx-auto mt-3">
+        <div className="card">
+          <div className="card-header py-1 px-3">
+            <div className="py-1 px-2"><i className="fa fa-search mr-3"></i> Search admited patients
+              </div>
           </div>
           <div className="card-body p-0 pb-2">
             <div className="row col-12 mx-auto mt-3">
@@ -100,7 +89,7 @@ export class Wards extends Component {
               </div>
               <div className="form-group col-12">
                 <button
-                  className="btn btn-sm btn-outline-success custom-text-primary"
+                  className="btn btn-sm btn-outline-success cu-text-primary"
                   onClick={this.onsearchPatient}><i className="fa fa-search mr-2"></i> Find Patient</button>
               </div>
             </div>
@@ -109,7 +98,7 @@ export class Wards extends Component {
         <div className="card card-body p-0 mt-2">
           <table className="table table-sm table-bordered m-0">
             <caption><i>Search result</i></caption>
-            <thead className="custom-bg-secondary">
+            <thead className="cu-bg-secondary">
               <tr>
                 <th>#</th>
                 <th>Patient</th>

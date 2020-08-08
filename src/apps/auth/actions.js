@@ -63,6 +63,7 @@ export const login = (data) => (dispatch) => {
 // REGISTER USER
 export const register = (data) => (dispatch) => {
   dispatch({ type: commonTypes.PROCESSING, });
+  // Headers
   const config = {
     headers: {
       'Content-Type': 'application/json',
@@ -70,7 +71,7 @@ export const register = (data) => (dispatch) => {
   };
 
   axios
-    .post(`${API_PATH}auth/register`, JSON.stringify(data), config)
+    .post(`${API_PATH}auth/register/`, JSON.stringify(data), config)
     .then((res) => {
       dispatch({
         type: authTypes.REGISTER_SUCCESS,
@@ -83,9 +84,10 @@ export const register = (data) => (dispatch) => {
       });
     })
     .finally(() => {
-      dispatch({ type: commonTypes.DONE, });
-    });
+      dispatch({ type: commonTypes.DONE })
+    })
 };
+
 
 // LOGOUT USER
 export const logout = () => (dispatch, getState) => {

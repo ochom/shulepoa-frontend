@@ -194,23 +194,12 @@ export class Drugs extends Component {
     return (
       <>
         {service_details}
-        <div className="row col-12 mx-auto mt-3">
-          <div className="card card-header bg-white py-1 px-3 col-12">
-            <div className="py-1 px-2">
-              <Link to="/">Home</Link>  &nbsp;
-              <i className="fa fa-angle-right"></i> &nbsp;
-              <Link to="/pharmacy">Pharmacy</Link>  &nbsp;
-              <i className="fa fa-angle-right"></i> &nbsp;
-              <Link to="/pharmacy/drugs">Drugs</Link>
-            </div>
-          </div>
-          <div className="card col-12 p-0 mt-2">
+        <div className="col-12 mx-auto mt-3">
+          <div className="card">
             <div className="card-header py-1 px-3">
-              <div
-                style={{ fontSize: "1.2vw", width: "300px", float: "left" }} className="py-1 px-2"><i className="fa fa-globe"></i> Browse drugs list</div>
+              <div className="py-1 px-2"><i className="fa fa-globe"></i> Drugs Stock</div>
               <button
-                style={{ float: "right" }}
-                className="btn btn-sm custom-bg-secondary py-1 px-2 text-light mr-auto"
+                className="btn btn-sm"
                 onClick={this.onNewService}><i className="fa fa-plus-circle mr-2"></i> Add Drug
               </button>
             </div>
@@ -225,7 +214,7 @@ export class Drugs extends Component {
                 </div>
                 <div className="form-group">
                   <button
-                    className="btn btn-sm btn-outline-success custom-text-primary ml-4"
+                    className="btn btn-sm btn-outline-success cu-text-primary ml-4"
                     onClick={this.onsearchService}
                     disabled={this.props.common.isProcessing}><i className="fa fa-search mr-2"></i> Find Service</button>
                 </div>
@@ -235,7 +224,7 @@ export class Drugs extends Component {
           <div className="card card-body col-12 p-0 mt-2">
             <table className="table table-sm table-striped table-bordered">
               <caption className="px-2"><i>All drugs | Drug search results</i></caption>
-              <thead className="custom-bg-secondary">
+              <thead className="">
                 <tr><th>#</th><th>Drug</th><th>Quantity</th><th>Price</th><th>Rebate</th><th>Scheme</th><th className="text-center">Action</th></tr>
               </thead>
               <tbody>

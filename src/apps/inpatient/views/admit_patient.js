@@ -101,26 +101,14 @@ export class Admission extends Component {
 
 
     return (
-      <div className="col-12 mx-auto mt-3">
+      <div>
         {service_list_view}
-        <div className="card card-header bg-white py-1 px-3">
-          <div className="py-1 px-2">
-            <Link to="/">Home</Link>  &nbsp;
-            <i className="fa fa-angle-right"></i> &nbsp;
-            <Link to="/inpatient">Inpatient</Link> &nbsp;
-            <i className="fa fa-angle-right"></i> &nbsp;
-            <Link to="/inpatient/admission">Admission</Link>&nbsp;
-            <i className="fa fa-angle-right"></i> &nbsp;
-            <Link to={`/inpatient/admission/patient/${this.props.match.params.pk}/admit`}>{selected_patient.fullname}
-            </Link>
-          </div>
-        </div>
-        <div className="row col-12 mx-auto mt-2" style={{ minHeight: "80vh" }}>
+        <div className="row col-12 justify-content-center mx-auto mt-3">
           <div className="col-3">
             <div className="patient_profile p-0 border border-light rounded ">
               <div className="row mx-auto justify-content-center mt-4">
                 <img src={person_icon} alt="DP" style={{ height: "5vw", width: "5vw", borderRadius: "50%" }} />
-                <p className="custom-text-primary col-12 text-center text-white mt-2">Patient Profile</p>
+                <p className="cu-text-primary col-12 text-center text-white mt-2">Patient Profile</p>
               </div>
               <ul className="w-100 mx-auto list-group mt-2">
                 <li className="list-group-item">
@@ -148,7 +136,7 @@ export class Admission extends Component {
             {
               this.state.stage === 1 ?
                 <div className="card" style={{ maxHeight: "75vh", overflowY: "auto" }}>
-                  <div className="card-header custom-bg-secondary px-3 py-2">
+                  <div className="card-header cu-bg-secondary px-3 py-2">
                     <div style={{ fontSize: "1.2vw", }}>Select Ward &amp; Bed</div>
                   </div>
                   <div className="card-body">
@@ -181,12 +169,12 @@ export class Admission extends Component {
                 </div> :
                 this.state.stage === 2 ?
                   <div className="card" style={{ maxHeight: "75vh", overflowY: "auto" }}>
-                    <div className="card-header custom-bg-secondary py-1 px-3">
+                    <div className="card-header cu-bg-secondary py-1 px-3">
                       <div
                         style={{ fontSize: "1.2vw", float: "left" }} className="py-1 px-2">Admission Charges  &amp; Services</div>
                       <button
                         style={{ float: "right" }}
-                        className="btn btn-sm bg-light text-dark py-0 px-2 mr-auto mt-1"
+                        className="btn btn-sm "
                         onClick={this.toggleModal}><i className="fa fa-plus-circle mr-2"></i> Add
                     </button>
                     </div>
@@ -228,7 +216,7 @@ export class Admission extends Component {
                   this.state.stage === 3 ?
                     <>
                       <div className="card">
-                        <div className="card-header custom-bg-secondary px-3 py-2">
+                        <div className="card-header cu-bg-secondary px-3 py-2">
                           <div style={{ fontSize: "1.2vw", }}>Select Ward &amp; Bed</div>
                         </div>
                         <div className="card-body p-0">
@@ -247,7 +235,7 @@ export class Admission extends Component {
                         </div>
                       </div>
                       <div className="card mt-3">
-                        <div className="card-header custom-bg-secondary px-3 py-2">
+                        <div className="card-header cu-bg-secondary px-3 py-2">
                           <div style={{ fontSize: "1.2vw", }}>Selected services</div>
                         </div>
                         <div className="card-body p-0">

@@ -9,15 +9,15 @@ export default class Topnav extends Component {
   render() {
     return (
       <>
-        <div id="topnav" className="topnav border border-bottom py-3 pr-2 bg-white">
-          <div className="topnav-title"><b>Professional Hospital Management System</b></div>
+        <div className="topnav">
+          <div className="topnav-title"><b>{this.props.page ? this.props.page : "Dashboard"}</b></div>
           <div className="topnav-title right" >
-            <button className="btn custom-text-primary" style={{ position: "relative" }}
+            <button className="btn cu-text-primary" style={{ position: "relative" }}
               onClick={this.toggleMenu}>
               <span className="text-warning fa fa-circle"
                 style={{ position: "absolute", right: "11px", top: "8px", fontSize: "8px" }}></span>
               <i className="fa fa-bell-o"></i></button>
-            <button className="btn custom-text-primary" style={{ position: "relative" }}
+            <button className="btn cu-text-primary" style={{ position: "relative" }}
               onClick={this.toggleMenu}>
               <span className="text-success fa fa-circle"
                 style={{ position: "absolute", right: "11px", top: "8px", fontSize: "8px" }}></span>
@@ -44,7 +44,7 @@ export default class Topnav extends Component {
                 <Link className="main-menu-menu text-center" to="/inpatient"><i className="fa fa-heartbeat"></i><br />In-patient</Link>
                 <Link className="main-menu-menu text-center" to="/revenue/cashpoint/payment-queue"><i className="fa fa-dollar"></i><br />Cashpoint</Link>
                 <Link className="main-menu-menu text-center" to="/revenue/accounts"><i className="fa fa-money"></i><br />Accounts</Link>
-                <Link className="main-menu-menu text-center" to="/procurement"><i className="fa fa-handshake-o"></i><br />Procurement</Link>
+                <Link className="main-menu-menu text-center" to="/inventory"><i className="fa fa-truck"></i><br />Inventory</Link>
                 <Link className="main-menu-menu text-center" to="/hospital/services"><i className="fa fa-ambulance"></i><br />Services</Link>
                 <Link className="main-menu-menu text-center" to="/payroll"><i className="fa fa-credit-card"></i><br />Payroll</Link>
                 <Link className="main-menu-menu text-center" to="/hospital/insurance"><i className="fa fa-briefcase"></i><br />Insurance</Link>

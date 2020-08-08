@@ -40,24 +40,15 @@ export class Reorders extends Component {
       )
     return (
       <div className="row col-12 mx-auto  mt-3">
-        <div className="card card-header bg-white py-1 px-3 col-12">
-          <div className="py-1 px-2">
-            <Link to="/">Home</Link>  &nbsp;
-            <i className="fa fa-angle-right"></i> &nbsp;
-            <Link to="/pharmacy">Pharmacy</Link>  &nbsp;
-            <i className="fa fa-angle-right"></i> &nbsp;
-            <Link to="/pharmacy/drugs-reorders">Reorders &amp; History</Link>
-          </div>
-        </div>
-        <div className="col-6 mx-auto mt-2">
+        <div className="col-6 mx-auto">
           <div className="card">
-            <div className="card-header custom-bg-secondary py-1 px-3">
+            <div className="card-header cu-bg-secondary py-1 px-3">
               <div className="py-1 px-2"><i className="fa fa-edit"></i> Stock Deficit</div>
             </div>
             <div className="card-body p-0 pb-2">
               <table className="table table-sm table-striped table-bordered table-responsive-sm m-0">
                 <caption className="px-2"><i>Drug reorder list</i></caption>
-                <thead className="bg-info text-light">
+                <thead className="">
                   <tr><th>#</th><th>Drug</th><th>Quantity in store</th><th>Reorder Level</th><th className="text-center">Action</th></tr>
                 </thead>
                 <tbody>
@@ -67,15 +58,15 @@ export class Reorders extends Component {
             </div>
           </div>
         </div>
-        <div className="col-6 mx-auto mt-2">
+        <div className="col-6 mx-auto">
           <div className="card">
-            <div className="card-header custom-bg-secondary py-1 px-3">
+            <div className="card-header cu-bg-secondary py-1 px-3">
               <div className="py-1 px-2"><i className="fa fa-globe"></i> Stock history</div>
             </div>
             <div className="card-body p-0 pb-2">
               <table className="table table-sm table-striped table-bordered table-responsive-sm m-0">
                 <caption className="px-2"><i>Drug reorder history</i></caption>
-                <thead className="bg-info text-light">
+                <thead className="">
                   <tr><th>#</th><th>Date</th><th>Drug</th><th>User</th><th className="text-center">Action</th></tr>
                 </thead>
                 <tbody>

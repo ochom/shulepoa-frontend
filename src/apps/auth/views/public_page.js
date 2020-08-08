@@ -15,7 +15,7 @@ export class PublicPage extends Component {
   render() {
     const { isAuthenticated } = this.props.auth;
     if (!isAuthenticated) {
-      return <Redirect to={{ pathname: '/user/authentication', state: { from: this.props.location } }} />
+      return <Redirect to={{ pathname: '/auth', state: { from: this.props.location } }} />
     }
     return (
       <>

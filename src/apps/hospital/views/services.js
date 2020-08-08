@@ -190,7 +190,7 @@ export class Service extends Component {
                 style={{ fontSize: "1.2vw", width: "300px", float: "left" }} className="py-1 px-2"><i className="fa fa-globe"></i> Browse service companies</div>
               <button
                 style={{ float: "right" }}
-                className="btn btn-sm custom-bg-secondary py-1 px-2 text-light mr-auto"
+                className="btn btn-sm py-1 px-2 mr-auto"
                 onClick={this.onNewService}><i className="fa fa-plus-circle mr-2"></i> Add Service
               </button>
             </div>
@@ -217,7 +217,7 @@ export class Service extends Component {
               </div>
               <div className="row col-12 mx-auto">
                 <button
-                  className="btn btn-sm btn-outline-success custom-text-primary ml-4"
+                  className="btn btn-sm btn-outline-success cu-text-primary ml-4"
                   onClick={this.onsearchService}
                   disabled={this.props.common.isProcessing}><i className="fa fa-search mr-2"></i> Find Service</button>
               </div>
@@ -226,7 +226,7 @@ export class Service extends Component {
           <div className="card card-body mt-4">
             <table className="table table-sm table-striped table-bordered table-responsive-sm m-0">
               <caption className="px-2"><i>Recent services | Search results</i></caption>
-              <thead className="custom-bg-secondary">
+              <thead className="cu-bg-secondary">
                 <tr><th>#</th><th>Name</th><th>Department</th><th>Price</th><th>Rebate</th><th>Scheme</th><th className="text-center">Action</th></tr>
               </thead>
               <tbody>

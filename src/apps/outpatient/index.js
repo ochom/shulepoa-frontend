@@ -6,6 +6,7 @@ import { loadService } from '../hospital/actions'
 import Consultation from './views/consultation'
 import Queue from './views/consultation_queue'
 import Triage from './views/triage'
+import Topnav from '../common/topnav'
 
 export class Outpatient extends Component {
   componentDidMount() {
@@ -20,18 +21,21 @@ export class Outpatient extends Component {
     return (
       <>
         <Sidenav menus={menu_list} />
-        <div className="row col-12 mx-auto page-container">
-          <Route
-            path="/outpatient"
-            render={({ match: { url } }) => (
-              <>
-                <Route path={`${url}`} component={Triage} exact />
-                <Route path={`${url}/triage`} component={Triage} />
-                <Route path={`${url}/appointment-queue`} component={Queue} />
-                <Route path={`${url}/appointments/file/:file_id`} component={Consultation} />
-              </>
-            )}
-          />
+        <div className="page_container">
+          <Topnav page="Consultation" />
+          <div className="page_body">
+            <Route
+              path="/outpatient"
+              render={({ match: { url } }) => (
+                <>
+                  <Route path={`${url}`} component={Triage} exact />
+                  <Route path={`${url}/triage`} component={Triage} />
+                  <Route path={`${url}/appointment-queue`} component={Queue} />
+                  <Route path={`${url}/appointments/file/:file_id`} component={Consultation} />
+                </>
+              )}
+            />
+          </div>
         </div>
       </>
     )

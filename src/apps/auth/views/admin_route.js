@@ -16,7 +16,7 @@ const AdminRoute = ({ component: Component, auth, ...rest }) => (
           }
         }
       } else {
-        return <Redirect to={{ pathname: '/user/authentication', state: { from: props.location } }} />;
+        return <Redirect to={{ pathname: '/auth', state: { from: props.location } }} />;
       }
     }}
   />

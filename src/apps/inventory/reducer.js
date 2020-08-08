@@ -1,25 +1,24 @@
-import { procurementTypes } from './actions'
+import { inventoryTypes } from './actions'
 
 const initialState = {
   stores: [],
   store: null,
-
 };
 
 export default function (state = initialState, action) {
   switch (action.type) {
-    case procurementTypes.GET_STORES:
+    case inventoryTypes.GET_STORES:
       return {
         ...state,
         stores: action.payload,
       };
-    case procurementTypes.ADD_STORE:
-    case procurementTypes.UPDATE_STORE:
+    case inventoryTypes.ADD_STORE:
+    case inventoryTypes.UPDATE_STORE:
       return {
         ...state,
         stores: [...state.stores.filter((_store) => _store.id !== action.payload.id), action.payload]
       };
-    case procurementTypes.DELETE_STORE:
+    case inventoryTypes.DELETE_STORE:
       return {
         ...state,
         stores: state.stores.filter((store) => store.id !== action.payload),

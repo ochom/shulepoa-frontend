@@ -36,20 +36,12 @@ export class AppointmentQueue extends Component {
     );
 
     return (
-      <div className="col-md-12 mx-auto mt-3">
-        <div className="card card-header bg-white py-1 px-3">
-          <div className="py-1 px-2">
-            <Link to="/">Home</Link>  &nbsp;
-            <i className="fa fa-angle-right"></i> &nbsp;
-            <Link to="/outpatient">Outpatient</Link> &nbsp;
-            <i className="fa fa-angle-right"></i> &nbsp;
-            <Link to="/outpatient/appointment-queue">Appointment Queue</Link>
-          </div>
-        </div>
-        <div className="card mt-3">
+      <div className="col-md-10 mx-auto mt-3">
+        <div className="card">
+          <div className="card-header py-1 px-3">Consultation Queue</div>
           <div className="card-body p-0 pb-2">
             <table className="table table-sm table-striped table-bordered">
-              <thead className="custom-text-primary">
+              <thead className="cu-text-primary">
                 <tr>
                   <th>Patient's Name</th>
                   <th># Reg.</th>

@@ -97,12 +97,12 @@ export class Intervention extends Component {
       <>
         {intervention_view}
         <div className="card">
-          <div className="card-header custom-bg-secondary py-1 px-3">
+          <div className="card-header cu-bg-secondary py-1 px-3">
             <div
               style={{ float: "left" }} className="py-1 px-2">Nursing Intervention</div>
             <button
               style={{ float: "right" }}
-              className="btn btn-sm bg-light text-dark py-0 px-2 mr-auto mt-1"
+              className="btn btn-sm "
               onClick={this.onNewIntervention}><i className="fa fa-plus-circle mr-2"></i> Add
               </button>
           </div>

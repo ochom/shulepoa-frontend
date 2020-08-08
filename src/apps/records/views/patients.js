@@ -103,7 +103,7 @@ export class Patients extends Component {
         <form onSubmit={this.onSubmitPatient}>
           <ModalBody>
             {/* Personal Details */}
-            <div className="custom-bg-primary py-1 px-3 my-2 rounded">Personal Details</div>
+            <div className="cu-bg-primary py-1 px-3 my-2 rounded">Personal Details</div>
             <div className="row mx-auto">
               <div className="form-group col-sm-12 col-md-8">
                 <label>Full name<sup>*</sup></label>
@@ -155,7 +155,7 @@ export class Patients extends Component {
               </div>
             </div>
             {/* Contact Information */}
-            <div className="custom-bg-primary py-1 px-3 my-2 rounded">Contacts and Adress</div>
+            <div className="cu-bg-primary py-1 px-3 my-2 rounded">Contacts and Adress</div>
             <div className="row mx-auto">
               <div className="form-group col-sm-12 col-md-4">
                 <label>Phone Number<sup>*</sup></label>
@@ -195,7 +195,7 @@ export class Patients extends Component {
               </div>
             </div>
             {/* NEXT OF KIN */}
-            <div className="custom-bg-primary py-1 px-3 my-2 rounded">Next of kin</div>
+            <div className="cu-bg-primary py-1 px-3 my-2 rounded">Next of kin</div>
             <div className="row mx-auto">
               <div className="form-group col-sm-12 col-md-4">
                 <label>Kin's Name <small>(Full name)</small><sup>*</sup></label>
@@ -256,14 +256,13 @@ export class Patients extends Component {
     return (
       <>
         {patient_details}
-        <div className="col-12 mx-auto mt-3">
+        <div className="col-sm-12 col-md-11 mx-auto mt-3">
           <div className="card">
             <div className="card-header py-1 px-3">
-              <div
-                style={{ fontSize: "1.2vw", width: "300px", float: "left" }} className="py-1 px-2"><i className="fa fa-globe"></i> Browse patients</div>
+              <div className="py-1 px-2"><i className="fa fa-globe"></i> Manage patient records</div>
               <button
                 style={{ float: "right" }}
-                className="btn btn-sm custom-bg-secondary py-1 px-2 text-light mr-auto"
+                className="btn btn-sm py-1 px-2 mr-auto"
                 onClick={this.onNewPatient}><i className="fa fa-plus-circle mr-2"></i> Add Patient
               </button>
             </div>
@@ -295,22 +294,26 @@ export class Patients extends Component {
                 </div>
                 <div className="form-group  col-12">
                   <button
-                    className="btn btn-sm btn-outline-success custom-text-primary"
+                    className="btn btn-sm btn-outline-success cu-text-primary"
                     onClick={this.onsearchPatient}><i className="fa fa-search mr-2"></i> Find Patient</button>
                 </div>
               </div>
             </div>
           </div>
-          <div className="card card-body mt-4">
-            <table className="table table-sm table-striped table-bordered table-responsive-sm m-0">
-              <caption className="px-2"><i>Recent patients | Search results</i></caption>
-              <thead className="custom-bg-secondary">
-                <tr><th>#Reg.</th><th>Full name</th><th>Gender</th><th>Mobile</th><th>Address</th><th className="text-center">Action</th></tr>
-              </thead>
-              <tbody>
-                {patient_filter_list}
-              </tbody>
-            </table>
+
+          <div className="card mt-4">
+            <div className="card-header"></div>
+            <div className="card-bodyp-0">
+              <table className="table table-sm table-striped table-bordered table-responsive-sm m-0">
+                <caption className="px-2"><i>Recent patients | Search results</i></caption>
+                <thead className="">
+                  <tr><th>#Reg.</th><th>Full name</th><th>Gender</th><th>Mobile</th><th>Address</th><th className="text-center">Action</th></tr>
+                </thead>
+                <tbody>
+                  {patient_filter_list}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </>

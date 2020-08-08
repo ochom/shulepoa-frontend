@@ -1,16 +1,14 @@
 import React, { Component, Fragment } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css';
-import lysofts_logo from './images/lysofts_logo.png'
 import { connect } from 'react-redux';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import SignIn from './apps/auth/index';
+import Auth from './apps/auth';
 import AdminRoute from './apps/auth/views/admin_route';
 import PrivateRoute from './apps/auth/views/private_route';
 import { loadUser } from './apps/auth/actions';
 import Dashboard from './apps/common/index';
 import Records from './apps/records/index';
-import Topnav from './apps/common/topnav';
 import Hospital from './apps/hospital';
 import Revenue from './apps/revenue';
 import outpatient from './apps/outpatient';
@@ -18,27 +16,32 @@ import pharmacy from './apps/pharmacy';
 import laboratory from './apps/laboratory';
 import radiology from './apps/radiology';
 import inpatient from './apps/inpatient';
-import Procurement from './apps/procurement';
+import Inventory from './apps/inventory';
 import public_page from './apps/auth/views/public_page';
+import Profile from './apps/auth/views/profile';
 
 export class App extends Component {
 
+  state = { isLoading: true }
+
   componentDidMount() {
     this.props.loadUser();
-    var link = document.getElementById("favicon");
-    if (link) {
-      link.href = lysofts_logo;
-    }
+    setTimeout(() => this.setState({ isLoading: false }), 6000);
   }
 
   render() {
     const { isAuthenticated, isLoading } = this.props.auth;
     const { isProcessing } = this.props.common;
-    return (
-      <Router>
-        <Fragment>
-          <div style={{ position: "relative", paddingLeft: "16vw", width: "100vw", overflowX: "hidden", }}>
-            {isAuthenticated ? <Topnav /> : null}
+    if (this.state.isLoading) {
+      return (
+        <div className="loader">
+          <div className="loader-icon"></div>
+        </div>
+      )
+    } else {
+      return (
+        <Router>
+          <Fragment>
             <Switch>
               <PrivateRoute exact path="/" component={Dashboard} />
               <PrivateRoute path="/hospital" component={Hospital} />
@@ -49,19 +52,21 @@ export class App extends Component {
               <PrivateRoute path="/radiology" component={radiology} />
               <PrivateRoute path="/inpatient" component={inpatient} />
               <AdminRoute path="/revenue" component={Revenue} />
-              <AdminRoute path="/procurement" component={Procurement}/>
+              <AdminRoute path="/inventory" component={Inventory} />
               <Route exact path="/public/page" component={public_page} />
-              <Route exact path="/user/authentication" component={SignIn} />
+              <PrivateRoute path="/profile" component={Profile} />
+              <PrivateRoute path="/change-password" component={() => <Profile change_password={true} />} />
+              <Route path="/auth" component={Auth} />
             </Switch>
-          </div>
-          <div id="processing" style={{ display: isProcessing || isLoading ? "block" : "none" }}>
-            <h1 className="text-light text-center m-0" style={{ fontSize: "8vw", paddingTop: "30vh" }}>
-              <i className="fa fa-spinner fa-spin"></i>
-            </h1>
-          </div>
-        </Fragment >
-      </Router >
-    );
+            <div id="processing" style={{ display: isProcessing || isLoading ? "block" : "none" }}>
+              <h1 className="text-light text-center m-0" style={{ fontSize: "8vw", paddingTop: "30vh" }}>
+                <i className="fa fa-spinner fa-spin"></i>
+              </h1>
+            </div>
+          </Fragment >
+        </Router >
+      );
+    }
   }
 }
 

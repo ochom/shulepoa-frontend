@@ -7,6 +7,7 @@ import Results from './views/results'
 import Sampling from './views/sampling'
 import logbooks from './views/logbooks'
 import logbook from './views/logbook'
+import Topnav from '../common/topnav'
 
 export class Radiology extends Component {
   componentDidMount() {
@@ -22,19 +23,22 @@ export class Radiology extends Component {
     return (
       <>
         <Sidenav menus={menu_list} />
-        <div className="row col-12 mx-auto page-container">
-          <Route
-            path="/radiology"
-            render={({ match: { url } }) => (
-              <>
-                <Route path={`${url}`} component={Sampling} exact />
-                <Route path={`${url}/queue`} component={Sampling} />
-                <Route path={`${url}/results`} component={Results} />
-                <Route path={`${url}/logbooks`} component={logbooks} exact />
-                <Route path={`${url}/logbooks/:pk`} component={logbook} />
-              </>
-            )}
-          />
+        <div className="page_container">
+          <Topnav page="Radiology" />
+          <div className="page_body">
+            <Route
+              path="/radiology"
+              render={({ match: { url } }) => (
+                <>
+                  <Route path={`${url}`} component={Sampling} exact />
+                  <Route path={`${url}/queue`} component={Sampling} />
+                  <Route path={`${url}/results`} component={Results} />
+                  <Route path={`${url}/logbooks`} component={logbooks} exact />
+                  <Route path={`${url}/logbooks/:pk`} component={logbook} />
+                </>
+              )}
+            />
+          </div>
         </div>
       </>
     )

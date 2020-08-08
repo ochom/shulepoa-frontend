@@ -134,14 +134,14 @@ export class HospitalProfile extends Component {
     return (
       <>
         {hospital_details}
-        <div className="col-12 mx-auto mt-3">
+        <div className="col-sm-12 col-md-8 mx-auto mt-3">
           <div className="card">
             <div className="card-header py-1 px-3">
               <div
                 style={{ fontSize: "1.2vw", width: "300px", float: "left" }} className="py-1 px-2"><i className="fa fa-globe"></i> Browse hospital</div>
               <button
                 style={{ float: "right" }}
-                className="btn btn-sm custom-bg-secondary py-1 px-2 text-light mr-auto"
+                className="btn btn-sm py-1 px-2 mr-auto"
                 onClick={this.toggleModal}><i className="fa fa-edit mr-2"></i> Edit Hospital
               </button>
             </div>

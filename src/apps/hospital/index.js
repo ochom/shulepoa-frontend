@@ -7,6 +7,7 @@ import Insurance from './views/insurance'
 import Users from './views/users'
 import Services from './views/services'
 import supplier from './views/supplier'
+import Topnav from '../common/topnav'
 
 export class Hospital extends Component {
   render() {
@@ -21,19 +22,22 @@ export class Hospital extends Component {
     return (
       <>
         <Sidenav menus={menu_list} />
-        <div className="row col-12 mx-auto page-container">
-          <Route
-            path="/hospital"
-            render={({ match: { url } }) => (
-              <>
-                <Route path={`${url}`} component={HospitalProfile} exact />
-                <Route path={`${url}/supplier`} component={supplier} />
-                <Route path={`${url}/insurance`} component={Insurance} />
-                <Route path={`${url}/services`} component={Services} />
-                <Route path={`${url}/users`} component={Users} />
-              </>
-            )}
-          />
+        <div className="page_container">
+          <Topnav page="Profiles Manager" />
+          <div className="page_body">
+            <Route
+              path="/hospital"
+              render={({ match: { url } }) => (
+                <>
+                  <Route path={`${url}`} component={HospitalProfile} exact />
+                  <Route path={`${url}/supplier`} component={supplier} />
+                  <Route path={`${url}/insurance`} component={Insurance} />
+                  <Route path={`${url}/services`} component={Services} />
+                  <Route path={`${url}/users`} component={Users} />
+                </>
+              )}
+            />
+          </div>
         </div>
       </>
     )

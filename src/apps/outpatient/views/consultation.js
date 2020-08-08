@@ -17,24 +17,12 @@ export class Consultation extends Component {
     }
     return (
       <div className="col-12 mx-auto mt-3">
-        <div className="card card-header bg-white py-1 px-3">
-          <div className="py-1 px-2">
-            <Link to="/">Home</Link>  &nbsp;
-            <i className="fa fa-angle-right"></i> &nbsp;
-            <Link to="/outpatient">Outpatient</Link> &nbsp;
-            <i className="fa fa-angle-right"></i> &nbsp;
-            <Link to="/outpatient/appointment-queue">Appointment Queue</Link>&nbsp;
-            <i className="fa fa-angle-right"></i> &nbsp;
-            <Link to={`/outpatient/appointments/file/${this.props.match.params.file_id}`}>{health_file.patient_details.fullname}
-            </Link>
-          </div>
-        </div>
         <div className="row col-12 mx-auto mt-2" style={{ minHeight: "80vh" }}>
           <div className="col-3">
             <div className="patient_profile p-0 border border-light rounded ">
               <div className="row mx-auto justify-content-center mt-4">
                 <img src={person_icon} alt="DP" style={{ height: "5vw", width: "5vw", borderRadius: "50%" }} />
-                <p className="custom-text-primary col-12 text-center text-white mt-2">Patient Profile</p>
+                <p className="cu-text-primary col-12 text-center text-white mt-2">Patient Profile</p>
               </div>
               <ul className="w-100 mx-auto list-group mt-2">
                 <li className="list-group-item">

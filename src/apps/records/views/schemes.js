@@ -125,12 +125,9 @@ export class Schemes extends Component {
         <div className="col-md-9 col-lg-8 mx-auto mt-3">
           <div className="card">
             <div className="card-header py-1 px-3">
-              <div
-                style={{ fontSize: "1.2vw", width: "300px", float: "left" }}
-                className="py-1 px-2"><i className="fa fa-briefcase"></i> Manage patient's schemes</div>
+              <div className="py-1 px-2"><i className="fa fa-briefcase"></i> Manage patient's schemes</div>
               <button
-                style={{ float: "right" }}
-                className="btn btn-sm custom-bg-secondary py-1 px-2 text-light mr-auto"
+                className="btn btn-sm"
                 onClick={this.onNewScheme}><i className="fa fa-plus-circle mr-2"></i> Add Patient Scheme
               </button>
             </div>
@@ -138,10 +135,10 @@ export class Schemes extends Component {
               <h5 className="py-2 px-3">{patients_list.length > 0 ? patients_list[0].fullname : ""}</h5>
             </div>
           </div>
-          <div className="card card-body mt-4">
+          <div className="card card-body mt-4 p-0">
             <table className="table table-sm table-striped table-bordered table-responsive-sm m-0">
               <caption className="px-2"><i>Patient's Insurance schemes</i></caption>
-              <thead className="custom-bg-secondary">
+              <thead className="">
                 <tr><th>#</th><th>Company name</th><th>Card number</th><th className="text-center">Action</th></tr>
               </thead>
               <tbody>

@@ -9,7 +9,7 @@ import laboratory from '../apps/laboratory/reducer'
 import radiology from '../apps/radiology/reducer'
 import pharmacy from '../apps/pharmacy/reducer'
 import inpatient from '../apps/inpatient/reducer'
-import procurement from '../apps/procurement/reducer'
+import inventory from '../apps/inventory/reducer'
 
 export default combineReducers({
   common,
@@ -22,5 +22,5 @@ export default combineReducers({
   radiology,
   pharmacy,
   inpatient,
-  procurement,
+  inventory,
 });
