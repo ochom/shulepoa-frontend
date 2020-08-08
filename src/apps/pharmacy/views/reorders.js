@@ -1,8 +1,8 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { saveReorder, } from '../actions'
-
 import { Link } from 'react-router-dom';
+import { saveReorder } from '../actions';
+
 
 export class Reorders extends Component {
   render() {

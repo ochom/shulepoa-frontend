@@ -1,24 +1,24 @@
-import React, { Component, Fragment } from 'react'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import './App.css';
 import Auth from './apps/auth';
+import { loadUser } from './apps/auth/actions';
 import AdminRoute from './apps/auth/views/admin_route';
 import PrivateRoute from './apps/auth/views/private_route';
-import { loadUser } from './apps/auth/actions';
+import Profile from './apps/auth/views/profile';
+import public_page from './apps/auth/views/public_page';
 import Dashboard from './apps/common/index';
-import Records from './apps/records/index';
 import Hospital from './apps/hospital';
-import Revenue from './apps/revenue';
-import outpatient from './apps/outpatient';
-import pharmacy from './apps/pharmacy';
-import laboratory from './apps/laboratory';
-import radiology from './apps/radiology';
 import inpatient from './apps/inpatient';
 import Inventory from './apps/inventory';
-import public_page from './apps/auth/views/public_page';
-import Profile from './apps/auth/views/profile';
+import laboratory from './apps/laboratory';
+import outpatient from './apps/outpatient';
+import pharmacy from './apps/pharmacy';
+import radiology from './apps/radiology';
+import Records from './apps/records/index';
+import Revenue from './apps/revenue';
 
 export class App extends Component {
 
@@ -30,7 +30,7 @@ export class App extends Component {
   }
 
   render() {
-    const { isAuthenticated, isLoading } = this.props.auth;
+    const { isLoading } = this.props.auth;
     const { isProcessing } = this.props.common;
     if (this.state.isLoading) {
       return (

@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { Link, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { getPatientRequests, saveDrugDispense } from '../actions'
+import { Redirect } from 'react-router-dom'
 import person_icon from '../../../images/person_icon.png'
+import { getPatientRequests, saveDrugDispense } from '../actions'
 
 export class ServePatient extends Component {
 

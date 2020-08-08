@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap'
-import { getStores, addStore, updateStore, deleteStore } from '../actions'
+import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
+import { addStore, deleteStore, getStores, updateStore } from '../actions'
 
 export class CashPoint extends Component {
   state = {

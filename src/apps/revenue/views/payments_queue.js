@@ -1,10 +1,9 @@
+import html2canvas from 'html2canvas'
+import jsPDF from 'jspdf'
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap'
+import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
 import { loadPaymentQueue, savePayment } from '../actions'
-import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
 
 export class CashPoint extends Component {
   state = {

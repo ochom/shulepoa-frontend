@@ -1,8 +1,8 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { saveReorder } from '../actions'
-
 import { Link } from 'react-router-dom';
+import { saveReorder } from '../actions';
+
 
 export class Reorders extends Component {
   state = {
@@ -57,18 +57,9 @@ export class Reorders extends Component {
     const { supplier_list } = this.props.hospital;
     return (
       <>
-        <div className="row col-12 mx-auto mt-3">
-          <div className="card card-header bg-white py-1 px-3 col-12">
-            <div className="py-1 px-2">
-              <Link to="/pharmacy">Pharmacy</Link>  &nbsp;
-                <i className="fa fa-angle-right"></i> &nbsp;
-                <Link to="/pharmacy/drugs-reorders">Drug Reorders</Link> &nbsp;
-                <i className="fa fa-angle-right"></i> &nbsp;
-                <Link to={`/pharmacy/drugs-reorders/${this.state.select_service ? this.state.select_service.id : "0"}/edit`}>
-                {this.state.select_service ? this.state.select_service.name : ""}</Link>
-            </div>
-          </div>
-          <div className="card col-md-7 mx-auto mt-3">
+        <div className="row col-md-7 mx-auto mt-3">
+          <div className="card">
+            <div className="card-header py-2 px-3">Adjust Pharmacy Stock</div>
             <div className="card-body">
               <form onSubmit={this.onSubmitService}>
                 <div className="row mx-auto">

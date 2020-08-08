@@ -1,12 +1,12 @@
-import React, { Component } from 'react'
-import { Link, Redirect, Route } from 'react-router-dom'
-import person_icon from '../../../images/person_icon.png'
-import { connect } from 'react-redux'
-import Observation from './observations';
-import Investigations from './investigations';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Link, Redirect, Route } from 'react-router-dom';
+import person_icon from '../../../images/person_icon.png';
 import diagnosis from './diagnosis';
-import prescriptions from './prescriptions';
 import discharge from './discharge';
+import Investigations from './investigations';
+import Observation from './observations';
+import prescriptions from './prescriptions';
 
 export class Consultation extends Component {
   render() {

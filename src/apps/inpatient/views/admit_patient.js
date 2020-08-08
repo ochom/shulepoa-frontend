@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { Link, Redirect } from 'react-router-dom'
-import { Modal, ModalHeader, ModalBody } from 'reactstrap'
-import person_icon from '../../../images/person_icon.png'
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
+import { Modal, ModalBody, ModalHeader } from 'reactstrap'
+import person_icon from '../../../images/person_icon.png'
 import { admitPatient } from '../actions'
 
 export class Admission extends Component {

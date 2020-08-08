@@ -1,8 +1,7 @@
-import React, { Component } from 'react'
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { loadService, searchService, addService, updateService } from '../../hospital/actions'
-import { Link } from 'react-router-dom';
+import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
+import { addService, loadService, searchService, updateService } from '../../hospital/actions';
 
 export class Drugs extends Component {
   state = {

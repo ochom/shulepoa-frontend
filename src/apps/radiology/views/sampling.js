@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { getSamplingQueue, saveSample } from '../actions'
 import { Button } from 'reactstrap'
+import { getSamplingQueue, saveSample } from '../actions'
 
 export class Sampling extends Component {
   state = {

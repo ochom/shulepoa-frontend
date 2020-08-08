@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { loadAppointmentQueue } from '../actions'
 import store from '../../../reducer/store'
+import { loadAppointmentQueue } from '../actions'
 
 export class AppointmentQueue extends Component {
 

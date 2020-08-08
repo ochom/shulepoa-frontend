@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { getResultsQueue, saveResults } from '../actions'
 import { Button } from 'reactstrap'

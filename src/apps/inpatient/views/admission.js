@@ -1,8 +1,7 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { searchPatients, } from '../../records/actions';
-import { Link } from 'react-router-dom';
-import store from '../../../reducer/store'
+import store from '../../../reducer/store';
+import { searchPatients } from '../../records/actions';
 
 export class Patients extends Component {
   state = {

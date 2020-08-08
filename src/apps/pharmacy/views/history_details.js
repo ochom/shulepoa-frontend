@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import person_icon from '../../../images/person_icon.png'
 
@@ -18,7 +17,7 @@ export class HistoryDetails extends Component {
     return (
       <>
         {reorder ?
-          <div className="row col-12 mt-3 mx-auto">
+          <div className="row col-12 mt-3 justify-content-center mx-auto">
             <div className="col-3">
               <div className="patient_profile p-0 border border-light rounded ">
                 <div className="row col-12 mx-auto justify-content-center"

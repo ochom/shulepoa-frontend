@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { Link, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 import person_icon from '../../../images/person_icon.png'
 
 export class LogBook extends Component {
@@ -35,7 +35,7 @@ export class LogBook extends Component {
       return (<Redirect to="/radiology/logbooks" />)
     }
     return (
-      <div className="row col-12 mx-auto mt-3">
+      <div className="row col-12 justify-content-center mx-auto mt-3">
         <div className="row col-12 mx-auto mt-2" style={{ minHeight: "80vh" }}>
           <div className="col-3">
             <div className="patient_profile row border border-light rounded ">

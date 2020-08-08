@@ -1,8 +1,7 @@
-import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { loadWards, addWard, updateWard } from '../actions'
 import store from '../../../reducer/store';
+import { addWard, loadWards, updateWard } from '../actions';
 
 export class Wards extends Component {
   state = {

@@ -1,8 +1,7 @@
-import React, { Component } from 'react'
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import { loadUsers, searchUser, updateUser } from '../actions';
-import { Link } from 'react-router-dom';
 
 export class Users extends Component {
   state = {
@@ -153,7 +152,7 @@ export class Users extends Component {
     return (
       <>
         {users_details}
-        <div className="row col-sm-11 col-md-8 mx-auto mt-3">
+        <div className="row col-md-10 mx-auto mt-3">
           <div className="card col-12 p-0 mt-2">
             <div className="card-header py-1 px-3">
               <div className="py-1 px-2"><i className="fa fa-globe"></i> manage Users</div>

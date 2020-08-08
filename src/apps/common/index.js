@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
-import Sidenav from './sidenav'
-import { connect } from 'react-redux'
-import { loadDashboardData } from './actions'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { loadDashboardData } from './actions';
+import Sidenav from './sidenav';
 import Topnav from './topnav';
 
 export class Dashboard extends Component {
@@ -9,7 +9,7 @@ export class Dashboard extends Component {
     this.props.loadDashboardData();
   }
   render() {
-    const { dashboard_data } = this.props.common
+    // const { dashboard_data } = this.props.common
     return (
       <>
         <Sidenav menus={null} />
