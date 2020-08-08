@@ -4,7 +4,7 @@ import { tokenConfig } from "../auth/actions";
 export const API_PATH =
   process.env.NODE_ENV === 'development' ?
     'http://127.0.0.1:8000/api/' : process.env.NODE_ENV === 'production' ?
-      '/api/' : "/";
+      'https://hosipoa-backend.herokuapp.com/api/' : "/";
 
 export const commonTypes = {
   PROCESSING: 'PROCESSING',
