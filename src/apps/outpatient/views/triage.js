@@ -198,7 +198,7 @@ export class Triage extends Component {
             <Button type="submit" color="primary" size="sm"
               onSubmit={this.onSubmitVitals}>
               <i className="fa fa-check"></i> Save</Button>{' '}
-            <Button color="secondary" size="sm" onClick={this.toggleModal}>
+            <Button color="danger" size="sm" onClick={this.toggleModal}>
               <i className="fa fa-close"></i> Cancel</Button>
           </ModalFooter>
         </form>

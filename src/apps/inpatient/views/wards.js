@@ -111,7 +111,7 @@ export class Wards extends Component {
           <ModalFooter>
             <Button size="sm" color="primary" onSubmit={this.onSubmit}>
               <i className="fa fa-check"></i> Submit</Button>
-            <Button size="sm" color="secondary" onClick={this.toggleModal}>
+            <Button size="sm" color="danger" onClick={this.toggleModal}>
               <i className="fa fa-close"></i> Close</Button>
           </ModalFooter>
         </form>

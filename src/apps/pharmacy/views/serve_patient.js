@@ -30,7 +30,7 @@ export class ServePatient extends Component {
         <td>{request.description}</td>
         <td>{request.quantity}</td>
         <td className="text-center">
-          <button className="btn btn-sm btn-primary p-0 px-1"
+          <button className="btn btn-sm cu-bg-primary p-0 px-1"
             onClick={() => this.onSubmit(request)}><i className="fa fa-check"></i> Dispense</button>
         </td>
       </tr>

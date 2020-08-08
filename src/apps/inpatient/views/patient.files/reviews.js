@@ -97,7 +97,7 @@ export class Review extends Component {
           <ModalFooter>
             <Button type="submit" color="primary" size="sm"
               onClick={this.onSubmit}><i className="fa fa-check"></i> Submit</Button>
-            <Button color="secondary" size="sm" onClick={this.toggleModal}>
+            <Button color="danger" size="sm" onClick={this.toggleModal}>
               <i className="fa fa-close"></i> Cancel</Button>
           </ModalFooter>
         </form>

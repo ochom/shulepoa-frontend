@@ -158,7 +158,7 @@ export class CashPoint extends Component {
             <Button type="submit" color="success" size="sm"
               onClick={this.printReceipt}> <i className="fa fa-print"></i> Print</Button>}
           {' '}
-          <Button color="secondary" size="sm" onClick={this.toggleModal}>
+          <Button color="danger" size="sm" onClick={this.toggleModal}>
             <i className="fa fa-close"></i> Cancel</Button>
         </ModalFooter>
       </Modal >

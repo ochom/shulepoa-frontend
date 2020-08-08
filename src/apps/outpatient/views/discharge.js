@@ -40,7 +40,7 @@ export class Discharge extends Component {
                     onChange={this.onChange} value={this.state.discharge_note} placeholder="Discharge statement..."></textarea>
                 </div>
                 <div className="form-group col-12">
-                  <button className="btn btn-primary btn-sm" onSubmit={this.onSubmit}><i className="fa fa-check"></i> Save</button>
+                  <button className="btn cu-bg-primary btn-sm" onSubmit={this.onSubmit}><i className="fa fa-check"></i> Save</button>
                 </div>
               </div>
             </form>

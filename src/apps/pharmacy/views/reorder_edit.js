@@ -100,10 +100,10 @@ export class Reorders extends Component {
                   </div>
                 </div>
                 <div className="form-group col-12">
-                  <button type="submit" className="btn btn-sm btn-primary mr-3"
+                  <button type="submit" className="btn btn-sm cu-bg-primary mr-3"
                     onSubmit={this.onSubmitService}>
                     <i className="fa fa-check"></i> Save</button>{' '}
-                  <Link to="/pharmacy/drugs-reorders/" className="btn btn-sm btn-secondary">
+                  <Link to="/pharmacy/drugs-reorders/" className="btn btn-sm btn-danger">
                     <i className="fa fa-close"></i> Cancel</Link>
                 </div>
               </form>

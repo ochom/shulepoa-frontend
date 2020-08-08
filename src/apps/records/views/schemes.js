@@ -97,10 +97,10 @@ export class Schemes extends Component {
             </div>
           </ModalBody >
           <ModalFooter>
-            <button type="submit" className="btn btn-sm btn-primary"
+            <button type="submit" className="btn btn-sm cu-bg-primary"
               onSubmit={this.onSubmitScheme}>
               <i className="fa fa-check"></i> Save</button>{' '}
-            <Button color="secondary" size="sm" onClick={this.toggleModal}>
+            <Button color="danger" size="sm" onClick={this.toggleModal}>
               <i className="fa fa-close"></i> Cancel</Button>
           </ModalFooter>
         </form>

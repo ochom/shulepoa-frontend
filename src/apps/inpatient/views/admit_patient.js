@@ -248,7 +248,7 @@ export class Admission extends Component {
                             )}
                           </ul>
                           <div className="form-group col-12 mx-auto mt-3">
-                            <button className="btn btn-sm btn-primary"
+                            <button className="btn btn-sm cu-bg-primary"
                               onClick={this.onAdmitPatient}> Admit Patient</button>
                           </div>
                         </div>
