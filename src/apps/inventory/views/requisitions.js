@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
 import { addStore, deleteStore, getStores, updateStore } from '../actions'
 
-export class Stores extends Component {
+export class Requsitions extends Component {
   state = {
     showModal: false,
     selected_store: null,
@@ -93,7 +93,7 @@ export class Stores extends Component {
             <button
               className="btn btn-sm "
               onClick={this.onNewStore}><i className="fa fa-plus-circle mr-2"></i> Add Store
-              </button>
+            </button>
           </div>
           <div className="card-body p-0 pb-2">
             <table className="table table-sm table-striped table-bordered">
@@ -127,4 +127,4 @@ export class Stores extends Component {
 
 export default connect(state => ({
   inventory: state.inventory,
-}), { getStores, addStore, updateStore, deleteStore })(Stores)
+}), { getStores, addStore, updateStore, deleteStore })(Requsitions)

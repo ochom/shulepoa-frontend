@@ -13,16 +13,16 @@ export default class Topnav extends Component {
           <div className="topnav-title"><b>{this.props.page ? this.props.page : "Dashboard"}</b></div>
           <div className="topnav-title right" >
             <button className="btn cu-text-primary" style={{ position: "relative" }}
-              onClick={this.toggleMenu}>
+              onClick={this.toggleMenu} title="Notifications">
               <span className="text-warning fa fa-circle"
                 style={{ position: "absolute", right: "11px", top: "8px", fontSize: "8px" }}></span>
               <i className="fa fa-bell-o"></i></button>
             <button className="btn cu-text-primary" style={{ position: "relative" }}
-              onClick={this.toggleMenu}>
+              onClick={this.toggleMenu} title="Messages">
               <span className="text-success fa fa-circle"
                 style={{ position: "absolute", right: "11px", top: "8px", fontSize: "8px" }}></span>
               <i className="fa fa-envelope-o"></i></button>
-            <button className="btn text-danger"
+            <button className="btn text-danger" title="Main Menu"
               onClick={this.toggleMenu}><i className="fa fa-th"></i></button>
           </div>
         </div>
