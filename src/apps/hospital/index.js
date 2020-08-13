@@ -14,16 +14,16 @@ export class Hospital extends Component {
     const menu_list =
       <div className="list-group">
         <Link to="/hospital" className="list-group-item"><i className="fa fa-h-square"></i> Hospital</Link>
-        <Link to="/hospital/supplier" className="list-group-item"><i className="fa fa-briefcase"></i> Suppliers</Link>
-        <Link to="/hospital/insurance" className="list-group-item"><i className="fa fa-briefcase"></i> Insurance</Link>
         <Link to="/hospital/services" className="list-group-item"><i className="fa fa-ambulance"></i> Services</Link>
+        <Link to="/hospital/supplier" className="list-group-item"><i className="fa fa-handshake-o"></i> Suppliers</Link>
+        <Link to="/hospital/insurance" className="list-group-item"><i className="fa fa-briefcase"></i> Insurance</Link>
         <Link to="/hospital/users" className="list-group-item"><i className="fa fa-user-md"></i> System Users</Link>
       </div>
     return (
       <>
         <Sidenav menus={menu_list} />
         <div className="page_container">
-          <Topnav page="Profiles Manager" />
+          <Topnav page="Hospital Manager" />
           <div className="page_body">
             <Route
               path="/hospital"

@@ -76,7 +76,7 @@ body{
   display: flex;
   align-items: center;
   align-content: center;
-  background-image: url(/static/background_5.png);
+  background-image: url(/static/background_5.jpeg);
   background-size: cover;
   background-repeat: no-repeat;
 }

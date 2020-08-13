@@ -117,12 +117,6 @@ export class Users extends Component {
                   name="company_phone" onChange={this.onChange} value={this.state.company_phone} required={true}
                   placeholder="Contact phone number" />
               </div>
-
-              <div className="form-check col-12 pl-5 ">
-                <input type="checkbox" className="form-check-input" id="exampleCheck1"
-                  name="is_primary" onChange={this.toggleCheck} checked={this.state.is_primary} />
-                <label className="form-check-label custom-text-secondary py-1" htmlFor="exampleCheck1">This is the hospital's primary users</label>
-              </div>
             </div>
           </ModalBody >
           <ModalFooter>
@@ -145,7 +139,7 @@ export class Users extends Component {
         <td>{user.is_staff ? "Yes" : "No"}</td>
         <td className="text-center">
           <button className="btn btn-sm p-0 border-none text-success"
-            onClick={() => this.onEditUser(user)}><i className="fa fa-edit"></i> Edit</button>
+            onClick={null}><i className="fa fa-edit"></i> Edit</button>
         </td>
       </tr>
     )
@@ -155,7 +149,7 @@ export class Users extends Component {
         <div className="row col-md-10 mx-auto mt-3">
           <div className="card col-12 p-0 mt-2">
             <div className="card-header py-1 px-3">
-              <div className="py-1 px-2"><i className="fa fa-globe"></i> manage Users</div>
+              <div className="py-1 px-2"><i className="fa fa-user-md"></i> Manage system Users</div>
             </div>
             <div className="card-body p-0 pb-2">
               <div className="row col-12 mx-auto mt-3">

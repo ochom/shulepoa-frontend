@@ -148,13 +148,11 @@ export class Supplier extends Component {
     return (
       <>
         {supplier_details}
-        <div className="col-12 mx-auto mt-3">
+        <div className="col-md-10 mx-auto mt-3">
           <div className="card">
             <div className="card-header py-1 px-3">
-              <div
-                style={{ fontSize: "1.2vw", width: "300px", float: "left" }} className="py-1 px-2"><i className="fa fa-globe"></i> Browse suppliers</div>
+              <div className="py-1 px-2"><i className="fa fa-handshake-o"></i> Manage suppliers</div>
               <button
-                style={{ float: "right" }}
                 className="btn btn-sm py-1 px-2 mr-auto"
                 onClick={this.onNewSupplier}><i className="fa fa-plus-circle mr-2"></i> Add Supplier
               </button>

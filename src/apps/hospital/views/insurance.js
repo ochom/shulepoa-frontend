@@ -118,11 +118,11 @@ export class Insurance extends Component {
                   placeholder="Contact phone number" />
               </div>
 
-              <div className="form-check col-12 pl-5 ">
+              {/* <div className="form-check col-12 pl-5 ">
                 <input type="checkbox" className="form-check-input" id="exampleCheck1"
                   name="is_primary" onChange={this.toggleCheck} checked={this.state.is_primary} />
                 <label className="form-check-label custom-text-secondary py-1" htmlFor="exampleCheck1">This is the hospital's primary insurance</label>
-              </div>
+              </div> */}
             </div>
           </ModalBody >
           <ModalFooter>
@@ -151,13 +151,11 @@ export class Insurance extends Component {
     return (
       <>
         {insurance_details}
-        <div className="col-12 mx-auto mt-3">
+        <div className="col-md-10 mx-auto mt-3">
           <div className="card">
             <div className="card-header py-1 px-3">
-              <div
-                style={{ fontSize: "1.2vw", width: "300px", float: "left" }} className="py-1 px-2"><i className="fa fa-globe"></i> Browse insurance companies</div>
+              <div className="py-1 px-2"><i className="fa fa-briefcase"></i> Manage hospital's insurance companies</div>
               <button
-                style={{ float: "right" }}
                 className="btn btn-sm py-1 px-2 mr-auto"
                 onClick={this.onNewInsurance}><i className="fa fa-plus-circle mr-2"></i> Add Insurance
               </button>
