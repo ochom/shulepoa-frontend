@@ -71,6 +71,7 @@ body{
 
 /* Auth */
 .auth-temp{
+  position: relative;
   min-height: 100vh;
   width: 100vw;
   display: flex;
@@ -284,6 +285,10 @@ table>tbody>tr>td>.btn:hover{
 }
 
 @media only screen and (max-width: 700px) {
+  .login{
+    height: calc(100vh - 20px);
+    width: 90%;
+  }
 }
 
 

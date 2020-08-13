@@ -46,7 +46,6 @@ export const addVitals = (data) => (dispatch, getState) => {
   dispatch({ type: commonTypes.PROCESSING })
   Axios.post(`${API_PATH}outpatient/triage/vitals/`, JSON.stringify(data), tokenConfig(getState))
     .then(res => {
-      console.log(data);
       dispatch({ type: outpatientTypes.ADD_VITALS, payload: data.health_file })
       dispatch({ type: commonTypes.SUCCESS, message: "Vitals saved succesfully" })
     }).catch(err => {

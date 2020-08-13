@@ -9,7 +9,6 @@ export class PublicPage extends Component {
 
   componentDidMount() {
     sal();
-    console.log(this.props);
   }
 
   render() {

@@ -27,7 +27,7 @@ export const loadUser = () => (dispatch, getState) => {
     })
     .catch((err) => {
       dispatch({
-        type: authTypes.AUTH_ERROR,
+        type: authTypes.AUTH_ERROR, payload: err
       });
     });
 };

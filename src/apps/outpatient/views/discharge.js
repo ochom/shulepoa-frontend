@@ -10,7 +10,6 @@ export class Discharge extends Component {
   onChange = (e) => this.setState({ [e.target.name]: e.target.value });
 
   componentDidMount() {
-    console.log(this.props.health_file.discharge_note);
     this.setState({ discharge_note: this.props.health_file.discharge_note })
   }
 

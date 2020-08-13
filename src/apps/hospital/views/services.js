@@ -221,7 +221,7 @@ export class Service extends Component {
               </div>
             </div>
           </div>
-          <div className="card card-body mt-4">
+          <div className="card card-body mt-4 p-0">
             <table className="table table-sm table-striped table-bordered table-responsive-sm m-0">
               <caption className="px-2"><i>Recent services | Search results</i></caption>
               <thead className="cu-bg-secondary">
