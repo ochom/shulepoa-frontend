@@ -13,16 +13,9 @@ export default class Topnav extends Component {
           <div className="topnav-title"><b>{this.props.page ? this.props.page : "Dashboard"}</b></div>
           <div className="topnav-title right" >
             <button className="btn cu-text-primary" style={{ position: "relative" }}
-              onClick={this.toggleMenu} title="Notifications">
-              <span className="text-warning fa fa-circle"
-                style={{ position: "absolute", right: "11px", top: "8px", fontSize: "8px" }}></span>
-              <i className="fa fa-bell-o"></i></button>
-            <button className="btn cu-text-primary" style={{ position: "relative" }}
-              onClick={this.toggleMenu} title="Messages">
-              <span className="text-success fa fa-circle"
-                style={{ position: "absolute", right: "11px", top: "8px", fontSize: "8px" }}></span>
-              <i className="fa fa-envelope-o"></i></button>
-            <button className="btn text-danger" title="Main Menu"
+              onClick={this.toggleMenu} title="Profile">
+              <i className="fa fa-user-o"></i></button>
+            <button className="btn cu-text-primary" title="Main Menu"
               onClick={this.toggleMenu}><i className="fa fa-th"></i></button>
           </div>
         </div>
@@ -34,8 +27,6 @@ export default class Topnav extends Component {
             <div className="card card-body py-4 px-2">
               <div className="row col-12 mx-auto">
                 <Link className="main-menu-menu text-center" to="/"><i className="fa fa-home"></i><br />Dashboard</Link>
-                <Link className="main-menu-menu text-center" to="/hospital"><i className="fa fa-h-square"></i><br />Hospital</Link>
-                <Link className="main-menu-menu text-center" to="/hospital/users"><i className="fa fa-users"></i><br />Users</Link>
                 <Link className="main-menu-menu text-center" to="/records"><i className="fa fa-pencil"></i><br />Records</Link>
                 <Link className="main-menu-menu text-center" to="/outpatient"><i className="fa fa-user-md"></i><br />Out-patient</Link>
                 <Link className="main-menu-menu text-center" to="/laboratory"><i className="fa fa-flask"></i><br />Laboratory</Link>
@@ -46,8 +37,9 @@ export default class Topnav extends Component {
                 <Link className="main-menu-menu text-center" to="/revenue/accounts"><i className="fa fa-money"></i><br />Accounts</Link>
                 <Link className="main-menu-menu text-center" to="/inventory"><i className="fa fa-truck"></i><br />Inventory</Link>
                 <Link className="main-menu-menu text-center" to="/hospital/services"><i className="fa fa-ambulance"></i><br />Services</Link>
-                <Link className="main-menu-menu text-center" to="/payroll"><i className="fa fa-credit-card"></i><br />Payroll</Link>
                 <Link className="main-menu-menu text-center" to="/hospital/insurance"><i className="fa fa-briefcase"></i><br />Insurance</Link>
+                <Link className="main-menu-menu text-center" to="/hospital"><i className="fa fa-h-square"></i><br />Hospital</Link>
+                <Link className="main-menu-menu text-center" to="/hospital/users"><i className="fa fa-users"></i><br />Users</Link>
               </div>
             </div>
           </div>

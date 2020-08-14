@@ -1,9 +1,11 @@
 :root{
   --theme-dark:rgb(19, 18, 18);
   --theme-light:rgb(252, 248, 245);
-  --theme-white:rgb(252, 250, 245);
+  --theme-white:rgb(255, 255, 255);
+  /* --theme-primary:rgb(15, 83, 2);
+  --theme-secondary:rgb(17, 207, 0); */
   --theme-primary:rgb(53, 9, 94);
-  --theme-secondary:rgb(128, 4, 128);
+  --theme-secondary:rgb(180, 6, 180);
 }
 
 *{
@@ -271,11 +273,11 @@ table>tbody>tr>td>.btn:hover{
 }
 
 .copyright-text{
-  position: absolute; 
-  bottom: 20px; width: 200px;
-  color: var(--theme-dark);
-  text-align: center;
-  justify-content: center;
+  position: fixed; 
+  bottom: 10px; 
+  right: 20px;
+  width: auto;
+  color: var(--theme-secondary);
   text-decoration: none;
   font-size: 0.9em;
 }
@@ -303,11 +305,14 @@ table>tbody>tr>td>.btn:hover{
   background-size: cover;
 }
 
+
+
+/* Top Navigation */
 .topnav{
   position: absolute;
   top: 0; left: 0;
   width: 100%; 
-  padding-left: 40px;
+  padding-left: 50px;
   height: 50px;
   color: var(--theme-primary);
   display: inline-flex;
@@ -318,20 +323,9 @@ table>tbody>tr>td>.btn:hover{
   border-bottom:1px solid rgba(222, 248, 223, 0.678);
 }
 
-.page_body{
-  width: 100%;
-  padding-top: 70px;
-  height: 100%;
-  position: absolute;
-  overflow-y: auto;
-}
-
-
-
-/* Top Navigation */
 .topnav-title{
   font-size: 1em;
-  color: rgb(53, 9, 94);
+  color: var(--theme-primary);
 }
 .topnav .right{
   position: absolute; right: 35px; 
@@ -342,6 +336,7 @@ table>tbody>tr>td>.btn:hover{
  background-color: rgba(0, 0, 0, 0.5); z-index: 9999;
  transition: opacity 500ms ease-out;
  overflow: hidden;
+ overflow-y: auto;
 }
 
 .hide-menu{
@@ -356,48 +351,37 @@ table>tbody>tr>td>.btn:hover{
 
 .main-menu-menu{
   width: calc((100% - 60px)/3); height: auto; padding: 5px; border-radius: 5px; margin: 10px;
-  color: rgb(53, 9, 94); font-size: 1vw; float: left; border: 1px solid rgba(235, 111, 111, 0.527);
+  color: var(--theme-primary); float: left; border: 1px solid var(--theme-secondary);
 }
 
 .main-menu-menu i{
-  font-size: 2.5vw;
+  font-size: 2em;
   margin-bottom: 5px;
 }
 
 .main-menu-menu:hover{
   text-decoration: none;
-  color: rgb(21, 187, 187);
-  border: 1px solid rgba(103, 255, 2, 0.425);
+  color: var(--theme-secondary);
+  border: 1px solid var(--theme-primary);
 }
 
 
-/* Public page */
-.background_cover{
-  position: fixed; left: 0;
-  width: 100vw; height: 100vh;
-  padding-top: 30vh; padding-left: 16vw;
+/* Page body */
+.page_body{
+  width: 100%;
+  padding-top: 70px;
+  height: 100%;
+  position: absolute;
+  overflow-y: auto;
 }
-
-.blur{
-  width: 100%; height: 100vh;
-  position: fixed;
-  top: 0; left: 0;
-  background-image: linear-gradient(50deg, rgba(76, 0, 130, 0.493), rgba(0, 0, 255, 0.418));
-  opacity: 0.3; z-index: 1
-}
-
-.preview{
-  z-index: 99; padding: 0 10vw;
-}
-
 
 /* Dashboard */
 .dash_item{
-  height: 35vh;
+  height: 400px;
   margin-bottom: 50px;
 }
 
-.dash_item canvas{
+.dash_item .canvas{
   border-radius: 3px;
   width: 98%;
   height: 98%;
@@ -408,21 +392,24 @@ table>tbody>tr>td>.btn:hover{
 .patient_profile{
   position: absolute; left: 0; width: 100%;
   background-size: cover;
-  background-image: linear-gradient(200deg, rgb(112, 37, 250), rgb(248, 20, 248),rgb(248, 24, 24));
+  background-image: linear-gradient(200deg, var(--theme-primary), var(--theme-secondary),rgb(248, 24, 24));
 }
+
 .patient_profile p{
- font-weight: bolder; font-size: 1.2vw;
+ font-weight: bolder; font-size: 1em;
 }
 
 .patient_page_tabs{
   position: absolute; right: 0; width: 100%;
-  box-shadow: 0px 0.2vw 0.3vw 0px rgba(53, 9, 94, 0.486);
+  box-shadow: 0px 3px 3px 0px var(--theme-primary);
 }
 
 .patient_page_tabs .list-group-item{
-  text-decoration: none; font-size: 1.1vw;
+  text-decoration: none; font-size: 0.9em;
 }
 
 .patient_page_tabs .list-group-item:hover{
-  text-decoration: none; background-color: rgb(53, 9, 94); color: #fff;
+  text-decoration: none;
+  background-color: var(--theme-primary); 
+  color: var(--theme-light);
 }
