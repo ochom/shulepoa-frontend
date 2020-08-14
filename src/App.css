@@ -1,6 +1,6 @@
 :root{
   --theme-dark:rgb(19, 18, 18);
-  --theme-light:rgb(252, 248, 245);
+  --theme-light:rgb(247, 237, 230);
   --theme-white:rgb(255, 255, 255);
   /* --theme-primary:rgb(15, 83, 2);
   --theme-secondary:rgb(17, 207, 0); */
@@ -368,6 +368,7 @@ table>tbody>tr>td>.btn:hover{
 
 /* Page body */
 .page_body{
+  background-color: var(--theme-light);
   width: 100%;
   padding-top: 70px;
   height: 100%;
@@ -383,8 +384,8 @@ table>tbody>tr>td>.btn:hover{
 
 .dash_item .canvas{
   border-radius: 3px;
-  width: 98%;
-  height: 98%;
+  width: 100%;
+  height: 100%;
   background-color: white;
 }
 

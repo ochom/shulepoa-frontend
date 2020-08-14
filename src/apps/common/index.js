@@ -15,17 +15,19 @@ export class Dashboard extends Component {
   }
   render() {
     const top_infections = {
+      exportEnabled: true,
+      animationEnabled: true,
       title: {
         text: "Most infectious diseases"
       },
       data: [{
-        type: "column",
+        type: "pie",
         dataPoints: [
-          { label: "Apple", y: 10 },
-          { label: "Orange", y: 15 },
-          { label: "Banana", y: 25 },
-          { label: "Mango", y: 30 },
-          { label: "Grape", y: 28 }
+          { label: "TB", y: 10 },
+          { label: "Typhoid", y: 15 },
+          { label: "Ulcers", y: 25 },
+          { label: "Malaria", y: 30 },
+          { label: "Others", y: 28 }
         ]
       }]
     }
@@ -37,20 +39,20 @@ export class Dashboard extends Component {
       data: [{
         type: "spline",
         dataPoints: [
-          { label: "Apple", y: 10 },
-          { label: "Orange", y: 15 },
-          { label: "Banana", y: 25 },
-          { label: "Mango", y: 30 },
-          { label: "Grape", y: 28 }
+          { label: "TB", y: 10 },
+          { label: "Typhoid", y: 15 },
+          { label: "Ulcers", y: 25 },
+          { label: "Malaria", y: 30 },
+          { label: "Others", y: 28 }
         ]
       }, {
         type: "spline",
         dataPoints: [
-          { label: "Apple", y: 15 },
-          { label: "Orange", y: 15 },
-          { label: "Banana", y: 25 },
-          { label: "Mango", y: 10 },
-          { label: "Grape", y: 23 }
+          { label: "TB", y: 8 },
+          { label: "Typhoid", y: 22 },
+          { label: "Ulcers", y: 25 },
+          { label: "Malaria", y: 28 },
+          { label: "Others", y: 30 }
         ]
       }]
     }
