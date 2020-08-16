@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
-import { Route, Link } from 'react-router-dom'
-import Sidenav from '../common/sidenav'
 import { connect } from 'react-redux'
+import { Link, Route } from 'react-router-dom'
+import Sidenav from '../common/sidenav'
+import Topnav from '../common/topnav'
 import HospitalProfile from './views/hospital_profile'
 import Insurance from './views/insurance'
-import Users from './views/users'
 import Services from './views/services'
-import supplier from './views/supplier'
-import Topnav from '../common/topnav'
+import Users from './views/users'
 
 export class Hospital extends Component {
   render() {
@@ -30,7 +29,6 @@ export class Hospital extends Component {
               render={({ match: { url } }) => (
                 <>
                   <Route path={`${url}`} component={HospitalProfile} exact />
-                  <Route path={`${url}/supplier`} component={supplier} />
                   <Route path={`${url}/insurance`} component={Insurance} />
                   <Route path={`${url}/services`} component={Services} />
                   <Route path={`${url}/users`} component={Users} />

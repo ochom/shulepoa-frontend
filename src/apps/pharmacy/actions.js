@@ -1,7 +1,7 @@
 import { API_PATH, commonTypes } from '../common/actions'
 import { tokenConfig } from '../auth/actions';
 import Axios from "axios"
-import { loadService } from '../hospital/actions'
+import { getServices } from '../hospital/actions'
 
 export const pharmTypes = {
   GET_PHARM_QUEUE: 'GET_PHARM_QUEUE',
@@ -57,7 +57,7 @@ export const saveReorder = (data) => (dispatch, getState) => {
   dispatch({ type: commonTypes.PROCESSING })
   Axios.post(`${API_PATH}pharmacy/reorders/`, JSON.stringify(data), tokenConfig(getState))
     .then(res => {
-      loadService();
+      getServices();
       getReordersHistory();
       dispatch({ type: pharmTypes.ADD_PHARM_REORDER, payload: res.data });
       dispatch({ type: commonTypes.SUCCESS, message: "Reorder saved succesfully" });

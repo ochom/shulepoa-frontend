@@ -70,43 +70,34 @@ export class Diagnosis extends Component {
   }
 
   render() {
-    const { TIME_UNITS } = this.props.common.CONSTANTS;
+    const { icd_10 } = this.props.common.CONSTANTS;
     const { diagnosis } = this.props;
     const observation_view =
       <Modal isOpen={this.state.showModal} size="md">
         <ModalHeader toggle={this.toggleModal}>
-          {this.state.selected_observation ? 'Edit observation details' : 'Add observation and examination'}
+          {this.state.selected_observation ? 'Edit diagnosis' : 'Add diagnosis'}
         </ModalHeader>
         <form onSubmit={this.onSubmit}>
           <ModalBody>
             <div className="form-row">
-              <div className="form-group col-5">
-                <label>Complaint</label>
-                <input className="form-control form-control-sm" name="complaint" required={true}
-                  value={this.state.complaint} onChange={this.onChange} placeholder="Complaint..." />
-              </div>
-              <div className="form-group col-3">
-                <label>Period</label>
-                <input className="form-control form-control-sm" name="period" required={true}
-                  value={this.state.period} onChange={this.onChange} placeholder="0" />
-              </div>
-              <div className="form-group col-4">
-                <label>Units</label>
-                <select className="form-control form-control-sm" name="period_units" required={true}
-                  value={this.state.period_units} onChange={this.onChange} >
-                  <option value="">Select</option>
-                  {TIME_UNITS.map((unit, index) => <option key={index} value={unit}>{unit}</option>)}
+              <div className="form-group col-12">
+                <label>Disease name</label>
+                <select className="form-control form-control-sm" name="search" required={true}
+                  value={this.state.search} onChange={this.onChange} placeholder="Search..." >
+                  {icd_10.map((disease, index) =>
+                    <option key={index} value={disease.code}>{disease.desc}</option>
+                  )}
                 </select>
               </div>
               <div className="form-group col-12">
-                <label>Pre-medication Note</label>
-                <textarea className="form-control form-control-sm" name="pre_med_note"
-                  value={this.state.pre_med_note} onChange={this.onChange} placeholder="Pre Meds..."></textarea>
+                <label>Disease name</label>
+                <input className="form-control form-control-sm" name="disease" required={true}
+                  value={this.state.disease} onChange={this.onChange} placeholder="Search..." />
               </div>
               <div className="form-group col-12">
-                <label>Physical Examination Note</label>
-                <textarea className="form-control form-control-sm" name="physical_examination_note"
-                  value={this.state.physical_examination_note} onChange={this.onChange} placeholder="Any physical Examination..."></textarea>
+                <label>ICD 10</label>
+                <input className="form-control form-control-sm" name="icd_10" required={true}
+                  value={this.state.icd_10} onChange={this.onChange} placeholder="0" />
               </div>
             </div>
           </ModalBody >

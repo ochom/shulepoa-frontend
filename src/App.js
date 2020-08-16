@@ -9,6 +9,8 @@ import AdminRoute from './apps/auth/views/admin_route';
 import PrivateRoute from './apps/auth/views/private_route';
 import Profile from './apps/auth/views/profile';
 import public_page from './apps/auth/views/public_page';
+import Bugs from './apps/bugs/index';
+import { loadICD10 } from './apps/common/actions';
 import Dashboard from './apps/common/index';
 import Hospital from './apps/hospital';
 import inpatient from './apps/inpatient';
@@ -19,7 +21,6 @@ import pharmacy from './apps/pharmacy';
 import radiology from './apps/radiology';
 import Records from './apps/records/index';
 import Revenue from './apps/revenue';
-import Bugs from './apps/bugs/index'
 
 export class App extends Component {
 
@@ -27,6 +28,7 @@ export class App extends Component {
 
   componentDidMount() {
     this.props.loadUser();
+    this.props.loadICD10()
     setTimeout(() => this.setState({ isLoading: false }), 6000);
   }
 
@@ -72,4 +74,4 @@ export class App extends Component {
   }
 }
 
-export default connect(state => ({ auth: state.auth, common: state.common }), { loadUser, })(App);
+export default connect(state => ({ auth: state.auth, common: state.common }), { loadUser, loadICD10 })(App);

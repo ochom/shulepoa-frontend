@@ -1,6 +1,7 @@
 import { inventoryTypes } from './actions'
 
 const initialState = {
+  supplier_list: [],
   stores: [],
   store: null,
 };

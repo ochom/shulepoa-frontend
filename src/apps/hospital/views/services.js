@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { connect } from 'react-redux';
-import { loadService, searchService, addService, updateService } from '../actions';
+import { getServices, addService, updateService } from '../actions';
 
 export class Service extends Component {
   state = {
@@ -19,7 +19,7 @@ export class Service extends Component {
   }
 
   componentDidMount() {
-    this.props.loadService();
+    this.props.getServices();
   }
 
   onChange = (e) => this.setState({ [e.target.name]: e.target.value });
@@ -243,4 +243,4 @@ const mapStateToProps = state => ({
   common: state.common,
 });
 
-export default connect(mapStateToProps, { loadService, searchService, addService, updateService })(Service);
+export default connect(mapStateToProps, { getServices, addService, updateService })(Service);

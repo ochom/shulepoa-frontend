@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Route, Link } from 'react-router-dom'
 import Sidenav from '../common/sidenav'
 import { connect } from 'react-redux'
-import { loadService, loadInsurance } from '../hospital/actions'
+import { getServices, loadInsurance } from '../hospital/actions'
 import CashPoint from './views/payments_queue'
 import Topnav from '../common/topnav'
 
@@ -10,7 +10,7 @@ export class Revenue extends Component {
 
   componentDidMount() {
     this.props.loadInsurance();
-    this.props.loadService();
+    this.props.getServices();
   }
 
   render() {
@@ -48,5 +48,5 @@ const mapStateToProps = state => ({
 
 })
 
-export default connect(mapStateToProps, { loadService, loadInsurance })(Revenue);
+export default connect(mapStateToProps, { getServices, loadInsurance })(Revenue);
 

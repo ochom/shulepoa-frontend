@@ -11,21 +11,10 @@ export class Auth extends Component {
     const { location } = this.props;
     const { state } = location;
     if (isAuthenticated) {
-      if (user.is_admin) {
-        if (state && state.from) {
-          return (<Redirect to={`${state.from.pathname}`} />)
-        } else {
-          return (<Redirect to="/" />)
-        }
+      if (state && state.from) {
+        return (<Redirect to={`${state.from.pathname}`} />)
       } else {
-        return (
-          <>
-            <p className="alert alert-danger">Your account is not activated
-                <button className="btn btn-sm btn-outline-primary border-none ml-5"
-                onClick={() => this.props.logout()}>Logout</button>
-            </p>
-          </>
-        );
+        return (<Redirect to="/" />)
       }
     }
     return (

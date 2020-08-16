@@ -2,6 +2,7 @@ import { commonTypes } from './actions';
 
 const initialState = {
   isProcessing: false,
+  icd_10:[],
   CONSTANTS: {
     DEPARTMENTS: [
       (0, "Records"), (1, "Revenue"), (2, "Outpatient"),
@@ -93,7 +94,11 @@ export default function (state = initialState, action) {
         isProcessing: false,
         silent_processing: false,
       }
-
+  case commonTypes.LOAD_ICD10:
+    return {
+      ...state,
+      icd_10:action.payload
+    }
     default:
       return state;
   }

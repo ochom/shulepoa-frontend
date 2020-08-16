@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { connect } from 'react-redux';
-import { loadInsurance, searchInsurance, addInsurance, updateInsurance } from '../actions';
+import { loadInsurance, addInsurance, updateInsurance } from '../actions';
 
 export class Insurance extends Component {
   state = {
@@ -209,4 +209,4 @@ const mapStateToProps = state => ({
   common: state.common,
 });
 
-export default connect(mapStateToProps, { loadInsurance, searchInsurance, addInsurance, updateInsurance })(Insurance);
+export default connect(mapStateToProps, { loadInsurance, addInsurance, updateInsurance })(Insurance);

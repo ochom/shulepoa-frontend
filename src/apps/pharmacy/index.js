@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import { Route, Link } from 'react-router-dom'
 import Sidenav from '../common/sidenav'
 import { connect } from 'react-redux'
-import { loadService, loadSupplier } from '../hospital/actions'
+import { getServices } from '../hospital/actions'
+import { getSuppliers } from '../inventory/actions'
 import { getReordersHistory } from './actions'
 import Drugs from './views/drugs'
 import Queue from './views/queue'
@@ -14,8 +15,8 @@ import Topnav from '../common/topnav'
 
 export class Pharmacy extends Component {
   componentDidMount() {
-    this.props.loadService();
-    this.props.loadSupplier();
+    this.props.getServices();
+    this.props.getSuppliers();
     this.props.getReordersHistory();
   }
   render() {
@@ -55,5 +56,5 @@ const mapStateToProps = state => ({
 
 })
 
-export default connect(mapStateToProps, { loadService, loadSupplier, getReordersHistory })(Pharmacy);
+export default connect(mapStateToProps, { getServices, getSuppliers, getReordersHistory })(Pharmacy);
 

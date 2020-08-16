@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { connect } from 'react-redux';
-import { loadSupplier, searchSupplier, addSupplier, updateSupplier } from '../actions';
+import { getSuppliers, addSupplier, updateSupplier } from '../actions';
 
 export class Supplier extends Component {
   state = {
@@ -19,7 +19,7 @@ export class Supplier extends Component {
   }
 
   componentDidMount() {
-    this.props.loadSupplier();
+    this.props.getSuppliers();
   }
 
   onChange = (e) => this.setState({ [e.target.name]: e.target.value });
@@ -206,4 +206,4 @@ const mapStateToProps = state => ({
   common: state.common,
 });
 
-export default connect(mapStateToProps, { loadSupplier, searchSupplier, addSupplier, updateSupplier })(Supplier);
+export default connect(mapStateToProps, { getSuppliers, addSupplier, updateSupplier })(Supplier);

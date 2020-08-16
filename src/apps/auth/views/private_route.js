@@ -7,14 +7,8 @@ const PrivateRoute = ({ component: Component, auth, ...rest }) => (
     {...rest}
     render={(props) => {
       if (auth.isAuthenticated) {
-        const { user } = auth;
-        if (user && user.is_admin) {
-          return <Component {...props} />;
-        } else {
-          return <Redirect to={{ pathname: '/auth', state: { from: props.location } }} />;
-        }
+        return <Component {...props} />;
       } else {
-
         return <Redirect to={{ pathname: '/auth', state: { from: props.location } }} />;
       }
     }}

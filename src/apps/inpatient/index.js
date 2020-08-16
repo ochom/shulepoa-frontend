@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Route, Link } from 'react-router-dom'
 import Sidenav from '../common/sidenav'
 import { connect } from 'react-redux'
-import { loadService } from '../hospital/actions'
+import { getServices } from '../hospital/actions'
 import { loadWards, getAdmiedtPatient } from './actions'
 import wards from './views/wards'
 import patients from './views/patients'
@@ -13,7 +13,7 @@ import Topnav from '../common/topnav'
 
 export class Inpatient extends Component {
   componentDidMount() {
-    this.props.loadService();
+    this.props.getServices();
     this.props.loadWards();
     this.props.getAdmiedtPatient();
   }
@@ -49,5 +49,5 @@ export class Inpatient extends Component {
     )
   }
 }
-export default connect(null, { loadService, loadWards, getAdmiedtPatient })(Inpatient);
+export default connect(null, { getServices, loadWards, getAdmiedtPatient })(Inpatient);
 

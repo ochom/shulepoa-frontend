@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Route, Link } from 'react-router-dom'
 import Sidenav from '../common/sidenav'
 import { connect } from 'react-redux'
-import { loadService } from '../hospital/actions'
+import { getServices } from '../hospital/actions'
 import Results from './views/results'
 import Sampling from './views/sampling'
 import verifications from './views/verifications'
@@ -12,7 +12,7 @@ import Topnav from '../common/topnav'
 
 export class Laboratory extends Component {
   componentDidMount() {
-    this.props.loadService();
+    this.props.getServices();
   }
   render() {
     const menu_list =
@@ -51,5 +51,5 @@ const mapStateToProps = state => ({
 
 })
 
-export default connect(mapStateToProps, { loadService })(Laboratory);
+export default connect(mapStateToProps, { getServices })(Laboratory);
 

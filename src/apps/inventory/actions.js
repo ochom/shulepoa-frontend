@@ -8,6 +8,13 @@ export const inventoryTypes = {
   GET_STORE: 'GET_STORE',
   UPDATE_STORE: 'UPDATE_STORE',
   DELETE_STORE: 'DELETE_STORE',
+
+
+  GET_SUPPLIER: 'GET_SUPPLIER',
+  DELETE_SUPPLIER: 'DELETE_SUPPLIER',
+  ADD_SUPPLIER: 'ADD_SUPPLIER',
+  UPDATE_SUPPLIER: 'UPDATE_SUPPLIER',
+
 }
 
 export const getStores = () => (dispatch, getState) => {
@@ -82,4 +89,48 @@ export const deleteStore = (id) => (dispatch, getState) => {
     .finally(() => {
       dispatch({ type: commonTypes.DONE })
     })
+}
+
+
+// Suppliers
+export const getSuppliers = () => (dispatch, getState) => {
+  Axios.get(`${API_PATH}organization/supplier/`, tokenConfig(getState))
+    .then(res => {
+      dispatch({ type: inventoryTypes.GET_SUPPLIER, payload: res.data })
+    }).catch(err => {
+      // To do
+    });
+}
+
+export const addSupplier = (data) => (dispatch, getState) => {
+  dispatch({ type: commonTypes.PROCESSING })
+  Axios.post(`${API_PATH}organization/supplier/`, JSON.stringify(data), tokenConfig(getState))
+    .then(res => {
+      dispatch({ type: inventoryTypes.ADD_SUPPLIER, payload: res.data })
+      dispatch({ type: commonTypes.SUCCESS, message: "Supplier details saved succesfully" })
+    }).catch(err => {
+      dispatch({ type: commonTypes.ERROR, error: err })
+    });
+}
+
+export const updateSupplier = (id, data) => (dispatch, getState) => {
+  dispatch({ type: commonTypes.PROCESSING })
+  Axios.put(`${API_PATH}organization/supplier/${id}/`, JSON.stringify(data), tokenConfig(getState))
+    .then(res => {
+      dispatch({ type: inventoryTypes.UPDATE_SUPPLIER, payload: res.data })
+      dispatch({ type: commonTypes.SUCCESS, message: "Supplier details updated succesfully" })
+    }).catch(err => {
+      dispatch({ type: commonTypes.ERROR, error: err })
+    });
+}
+
+export const deleteSupplier = (id, data) => (dispatch, getState) => {
+  dispatch({ type: commonTypes.PROCESSING })
+  Axios.delete(`${API_PATH}organization/supplier/${id}/`, tokenConfig(getState))
+    .then(res => {
+      dispatch({ type: inventoryTypes.DELETE_SUPPLIER, payload: id })
+      dispatch({ type: commonTypes.SUCCESS, message: "Supplier details saved succesfully" })
+    }).catch(err => {
+      // dispatch({ type: commonTypes.ERROR, error: err })
+    });
 }

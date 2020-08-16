@@ -6,14 +6,14 @@ import { connect } from 'react-redux'
 import Schemes from './views/schemes'
 import HealthFiles from './views/health_files'
 import HealthFileDetails from './views/health_file_details'
-import { loadService, loadInsurance } from '../hospital/actions'
+import { getServices, loadInsurance } from '../hospital/actions'
 import Topnav from '../common/topnav'
 
 export class Records extends Component {
 
   componentDidMount() {
     this.props.loadInsurance();
-    this.props.loadService();
+    this.props.getServices();
   }
 
   render() {
@@ -49,5 +49,5 @@ const mapStateToProps = state => ({
 
 })
 
-export default connect(mapStateToProps, { loadService, loadInsurance })(Records);
+export default connect(mapStateToProps, { getServices, loadInsurance })(Records);
 

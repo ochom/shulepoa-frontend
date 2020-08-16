@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Route, Link } from 'react-router-dom'
 import Sidenav from '../common/sidenav'
 import { connect } from 'react-redux'
-import { loadService } from '../hospital/actions'
+import { getServices } from '../hospital/actions'
 import Consultation from './views/consultation'
 import Queue from './views/consultation_queue'
 import Triage from './views/triage'
@@ -10,7 +10,7 @@ import Topnav from '../common/topnav'
 
 export class Outpatient extends Component {
   componentDidMount() {
-    this.props.loadService();
+    this.props.getServices();
   }
   render() {
     const menu_list =
@@ -45,5 +45,5 @@ const mapStateToProps = state => ({
 
 })
 
-export default connect(mapStateToProps, { loadService })(Outpatient);
+export default connect(mapStateToProps, { getServices })(Outpatient);
 

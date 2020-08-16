@@ -4,7 +4,6 @@ import {
 
 const initialState = {
   hospital_profile: null,
-  supplier_list: [],
   insurance_list: [],
   service_list: [],
   users_list: [],

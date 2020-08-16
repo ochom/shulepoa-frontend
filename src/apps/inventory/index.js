@@ -7,6 +7,7 @@ import Products from './views/products'
 import Requsitions from './views/requisitions'
 import Stores from './views/stores'
 import Supplies from './views/supplies'
+import supplier from './views/supplier'
 
 export default class Inventory extends Component {
   render() {
@@ -31,6 +32,7 @@ export default class Inventory extends Component {
                   <Route path={`${url}`} component={Stores} exact />
                   <Route path={`${url}/stores`} component={Stores} exact />
                   <Route path={`${url}/stock`} component={Products} />
+                  <Route path={`${url}/supplier`} component={supplier} />
                   <Route path={`${url}/requisitions`} component={Requsitions} />
                   <Route path={`${url}/orders`} component={PurchaseOrders} />
                   <Route path={`${url}/supplies`} component={Supplies} />
