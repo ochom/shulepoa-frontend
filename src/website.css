@@ -1,0 +1,38 @@
+.issues-list .list-group-item{
+  margin: 10px 0;
+  color: black;
+  position: relative;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+.issues-list .list-group-item:hover{
+  text-decoration: none;
+}
+
+.time-posted{
+  position: absolute;
+  right: 20px;
+  top: 10px;
+}
+
+.issues-list .list-group-item .status-open{
+  background-color: yellow;
+  font-size: 0.8em;
+  color: black;
+  padding: 5px 10px;
+  border-radius: 3px;
+}
+
+.issues-list .list-group-item .status-resolved{
+  background-color: lime;
+  font-size: 0.8em;
+  color: black;
+  padding: 5px 10px;
+  border-radius: 3px;
+}
+
+.issues-list .person{
+  margin: 10px 0;
+  border-radius: 5px;
+}

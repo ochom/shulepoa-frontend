@@ -1,14 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { logout } from '../auth/actions'
 import { Link } from 'react-router-dom'
 
-export class Sidenav extends Component {
-
-  logoutUser = () => {
-    this.props.logout();
-  }
-
+class Sidenav extends Component {
   render() {
     return (
       <div>
@@ -20,6 +14,10 @@ export class Sidenav extends Component {
                 <i className="fa fa-home"></i> Dashboard</Link>
             </div>
             {this.props.menus}
+            <div className="list-group">
+              <Link to="/issues" className="list-group-item">
+                <i className="fa fa-bug"></i> Bugs &amp; Issues</Link>
+            </div>
             {/* <div className="list-group">
               <Link to="/profile" className="list-group-item">
                 <i className="fa fa-cog"></i> My Profile</Link>
@@ -43,6 +41,4 @@ export class Sidenav extends Component {
 export default connect(
   state => ({
     auth: state.auth,
-  }),
-  { logout }
-)(Sidenav);
+  }))(Sidenav);

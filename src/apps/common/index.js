@@ -6,7 +6,7 @@ import { loadDashboardData } from './actions';
 import Sidenav from './sidenav';
 import Topnav from './topnav';
 
-var CanvasJS = CanvasJSReact.CanvasJS;
+//var CanvasJS = CanvasJSReact.CanvasJS;
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 export class Dashboard extends Component {

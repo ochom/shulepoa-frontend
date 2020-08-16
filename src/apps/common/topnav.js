@@ -1,22 +1,35 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import { logout } from '../auth/actions'
+import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import { connect } from 'react-redux';
 
-export default class Topnav extends Component {
+class Topnav extends Component {
   state = {
     showMainMenu: false,
+    dropdown: false
   }
+
   toggleMenu = () => this.setState({ showMainMenu: !this.state.showMainMenu })
+
   render() {
     return (
       <>
         <div className="topnav">
           <div className="topnav-title"><b>{this.props.page ? this.props.page : "Dashboard"}</b></div>
           <div className="topnav-title right" >
-            <button className="btn cu-text-primary" style={{ position: "relative" }}
-              onClick={this.toggleMenu} title="Profile">
-              <i className="fa fa-user-o"></i></button>
             <button className="btn cu-text-primary" title="Main Menu"
               onClick={this.toggleMenu}><i className="fa fa-th"></i></button>
+            <Dropdown isOpen={this.state.dropdown} className="btn"
+              toggle={() => this.setState({ dropdown: !this.state.dropdown })}>
+              <DropdownToggle color="cu-text-primary" className="bg-transparent border-0" caret><i className="fa fa-user-o"></i></DropdownToggle>
+              <DropdownMenu>
+                <DropdownItem>Profile</DropdownItem>
+                <DropdownItem>Settings</DropdownItem>
+                <DropdownItem divider />
+                <DropdownItem onClick={() => this.props.logout()}>Signout</DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
           </div>
         </div>
         <div id="main-menu"
@@ -49,3 +62,4 @@ export default class Topnav extends Component {
     )
   }
 }
+export default connect(null, { logout })(Topnav)

@@ -19,6 +19,7 @@ import pharmacy from './apps/pharmacy';
 import radiology from './apps/radiology';
 import Records from './apps/records/index';
 import Revenue from './apps/revenue';
+import Bugs from './apps/bugs/index'
 
 export class App extends Component {
 
@@ -57,6 +58,7 @@ export class App extends Component {
               <PrivateRoute path="/profile" component={Profile} />
               <PrivateRoute path="/change-password" component={() => <Profile change_password={true} />} />
               <Route path="/auth" component={Auth} />
+              <PrivateRoute path="/issues" component={Bugs} />
             </Switch>
             <div id="processing" style={{ display: isProcessing || isLoading ? "block" : "none" }}>
               <h1 className="text-light text-center m-0" style={{ fontSize: "8vw", paddingTop: "30vh" }}>
