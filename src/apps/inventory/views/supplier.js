@@ -138,7 +138,7 @@ export class Supplier extends Component {
         <div className="col-md-10 mx-auto mt-3">
           <div className="card">
             <div className="card-header py-1 px-3">
-              <div className="py-1 px-2"><i className="fa fa-handshake-o"></i> Manage suppliers</div>
+              <div className="py-1 px-2">Manage Suppliers</div>
               <button
                 className="btn btn-sm py-1 px-2 mr-auto"
                 onClick={this.onNewSupplier}><i className="fa fa-plus-circle mr-2"></i> Add Supplier

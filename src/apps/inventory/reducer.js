@@ -4,6 +4,9 @@ const initialState = {
   stores: [],
   store: null,
 
+  categories: [],
+  category: null,
+
   units: [],
   unit: null,
 
@@ -15,6 +18,9 @@ const initialState = {
 
   suppliers: [],
   supplier: null,
+
+  orders: [],
+  order: null,
 };
 
 export default function (state = initialState, action) {
@@ -24,50 +30,46 @@ export default function (state = initialState, action) {
         ...state,
         stores: action.payload,
       };
-    case inventoryTypes.ADD_STORE:
-    case inventoryTypes.UPDATE_STORE:
+    case inventoryTypes.GET_STORE:
       return {
         ...state,
-        stores: [...state.stores.filter((_store) => _store.id !== action.payload.id), action.payload]
+        store: action.payload
       };
-    case inventoryTypes.DELETE_STORE:
+
+
+    case inventoryTypes.GET_CATEGORIES:
       return {
         ...state,
-        stores: state.stores.filter((store) => store.id !== action.payload),
+        categories: action.payload,
       };
+    case inventoryTypes.GET_CATEGORY:
+      return {
+        ...state,
+        category: action.payload
+      };
+
 
     case inventoryTypes.GET_UNITS:
       return {
         ...state,
         units: action.payload,
       };
-    case inventoryTypes.ADD_UNIT:
-    case inventoryTypes.UPDATE_UNIT:
+    case inventoryTypes.GET_UNIT:
       return {
         ...state,
-        units: [...state.units.filter((_unit) => _unit.id !== action.payload.id), action.payload]
+        unit: action.payload
       };
-    case inventoryTypes.DELETE_UNIT:
-      return {
-        ...state,
-        units: state.units.filter((unit) => unit.id !== action.payload),
-      };
+
 
     case inventoryTypes.GET_PRODUCTS:
       return {
         ...state,
         products: action.payload,
       };
-    case inventoryTypes.ADD_PRODUCT:
-    case inventoryTypes.UPDATE_PRODUCT:
+    case inventoryTypes.GET_PRODUCT:
       return {
         ...state,
-        products: [...state.products.filter((_product) => _product.id !== action.payload.id), action.payload]
-      };
-    case inventoryTypes.DELETE_PRODUCT:
-      return {
-        ...state,
-        products: state.products.filter((product) => product.id !== action.payload),
+        product: action.payload
       };
 
 
@@ -76,17 +78,12 @@ export default function (state = initialState, action) {
         ...state,
         requisitions: action.payload,
       };
-    case inventoryTypes.ADD_REQUISITION:
-    case inventoryTypes.UPDATE_REQUISITION:
+    case inventoryTypes.GET_REQUISITION:
       return {
         ...state,
-        requisitions: [...state.requisitions.filter((_requisition) => _requisition.id !== action.payload.id), action.payload]
+        requisition: action.payload,
       };
-    case inventoryTypes.DELETE_REQUISITION:
-      return {
-        ...state,
-        requisitions: state.requisitions.filter((requisition) => requisition.id !== action.payload),
-      };
+
 
     case inventoryTypes.GET_SUPPLIERS:
       return {
@@ -97,6 +94,18 @@ export default function (state = initialState, action) {
       return {
         ...state,
         supplier: action.payload,
+      };
+
+
+    case inventoryTypes.GET_ORDERS:
+      return {
+        ...state,
+        orders: action.payload,
+      };
+    case inventoryTypes.GET_ORDER:
+      return {
+        ...state,
+        order: action.payload,
       };
 
 

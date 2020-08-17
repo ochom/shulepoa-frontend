@@ -5,6 +5,7 @@ import {
   addProduct, deleteProduct, getProducts, updateProduct,
   addRequisition
 } from '../actions'
+import categories from './categories'
 
 export class Products extends Component {
   state = {
@@ -13,6 +14,7 @@ export class Products extends Component {
     store_id: "",
     name: "",
     label: "",
+    category_id: "",
     unit_id: "",
     price: "",
     startingInventory: "",
@@ -38,6 +40,7 @@ export class Products extends Component {
       store_id: "",
       name: "",
       label: "",
+      category_id: "",
       unit_id: "",
       price: "",
       startingInventory: "",
@@ -52,6 +55,7 @@ export class Products extends Component {
       store_id: data.store_id,
       name: data.name,
       label: data.label,
+      category_id: data.category_id,
       unit_id: data.unit_id,
       price: data.price,
       startingInventory: data.startingInventory,
@@ -67,6 +71,7 @@ export class Products extends Component {
       store_id,
       name,
       label,
+      category_id,
       unit_id,
       price,
       startingInventory,
@@ -77,6 +82,7 @@ export class Products extends Component {
       store_id,
       name,
       label,
+      category_id,
       unit_id,
       price,
       startingInventory,
@@ -117,7 +123,7 @@ export class Products extends Component {
   }
 
   render() {
-    const { products, stores, units } = this.props.inventory;
+    const { products, categories, stores, units } = this.props.inventory;
     const product_modal_view =
       <Modal isOpen={this.state.showModal} size="md">
         <ModalHeader toggle={this.toggleModal}>
@@ -135,6 +141,15 @@ export class Products extends Component {
                 <label>Label<sup>*</sup></label>
                 <input className="form-control form-control-sm" name="label" required={true}
                   onChange={this.onChange} value={this.state.label} />
+              </div>
+              <div className="form-group col-12">
+                <label>Category<sup>*</sup></label>
+                <select className="form-control form-control-sm" name="category_id" required={true}
+                  onChange={this.onChange} value={this.state.category_id} >
+                  <option value="">Select</option>
+                  {categories.map((cat, index) =>
+                    <option key={index} value={cat.id}>{cat.name}</option>)}
+                </select>
               </div>
               <div className="form-group col-12">
                 <label>Store<sup>*</sup></label>
@@ -243,6 +258,7 @@ export class Products extends Component {
                   <th>#</th>
                   <th>Product</th>
                   <th>Label</th>
+                  <th>Category</th>
                   <th>Store</th>
                   <th>In Store</th>
                   <th>Price</th>
@@ -255,6 +271,9 @@ export class Products extends Component {
                     <td>{index + 1}</td>
                     <td>{product.name}</td>
                     <td>{product.label}</td>
+                    <td>
+                      {categories.length > 0 ? categories.filter(cat => cat.id === product.category_id)[0].name : ""}
+                    </td>
                     <td>
                       {stores.length > 0 ? stores.filter(store => store.id === product.store_id)[0].name : ""}
                     </td>

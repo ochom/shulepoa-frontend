@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
 import { addStore, deleteStore, getStores, updateStore } from '../actions'
 import Units from './units'
+import Categories from './categories'
 
 export class Stores extends Component {
   state = {
@@ -20,7 +21,7 @@ export class Stores extends Component {
 
   onChange = (e) => this.setState({ [e.target.name]: e.target.value });
 
-  onNewStore = (data) => {
+  onNewStore = () => {
     this.setState({
       selected_store: null,
       name: "",
@@ -42,10 +43,12 @@ export class Stores extends Component {
     e.preventDefault();
     const {
       selected_store,
-      name, description
+      name,
+      description
     } = this.state
     const data = {
-      name, description
+      name,
+      description
     }
     if (selected_store) {
       this.props.updateStore(selected_store.id, data)
@@ -86,8 +89,8 @@ export class Stores extends Component {
       </Modal >
 
     return (
-      <div className="row col-12 mx-auto  mt-3">
-        <div className="col-md-7">
+      <div className="row col-12 mx-auto">
+        <div className="col-md-7 mt-3">
           {store_modal_view}
           <div className="card">
             <div className="card-header py-1 px-3">
@@ -123,6 +126,7 @@ export class Stores extends Component {
             </div>
           </div>
         </div>
+        <Categories />
         <Units />
       </div>
     )

@@ -1,37 +1,37 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
-import { addUnit, deleteUnit, getUnits, updateUnit } from '../actions'
+import { addCategory, deleteCategory, getCategories, updateCategory } from '../actions'
 
-export class Units extends Component {
+export class Categories extends Component {
   state = {
     showModal: false,
-    selected_unit: null,
-    abbr: "",
+    selected_cat: null,
+    name: "",
     desc: "",
   }
 
   componentDidMount() {
-    this.props.getUnits();
+    this.props.getCategories();
   }
 
   toggleModal = () => this.setState({ showModal: !this.state.showModal });
 
   onChange = (e) => this.setState({ [e.target.name]: e.target.value });
 
-  onNewUnit = (data) => {
+  onNewCategory = (data) => {
     this.setState({
-      selected_unit: null,
-      abbr: "",
+      selected_cat: null,
+      name: "",
       desc: "",
     })
     this.toggleModal();
   }
 
-  onEditUnit = (data) => {
+  onEditCategory = (data) => {
     this.setState({
-      selected_unit: data,
-      abbr: data.abbr,
+      selected_cat: data,
+      name: data.name,
       desc: data.desc,
     })
     this.toggleModal();
@@ -40,39 +40,39 @@ export class Units extends Component {
   onSubmit = (e) => {
     e.preventDefault();
     const {
-      selected_unit,
-      abbr, desc
+      selected_cat,
+      name, desc
     } = this.state
     const data = {
-      abbr, desc
+      name, desc
     }
-    if (selected_unit) {
-      this.props.updateUnit(selected_unit.id, data)
+    if (selected_cat) {
+      this.props.updateCategory(selected_cat.id, data)
     } else {
-      this.props.addUnit(data)
+      this.props.addCategory(data)
     }
     this.toggleModal();
   }
 
 
   render() {
-    const { units } = this.props.inventory;
-    const unit_modal_view =
+    const { categories } = this.props.inventory;
+    const cat_modal_view =
       <Modal isOpen={this.state.showModal} size="md">
         <ModalHeader toggle={this.toggleModal}>
-          {this.state.selected_unit ? 'Edit Unit Details' : 'Add new unit'}
+          {this.state.selected_cat ? 'Edit Category Details' : 'Add new category'}
         </ModalHeader>
         <form onSubmit={this.onSubmit}>
           <ModalBody>
             <div className="form-group">
-              <label>Abbr.</label>
-              <input className="form-control form-control-sm" name="abbr" required={true}
-                onChange={this.onChange} value={this.state.abbr} />
+              <label>Name</label>
+              <input className="form-control form-control-sm" name="name" required={true}
+                onChange={this.onChange} value={this.state.name} />
             </div>
             <div className="form-group">
-              <label>Label</label>
-              <input className="form-control form-control-sm" name="desc" required={true}
-                onChange={this.onChange} value={this.state.desc} />
+              <label>Description</label>
+              <textarea className="form-control form-control-sm" name="desc" required={true}
+                onChange={this.onChange} value={this.state.desc} ></textarea>
             </div>
           </ModalBody >
           <ModalFooter>
@@ -86,13 +86,13 @@ export class Units extends Component {
 
     return (
       <div className="col-5 mt-3">
-        {unit_modal_view}
+        {cat_modal_view}
         <div className="card">
           <div className="card-header py-1 px-3">
-            <div className="py-1 px-2">Store units</div>
+            <div className="py-1 px-2">Item Categories</div>
             <button
               className="btn btn-sm "
-              onClick={this.onNewUnit}><i className="fa fa-plus-circle mr-2"></i> Add Unit
+              onClick={this.onNewCategory}><i className="fa fa-plus-circle mr-2"></i> Add Category
               </button>
           </div>
           <div className="card-body p-0 pb-2">
@@ -100,20 +100,20 @@ export class Units extends Component {
               <thead className="cu-text-primary">
                 <tr>
                   <th>#</th>
-                  <th>Abbr.</th>
+                  <th>Name.</th>
                   <th>Label</th>
                   <th className="text-center">Action</th>
                 </tr>
               </thead>
               <tbody>
-                {units.map((unit, index) =>
+                {categories.map((cat, index) =>
                   <tr key={index}>
                     <td>{index + 1}</td>
-                    <td>{unit.abbr}</td>
-                    <td>{unit.desc}</td>
+                    <td>{cat.name}</td>
+                    <td>{cat.desc}</td>
                     <td className="text-center">
                       <button className="btn btn-sm p-0 border-none text-success"
-                        onClick={() => this.onEditUnit(unit)}><i className="fa fa-edit"></i> Edit</button></td>
+                        onClick={() => this.onEditCategory(cat)}><i className="fa fa-edit"></i> Edit</button></td>
                   </tr>
                 )}
               </tbody>
@@ -127,4 +127,4 @@ export class Units extends Component {
 
 export default connect(state => ({
   inventory: state.inventory,
-}), { getUnits, addUnit, updateUnit, deleteUnit })(Units)
+}), { getCategories, addCategory, updateCategory, deleteCategory })(Categories)

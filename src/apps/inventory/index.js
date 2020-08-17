@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Link, Route } from 'react-router-dom'
 import Sidenav from '../common/sidenav'
 import Topnav from '../common/topnav'
-import { getProducts, getStores, getUnits } from './actions'
+import { getProducts, getStores, getCategories, getUnits, getSuppliers } from './actions'
 import Dispatches from './views/dispatches'
 import GRN from './views/grn'
 import PurchaseOrders from './views/purchase_orders'
@@ -15,8 +15,10 @@ import supplier from './views/supplier'
 class Inventory extends Component {
   componentDidMount() {
     this.props.getStores();
+    this.props.getCategories()
     this.props.getUnits();
     this.props.getProducts();
+    this.props.getSuppliers()
   }
   render() {
     const menu_list =
@@ -26,8 +28,8 @@ class Inventory extends Component {
         <Link to="/inventory/requisitions" className="list-group-item"><i className="fa fa-cart-plus"></i> New Requisitions</Link>
         <Link to="/inventory/dispatches" className="list-group-item"><i className="fa fa-history"></i> Dispatch</Link>
         <Link to="/inventory/suppliers" className="list-group-item"><i className="fa fa-handshake-o"></i> Suppliers</Link>
-        <Link to="/inventory/orders" className="list-group-item"><i className="fa fa-briefcase"></i> Orders</Link>
-        <Link to="/inventory/grn" className="list-group-item"><i className="fa fa-truck"></i> GRN</Link>
+        <Link to="/inventory/orders" className="list-group-item"><i className="fa fa-briefcase"></i> Active Orders</Link>
+        <Link to="/inventory/grn" className="list-group-item"><i className="fa fa-truck"></i> Goods Received</Link>
       </div>
     return (
       <>
@@ -57,4 +59,4 @@ class Inventory extends Component {
   }
 }
 
-export default connect(null, { getStores, getUnits, getProducts })(Inventory)
+export default connect(null, { getStores, getCategories, getUnits, getProducts, getSuppliers })(Inventory)
