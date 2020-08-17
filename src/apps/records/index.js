@@ -1,13 +1,11 @@
 import React, { Component } from 'react'
-import { Route, Link } from 'react-router-dom'
-import Patients from './views/patients'
-import Sidenav from '../common/sidenav'
 import { connect } from 'react-redux'
-import Schemes from './views/schemes'
-import HealthFiles from './views/health_files'
-import HealthFileDetails from './views/health_file_details'
-import { getServices, loadInsurance } from '../hospital/actions'
+import { Link, Route } from 'react-router-dom'
+import Sidenav from '../common/sidenav'
 import Topnav from '../common/topnav'
+import { getServices, loadInsurance } from '../hospital/actions'
+import Patient from './views/patient'
+import Patients from './views/patients'
 
 export class Records extends Component {
 
@@ -33,9 +31,7 @@ export class Records extends Component {
               render={({ match: { url } }) => (
                 <>
                   <Route path={`${url}`} component={Patients} exact />
-                  <Route path={`${url}/patients/:patient_id/insurance`} component={Schemes} />
-                  <Route path={`${url}/patients/:patient_id/health-files`} component={HealthFiles} exact />
-                  <Route path={`${url}/patients/:patient_id/health-files/:pk`} component={HealthFileDetails} />
+                  <Route path={`${url}/patients/:patient_id`} component={Patient} />
                 </>
               )}
             />

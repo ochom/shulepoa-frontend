@@ -1,24 +1,28 @@
 import React, { Component } from 'react'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { connect } from 'react-redux';
-import { searchPatients, addPatient, updatePatient } from '../actions'
+import { getPatients, addPatient, updatePatient } from '../actions'
 import { Link } from 'react-router-dom';
 
 export class Patients extends Component {
   state = {
     patient_search_name: "",
     patient_search_phone: "",
-    patient_search_idno: "",
+    patient_search_id_no: "",
     showModal: false,
     select_patient: null,
 
 
-    fullname: "", id_type: "", idno: "",
+    fullname: "", id_type: "", id_no: "",
     dob: "", sex: "", marital_status: "",
     occupation: "",
     phone: "", postal_address: "", country: "Kenya",
     county: "", sub_county: "", ward_estate: "",
     kin_name: "", kin_phone: "", kin_relationship: "", kin_id: "",
+  }
+
+  componentDidMount() {
+    this.props.getPatients()
   }
 
   onChange = (e) => this.setState({ [e.target.name]: e.target.value });
@@ -27,7 +31,7 @@ export class Patients extends Component {
   onNewPatient = () => {
     this.setState({
       select_patient: null,
-      fullname: "", id_type: "", idno: "",
+      fullname: "", id_type: "", id_no: "",
       dob: "", sex: "", marital_status: "",
       occupation: "",
       phone: "", postal_address: "", country: "Kenya",
@@ -40,7 +44,7 @@ export class Patients extends Component {
   onEditPatient = (data) => {
     this.setState({
       select_patient: data,
-      fullname: data.fullname, id_type: data.id_type, idno: data.idno,
+      fullname: data.fullname, id_type: data.id_type, id_no: data.id_no,
       dob: data.dob, sex: data.sex, marital_status: data.marital_status,
       occupation: data.occupation,
       phone: data.phone, postal_address: data.postal_address, country: data.country,
@@ -54,7 +58,7 @@ export class Patients extends Component {
     e.preventDefault();
     const {
       select_patient,
-      fullname, id_type, idno,
+      fullname, id_type, id_no,
       dob, sex, marital_status,
       occupation,
       phone, postal_address, country,
@@ -63,7 +67,7 @@ export class Patients extends Component {
     } = this.state;
 
     const data = {
-      fullname, id_type, idno,
+      fullname, id_type, id_no,
       dob, sex, marital_status,
       occupation,
       phone, postal_address, country,
@@ -82,7 +86,7 @@ export class Patients extends Component {
   onsearchPatient = () => {
     const data = {
       "fullname": this.state.patient_search_name,
-      "idno": this.state.patient_search_idno,
+      "id_no": this.state.patient_search_id_no,
       "phone": this.state.patient_search_phone,
     }
     this.props.searchPatients(data);
@@ -136,7 +140,7 @@ export class Patients extends Component {
               <div className="form-group col-sm-12 col-md-4">
                 <label>ID NO<sup>*</sup></label>
                 <input className="form-control form-control-sm"
-                  name="idno" onChange={this.onChange} value={this.state.idno} required={true}
+                  name="id_no" onChange={this.onChange} value={this.state.id_no} required={true}
                   placeholder="Identification Number" />
               </div>
               <div className="form-group col-sm-12 col-md-4">
@@ -246,10 +250,8 @@ export class Patients extends Component {
         <td className="text-center">
           <button className="btn btn-sm p-0 border-none text-success"
             onClick={() => this.onEditPatient(patient)}><i className="fa fa-edit"></i> Edit</button>{' | '}
-          <Link to={`/records/patients/${patient.id}/insurance`}
-            className="btn btn-sm p-0 border-none text-primary"><i className="fa fa-briefcase"></i> Schemes</Link>{' | '}
-          <Link to={`/records/patients/${patient.id}/health-files`}
-            className="btn btn-sm p-0 border-none text-primary"><i className="fa fa-user-md"></i> Book</Link>
+          <Link to={`/records/patients/${patient.id}`}
+            className="btn btn-sm p-0 border-none text-primary"><i className="fa fa-user"></i> View profile</Link>
         </td>
       </tr>
     )
@@ -287,8 +289,8 @@ export class Patients extends Component {
                 <div className="form-group col-3">
                   <label>ID Number</label>
                   <input className="form-control form-control-sm"
-                    name="patient_search_idno"
-                    value={this.state.patient_search_idno}
+                    name="patient_search_id_no"
+                    value={this.state.patient_search_id_no}
                     onChange={this.onChange}
                     placeholder="Enter ID number" />
                 </div>
@@ -326,4 +328,4 @@ const mapStateToProps = state => ({
   common: state.common,
 });
 
-export default connect(mapStateToProps, { searchPatients, addPatient, updatePatient })(Patients);
+export default connect(mapStateToProps, { getPatients, addPatient, updatePatient })(Patients);

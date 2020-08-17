@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import CanvasJSReact from '../../lib/canvasjs.react';
-import { loadDashboardData } from './actions';
 import Sidenav from './sidenav';
 import Topnav from './topnav';
 
@@ -11,8 +10,8 @@ var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 export class Dashboard extends Component {
   componentDidMount() {
-    this.props.loadDashboardData();
   }
+
   render() {
     const top_infections = {
       exportEnabled: true,
@@ -117,5 +116,4 @@ export default connect(
     auth: state.auth,
     common: state.common,
   }),
-  { loadDashboardData }
 )(Dashboard);

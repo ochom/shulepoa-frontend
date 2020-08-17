@@ -1,5 +1,4 @@
 import Axios from "axios";
-import { tokenConfig } from "../auth/actions";
 
 export const API_PATH =
   process.env.NODE_ENV === 'development' ?
@@ -18,19 +17,9 @@ export const commonTypes = {
 };
 
 
-export const loadDashboardData = () => (dispatch, getState) => {
+export const loadICD10 = () => (dispatch) => {
   dispatch({ type: commonTypes.PROCESSING })
-  Axios.get(`${API_PATH}registration/dashboard/data/`, tokenConfig(getState))
-    .then(res => {
-      dispatch({ type: commonTypes.DASHBOARD_DATA, payload: res.data })
-    }).catch(err => {
-      dispatch({ type: commonTypes.DONE, })
-    })
-}
-
-export const loadICD10 = () => (dispatch, getState) => {
-  dispatch({ type: commonTypes.PROCESSING })
-  Axios.get(`https://gist.githubusercontent.com/cryocaustik/b86de96e66489ada97c25fc25f755de0/raw/b31a549638a609004e9a45f8933c3f37bdf4c27d/icd10_codes.json`, tokenConfig(getState))
+  Axios.get(`https://gist.githubusercontent.com/cryocaustik/b86de96e66489ada97c25fc25f755de0/raw/b31a549638a609004e9a45f8933c3f37bdf4c27d/icd10_codes.json`)
     .then(res => {
       dispatch({ type: commonTypes.LOAD_ICD10, payload: res.data })
     }).catch(err => {

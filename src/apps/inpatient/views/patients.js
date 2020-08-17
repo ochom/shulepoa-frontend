@@ -8,7 +8,7 @@ export class Wards extends Component {
     showModal: false,
     selected_ward: null,
     search_name: "",
-    search_idno: "",
+    search_id_no: "",
     search_ward: "",
     search_Result: [],
   }
@@ -18,10 +18,10 @@ export class Wards extends Component {
   onChange = (e) => this.setState({ [e.target.name]: e.target.value });
 
   onsearchPatient = () => {
-    const { search_name, search_idno, search_ward } = this.state
+    const { search_name, search_id_no, search_ward } = this.state
     const result = this.props.inpatient.inpatient_files.filter(file =>
       ((file.patient_details.fullname.toLowerCase().includes(search_name.toLocaleLowerCase()) ||
-        file.patient_details.idno.includes(search_idno) ||
+        file.patient_details.id_no.includes(search_id_no) ||
         file.ward === parseInt(search_ward)
       ))
     )
@@ -71,8 +71,8 @@ export class Wards extends Component {
               <div className="form-group col-3">
                 <label>ID Number</label>
                 <input className="form-control form-control-sm"
-                  name="search_idno"
-                  value={this.state.search_idno}
+                  name="search_id_no"
+                  value={this.state.search_id_no}
                   onChange={this.onChange}
                   placeholder="Enter ID number" />
               </div>

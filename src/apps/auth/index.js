@@ -7,7 +7,7 @@ import { logout } from './actions'
 
 export class Auth extends Component {
   render() {
-    const { isAuthenticated, user } = this.props.auth;
+    const { isAuthenticated } = this.props.auth;
     const { location } = this.props;
     const { state } = location;
     if (isAuthenticated) {

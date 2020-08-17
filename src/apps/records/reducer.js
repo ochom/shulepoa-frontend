@@ -2,6 +2,7 @@ import { recordTypes } from './actions.js'
 
 const initialState = {
   patients_list: [],
+  patient: null,
   patient_insurance_list: [],
   patient_health_files: [],
 };
@@ -13,6 +14,13 @@ export default function (state = initialState, action) {
         ...state,
         patients_list: action.payload,
       };
+
+    case recordTypes.GET_PATIENT:
+      return {
+        ...state,
+        patient: action.payload,
+      };
+
     case recordTypes.ADD_PATIENT:
       return {
         ...state,

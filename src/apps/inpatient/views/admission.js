@@ -7,7 +7,7 @@ export class Patients extends Component {
   state = {
     patient_search_name: "",
     patient_search_phone: "",
-    patient_search_idno: "",
+    patient_search_id_no: "",
   }
 
   onChange = (e) => this.setState({ [e.target.name]: e.target.value });
@@ -16,7 +16,7 @@ export class Patients extends Component {
   onsearchPatient = () => {
     const data = {
       "fullname": this.state.patient_search_name,
-      "idno": this.state.patient_search_idno,
+      "id_no": this.state.patient_search_id_no,
       "phone": this.state.patient_search_phone,
     }
     this.props.searchPatients(data);
@@ -72,8 +72,8 @@ export class Patients extends Component {
               <div className="form-group col-3">
                 <label>ID Number</label>
                 <input className="form-control form-control-sm"
-                  name="patient_search_idno"
-                  value={this.state.patient_search_idno}
+                  name="patient_search_id_no"
+                  value={this.state.patient_search_id_no}
                   onChange={this.onChange}
                   placeholder="Enter ID number" />
               </div>

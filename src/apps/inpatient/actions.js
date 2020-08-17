@@ -336,7 +336,7 @@ export const deleteWard = (id) => (dispatch, getState) => {
 
 
 // Patient admission
-export const getAdmiedtPatient = (name, idno, ward) => (dispatch, getState) => {
+export const getAdmiedtPatient = (name, id_no, ward) => (dispatch, getState) => {
   dispatch({ type: commonTypes.PROCESSING })
   Axios.get(`${API_PATH}inpatient/admission/`, tokenConfig(getState))
     .then(res => {

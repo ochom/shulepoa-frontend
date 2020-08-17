@@ -6,9 +6,8 @@ import { getPatient, loadScheme, addScheme, updateScheme } from '../actions'
 export class Schemes extends Component {
   constructor(props) {
     super(props);
-    const { match: { params } } = this.props;
     this.state = {
-      patient: params.patient_id,
+      patient: props.patient_id,
       showModal: false,
       select_scheme: null,
       company: "",
@@ -66,7 +65,6 @@ export class Schemes extends Component {
   }
 
   render() {
-    const { patients_list } = this.props.patients;
     const { insurance_list } = this.props;
     const scheme_details =
       <Modal isOpen={this.state.showModal} size="md">
@@ -106,43 +104,35 @@ export class Schemes extends Component {
         </form>
       </Modal >
 
-    const scheme_filter_list = this.props.patients.patient_insurance_list.map((scheme, index) =>
-      <tr key={index}>
-        <td>{index + 1}</td>
-        <td>{insurance_list.length > 0 ? insurance_list.filter(company => company.id === scheme.company)[0].company_name : ""}</td>
-        <td>{scheme.card_number}</td>
-        <td className="text-center">
-          <button className="btn btn-sm p-0 border-none text-success"
-            onClick={() => this.onEditScheme(scheme)}><i className="fa fa-edit"></i> Edit</button>{' | '}
-          <button className="btn btn-sm p-0 border-none text-danger">
-            <i className="fa fa-trash"></i> Delete</button>
-        </td>
-      </tr>
-    )
     return (
       <>
         {scheme_details}
-        <div className="col-md-9 col-lg-8 mx-auto mt-3">
-          <div className="card">
-            <div className="card-header py-1 px-3">
-              <div className="py-1 px-2"><i className="fa fa-briefcase"></i> Manage patient's schemes</div>
-              <button
-                className="btn btn-sm"
-                onClick={this.onNewScheme}><i className="fa fa-plus-circle mr-2"></i> Add Patient Scheme
+        <div className="card">
+          <div className="card-header py-1 px-3">
+            <div className="py-1 px-2"> Patient Schemes</div>
+            <button
+              className="btn btn-sm"
+              onClick={this.onNewScheme}><i className="fa fa-plus-circle mr-2"></i> Add Insurance
               </button>
-            </div>
-            <div className="card-body p-0 pb-2">
-              <h5 className="py-2 px-3">{patients_list.length > 0 ? patients_list[0].fullname : ""}</h5>
-            </div>
           </div>
-          <div className="card card-body mt-4 p-0">
+          <div className="card-body p-0 pb-2">
             <table className="table table-sm table-striped table-bordered table-responsive-sm m-0">
               <caption className="px-2"><i>Patient's Insurance schemes</i></caption>
               <thead className="">
-                <tr><th>#</th><th>Company name</th><th>Card number</th><th className="text-center">Action</th></tr>
+                <tr><th>#</th><th>Insurance scheme</th><th className="text-center">Action</th></tr>
               </thead>
               <tbody>
-                {scheme_filter_list}
+                {this.props.patients.patient_insurance_list.map((scheme, index) =>
+                  <tr key={index}>
+                    <td>{index + 1}</td>
+                    <td>{insurance_list.length > 0 ? insurance_list.filter(company => company.id === scheme.company)[0].company_name : ""}</td>
+                    <td className="text-center">
+                      <button className="btn btn-sm p-0 border-none text-success"
+                        onClick={() => this.onEditScheme(scheme)}><i className="fa fa-edit"></i> Edit</button>{' | '}
+                      <button className="btn btn-sm p-0 border-none text-danger">
+                        <i className="fa fa-trash"></i> Delete</button>
+                    </td>
+                  </tr>)}
               </tbody>
             </table>
           </div>

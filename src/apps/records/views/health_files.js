@@ -1,18 +1,16 @@
-import React, { Component } from 'react'
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getPatient, getPatientHealthFiles, addHealthFile, loadScheme } from '../actions'
-import { Link } from 'react-router-dom';
+import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
+import { addHealthFile, getPatient, getPatientHealthFiles, loadScheme } from '../actions';
 
 export class HealthFiles extends Component {
   constructor(props) {
     super(props);
-    const { match: { params } } = this.props;
     this.state = {
       isSearchingService: false,
       filtered_service_list: [],
 
-      patient: params.patient_id,
+      patient: props.patient_id,
       selected_Service_id: "",
       selected_service_name: "",
       treatment_scheme: "",
@@ -22,9 +20,7 @@ export class HealthFiles extends Component {
   }
 
   componentDidMount() {
-    this.props.getPatient(this.state.patient);
     this.props.getPatientHealthFiles(this.state.patient);
-    this.props.loadScheme(this.state.patient);
   }
 
   onChange = (e) => {
@@ -100,7 +96,6 @@ export class HealthFiles extends Component {
           <ModalBody>
             <div className="row mx-auto">
               <div className="form-group col-12">
-                <i className="fa fa-search custom-text-secondary px-3" style={{ position: "absolute", paddingTop: "1vw" }}></i>
                 <input className="form-control pl-5" onChange={this.onSearchService}
                   placeholder="Search..." />
                 <div style={{ position: "relative", display: this.state.isSearchingService ? "block" : "none" }}>
@@ -157,45 +152,36 @@ export class HealthFiles extends Component {
       </Modal >
 
 
-    const health_files_list = this.props.patients.patient_health_files.map((_file, index) =>
-      <tr key={index}>
-        <td>{index + 1}</td>
-        <td>{new Date(_file.created_at).toLocaleString("en-UK")}</td>
-        <td>{_file.id}</td>
-        <td>{_file.is_open ?
-          <span className={`p-1 px-2 rounded bg-success text-light`}>Opened</span> :
-          <span className={`p-1 rounded bg-primary text-light`}>Closed</span>}
-        </td>
-        <td className="text-center">
-          <Link to={`/records/patients/${this.state.patient}/health-files/${_file.id}`}
-            className="btn btn-sm p-0 border-none cu-text-primary"><i className="fa fa-eye"></i> Preview</Link>
-        </td>
-      </tr>
-    )
+
     return (
       <>
         {book_appointment_view}
-        <div className="col-md-8 col-lg-7 mx-auto mt-3">
-          <div className="card">
-            <div className="card-header py-1 px-3">
-              <div className="py-1 px-2"><i className="fa fa-briefcase"></i> Health Files</div>
-              <button
-                className="btn btn-sm"
-                onClick={this.onNewHealthFile}><i className="fa fa-plus-circle mr-2"></i> Create Health File
+        <div className="card">
+          <div className="card-header py-1 px-3">
+            <div className="py-1 px-2">Health Files</div>
+            <button
+              className="btn btn-sm"
+              onClick={this.onNewHealthFile}><i className="fa fa-plus-circle mr-2"></i> Create Health File
               </button>
-            </div>
-            <div className="card-body p-0 pb-2">
-              <h5 className="py-2 px-3">{patients_list.length > 0 ? patients_list[0].fullname : ""}</h5>
-            </div>
           </div>
-          <div className="card card-body mt-4 p-0">
+          <div className="card-body p-0 pb-2">
             <table className="table table-sm table-striped table-bordered table-responsive-sm m-0">
               <caption className="px-2"><i>Patient health files</i></caption>
               <thead className="">
-                <tr><th>#</th><th>Date</th><th>File</th><th>Status</th><th className="text-center">Action</th></tr>
+                <tr><th>#</th><th>Created</th><th>File</th><th>Status</th></tr>
               </thead>
               <tbody>
-                {health_files_list}
+                {this.props.patients.patient_health_files.map((_file, index) =>
+                  <tr key={index}>
+                    <td>{index + 1}</td>
+                    <td>{new Date(_file.created).toLocaleString("en-UK")}</td>
+                    <td>{_file.id}</td>
+                    <td>{_file.is_open ?
+                      <span className={`p-1 px-2 text-success`}>Active</span> :
+                      <span className={`p-1 text-primary`}>Closed</span>}
+                    </td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>

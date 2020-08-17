@@ -14,8 +14,6 @@ export class Service extends Component {
     department: "",
     description: "",
     price: "",
-    rebate: "",
-    is_insured: true,
   }
 
   componentDidMount() {
@@ -38,8 +36,6 @@ export class Service extends Component {
       department: "",
       description: "",
       price: "",
-      rebate: "",
-      is_insured: true,
     })
   }
 
@@ -51,8 +47,6 @@ export class Service extends Component {
       department: data.department,
       description: data.description,
       price: data.price,
-      rebate: data.rebate,
-      is_insured: data.is_insured,
     })
   }
 
@@ -64,8 +58,6 @@ export class Service extends Component {
       department,
       description,
       price,
-      rebate,
-      is_insured
     } = this.state;
 
     const data = {
@@ -73,8 +65,6 @@ export class Service extends Component {
       department,
       description,
       price,
-      rebate,
-      is_insured
     }
     if (select_service) {
       this.props.updateService(select_service.id, data);
@@ -116,7 +106,7 @@ export class Service extends Component {
                   name="name" onChange={this.onChange} value={this.state.name} required={true}
                   placeholder="Service full name" />
               </div>
-              <div className="form-group col-12">
+              <div className="form-group col-6">
                 <label>Department<sup>*</sup></label>
                 <select className="form-control form-control-sm"
                   name="department" onChange={this.onChange}
@@ -130,22 +120,6 @@ export class Service extends Component {
                 <input className="form-control form-control-sm"
                   name="price" onChange={this.onChange} value={this.state.price} required={true}
                   placeholder="Service price" />
-              </div>
-              <div className="form-group col-6">
-                <label>Rebate (NHIF)<sup>*</sup></label>
-                <input className="form-control form-control-sm"
-                  name="rebate" onChange={this.onChange} value={this.state.rebate} required={true}
-                  placeholder="Rebate amount" />
-              </div>
-
-              <div className="form-group col-12">
-                <label>Is this service paid by insurance ?<sup>*</sup></label>
-                <select className="form-control form-control-sm"
-                  name="is_insured" onChange={this.onChange}
-                  value={this.state.is_insured} required={true} >
-                  <option value={false}>No</option>
-                  <option value={true}>Yes</option>
-                </select>
               </div>
               <div className="form-group col-12">
                 <label>Other descriptions</label>
@@ -171,8 +145,6 @@ export class Service extends Component {
         <td>{service.name}</td>
         <td>{DEPARTMENTS[service.department]}</td>
         <td>{service.price}</td>
-        <td>{service.rebate}</td>
-        <td>{service.is_insured ? 'Yes' : 'No'}</td>
         <td className="text-center">
           <button className="btn btn-sm p-0 border-none text-success"
             onClick={() => this.onEditService(service)}><i className="fa fa-edit"></i> Edit</button>{' | '}
@@ -225,7 +197,7 @@ export class Service extends Component {
             <table className="table table-sm table-striped table-bordered table-responsive-sm m-0">
               <caption className="px-2"><i>Recent services | Search results</i></caption>
               <thead className="cu-bg-secondary">
-                <tr><th>#</th><th>Name</th><th>Department</th><th>Price</th><th>Rebate</th><th>Scheme</th><th className="text-center">Action</th></tr>
+                <tr><th>#</th><th>Name</th><th>Department</th><th>Price</th><th className="text-center">Action</th></tr>
               </thead>
               <tbody>
                 {service_filter_list}
