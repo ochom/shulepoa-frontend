@@ -85,7 +85,7 @@ export class HealthFiles extends Component {
   }
 
   render() {
-    const { patients_list, patient_insurance_list } = this.props.patients;
+    const { patient_insurance_list } = this.props.patients;
     const { TREATMENT_SCHEMES } = this.props.common.CONSTANTS;
     const { insurance_list } = this.props;
 

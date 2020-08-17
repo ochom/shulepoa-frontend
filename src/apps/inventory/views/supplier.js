@@ -132,19 +132,6 @@ export class Supplier extends Component {
         </form>
       </Modal >
 
-    const supplier_filter_list = this.props.supplier_list.map((supplier, index) =>
-      <tr key={index}>
-        <td>{index + 1}</td>
-        <td>{supplier.name}</td>
-        <td>{supplier.email}</td>
-        <td>{supplier.phone}</td>
-        <td className="text-center">
-          <button className="btn btn-sm p-0 border-none text-success"
-            onClick={() => this.onEditSupplier(supplier)}><i className="fa fa-edit"></i> Edit</button>{' | '}
-          <button className="btn btn-sm p-0 border-none text-danger"><i className="fa fa-trash"></i> Delete</button>
-        </td>
-      </tr>
-    )
     return (
       <>
         {supplier_details}
@@ -157,43 +144,29 @@ export class Supplier extends Component {
                 onClick={this.onNewSupplier}><i className="fa fa-plus-circle mr-2"></i> Add Supplier
               </button>
             </div>
-            <div className="card-body p-0 pb-2">
-              <div className="row col-12 mx-auto mt-3">
-                <div className="form-group  col-3">
-                  <label>Supplier name</label>
-                  <input className="form-control form-control-sm"
-                    name="supplier_search_name"
-                    value={this.state.supplier_search_name}
-                    onChange={this.onChange}
-                    placeholder="Enter name" />
-                </div>
-                <div className="form-group  col-3">
-                  <label>Phone number</label>
-                  <input className="form-control form-control-sm"
-                    name="supplier_search_phone"
-                    value={this.state.supplier_search_phone}
-                    onChange={this.onChange}
-                    placeholder="Enter phone number" />
-                </div>
-              </div>
-              <div className="row col-12 mx-auto">
-                <button
-                  className="btn btn-sm btn-outline-success cu-text-primary ml-4"
-                  onClick={this.onsearchSupplier}
-                  disabled={this.props.common.isProcessing}><i className="fa fa-search mr-2"></i> Find Supplier</button>
-              </div>
+            <div className="card-body p-0">
+              <table className="table table-sm table-striped table-bordered">
+                <caption className="px-2"><i>Recent suppliers | Search results</i></caption>
+                <thead className="cu-text-primary">
+                  <tr><th>#</th><th>Name</th><th>Email</th><th>Mobile</th><th className="text-center">Action</th></tr>
+                </thead>
+                <tbody>
+                  {this.props.suppliers.map((supplier, index) =>
+                    <tr key={index}>
+                      <td>{index + 1}</td>
+                      <td>{supplier.name}</td>
+                      <td>{supplier.email}</td>
+                      <td>{supplier.phone}</td>
+                      <td className="text-center">
+                        <button className="btn btn-sm p-0 border-none text-success"
+                          onClick={() => this.onEditSupplier(supplier)}><i className="fa fa-edit"></i> Edit</button>{' | '}
+                        <button className="btn btn-sm p-0 border-none text-danger"><i className="fa fa-trash"></i> Delete</button>
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
             </div>
-          </div>
-          <div className="card card-body mt-4 p-0">
-            <table className="table table-sm table-striped table-bordered table-responsive-sm m-0">
-              <caption className="px-2"><i>Recent suppliers | Search results</i></caption>
-              <thead className="cu-bg-secondary">
-                <tr><th>#</th><th>Name</th><th>Email</th><th>Mobile</th><th className="text-center">Action</th></tr>
-              </thead>
-              <tbody>
-                {supplier_filter_list}
-              </tbody>
-            </table>
           </div>
         </div>
       </>
@@ -202,7 +175,7 @@ export class Supplier extends Component {
 }
 
 const mapStateToProps = state => ({
-  supplier_list: state.hospital.supplier_list,
+  suppliers: state.inventory.suppliers,
   common: state.common,
 });
 

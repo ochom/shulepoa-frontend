@@ -55,7 +55,7 @@ export class App extends Component {
               <PrivateRoute path="/radiology" component={radiology} />
               <PrivateRoute path="/inpatient" component={inpatient} />
               <AdminRoute path="/revenue" component={Revenue} />
-              <AdminRoute path="/inventory" component={Inventory} />
+              <PrivateRoute path="/inventory" component={Inventory} />
               <Route exact path="/public/page" component={public_page} />
               <PrivateRoute path="/profile" component={Profile} />
               <PrivateRoute path="/change-password" component={() => <Profile change_password={true} />} />

@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
-import { getRequisitions, updateRequisition } from '../actions'
+import { getRequisitions } from '../actions'
 
-export class Requsitions extends Component {
+export class PurchaseOrders extends Component {
   state = {
     showModal: false,
     selected_requisition: null,
@@ -87,7 +87,11 @@ export class Requsitions extends Component {
         {requisition_modal_view}
         <div className="card mt-3">
           <div className="card-header py-1 px-3">
-            <div className="py-1 px-2">Item Requisitions</div>
+            <div className="py-1 px-2">Active Purchase Orders</div>
+            <button
+              className="btn btn-sm "
+              onClick={this.onNewProduct}><i className="fa fa-plus-circle mr-2"></i> Create purchase order
+              </button>
           </div>
           <div className="card-body p-0 pb-2">
             <table className="table table-sm table-striped table-bordered">
@@ -96,14 +100,13 @@ export class Requsitions extends Component {
                   <th>#</th>
                   <th>Date</th>
                   <th>Item</th>
-                  <th>Requesting Store</th>
-                  <th>Quantity</th>
-                  <th>Required By</th>
-                  <th className="text-center">Action</th>
+                  <th>Supplier</th>
+                  <th>Items</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
-                {requisitions.filter(req => req.is_dispatched === false).map((requisition, index) =>
+                {requisitions.filter(req => req.is_dispatched === true).map((requisition, index) =>
                   <tr key={index}>
                     <td>{index + 1}</td>
                     <td>{new Date(requisition.created).toLocaleDateString('en-uk')}</td>
@@ -111,9 +114,6 @@ export class Requsitions extends Component {
                     <td>{stores.length > 0 ? stores.filter(store => store.id === requisition.store_id)[0].name : ""}</td>
                     <td>{requisition.quantity_required}</td>
                     <td>{new Date(requisition.required_by).toLocaleDateString('en-uk')}</td>
-                    <td className="text-center">
-                      <button className="btn btn-sm p-0 border-none text-primary"
-                        onClick={() => this.onNewDispatch(requisition)}><i className="fa fa-truck"></i> Dispatch</button></td>
                   </tr>
                 )}
               </tbody>
@@ -127,4 +127,4 @@ export class Requsitions extends Component {
 
 export default connect(state => ({
   inventory: state.inventory,
-}), { getRequisitions, updateRequisition })(Requsitions)
+}), { getRequisitions })(PurchaseOrders)

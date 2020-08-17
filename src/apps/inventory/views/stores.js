@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
 import { addStore, deleteStore, getStores, updateStore } from '../actions'
+import Units from './units'
 
 export class Stores extends Component {
   state = {
@@ -85,41 +86,44 @@ export class Stores extends Component {
       </Modal >
 
     return (
-      <div className="col-md-10 mx-auto mt-3">
-        {store_modal_view}
-        <div className="card mt-3">
-          <div className="card-header py-1 px-3">
-            <div className="py-1 px-2">Store Management</div>
-            <button
-              className="btn btn-sm "
-              onClick={this.onNewStore}><i className="fa fa-plus-circle mr-2"></i> Add Store
+      <div className="row col-12 mx-auto  mt-3">
+        <div className="col-md-7">
+          {store_modal_view}
+          <div className="card">
+            <div className="card-header py-1 px-3">
+              <div className="py-1 px-2">Store Management</div>
+              <button
+                className="btn btn-sm "
+                onClick={this.onNewStore}><i className="fa fa-plus-circle mr-2"></i> Add Store
               </button>
-          </div>
-          <div className="card-body p-0 pb-2">
-            <table className="table table-sm table-striped table-bordered">
-              <thead className="cu-text-primary">
-                <tr>
-                  <th>#</th>
-                  <th>Store name</th>
-                  <th>Store Description</th>
-                  <th className="text-center">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {stores.map((store, index) =>
-                  <tr key={index}>
-                    <td>{index + 1}</td>
-                    <td>{store.name}</td>
-                    <td>{store.description}</td>
-                    <td className="text-center">
-                      <button className="btn btn-sm p-0 border-none text-success"
-                        onClick={() => this.onEditStore(store)}><i className="fa fa-edit"></i> Edit</button></td>
+            </div>
+            <div className="card-body p-0 pb-2">
+              <table className="table table-sm table-striped table-bordered">
+                <thead className="cu-text-primary">
+                  <tr>
+                    <th>#</th>
+                    <th>Store name</th>
+                    <th>Store Description</th>
+                    <th className="text-center">Action</th>
                   </tr>
-                )}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {stores.map((store, index) =>
+                    <tr key={index}>
+                      <td>{index + 1}</td>
+                      <td>{store.name}</td>
+                      <td>{store.description}</td>
+                      <td className="text-center">
+                        <button className="btn btn-sm p-0 border-none text-success"
+                          onClick={() => this.onEditStore(store)}><i className="fa fa-edit"></i> Edit</button></td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
+        <Units />
       </div>
     )
   }

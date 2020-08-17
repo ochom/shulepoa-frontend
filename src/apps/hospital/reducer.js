@@ -24,28 +24,6 @@ export default function (state = initialState, action) {
       };
 
 
-    case hospitalTypes.GET_SUPPLIER:
-      return {
-        ...state,
-        supplier_list: action.payload,
-      };
-    case hospitalTypes.ADD_SUPPLIER:
-      return {
-        ...state,
-        supplier_list: [...state.supplier_list, action.payload,],
-      };
-    case hospitalTypes.UPDATE_SUPPLIER:
-      return {
-        ...state,
-        supplier_list: [action.payload,],
-      };
-    case hospitalTypes.DELETE_SUPPLIER:
-      return {
-        ...state,
-        supplier_list: state.supplier_list.filter((supplier) => supplier.id !== action.payload),
-      };
-
-
     case hospitalTypes.GET_INSURANCE:
       return {
         ...state,
