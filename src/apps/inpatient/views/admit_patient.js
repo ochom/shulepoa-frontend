@@ -21,7 +21,7 @@ export class Admission extends Component {
 
   onSearch = (e) => {
     const search = e.target.value;
-    var result = this.props.service_list.filter(service => (
+    var result = this.props.services.filter(service => (
       service.name.toLowerCase().includes(search.toLowerCase()) && service.department === 6)
     ).slice(0, 20);
     this.setState({ search_result: result });
@@ -64,7 +64,7 @@ export class Admission extends Component {
       return (<Redirect to="/inpatient/admission" />)
     }
 
-    const service_list_view =
+    const services_view =
       <Modal isOpen={this.state.showModal} size="md">
         <ModalHeader toggle={this.toggleModal}><i className="fa fa-plus-circle"></i> Add charges</ModalHeader>
         <ModalBody>
@@ -102,7 +102,7 @@ export class Admission extends Component {
 
     return (
       <div>
-        {service_list_view}
+        {services_view}
         <div className="row col-12 justify-content-center mx-auto mt-3">
           <div className="col-3">
             <div className="patient_profile p-0 border border-light rounded ">
@@ -265,7 +265,7 @@ export class Admission extends Component {
 
 export default connect(state => ({
   inpatient: state.inpatient,
-  service_list: state.hospital.service_list,
+  services: state.hospital.services,
   selected_patient: state.inpatient.selected_patient,
   common: state.common,
 }), { admitPatient })(Admission)

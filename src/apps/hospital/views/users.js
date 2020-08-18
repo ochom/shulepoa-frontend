@@ -129,7 +129,7 @@ export class Users extends Component {
         </form>
       </Modal >
 
-    const users_filter_list = this.props.users_list.map((user, index) =>
+    const users_filter_list = this.props.users.map((user, index) =>
       <tr key={index}>
         <td>{index + 1}</td>
         <td>{user.user_profile ? user.user_profile.fullname : user.username}</td>
@@ -201,7 +201,7 @@ export class Users extends Component {
 }
 
 const mapStateToProps = state => ({
-  users_list: state.hospital.users_list,
+  users: state.hospital.users,
   common: state.common,
 });
 

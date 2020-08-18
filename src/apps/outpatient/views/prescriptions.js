@@ -21,7 +21,7 @@ export class Prescription extends Component {
 
   onSearch = (e) => {
     const search_name = e.target.value;
-    const result = this.props.service_list.filter(service =>
+    const result = this.props.services.filter(service =>
       (service.name.toLowerCase().includes(search_name.toLowerCase()) && service.department === 5)
     ).slice(0, 15);
     this.setState({ search_list: result });
@@ -217,5 +217,5 @@ export default connect(state => ({
   health_file: state.outpatient.selected_health_file,
   prescriptions: state.outpatient.prescriptions,
   common: state.common,
-  service_list: state.hospital.service_list,
+  services: state.hospital.services,
 }), { getPrescriptions, addPrescription, deletePrescription })(Prescription)

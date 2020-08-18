@@ -12,7 +12,7 @@ export class HistoryDetails extends Component {
   }
 
   render() {
-    const { service_list } = this.props;
+    const { services } = this.props;
     const { reorder } = this.state;
     return (
       <>
@@ -50,7 +50,7 @@ export class HistoryDetails extends Component {
                   <ul className="list-group">
                     <li className="list-group-item">
                       <span className="m-0">Product:</span>
-                      <span style={{ float: "right" }}>{service_list.filter(service => service.id === reorder.service)[0].name}</span>
+                      <span style={{ float: "right" }}>{services.filter(service => service.id === reorder.service)[0].name}</span>
                     </li>
                     <li className="list-group-item">
                       <span className="m-0">Date:</span>
@@ -90,6 +90,6 @@ export class HistoryDetails extends Component {
 
 export default connect(state => ({
   reorder_history: state.pharmacy.reorder_history,
-  service_list: state.hospital.service_list,
+  services: state.hospital.services,
   constants: state.common.CONSTANTS,
 }))(HistoryDetails)

@@ -1,32 +1,32 @@
 import React, { Component } from 'react'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { connect } from 'react-redux';
-import { getPatient, loadScheme, addScheme, updateScheme } from '../actions'
+import { getPatient, getSchemes, addScheme, updateScheme } from '../actions'
 
 export class Schemes extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      patient: props.patient_id,
       showModal: false,
       select_scheme: null,
-      company: "",
+      patient_id: props.patient_id,
+      company_id: "",
       card_number: "",
     };
   }
 
   componentDidMount() {
-    this.props.getPatient(this.state.patient);
-    this.props.loadScheme(this.state.patient);
+    this.props.getSchemes(this.props.patient_id);
   }
 
   onChange = (e) => this.setState({ [e.target.name]: e.target.value });
   toggleModal = () => this.setState({ showModal: !this.state.showModal });
+
   onNewScheme = () =>
     this.setState({
       showModal: !this.state.showModal,
       select_scheme: null,
-      company: "",
+      company_id: "",
       card_number: "",
     })
 
@@ -43,29 +43,27 @@ export class Schemes extends Component {
     e.preventDefault();
     const {
       select_scheme,
-      patient,
-      company,
+      patient_id,
+      company_id,
       card_number,
     } = this.state;
 
     const data = {
-      patient,
-      company,
+      patient_id,
+      company_id,
       card_number,
     }
     if (select_scheme) {
-      this.props.updateScheme(patient, select_scheme.id, data);
+      this.props.updateScheme(select_scheme.id, data);
     } else {
-      this.props.addScheme(patient, data)
+      this.props.addScheme(data)
     }
-
-    this.setState({
-      showModal: !this.state.showModal,
-    })
+    this.toggleModal()
   }
 
   render() {
-    const { insurance_list } = this.props;
+
+    const { insurances, records: { schemes } } = this.props;
     const scheme_details =
       <Modal isOpen={this.state.showModal} size="md">
         <ModalHeader toggle={this.toggleModal}>
@@ -81,9 +79,9 @@ export class Schemes extends Component {
                 <label>Insurance Company/Scheme<sup>*</sup>
                 </label>
                 <select className="form-control form-control-sm"
-                  name="company" onChange={this.onChange} value={this.state.company} required={true}>
+                  name="company_id" onChange={this.onChange} value={this.state.company_id} required={true}>
                   <option value="">Select</option>
-                  {insurance_list.map((insurance, index) => <option key={index} value={insurance.id}>{insurance.company_name}</option>)}
+                  {insurances.map((insurance, index) => <option key={index} value={insurance.id}>{insurance.company_name}</option>)}
                 </select>
               </div>
               <div className="form-group col-12">
@@ -116,21 +114,21 @@ export class Schemes extends Component {
               </button>
           </div>
           <div className="card-body p-0 pb-2">
-            <table className="table table-sm table-striped table-bordered table-responsive-sm m-0">
-              <caption className="px-2"><i>Patient's Insurance schemes</i></caption>
-              <thead className="">
-                <tr><th>#</th><th>Insurance scheme</th><th className="text-center">Action</th></tr>
+            <table className="table table-sm table-striped table-bordered">
+              <thead className="cu-bg-secondary">
+                <tr><th>#</th><th>Scheme</th><th>Card</th><th className="text-center">Action</th></tr>
               </thead>
               <tbody>
-                {this.props.patients.patient_insurance_list.map((scheme, index) =>
+                {schemes.filter(sch => sch.id === parseInt(this.state.patient_id)).map((scheme, index) =>
                   <tr key={index}>
                     <td>{index + 1}</td>
-                    <td>{insurance_list.length > 0 ? insurance_list.filter(company => company.id === scheme.company)[0].company_name : ""}</td>
+                    <td>{insurances.length > 0 ? insurances.find(company => company.id === scheme.company_id).company_name : ""}</td>
+                    <td>{scheme.card_number}</td>
                     <td className="text-center">
                       <button className="btn btn-sm p-0 border-none text-success"
-                        onClick={() => this.onEditScheme(scheme)}><i className="fa fa-edit"></i> Edit</button>{' | '}
+                        onClick={() => this.onEditScheme(scheme)}><i className="fa fa-edit"></i></button>{' | '}
                       <button className="btn btn-sm p-0 border-none text-danger">
-                        <i className="fa fa-trash"></i> Delete</button>
+                        <i className="fa fa-trash"></i></button>
                     </td>
                   </tr>)}
               </tbody>
@@ -143,10 +141,10 @@ export class Schemes extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  patients: state.records,
-  insurance_list: state.hospital.insurance_list,
+  records: state.records,
+  insurances: state.hospital.insurances,
 });
 
 export default connect(mapStateToProps,
-  { getPatient, loadScheme, addScheme, updateScheme }
+  { getPatient, getSchemes, addScheme, updateScheme }
 )(Schemes);

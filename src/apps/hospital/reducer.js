@@ -4,9 +4,10 @@ import {
 
 const initialState = {
   hospital_profile: null,
-  insurance_list: [],
-  service_list: [],
-  users_list: [],
+  clinics: [],
+  insurances: [],
+  services: [],
+  users: [],
 };
 
 export default function (state = initialState, action) {
@@ -16,61 +17,31 @@ export default function (state = initialState, action) {
         ...state,
         hospital_profile: action.payload[0],
       };
-    case hospitalTypes.ADD_HOSPITAL:
-    case hospitalTypes.UPDATE_HOSPITAL:
+
+    case hospitalTypes.GET_CLINICS:
       return {
         ...state,
-        hospital_profile: action.payload,
+        clinics: action.payload,
+      };
+
+    case hospitalTypes.GET_INSURANCES:
+      return {
+        ...state,
+        insurances: action.payload,
       };
 
 
-    case hospitalTypes.GET_INSURANCE:
+    case hospitalTypes.GET_SERVICES:
       return {
         ...state,
-        insurance_list: action.payload,
-      };
-    case hospitalTypes.ADD_INSURANCE:
-      return {
-        ...state,
-        insurance_list: [...state.insurance_list, action.payload,],
-      };
-    case hospitalTypes.UPDATE_INSURANCE:
-      return {
-        ...state,
-        insurance_list: [action.payload,],
-      };
-    case hospitalTypes.DELETE_INSURANCE:
-      return {
-        ...state,
-        insurance_list: state.insurance_list.filter((insurance) => insurance.id !== action.payload),
+        services: action.payload,
       };
 
-
-    case hospitalTypes.GET_SERVICE:
-      return {
-        ...state,
-        service_list: action.payload,
-      };
-    case hospitalTypes.ADD_SERVICE:
-      return {
-        ...state,
-        service_list: [...state.service_list, action.payload,],
-      };
-    case hospitalTypes.UPDATE_SERVICE:
-      return {
-        ...state,
-        service_list: [action.payload,],
-      };
-    case hospitalTypes.DELETE_SERVICE:
-      return {
-        ...state,
-        service_list: state.service_list.filter((service) => service.id !== action.payload),
-      };
 
     case hospitalTypes.GET_USERS:
       return {
         ...state,
-        users_list: action.payload,
+        users: action.payload,
       };
 
     default:

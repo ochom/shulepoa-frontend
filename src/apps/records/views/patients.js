@@ -7,7 +7,6 @@ import { Link } from 'react-router-dom';
 export class Patients extends Component {
   state = {
     patients: [],
-    search: "",
     showModal: false,
     select_patient: null,
 
@@ -88,13 +87,16 @@ export class Patients extends Component {
     this.toggleModal();
   }
 
-  onsearchPatient = () => {
-    const data = {
-      "fullname": this.state.search,
-      "id_no": this.state.patient_search_id_no,
-      "phone": this.state.patient_search_phone,
-    }
-    this.props.searchPatients(data);
+  onSearchPatient = (e) => {
+    const search_val = (e.target.value).toLowerCase();
+    this.setState({
+      patients: this.props.patients.filter(pt =>
+        (pt.fullname.toLowerCase().includes(search_val) ||
+          pt.id_no.toLowerCase().includes(search_val) ||
+          pt.phone.toLowerCase().includes(search_val)
+        )
+      )
+    })
   }
 
 
@@ -253,9 +255,7 @@ export class Patients extends Component {
             <div className="card-header py-1 px-3">
               <div className="py-1 px-2"><i className="fa fa-globe"></i> Manage patient records</div>
               <input className="form-control form-control-sm"
-                name="search"
-                value={this.state.search}
-                onChange={this.onChange}
+                onChange={this.onSearchPatient}
                 placeholder="Search..." />
               <button
                 className="btn btn-sm py-1 px-2 mr-auto"
@@ -267,15 +267,15 @@ export class Patients extends Component {
           <div className="card mt-4">
             <div className="card-header"></div>
             <div className="card-bodyp-0">
-              <table className="table table-sm table-striped table-bordered table-responsive-sm m-0">
+              <table className="table table-sm table-striped table-bordered">
                 <caption className="px-2"><i>Recent patients | Search results</i></caption>
                 <thead className="">
-                  <tr><th>#Reg.</th><th>Full name</th><th>Gender</th><th>Mobile</th><th>Address</th><th className="text-center">Action</th></tr>
+                  <tr><th>#</th><th>Full name</th><th>Gender</th><th>Mobile</th><th>Address</th><th className="text-center">Action</th></tr>
                 </thead>
                 <tbody>
                   {patients.map((patient, index) =>
                     <tr key={index}>
-                      <td>{patient.id}</td>
+                      <td>{index + 1}</td>
                       <td>{patient.fullname}</td>
                       <td>{GENDERS[patient.sex]}</td>
                       <td>{patient.phone}</td>

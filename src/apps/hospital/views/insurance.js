@@ -1,25 +1,31 @@
 import React, { Component } from 'react'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { connect } from 'react-redux';
-import { loadInsurance, addInsurance, updateInsurance } from '../actions';
+import { getInsurances, addInsurance, updateInsurance } from '../actions';
 
 export class Insurance extends Component {
-  state = {
-    insurance_search_name: "",
-    insurance_search_phone: "",
-    showModal: false,
-    select_insurance: null,
+  constructor(props) {
+    super(props)
+    this.state = {
+      showModal: false,
+      select_insurance: null,
+      insurances: props.hospital.insurances,
 
-
-    company_name: "",
-    company_email: "",
-    company_phone: "",
-    is_primary: 0,
-
+      company_name: "",
+      company_email: "",
+      company_phone: "",
+    }
   }
 
   componentDidMount() {
-    this.props.loadInsurance();
+    this.props.getInsurances();
+  }
+
+
+  componentDidUpdate(nextProps) {
+    if (nextProps !== this.props) {
+      this.setState({ insurances: nextProps.hospital.insurances })
+    }
   }
 
   onChange = (e) => this.setState({ [e.target.name]: e.target.value });
@@ -37,7 +43,6 @@ export class Insurance extends Component {
       company_name: "",
       company_email: "",
       company_phone: "",
-      is_primary: 0,
     })
   }
 
@@ -48,7 +53,6 @@ export class Insurance extends Component {
       company_name: data.company_name,
       company_email: data.company_email,
       company_phone: data.company_phone,
-      is_primary: data.is_primary,
     })
   }
 
@@ -59,14 +63,12 @@ export class Insurance extends Component {
       company_name,
       company_email,
       company_phone,
-      is_primary
     } = this.state;
 
     const data = {
       company_name,
       company_email,
       company_phone,
-      is_primary
     }
     if (select_insurance) {
       this.props.updateInsurance(select_insurance.id, data);
@@ -79,15 +81,15 @@ export class Insurance extends Component {
     })
   }
 
-  onsearchInsurance = () => {
-    const data = {
-      "company_name": this.state.insurance_search_name,
-      "company_phone": this.state.insurance_search_phone,
-    }
-    this.props.searchInsurance(data);
+  onSearch = (e) => {
+    const search = (e.target.value).toLowerCase()
+    this.setState({
+      insurances: this.props.hospital.insurances.filter(ser => ser.company_name.toLowerCase().includes(search))
+    })
   }
 
   render() {
+    const { insurances } = this.state
     const insurance_details =
       <Modal isOpen={this.state.showModal} size="md">
         <ModalHeader toggle={this.toggleModal}>
@@ -117,12 +119,6 @@ export class Insurance extends Component {
                   name="company_phone" onChange={this.onChange} value={this.state.company_phone} required={true}
                   placeholder="Contact phone number" />
               </div>
-
-              {/* <div className="form-check col-12 pl-5 ">
-                <input type="checkbox" className="form-check-input" id="exampleCheck1"
-                  name="is_primary" onChange={this.toggleCheck} checked={this.state.is_primary} />
-                <label className="form-check-label custom-text-secondary py-1" htmlFor="exampleCheck1">This is the hospital's primary insurance</label>
-              </div> */}
             </div>
           </ModalBody >
           <ModalFooter>
@@ -135,66 +131,40 @@ export class Insurance extends Component {
         </form>
       </Modal >
 
-    const insurance_filter_list = this.props.insurance_list.map((insurance, index) =>
-      <tr key={index}>
-        <td>{index + 1}</td>
-        <td>{insurance.company_name}</td>
-        <td>{insurance.company_email}</td>
-        <td>{insurance.company_phone}</td>
-        <td className="text-center">
-          <button className="btn btn-sm p-0 border-none text-success"
-            onClick={() => this.onEditInsurance(insurance)}><i className="fa fa-edit"></i> Edit</button>{' | '}
-          <button className="btn btn-sm p-0 border-none text-danger"><i className="fa fa-trash"></i> Delete</button>
-        </td>
-      </tr>
-    )
     return (
       <>
         {insurance_details}
         <div className="col-md-10 mx-auto mt-3">
           <div className="card">
             <div className="card-header py-1 px-3">
-              <div className="py-1 px-2"><i className="fa fa-briefcase"></i> Manage hospital's insurance companies</div>
+              <div className="py-1 px-2"><i className="fa fa-briefcase"></i> Manage Insurance companies</div>
+              <input className="form-control form-control-sm"
+                onChange={this.onSearch}
+                placeholder="Search..." />
               <button
                 className="btn btn-sm py-1 px-2 mr-auto"
                 onClick={this.onNewInsurance}><i className="fa fa-plus-circle mr-2"></i> Add Insurance
               </button>
             </div>
-            <div className="card-body p-0 pb-2">
-              <div className="row col-12 mx-auto mt-3">
-                <div className="form-group  col-3">
-                  <label>Insurance name</label>
-                  <input className="form-control form-control-sm"
-                    name="insurance_search_name"
-                    value={this.state.insurance_search_name}
-                    onChange={this.onChange}
-                    placeholder="Enter name" />
-                </div>
-                <div className="form-group  col-3">
-                  <label>Phone number</label>
-                  <input className="form-control form-control-sm"
-                    name="insurance_search_phone"
-                    value={this.state.insurance_search_phone}
-                    onChange={this.onChange}
-                    placeholder="Enter phone number" />
-                </div>
-              </div>
-              <div className="row col-12 mx-auto">
-                <button
-                  className="btn btn-sm btn-outline-success cu-text-primary ml-4"
-                  onClick={this.onsearchInsurance}
-                  disabled={this.props.common.isProcessing}><i className="fa fa-search mr-2"></i> Find Insurance</button>
-              </div>
-            </div>
           </div>
           <div className="card card-body mt-4 p-0">
-            <table className="table table-sm table-striped table-bordered table-responsive-sm m-0">
-              <caption className="px-2"><i>Recent insurances | Search results</i></caption>
+            <table className="table table-sm table-striped table-bordered">
               <thead className="cu-bg-secondary">
-                <tr><th>#</th><th>Name</th><th>Email</th><th>Mobile</th><th className="text-center">Action</th></tr>
+                <tr><th>#</th><th>Company</th><th>Email</th><th>Mobile</th><th className="text-center">Action</th></tr>
               </thead>
               <tbody>
-                {insurance_filter_list}
+                {insurances.map((insurance, index) =>
+                  <tr key={index}>
+                    <td>{index + 1}</td>
+                    <td>{insurance.company_name}</td>
+                    <td>{insurance.company_email}</td>
+                    <td>{insurance.company_phone}</td>
+                    <td className="text-center">
+                      <button className="btn btn-sm p-0 border-none text-success"
+                        onClick={() => this.onEditInsurance(insurance)}><i className="fa fa-edit"></i> Edit</button>
+                    </td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>
@@ -205,8 +175,7 @@ export class Insurance extends Component {
 }
 
 const mapStateToProps = state => ({
-  insurance_list: state.hospital.insurance_list,
-  common: state.common,
+  hospital: state.hospital,
 });
 
-export default connect(mapStateToProps, { loadInsurance, addInsurance, updateInsurance })(Insurance);
+export default connect(mapStateToProps, { getInsurances, addInsurance, updateInsurance })(Insurance);

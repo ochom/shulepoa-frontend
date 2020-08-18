@@ -3,22 +3,22 @@ import { connect } from 'react-redux'
 import { Link, Route } from 'react-router-dom'
 import Sidenav from '../common/sidenav'
 import Topnav from '../common/topnav'
-import { getServices, loadInsurance } from '../hospital/actions'
+import { getClinics, getServices, getInsurances } from '../hospital/actions'
 import Patient from './views/patient'
 import Patients from './views/patients'
 
 export class Records extends Component {
 
   componentDidMount() {
-    this.props.loadInsurance();
+    this.props.getClinics();
+    this.props.getInsurances();
     this.props.getServices();
   }
 
   render() {
     const menu_list =
       <div className="list-group">
-        <Link to="/records" className="list-group-item"><i className="fa fa-user"></i> Registration</Link>
-        <Link to="/outpatient/triage" className="list-group-item"><i className="fa fa-thermometer-half"></i> Triage</Link>
+        <Link to="/records" className="list-group-item"><i className="fa fa-pencil"></i> Registration</Link>
       </div>
     return (
       <>
@@ -41,9 +41,6 @@ export class Records extends Component {
     )
   }
 }
-const mapStateToProps = state => ({
 
-})
-
-export default connect(mapStateToProps, { getServices, loadInsurance })(Records);
+export default connect(null, { getClinics, getServices, getInsurances })(Records);
 

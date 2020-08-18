@@ -64,7 +64,7 @@ export class Queue extends Component {
 
 export default connect(state => ({
   pharmacy: state.pharmacy,
-  service_list: state.hospital.service_list,
+  services: state.hospital.services,
   constants: state.common.CONSTANTS,
   common: state.common,
 }), { getQueue, })(Queue)

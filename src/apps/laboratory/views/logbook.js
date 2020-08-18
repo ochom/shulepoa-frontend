@@ -160,6 +160,6 @@ export class LogBook extends Component {
 
 export default connect(state => ({
   logbook: state.laboratory.selected_logbook,
-  service_list: state.hospital.service_list,
+  services: state.hospital.services,
   constants: state.common.CONSTANTS,
 }))(LogBook)

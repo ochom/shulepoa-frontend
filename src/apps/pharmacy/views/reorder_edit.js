@@ -18,7 +18,7 @@ export class Reorders extends Component {
   }
 
   componentDidMount() {
-    var data = this.props.hospital.service_list.filter(service => service.id === parseInt(this.props.match.params.pk));
+    var data = this.props.hospital.services.filter(service => service.id === parseInt(this.props.match.params.pk));
     if (data.length > 0) {
       data = data[0]
       this.setState({

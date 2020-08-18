@@ -103,7 +103,7 @@ export class Drugs extends Component {
   }
 
   render() {
-    const { service_list } = this.props.hospital;
+    const { services } = this.props.hospital;
     const service_details =
       <Modal isOpen={this.state.showModal} size="md">
         <ModalHeader toggle={this.toggleModal}>
@@ -175,7 +175,7 @@ export class Drugs extends Component {
         </form>
       </Modal >
 
-    const service_filter_list = service_list.filter(service => service.department === 5).map((service, index) =>
+    const service_filter_list = services.filter(service => service.department === 5).map((service, index) =>
       <tr key={index}>
         <td>{index + 1}</td>
         <td>{service.name}</td>

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import store from '../../../reducer/store';
-import { searchPatients } from '../../records/actions';
 
 export class Patients extends Component {
   state = {
@@ -14,12 +13,7 @@ export class Patients extends Component {
 
 
   onsearchPatient = () => {
-    const data = {
-      "fullname": this.state.patient_search_name,
-      "id_no": this.state.patient_search_id_no,
-      "phone": this.state.patient_search_phone,
-    }
-    this.props.searchPatients(data);
+    //this.props.searchPatients(data);
   }
 
   selectPatient = (patient) => {
@@ -106,4 +100,4 @@ const mapStateToProps = state => ({
   common: state.common,
 });
 
-export default connect(mapStateToProps, { searchPatients, })(Patients);
+export default connect(mapStateToProps)(Patients);

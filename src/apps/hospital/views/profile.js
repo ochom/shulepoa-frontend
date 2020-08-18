@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { connect } from 'react-redux';
-import { loadHospital, addHospital, updateHospital } from '../actions';
+import { getHospital, addHospital, updateHospital } from '../actions';
 
 export class HospitalProfile extends Component {
   state = {
@@ -16,7 +16,7 @@ export class HospitalProfile extends Component {
   }
 
   componentDidMount() {
-    this.props.loadHospital()
+    this.props.getHospital()
   }
 
   onChange = (e) => this.setState({ [e.target.name]: e.target.value });
@@ -160,4 +160,4 @@ const mapStateToProps = state => ({
   common: state.common,
 });
 
-export default connect(mapStateToProps, { loadHospital, addHospital, updateHospital })(HospitalProfile);
+export default connect(mapStateToProps, { getHospital, addHospital, updateHospital })(HospitalProfile);

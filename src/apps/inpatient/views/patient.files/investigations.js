@@ -17,7 +17,7 @@ export class Investigation extends Component {
 
   onChange = (e) => {
     var search_name = e.target.value;
-    var search_result = this.props.service_list.filter(service =>
+    var search_result = this.props.services.filter(service =>
       ((service.department === 3 || service.department === 4) && service.name.toLowerCase().includes(search_name.toLowerCase())));
     search_result = search_result.slice(0, 10)
     this.setState({ search_result: search_result })
@@ -139,5 +139,5 @@ export default connect(state => ({
   health_file: state.inpatient.selected_health_file,
   investigations: state.inpatient.investigations,
   common: state.common,
-  service_list: state.hospital.service_list,
+  services: state.hospital.services,
 }), { getInvestigations, addInvestigation, deleteInvestigation })(Investigation)

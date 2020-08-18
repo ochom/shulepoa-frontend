@@ -164,7 +164,7 @@ export class Results extends Component {
 
 export default connect(state => ({
   radiology: state.radiology,
-  service_list: state.hospital.service_list,
+  services: state.hospital.services,
   constants: state.common.CONSTANTS,
   common: state.common,
 }), { getResultsQueue, saveResults, })(Results)

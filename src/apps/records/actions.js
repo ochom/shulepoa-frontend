@@ -14,9 +14,9 @@ export const recordTypes = {
   ADD_SCHEME: 'ADD_SCHEME',
   UPDATE_SCHEME: 'UPDATE_SCHEME',
 
-  GET_HEALTH_FILES: 'GET_HEALTH_FILES',
-  GET_PATIENT_HEALTH_FILES: 'GET_PATIENT_HEALTH_FILES',
-  ADD_HEALTH_FILE: 'ADD_HEALTH_FILE',
+  GET_APPOINTMENTS: 'GET_APPOINTMENTS',
+  GET_PATIENT_APPOINTMENTS: 'GET_PATIENT_APPOINTMENTS',
+  ADD_APPOINTMENT: 'ADD_APPOINTMENT',
 }
 
 
@@ -48,135 +48,173 @@ export const getPatient = (id) => (dispatch, getState) => {
     })
 }
 
-export const searchPatients = (data) => (dispatch, getState) => {
-  dispatch({ type: commonTypes.PROCESSING })
-  Axios.get(
-    `${API_PATH}records/patients/search/?fullname=${data.fullname}&id_no=${data.id_no}&phone=${data.phone}`,
-    tokenConfig(getState)
-  )
-    .then(res => {
-      dispatch({ type: recordTypes.GET_PATIENTS, payload: res.data })
-      dispatch({ type: commonTypes.DONE })
-    }).catch(err => {
-      // To do
-    }).finally(() => {
-      dispatch({ type: commonTypes.DONE })
-    });
-}
-
-
 export const addPatient = (data) => (dispatch, getState) => {
   dispatch({ type: commonTypes.PROCESSING })
   Axios.post(`${API_PATH}records/patients/`, JSON.stringify(data), tokenConfig(getState))
     .then(res => {
-      dispatch({ type: recordTypes.ADD_PATIENT, payload: res.data })
+      dispatch(getPatients())
       dispatch({ type: commonTypes.SUCCESS, message: "Patient details saved succesfully" })
-    }).catch(err => {
-      dispatch({ type: commonTypes.ERROR, payload: err })
-    });
+    })
+    .catch((err) => {
+      dispatch({ type: commonTypes.ERROR, payload: err });
+    })
+    .finally(() => {
+      dispatch({ type: commonTypes.DONE });
+    })
 }
 
 export const updatePatient = (id, data) => (dispatch, getState) => {
   dispatch({ type: commonTypes.PROCESSING })
   Axios.put(`${API_PATH}records/patients/${id}/`, JSON.stringify(data), tokenConfig(getState))
     .then(res => {
-      dispatch({ type: recordTypes.UPDATE_PATIENT, payload: res.data })
+      dispatch(getPatients())
       dispatch({ type: commonTypes.SUCCESS, message: "Patient details updated succesfully" })
-    }).catch(err => {
-      dispatch({ type: commonTypes.ERROR, payload: err })
-    });
+    })
+    .catch((err) => {
+      dispatch({ type: commonTypes.ERROR, payload: err });
+    })
+    .finally(() => {
+      dispatch({ type: commonTypes.DONE });
+    })
 }
 
 export const deletePatient = (id) => (dispatch, getState) => {
   dispatch({ type: commonTypes.PROCESSING })
   Axios.delete(`${API_PATH}records/patients/${id}/`, tokenConfig(getState))
     .then(res => {
-      dispatch({ type: recordTypes.DELETE_PATIENT })
+      dispatch(getPatients())
       dispatch({ type: commonTypes.SUCCESS, message: "Patient details deleted" })
-    }).catch(err => {
-      dispatch({ type: commonTypes.ERROR, payload: err })
-    });
+    })
+    .catch((err) => {
+      dispatch({ type: commonTypes.ERROR, payload: err });
+    })
+    .finally(() => {
+      dispatch({ type: commonTypes.DONE });
+    })
 }
 
 
 
 // Patient insurance
-export const loadScheme = (patient_id) => (dispatch, getState) => {
-  Axios.get(`${API_PATH}records/patient/${patient_id}/schemes/`, tokenConfig(getState))
+export const getSchemes = () => (dispatch, getState) => {
+  Axios.get(`${API_PATH}records/schemes/`, tokenConfig(getState))
     .then(res => {
       dispatch({ type: recordTypes.GET_SCHEMES, payload: res.data })
-    }).catch(err => {
-      // To do
-    });
+    })
+    .catch((err) => {
+      dispatch({ type: commonTypes.ERROR, payload: err });
+    })
+    .finally(() => {
+      dispatch({ type: commonTypes.DONE });
+    })
 }
 
-export const addScheme = (patient_id, data) => (dispatch, getState) => {
+export const addScheme = (data) => (dispatch, getState) => {
   dispatch({ type: commonTypes.PROCESSING })
-  Axios.post(`${API_PATH}records/patient/${patient_id}/schemes/`, JSON.stringify(data), tokenConfig(getState))
+  Axios.post(`${API_PATH}records/schemes/`, JSON.stringify(data), tokenConfig(getState))
     .then(res => {
-      dispatch({ type: recordTypes.ADD_SCHEME, payload: res.data })
+      dispatch(getSchemes())
       dispatch({ type: commonTypes.SUCCESS, message: "Scheme details saved succesfully" })
-    }).catch(err => {
-      dispatch({ type: commonTypes.ERROR, payload: err })
-    });
+    })
+    .catch((err) => {
+      dispatch({ type: commonTypes.ERROR, payload: err });
+    })
+    .finally(() => {
+      dispatch({ type: commonTypes.DONE });
+    })
 }
 
-export const updateScheme = (patient_id, id, data) => (dispatch, getState) => {
+export const updateScheme = (id, data) => (dispatch, getState) => {
   dispatch({ type: commonTypes.PROCESSING })
-  Axios.put(`${API_PATH}records/patient/${patient_id}/schemes/${id}/`, JSON.stringify(data), tokenConfig(getState))
+  Axios.put(`${API_PATH}records/schemes/${id}/`, JSON.stringify(data), tokenConfig(getState))
     .then(res => {
-      dispatch({ type: recordTypes.UPDATE_SCHEME, payload: res.data })
+      dispatch(getSchemes())
       dispatch({ type: commonTypes.SUCCESS, message: "Scheme details updated succesfully" })
-    }).catch(err => {
-      dispatch({ type: commonTypes.ERROR, payload: err })
-    });
+    })
+    .catch((err) => {
+      dispatch({ type: commonTypes.ERROR, payload: err });
+    })
+    .finally(() => {
+      dispatch({ type: commonTypes.DONE });
+    })
 }
 
 
-export const deleteScheme = (patient_id, id) => (dispatch, getState) => {
+export const deleteScheme = (id) => (dispatch, getState) => {
   dispatch({ type: commonTypes.PROCESSING })
-  Axios.delete(`${API_PATH}records/patient/${patient_id}/schemes/${id}/`, tokenConfig(getState))
+  Axios.delete(`${API_PATH}records/schemes/${id}/`, tokenConfig(getState))
     .then(res => {
-      dispatch({ type: recordTypes.DELETE_SCHEME, payload: id })
-      dispatch({ type: commonTypes.SUCCESS, message: "Scheme details saved succesfully" })
-    }).catch(err => {
-      // dispatch({ type: commonTypes.ERROR, payload: err })
-    });
+      dispatch(getSchemes())
+      dispatch({ type: commonTypes.SUCCESS, message: "Scheme details deleted succesfully" })
+    })
+    .catch((err) => {
+      dispatch({ type: commonTypes.ERROR, payload: err });
+    })
+    .finally(() => {
+      dispatch({ type: commonTypes.DONE });
+    })
 }
 
 
 
 
-// Health files
-export const loadHealthFiles = () => (dispatch, getState) => {
-  Axios.get(`${API_PATH}outpatient/health-files/`, tokenConfig(getState))
+// Appointments
+export const getAppointments = () => (dispatch, getState) => {
+  Axios.get(`${API_PATH}records/appointments/`, tokenConfig(getState))
     .then(res => {
-      dispatch({ type: recordTypes.GET_HEALTH_FILES, payload: res.data })
-    }).catch(err => {
-      // To do
-    });
-}
-
-export const getPatientHealthFiles = (patient_id) => (dispatch, getState) => {
-  dispatch({ type: commonTypes.PROCESSING })
-  Axios.get(`${API_PATH}outpatient/${patient_id}/health-files/`, tokenConfig(getState))
-    .then(res => {
-      dispatch({ type: recordTypes.GET_PATIENT_HEALTH_FILES, payload: res.data })
-    }).catch(err => {
-      // To do
-    }).finally(() => {
-      dispatch({ type: commonTypes.DONE })
-    });
+      dispatch({ type: recordTypes.GET_APPOINTMENTS, payload: res.data })
+    })
+    .catch((err) => {
+      dispatch({ type: commonTypes.ERROR, payload: err });
+    })
+    .finally(() => {
+      dispatch({ type: commonTypes.DONE });
+    })
 }
 
 
-export const addHealthFile = (data) => (dispatch, getState) => {
+export const addAppointment = (data) => (dispatch, getState) => {
   dispatch({ type: commonTypes.PROCESSING });
-  Axios.post(`${API_PATH}outpatient/health-files/`, JSON.stringify(data), tokenConfig(getState))
+  Axios.post(`${API_PATH}records/appointments/`, JSON.stringify(data), tokenConfig(getState))
     .then(res => {
-      dispatch({ type: recordTypes.ADD_HEALTH_FILE, payload: res.data })
-      dispatch({ type: commonTypes.SUCCESS, message: "HealthFile details saved succesfully" })
-    }).catch(err => {
-      dispatch({ type: commonTypes.ERROR, payload: err.data })
-    });
+      dispatch(getAppointments())
+      dispatch({ type: commonTypes.SUCCESS, message: "Appointment details saved succesfully" })
+    })
+    .catch((err) => {
+      dispatch({ type: commonTypes.ERROR, payload: err });
+    })
+    .finally(() => {
+      dispatch({ type: commonTypes.DONE });
+    })
 }
+
+export const getAppointment = (id) => (dispatch, getState) => {
+  dispatch({ type: commonTypes.PROCESSING });
+  Axios.get(`${API_PATH}records/appointments/${id}/`, tokenConfig(getState))
+    .then(res => {
+      dispatch({ type: recordTypes.GET_APPOINTMENT, payload: res.data })
+    })
+    .catch((err) => {
+      dispatch({ type: commonTypes.ERROR, payload: err });
+    })
+    .finally(() => {
+      dispatch({ type: commonTypes.DONE });
+    })
+}
+
+export const updateAppointment = (id, data) => (dispatch, getState) => {
+  dispatch({ type: commonTypes.PROCESSING });
+  Axios.post(`${API_PATH}records/appointments/${id}/`, JSON.stringify(data), tokenConfig(getState))
+    .then(res => {
+      dispatch(getAppointments())
+      dispatch({ type: commonTypes.SUCCESS, message: "Appointment details saved succesfully" })
+    })
+    .catch((err) => {
+      dispatch({ type: commonTypes.ERROR, payload: err });
+    })
+    .finally(() => {
+      dispatch({ type: commonTypes.DONE });
+    })
+}
+
+

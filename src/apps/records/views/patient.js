@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { getPatient } from '../actions'
 import person_icon from '../../../images/person_icon.png'
-import HealthFiles from './health_files'
+import HealthFiles from './appointments'
 import Schemes from './schemes'
+import ServiceRequests from './service_requests'
 
 class Patient extends Component {
   constructor(props) {
@@ -14,7 +15,7 @@ class Patient extends Component {
   }
 
   componentDidMount() {
-    this.props.getPatient(this.state.patient_id)
+    this.props.getPatient(this.props.match.params.patient_id)
   }
 
   render() {
@@ -53,11 +54,16 @@ class Patient extends Component {
                   </ul>
                 </div>
               </div>
-              <div className="col-5">
-                <HealthFiles patient_id={this.state.patient_id} />
-              </div>
-              <div className="col-4">
-                <Schemes patient_id={this.state.patient_id} />
+              <div className="row col-9">
+                <div className="col-md-6">
+                  <HealthFiles patient_id={this.state.patient_id} />
+                </div>
+                <div className="col-md-6">
+                  <Schemes patient_id={this.state.patient_id} />
+                </div>
+                <div className="col-12">
+                  <ServiceRequests patient_id={this.state.patient_id} />
+                </div>
               </div>
             </div>
           </ >

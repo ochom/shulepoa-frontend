@@ -144,7 +144,7 @@ export class Verification extends Component {
 
 export default connect(state => ({
   laboratory: state.laboratory,
-  service_list: state.hospital.service_list,
+  services: state.hospital.services,
   constants: state.common.CONSTANTS,
   common: state.common,
 }), { getVerificationQueue, saveVerification, })(Verification)

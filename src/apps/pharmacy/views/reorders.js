@@ -6,10 +6,10 @@ import { saveReorder } from '../actions';
 
 export class Reorders extends Component {
   render() {
-    const { service_list } = this.props.hospital;
+    const { services } = this.props.hospital;
     const { reorder_history } = this.props.pharmacy;
 
-    const service_filter_list = service_list.filter(
+    const service_filter_list = services.filter(
       service => (service.department === 5 && service.quantity_in_store <= service.reorder_level))
       .map((service, index) =>
         <tr key={index}>
@@ -30,7 +30,7 @@ export class Reorders extends Component {
         <tr key={index}>
           <td>{index + 1}</td>
           <td>{new Date(reorder.created_at).toLocaleDateString("en-UK")}</td>
-          <td>{service_list.filter(service => service.id === reorder.service)[0].name}</td>
+          <td>{services.filter(service => service.id === reorder.service)[0].name}</td>
           <td>{reorder.created_by_user.username}</td>
           <td className="text-center">
             <Link className="btn btn-sm p-0 border-none text-primary"

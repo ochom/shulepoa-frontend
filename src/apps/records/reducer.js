@@ -3,8 +3,8 @@ import { recordTypes } from './actions.js'
 const initialState = {
   patients: [],
   patient: null,
-  patient_insurance_list: [],
-  patient_health_files: [],
+  schemes: [],
+  appointments: [],
 };
 
 export default function (state = initialState, action) {
@@ -21,53 +21,18 @@ export default function (state = initialState, action) {
         patient: action.payload,
       };
 
-    case recordTypes.ADD_PATIENT:
-      return {
-        ...state,
-        patients: [action.payload,],
-      };
-    case recordTypes.UPDATE_PATIENT:
-      return {
-        ...state,
-        patients: [action.payload,],
-      };
-    case recordTypes.DELETE_PATIENT:
-      return {
-        ...state,
-        patients: state.records.filter((patient) => patient.id !== action.payload),
-      };
 
     case recordTypes.GET_SCHEMES:
       return {
         ...state,
-        patient_insurance_list: action.payload,
-      };
-    case recordTypes.ADD_SCHEME:
-      return {
-        ...state,
-        patient_insurance_list: [...state.patient_insurance_list, action.payload],
-      };
-    case recordTypes.UPDATE_SCHEME:
-      return {
-        ...state,
-        patient_insurance_list: [...state.patient_insurance_list.filter((scheme) => scheme.id !== action.payload.id), action.payload,],
-      };
-    case recordTypes.DELETE_SCHEME:
-      return {
-        ...state,
-        patient_insurance_list: state.patient_insurance_list.filter((scheme) => scheme.id !== action.payload),
+        schemes: action.payload,
       };
 
 
-    case recordTypes.GET_PATIENT_HEALTH_FILES:
+    case recordTypes.GET_APPOINTMENTS:
       return {
         ...state,
-        patient_health_files: action.payload,
-      };
-    case recordTypes.ADD_HEALTH_FILE:
-      return {
-        ...state,
-        patient_health_files: [...state.patient_health_files.filter((_file) => _file.id !== action.payload.id), action.payload,],
+        appointments: action.payload,
       };
 
     default:

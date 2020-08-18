@@ -108,7 +108,7 @@ export class Sampling extends Component {
                       <div className="form-group col-12">
                         <label>Investigation</label>
                         <input className="form-control form-control-sm" readOnly={true}
-                          value={this.props.service_list.filter(service => service.id === investigation.service)[0].name} />
+                          value={this.props.services.filter(service => service.id === investigation.service)[0].name} />
                       </div>
                       <div className="form-group col-12">
                         <Button size="sm" color="primary"
@@ -129,7 +129,7 @@ export class Sampling extends Component {
 
 export default connect(state => ({
   radiology: state.radiology,
-  service_list: state.hospital.service_list,
+  services: state.hospital.services,
   constants: state.common.CONSTANTS,
   common: state.common,
 }), { getSamplingQueue, saveSample, })(Sampling)
