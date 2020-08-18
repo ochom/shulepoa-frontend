@@ -30,21 +30,17 @@ export class ServiceRequests extends Component {
     });
   }
 
-  onSubmitAppointment = (e) => {
-    e.preventDefault();
-    const {
-      patient_id,
-      clinic_id,
-      date,
-    } = this.state;
-
-    const file_data = {
-      patient_id,
-      clinic_id,
-      date,
+  addRequest = (service) => {
+    const data = {
+      patient_id: this.state.patient_id,
+      service_id: service.id,
+      department: service.department,
+      quantity: 1,
+      price: service.price,
+      cost: service.price
     }
 
-    this.props.addAppointment(file_data)
+    this.props.addOPDServiceRequest(data)
     this.toggleModal()
   }
 
@@ -56,16 +52,16 @@ export class ServiceRequests extends Component {
   }
 
   render() {
-    const { common: { CONSTANTS: { DEPARTMENTS } }, services, opd_ser_reqs } = this.props
+    const { common: { CONSTANTS: { DEPARTMENTS } }, hospital: { services }, opd_ser_reqs } = this.props
     const book_appointment_view =
       <Modal isOpen={this.state.showModal} size="md">
         <ModalHeader toggle={this.toggleModal}>Request service</ModalHeader>
         <ModalBody>
-          <div className="form-group col-12">
+          <div className="form-group">
             <input className="form-control form-control-sm"
-              name="search" onChange={this.onSearch} />
+              onChange={this.onSearch} placeholder="Search..." />
           </div>
-          <table className="tabble table-striped table-bordered table-sm">
+          <table className="tabble table-sm table-striped table-bordered col-12">
             <thead>
               <tr>
                 <th>Service</th>
@@ -79,8 +75,11 @@ export class ServiceRequests extends Component {
                 <tr>
                   <td>{service.name}</td>
                   <td>{DEPARTMENTS[service.department]}</td>
-                  <td>Price</td>
-                  <td>Action</td>
+                  <td>{service.price}</td>
+                  <td>
+                    <button className="btn btn-sm btn-primary rounded"
+                      onClick={() => this.addRequest(service)}>Add</button>
+                  </td>
                 </tr>
               )}
             </tbody>
@@ -110,10 +109,10 @@ export class ServiceRequests extends Component {
               </thead>
               <tbody>
                 {opd_ser_reqs.filter(req => req.patient_id === parseInt(this.state.patient_id)).map((req, index) =>
-                  <tr key={index}>app
+                  <tr key={index}>
                     <td>{index + 1}</td>
                     <td>{new Date(req.created).toLocaleString("en-UK")}</td>
-                    <td>{services.length > 0 ? services.filter(service => service.id === req.service_id)[0].name : ""}</td>
+                    <td>{services.length > 0 ? services.find(service => service.id === req.service_id).name : ""}</td>
                     <td>{DEPARTMENTS[req.department]}</td>
                     <td>{req.cost}</td>
                   </tr>
