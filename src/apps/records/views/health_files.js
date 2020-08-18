@@ -192,7 +192,7 @@ export class HealthFiles extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  patients: state.patients,
+  patients: state.records,
   service_list: state.hospital.service_list,
   common: state.common,
   insurance_list: state.hospital.insurance_list,

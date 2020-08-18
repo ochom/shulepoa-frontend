@@ -180,6 +180,11 @@ sup{
   transition: ease 0.4s;
 }
 
+.card-header .form-control{
+  position: absolute;
+  right: 150px;
+}
+
 .card .card-header .btn:hover{
   background-color: red;
   padding-left: 10px;

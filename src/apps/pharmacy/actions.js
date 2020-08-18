@@ -45,7 +45,7 @@ export const saveDrugDispense = (data) => (dispatch, getState) => {
       dispatch({ type: pharmTypes.ADD_DRUG_DISPENSE, payload: res.data });
       dispatch({ type: commonTypes.SUCCESS, message: "Dispense saved succesfully" });
     }).catch(err => {
-      dispatch({ type: commonTypes.ERROR, error: err });
+      dispatch({ type: commonTypes.ERROR, payload: err });
     })
     .finally(() =>
       dispatch({ type: commonTypes.DONE })
@@ -62,7 +62,7 @@ export const saveReorder = (data) => (dispatch, getState) => {
       dispatch({ type: pharmTypes.ADD_PHARM_REORDER, payload: res.data });
       dispatch({ type: commonTypes.SUCCESS, message: "Reorder saved succesfully" });
     }).catch(err => {
-      dispatch({ type: commonTypes.ERROR, error: err });
+      dispatch({ type: commonTypes.ERROR, payload: err });
     })
     .finally(() =>
       dispatch({ type: commonTypes.DONE })

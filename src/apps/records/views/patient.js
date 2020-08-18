@@ -69,5 +69,5 @@ class Patient extends Component {
 
 export default connect(state => ({
   common: state.common,
-  patient: state.patients.patient,
+  patient: state.records.patient,
 }), { getPatient })(Patient)

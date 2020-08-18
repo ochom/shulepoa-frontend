@@ -14,7 +14,7 @@ export const loadPaymentQueue = () => (dispatch, getState) => {
       dispatch({ type: revenueTypes.GET_PAYMENT_QUEUE, payload: res.data })
     })
     .catch((err) => {
-      dispatch({ type: commonTypes.ERROR, error: err });
+      dispatch({ type: commonTypes.ERROR, payload: err });
     })
     .finally(() => {
       dispatch({ type: commonTypes.DONE });
@@ -29,7 +29,7 @@ export const savePayment = (patient_id, data) => (dispatch, getState) => {
       dispatch({ type: commonTypes.SUCCESS, message: "Payment saved succesfully" })
     })
     .catch((err) => {
-      dispatch({ type: commonTypes.ERROR, error: err });
+      dispatch({ type: commonTypes.ERROR, payload: err });
     })
     .finally(() => {
       dispatch({ type: commonTypes.DONE });
@@ -45,6 +45,6 @@ export const requestService = (data) => (dispatch, getState) => {
       dispatch({ type: commonTypes.SUCCESS, message: "Service requested succesfully" })
     })
     .catch((err) => {
-      dispatch({ type: commonTypes.ERROR, error: err });
+      dispatch({ type: commonTypes.ERROR, payload: err });
     })
 }

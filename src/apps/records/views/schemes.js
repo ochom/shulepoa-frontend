@@ -143,7 +143,7 @@ export class Schemes extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  patients: state.patients,
+  patients: state.records,
   insurance_list: state.hospital.insurance_list,
 });
 

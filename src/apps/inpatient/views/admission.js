@@ -31,7 +31,7 @@ export class Patients extends Component {
   render() {
     const { GENDERS } = this.props.common.CONSTANTS;
 
-    const patient_filter_list = this.props.patients.patients_list.map((patient, index) =>
+    const patient_filter_list = this.props.patients.patients.map((patient, index) =>
       <tr key={index}>
         <td>{patient.id}</td>
         <td>{patient.fullname}</td>
@@ -102,7 +102,7 @@ export class Patients extends Component {
 }
 
 const mapStateToProps = state => ({
-  patients: state.patients,
+  patients: state.records,
   common: state.common,
 });
 

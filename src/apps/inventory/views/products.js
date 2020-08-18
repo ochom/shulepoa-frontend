@@ -3,9 +3,8 @@ import { connect } from 'react-redux'
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
 import {
   addProduct, deleteProduct, getProducts, updateProduct,
-  addRequisition
+  addRequisition,
 } from '../actions'
-import categories from './categories'
 
 export class Products extends Component {
   state = {

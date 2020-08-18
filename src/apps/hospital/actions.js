@@ -40,7 +40,7 @@ export const addHospital = (data) => (dispatch, getState) => {
       dispatch({ type: hospitalTypes.ADD_HOSPITAL, payload: res.data })
       dispatch({ type: commonTypes.SUCCESS, message: "Hospital details updated succesfully" })
     }).catch(err => {
-      dispatch({ type: commonTypes.ERROR, error: err })
+      dispatch({ type: commonTypes.ERROR, payload: err })
     });
 }
 
@@ -51,7 +51,7 @@ export const updateHospital = (id, data) => (dispatch, getState) => {
       dispatch({ type: hospitalTypes.UPDATE_HOSPITAL, payload: res.data })
       dispatch({ type: commonTypes.SUCCESS, message: "Hospital details saved succesfully" })
     }).catch(err => {
-      dispatch({ type: commonTypes.ERROR, error: err })
+      dispatch({ type: commonTypes.ERROR, payload: err })
     });
 }
 
@@ -73,7 +73,7 @@ export const addInsurance = (data) => (dispatch, getState) => {
       dispatch({ type: hospitalTypes.ADD_INSURANCE, payload: res.data })
       dispatch({ type: commonTypes.SUCCESS, message: "Insurance details saved succesfully" })
     }).catch(err => {
-      dispatch({ type: commonTypes.ERROR, error: err })
+      dispatch({ type: commonTypes.ERROR, payload: err })
     });
 }
 
@@ -84,7 +84,7 @@ export const updateInsurance = (id, data) => (dispatch, getState) => {
       dispatch({ type: hospitalTypes.UPDATE_INSURANCE, payload: res.data })
       dispatch({ type: commonTypes.SUCCESS, message: "Insurance details updated succesfully" })
     }).catch(err => {
-      dispatch({ type: commonTypes.ERROR, error: err })
+      dispatch({ type: commonTypes.ERROR, payload: err })
     });
 }
 
@@ -95,7 +95,7 @@ export const deleteInsurance = (id) => (dispatch, getState) => {
       dispatch({ type: hospitalTypes.DELETE_INSURANCE, payload: id })
       dispatch({ type: commonTypes.SUCCESS, message: "Insurance details saved succesfully" })
     }).catch(err => {
-      // dispatch({ type: commonTypes.ERROR, error: err })
+      // dispatch({ type: commonTypes.ERROR, payload: err })
     });
 }
 
@@ -118,7 +118,7 @@ export const addService = (data) => (dispatch, getState) => {
       dispatch({ type: hospitalTypes.ADD_SERVICE, payload: res.data })
       dispatch({ type: commonTypes.SUCCESS, message: "Service details saved succesfully" })
     }).catch(err => {
-      dispatch({ type: commonTypes.ERROR, error: err })
+      dispatch({ type: commonTypes.ERROR, payload: err })
     });
 }
 
@@ -129,7 +129,7 @@ export const updateService = (id, data) => (dispatch, getState) => {
       dispatch({ type: hospitalTypes.UPDATE_SERVICE, payload: res.data })
       dispatch({ type: commonTypes.SUCCESS, message: "Service details updated succesfully" })
     }).catch(err => {
-      dispatch({ type: commonTypes.ERROR, error: err })
+      dispatch({ type: commonTypes.ERROR, payload: err })
     });
 }
 
@@ -140,7 +140,7 @@ export const deleteService = (id) => (dispatch, getState) => {
       dispatch({ type: hospitalTypes.DELETE_SERVICE, payload: id })
       dispatch({ type: commonTypes.SUCCESS, message: "Service details saved succesfully" })
     }).catch(err => {
-      // dispatch({ type: commonTypes.ERROR, error: err })
+      // dispatch({ type: commonTypes.ERROR, payload: err })
     });
 }
 
@@ -163,6 +163,6 @@ export const updateUser = (id, data) => (dispatch, getState) => {
       dispatch({ type: hospitalTypes.UPDATE_USER, payload: res.data })
       dispatch({ type: commonTypes.SUCCESS, message: "User details updated succesfully" })
     }).catch(err => {
-      dispatch({ type: commonTypes.ERROR, error: err })
+      dispatch({ type: commonTypes.ERROR, payload: err })
     });
 }

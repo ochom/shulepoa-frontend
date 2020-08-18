@@ -25,9 +25,13 @@ export const getPatients = () => (dispatch, getState) => {
   Axios.get(`${API_PATH}records/patients/`, tokenConfig(getState))
     .then(res => {
       dispatch({ type: recordTypes.GET_PATIENTS, payload: res.data })
-    }).catch(err => {
-      // To do
-    });
+    })
+    .catch((err) => {
+      dispatch({ type: commonTypes.ERROR, payload: err });
+    })
+    .finally(() => {
+      dispatch({ type: commonTypes.DONE });
+    })
 }
 
 export const getPatient = (id) => (dispatch, getState) => {
@@ -35,11 +39,13 @@ export const getPatient = (id) => (dispatch, getState) => {
   Axios.get(`${API_PATH}records/patients/${id}/`, tokenConfig(getState))
     .then(res => {
       dispatch({ type: recordTypes.GET_PATIENT, payload: res.data })
-    }).catch(err => {
-      // To do
-    }).finally(() => {
-      dispatch({ type: commonTypes.DONE })
-    });
+    })
+    .catch((err) => {
+      dispatch({ type: commonTypes.ERROR, payload: err });
+    })
+    .finally(() => {
+      dispatch({ type: commonTypes.DONE });
+    })
 }
 
 export const searchPatients = (data) => (dispatch, getState) => {
@@ -66,7 +72,7 @@ export const addPatient = (data) => (dispatch, getState) => {
       dispatch({ type: recordTypes.ADD_PATIENT, payload: res.data })
       dispatch({ type: commonTypes.SUCCESS, message: "Patient details saved succesfully" })
     }).catch(err => {
-      dispatch({ type: commonTypes.ERROR, error: err })
+      dispatch({ type: commonTypes.ERROR, payload: err })
     });
 }
 
@@ -77,7 +83,7 @@ export const updatePatient = (id, data) => (dispatch, getState) => {
       dispatch({ type: recordTypes.UPDATE_PATIENT, payload: res.data })
       dispatch({ type: commonTypes.SUCCESS, message: "Patient details updated succesfully" })
     }).catch(err => {
-      dispatch({ type: commonTypes.ERROR, error: err })
+      dispatch({ type: commonTypes.ERROR, payload: err })
     });
 }
 
@@ -88,7 +94,7 @@ export const deletePatient = (id) => (dispatch, getState) => {
       dispatch({ type: recordTypes.DELETE_PATIENT })
       dispatch({ type: commonTypes.SUCCESS, message: "Patient details deleted" })
     }).catch(err => {
-      dispatch({ type: commonTypes.ERROR, error: err })
+      dispatch({ type: commonTypes.ERROR, payload: err })
     });
 }
 
@@ -111,7 +117,7 @@ export const addScheme = (patient_id, data) => (dispatch, getState) => {
       dispatch({ type: recordTypes.ADD_SCHEME, payload: res.data })
       dispatch({ type: commonTypes.SUCCESS, message: "Scheme details saved succesfully" })
     }).catch(err => {
-      dispatch({ type: commonTypes.ERROR, error: err })
+      dispatch({ type: commonTypes.ERROR, payload: err })
     });
 }
 
@@ -122,7 +128,7 @@ export const updateScheme = (patient_id, id, data) => (dispatch, getState) => {
       dispatch({ type: recordTypes.UPDATE_SCHEME, payload: res.data })
       dispatch({ type: commonTypes.SUCCESS, message: "Scheme details updated succesfully" })
     }).catch(err => {
-      dispatch({ type: commonTypes.ERROR, error: err })
+      dispatch({ type: commonTypes.ERROR, payload: err })
     });
 }
 
@@ -134,7 +140,7 @@ export const deleteScheme = (patient_id, id) => (dispatch, getState) => {
       dispatch({ type: recordTypes.DELETE_SCHEME, payload: id })
       dispatch({ type: commonTypes.SUCCESS, message: "Scheme details saved succesfully" })
     }).catch(err => {
-      // dispatch({ type: commonTypes.ERROR, error: err })
+      // dispatch({ type: commonTypes.ERROR, payload: err })
     });
 }
 
@@ -171,6 +177,6 @@ export const addHealthFile = (data) => (dispatch, getState) => {
       dispatch({ type: recordTypes.ADD_HEALTH_FILE, payload: res.data })
       dispatch({ type: commonTypes.SUCCESS, message: "HealthFile details saved succesfully" })
     }).catch(err => {
-      dispatch({ type: commonTypes.ERROR, error: err.data })
+      dispatch({ type: commonTypes.ERROR, payload: err.data })
     });
 }

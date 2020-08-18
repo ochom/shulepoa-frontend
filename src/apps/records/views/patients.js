@@ -6,9 +6,8 @@ import { Link } from 'react-router-dom';
 
 export class Patients extends Component {
   state = {
-    patient_search_name: "",
-    patient_search_phone: "",
-    patient_search_id_no: "",
+    patients: [],
+    search: "",
     showModal: false,
     select_patient: null,
 
@@ -23,6 +22,12 @@ export class Patients extends Component {
 
   componentDidMount() {
     this.props.getPatients()
+  }
+
+  componentDidUpdate(nextProps) {
+    if (nextProps !== this.props) {
+      this.setState({ patients: nextProps.patients })
+    }
   }
 
   onChange = (e) => this.setState({ [e.target.name]: e.target.value });
@@ -85,7 +90,7 @@ export class Patients extends Component {
 
   onsearchPatient = () => {
     const data = {
-      "fullname": this.state.patient_search_name,
+      "fullname": this.state.search,
       "id_no": this.state.patient_search_id_no,
       "phone": this.state.patient_search_phone,
     }
@@ -95,6 +100,7 @@ export class Patients extends Component {
 
   render() {
     const { GENDERS, ID_TYPES, KIN_RELATIONSHIPS, MARITAL_STATUSES } = this.props.common.CONSTANTS;
+    const { patients } = this.state
 
     const patient_details =
       <Modal isOpen={this.state.showModal} size="lg">
@@ -239,22 +245,6 @@ export class Patients extends Component {
         </form>
       </Modal >
 
-
-    const patient_filter_list = this.props.patients.patients_list.map((patient, index) =>
-      <tr key={index}>
-        <td>{patient.id}</td>
-        <td>{patient.fullname}</td>
-        <td>{GENDERS[patient.sex]}</td>
-        <td>{patient.phone}</td>
-        <td>{`${patient.county}, ${patient.country}`}</td>
-        <td className="text-center">
-          <button className="btn btn-sm p-0 border-none text-success"
-            onClick={() => this.onEditPatient(patient)}><i className="fa fa-edit"></i> Edit</button>{' | '}
-          <Link to={`/records/patients/${patient.id}`}
-            className="btn btn-sm p-0 border-none text-primary"><i className="fa fa-user"></i> View profile</Link>
-        </td>
-      </tr>
-    )
     return (
       <>
         {patient_details}
@@ -262,44 +252,15 @@ export class Patients extends Component {
           <div className="card">
             <div className="card-header py-1 px-3">
               <div className="py-1 px-2"><i className="fa fa-globe"></i> Manage patient records</div>
+              <input className="form-control form-control-sm"
+                name="search"
+                value={this.state.search}
+                onChange={this.onChange}
+                placeholder="Search..." />
               <button
-                style={{ float: "right" }}
                 className="btn btn-sm py-1 px-2 mr-auto"
                 onClick={this.onNewPatient}><i className="fa fa-plus-circle mr-2"></i> Add Patient
               </button>
-            </div>
-            <div className="card-body p-0 pb-2">
-              <div className="row col-12 mx-auto mt-3">
-                <div className="form-group  col-3">
-                  <label>Patient Name</label>
-                  <input className="form-control form-control-sm"
-                    name="patient_search_name"
-                    value={this.state.patient_search_name}
-                    onChange={this.onChange}
-                    placeholder="Enter name" />
-                </div>
-                <div className="form-group  col-3">
-                  <label>Mobile</label>
-                  <input className="form-control form-control-sm"
-                    name="patient_search_phone"
-                    value={this.state.patient_search_phone}
-                    onChange={this.onChange}
-                    placeholder="Enter phone number" />
-                </div>
-                <div className="form-group col-3">
-                  <label>ID Number</label>
-                  <input className="form-control form-control-sm"
-                    name="patient_search_id_no"
-                    value={this.state.patient_search_id_no}
-                    onChange={this.onChange}
-                    placeholder="Enter ID number" />
-                </div>
-                <div className="form-group  col-12">
-                  <button
-                    className="btn btn-sm btn-outline-success cu-text-primary"
-                    onClick={this.onsearchPatient}><i className="fa fa-search mr-2"></i> Find Patient</button>
-                </div>
-              </div>
             </div>
           </div>
 
@@ -312,7 +273,21 @@ export class Patients extends Component {
                   <tr><th>#Reg.</th><th>Full name</th><th>Gender</th><th>Mobile</th><th>Address</th><th className="text-center">Action</th></tr>
                 </thead>
                 <tbody>
-                  {patient_filter_list}
+                  {patients.map((patient, index) =>
+                    <tr key={index}>
+                      <td>{patient.id}</td>
+                      <td>{patient.fullname}</td>
+                      <td>{GENDERS[patient.sex]}</td>
+                      <td>{patient.phone}</td>
+                      <td>{`${patient.county}, ${patient.country}`}</td>
+                      <td className="text-center">
+                        <button className="btn btn-sm p-0 border-none text-success"
+                          onClick={() => this.onEditPatient(patient)}><i className="fa fa-edit"></i> Edit</button>{' | '}
+                        <Link to={`/records/patients/${patient.id}`}
+                          className="btn btn-sm p-0 border-none text-primary"><i className="fa fa-user"></i> View profile</Link>
+                      </td>
+                    </tr>
+                  )}
                 </tbody>
               </table>
             </div>
@@ -324,7 +299,7 @@ export class Patients extends Component {
 }
 
 const mapStateToProps = state => ({
-  patients: state.patients,
+  patients: state.records.patients,
   common: state.common,
 });
 

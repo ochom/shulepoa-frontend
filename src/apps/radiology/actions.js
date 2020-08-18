@@ -30,7 +30,7 @@ export const saveSample = (data) => (dispatch, getState) => {
     .then(res => {
       dispatch({ type: commonTypes.SUCCESS, message: "Sample saved succesfully" });
     }).catch(err => {
-      dispatch({ type: commonTypes.ERROR, error: err });
+      dispatch({ type: commonTypes.ERROR, payload: err });
     })
     .finally(() =>
       dispatch({ type: commonTypes.DONE })
@@ -59,7 +59,7 @@ export const saveResults = (data) => (dispatch, getState) => {
       dispatch({ type: radTypes.ADD_RAD_RESULT, payload: res.data });
       dispatch({ type: commonTypes.SUCCESS, message: "Results saved succesfully" });
     }).catch(err => {
-      dispatch({ type: commonTypes.ERROR, error: err });
+      dispatch({ type: commonTypes.ERROR, payload: err });
     })
     .finally(() =>
       dispatch({ type: commonTypes.DONE })

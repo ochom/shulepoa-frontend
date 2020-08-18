@@ -55,7 +55,7 @@ export const getStores = () => (dispatch, getState) => {
       dispatch({ type: inventoryTypes.GET_STORES, payload: res.data })
     })
     .catch((err) => {
-      dispatch({ type: commonTypes.ERROR, error: err });
+      dispatch({ type: commonTypes.ERROR, payload: err });
     })
     .finally(() => {
       dispatch({ type: commonTypes.DONE });
@@ -70,7 +70,7 @@ export const addStore = (data) => (dispatch, getState) => {
       dispatch({ type: commonTypes.SUCCESS, message: "Store added succesfully" })
     })
     .catch((err) => {
-      dispatch({ type: commonTypes.ERROR, error: err });
+      dispatch({ type: commonTypes.ERROR, payload: err });
     })
     .finally(() => {
       dispatch({ type: commonTypes.DONE });
@@ -84,7 +84,7 @@ export const getStore = (id) => (dispatch, getState) => {
       dispatch({ type: inventoryTypes.GET_STORE, payload: res.data });
     })
     .catch((err) => {
-      dispatch({ type: commonTypes.ERROR, error: err });
+      dispatch({ type: commonTypes.ERROR, payload: err });
     })
     .finally(() => {
       dispatch({ type: commonTypes.DONE })
@@ -99,7 +99,7 @@ export const updateStore = (id, data) => (dispatch, getState) => {
       dispatch({ type: commonTypes.SUCCESS, message: "Store updated succesfully" })
     })
     .catch((err) => {
-      dispatch({ type: commonTypes.ERROR, error: err });
+      dispatch({ type: commonTypes.ERROR, payload: err });
     })
     .finally(() => {
       dispatch({ type: commonTypes.DONE })
@@ -114,7 +114,7 @@ export const deleteStore = (id) => (dispatch, getState) => {
       dispatch({ type: commonTypes.SUCCESS, message: "Store deleted succesfully" })
     })
     .catch((err) => {
-      dispatch({ type: commonTypes.ERROR, error: err });
+      dispatch({ type: commonTypes.ERROR, payload: err });
     })
     .finally(() => {
       dispatch({ type: commonTypes.DONE })
@@ -130,7 +130,7 @@ export const getCategories = () => (dispatch, getState) => {
       dispatch({ type: inventoryTypes.GET_CATEGORIES, payload: res.data })
     })
     .catch((err) => {
-      dispatch({ type: commonTypes.ERROR, error: err });
+      dispatch({ type: commonTypes.ERROR, payload: err });
     })
     .finally(() => {
       dispatch({ type: commonTypes.DONE });
@@ -145,7 +145,7 @@ export const addCategory = (data) => (dispatch, getState) => {
       dispatch({ type: commonTypes.SUCCESS, message: "Category added succesfully" })
     })
     .catch((err) => {
-      dispatch({ type: commonTypes.ERROR, error: err });
+      dispatch({ type: commonTypes.ERROR, payload: err });
     })
     .finally(() => {
       dispatch({ type: commonTypes.DONE });
@@ -159,7 +159,7 @@ export const getCategory = (id) => (dispatch, getState) => {
       dispatch({ type: inventoryTypes.GET_CATEGORY, payload: res.data });
     })
     .catch((err) => {
-      dispatch({ type: commonTypes.ERROR, error: err });
+      dispatch({ type: commonTypes.ERROR, payload: err });
     })
     .finally(() => {
       dispatch({ type: commonTypes.DONE })
@@ -174,7 +174,7 @@ export const updateCategory = (id, data) => (dispatch, getState) => {
       dispatch({ type: commonTypes.SUCCESS, message: "Category updated succesfully" })
     })
     .catch((err) => {
-      dispatch({ type: commonTypes.ERROR, error: err });
+      dispatch({ type: commonTypes.ERROR, payload: err });
     })
     .finally(() => {
       dispatch({ type: commonTypes.DONE })
@@ -189,7 +189,7 @@ export const deleteCategory = (id) => (dispatch, getState) => {
       dispatch({ type: commonTypes.SUCCESS, message: "Category deleted succesfully" })
     })
     .catch((err) => {
-      dispatch({ type: commonTypes.ERROR, error: err });
+      dispatch({ type: commonTypes.ERROR, payload: err });
     })
     .finally(() => {
       dispatch({ type: commonTypes.DONE })
@@ -205,7 +205,7 @@ export const getUnits = () => (dispatch, getState) => {
       dispatch({ type: inventoryTypes.GET_UNITS, payload: res.data })
     })
     .catch((err) => {
-      dispatch({ type: commonTypes.ERROR, error: err });
+      dispatch({ type: commonTypes.ERROR, payload: err });
     })
     .finally(() => {
       dispatch({ type: commonTypes.DONE });
@@ -220,7 +220,7 @@ export const addUnit = (data) => (dispatch, getState) => {
       dispatch({ type: commonTypes.SUCCESS, message: "Unit added succesfully" })
     })
     .catch((err) => {
-      dispatch({ type: commonTypes.ERROR, error: err });
+      dispatch({ type: commonTypes.ERROR, payload: err });
     })
     .finally(() => {
       dispatch({ type: commonTypes.DONE });
@@ -234,7 +234,7 @@ export const getUnit = (id) => (dispatch, getState) => {
       dispatch({ type: inventoryTypes.GET_UNIT, payload: res.data });
     })
     .catch((err) => {
-      dispatch({ type: commonTypes.ERROR, error: err });
+      dispatch({ type: commonTypes.ERROR, payload: err });
     })
     .finally(() => {
       dispatch({ type: commonTypes.DONE })
@@ -249,7 +249,7 @@ export const updateUnit = (id, data) => (dispatch, getState) => {
       dispatch({ type: commonTypes.SUCCESS, message: "Unit updated succesfully" })
     })
     .catch((err) => {
-      dispatch({ type: commonTypes.ERROR, error: err });
+      dispatch({ type: commonTypes.ERROR, payload: err });
     })
     .finally(() => {
       dispatch({ type: commonTypes.DONE })
@@ -264,7 +264,7 @@ export const deleteUnit = (id) => (dispatch, getState) => {
       dispatch({ type: commonTypes.SUCCESS, message: "Unit deleted succesfully" })
     })
     .catch((err) => {
-      dispatch({ type: commonTypes.ERROR, error: err });
+      dispatch({ type: commonTypes.ERROR, payload: err });
     })
     .finally(() => {
       dispatch({ type: commonTypes.DONE })
@@ -280,7 +280,7 @@ export const getProducts = () => (dispatch, getState) => {
       dispatch({ type: inventoryTypes.GET_PRODUCTS, payload: res.data })
     })
     .catch((err) => {
-      dispatch({ type: commonTypes.ERROR, error: err });
+      dispatch({ type: commonTypes.ERROR, payload: err });
     })
     .finally(() => {
       dispatch({ type: commonTypes.DONE });
@@ -295,7 +295,7 @@ export const addProduct = (data) => (dispatch, getState) => {
       dispatch({ type: commonTypes.SUCCESS, message: "Product added succesfully" })
     })
     .catch((err) => {
-      dispatch({ type: commonTypes.ERROR, error: err });
+      dispatch({ type: commonTypes.ERROR, payload: err });
     })
     .finally(() => {
       dispatch({ type: commonTypes.DONE });
@@ -309,7 +309,7 @@ export const getProduct = (id) => (dispatch, getState) => {
       dispatch({ type: inventoryTypes.GET_PRODUCT, payload: res.data });
     })
     .catch((err) => {
-      dispatch({ type: commonTypes.ERROR, error: err });
+      dispatch({ type: commonTypes.ERROR, payload: err });
     })
     .finally(() => {
       dispatch({ type: commonTypes.DONE })
@@ -324,7 +324,7 @@ export const updateProduct = (id, data) => (dispatch, getState) => {
       dispatch({ type: commonTypes.SUCCESS, message: "Product updated succesfully" })
     })
     .catch((err) => {
-      dispatch({ type: commonTypes.ERROR, error: err });
+      dispatch({ type: commonTypes.ERROR, payload: err });
     })
     .finally(() => {
       dispatch({ type: commonTypes.DONE })
@@ -339,7 +339,7 @@ export const deleteProduct = (id) => (dispatch, getState) => {
       dispatch({ type: commonTypes.SUCCESS, message: "Product deleted succesfully" })
     })
     .catch((err) => {
-      dispatch({ type: commonTypes.ERROR, error: err });
+      dispatch({ type: commonTypes.ERROR, payload: err });
     })
     .finally(() => {
       dispatch({ type: commonTypes.DONE })
@@ -355,7 +355,7 @@ export const getRequisitions = () => (dispatch, getState) => {
       dispatch({ type: inventoryTypes.GET_REQUISITIONS, payload: res.data })
     })
     .catch((err) => {
-      dispatch({ type: commonTypes.ERROR, error: err });
+      dispatch({ type: commonTypes.ERROR, payload: err });
     })
     .finally(() => {
       dispatch({ type: commonTypes.DONE });
@@ -370,7 +370,7 @@ export const addRequisition = (data) => (dispatch, getState) => {
       dispatch({ type: commonTypes.SUCCESS, message: "Requisition added succesfully" })
     })
     .catch((err) => {
-      dispatch({ type: commonTypes.ERROR, error: err });
+      dispatch({ type: commonTypes.ERROR, payload: err });
     })
     .finally(() => {
       dispatch({ type: commonTypes.DONE });
@@ -384,7 +384,7 @@ export const getRequisition = (id) => (dispatch, getState) => {
       dispatch({ type: inventoryTypes.GET_REQUISITION, payload: res.data });
     })
     .catch((err) => {
-      dispatch({ type: commonTypes.ERROR, error: err });
+      dispatch({ type: commonTypes.ERROR, payload: err });
     })
     .finally(() => {
       dispatch({ type: commonTypes.DONE })
@@ -399,7 +399,7 @@ export const updateRequisition = (id, data) => (dispatch, getState) => {
       dispatch({ type: commonTypes.SUCCESS, message: "Requisition updated succesfully" })
     })
     .catch((err) => {
-      dispatch({ type: commonTypes.ERROR, error: err });
+      dispatch({ type: commonTypes.ERROR, payload: err });
     })
     .finally(() => {
       dispatch({ type: commonTypes.DONE })
@@ -414,7 +414,7 @@ export const deleteRequisition = (id) => (dispatch, getState) => {
       dispatch({ type: commonTypes.SUCCESS, message: "Requisition deleted succesfully" })
     })
     .catch((err) => {
-      dispatch({ type: commonTypes.ERROR, error: err });
+      dispatch({ type: commonTypes.ERROR, payload: err });
     })
     .finally(() => {
       dispatch({ type: commonTypes.DONE })
@@ -429,7 +429,7 @@ export const getSuppliers = () => (dispatch, getState) => {
       dispatch({ type: inventoryTypes.GET_SUPPLIERS, payload: res.data })
     })
     .catch((err) => {
-      dispatch({ type: commonTypes.ERROR, error: err });
+      dispatch({ type: commonTypes.ERROR, payload: err });
     })
     .finally(() => {
       dispatch({ type: commonTypes.DONE })
@@ -444,7 +444,7 @@ export const addSupplier = (data) => (dispatch, getState) => {
       dispatch({ type: commonTypes.SUCCESS, message: "Supplier details saved succesfully" })
     })
     .catch((err) => {
-      dispatch({ type: commonTypes.ERROR, error: err });
+      dispatch({ type: commonTypes.ERROR, payload: err });
     })
     .finally(() => {
       dispatch({ type: commonTypes.DONE })
@@ -458,7 +458,7 @@ export const getSupplier = (id) => (dispatch, getState) => {
       dispatch({ type: inventoryTypes.GET_SUPPLIER, payload: res.data })
     })
     .catch((err) => {
-      dispatch({ type: commonTypes.ERROR, error: err });
+      dispatch({ type: commonTypes.ERROR, payload: err });
     })
     .finally(() => {
       dispatch({ type: commonTypes.DONE })
@@ -473,7 +473,7 @@ export const updateSupplier = (id, data) => (dispatch, getState) => {
       dispatch({ type: commonTypes.SUCCESS, message: "Supplier details updated succesfully" })
     })
     .catch((err) => {
-      dispatch({ type: commonTypes.ERROR, error: err });
+      dispatch({ type: commonTypes.ERROR, payload: err });
     })
     .finally(() => {
       dispatch({ type: commonTypes.DONE })
@@ -488,7 +488,7 @@ export const deleteSupplier = (id) => (dispatch, getState) => {
       dispatch({ type: commonTypes.SUCCESS, message: "Supplier details deleted succesfully" })
     })
     .catch((err) => {
-      dispatch({ type: commonTypes.ERROR, error: err });
+      dispatch({ type: commonTypes.ERROR, payload: err });
     })
     .finally(() => {
       dispatch({ type: commonTypes.DONE })
@@ -502,7 +502,7 @@ export const getOrders = () => (dispatch, getState) => {
       dispatch({ type: inventoryTypes.GET_ORDERS, payload: res.data })
     })
     .catch((err) => {
-      dispatch({ type: commonTypes.ERROR, error: err });
+      dispatch({ type: commonTypes.ERROR, payload: err });
     })
     .finally(() => {
       dispatch({ type: commonTypes.DONE })
@@ -517,7 +517,7 @@ export const addOrder = (data) => (dispatch, getState) => {
       dispatch({ type: commonTypes.SUCCESS, message: "Order details saved succesfully" })
     })
     .catch((err) => {
-      dispatch({ type: commonTypes.ERROR, error: err });
+      dispatch({ type: commonTypes.ERROR, payload: err });
     })
     .finally(() => {
       dispatch({ type: commonTypes.DONE })
@@ -531,7 +531,7 @@ export const getOrder = (id) => (dispatch, getState) => {
       dispatch({ type: inventoryTypes.GET_ORDER, payload: res.data })
     })
     .catch((err) => {
-      dispatch({ type: commonTypes.ERROR, error: err });
+      dispatch({ type: commonTypes.ERROR, payload: err });
     })
     .finally(() => {
       dispatch({ type: commonTypes.DONE })
@@ -546,7 +546,7 @@ export const updateOrder = (id, data) => (dispatch, getState) => {
       dispatch({ type: commonTypes.SUCCESS, message: "Order details updated succesfully" })
     })
     .catch((err) => {
-      dispatch({ type: commonTypes.ERROR, error: err });
+      dispatch({ type: commonTypes.ERROR, payload: err });
     })
     .finally(() => {
       dispatch({ type: commonTypes.DONE })
@@ -561,7 +561,7 @@ export const deleteOrder = (id) => (dispatch, getState) => {
       dispatch({ type: commonTypes.SUCCESS, message: "Order details deleted succesfully" })
     })
     .catch((err) => {
-      dispatch({ type: commonTypes.ERROR, error: err });
+      dispatch({ type: commonTypes.ERROR, payload: err });
     })
     .finally(() => {
       dispatch({ type: commonTypes.DONE })

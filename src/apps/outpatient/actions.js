@@ -49,7 +49,7 @@ export const addVitals = (data) => (dispatch, getState) => {
       dispatch({ type: outpatientTypes.ADD_VITALS, payload: data.health_file })
       dispatch({ type: commonTypes.SUCCESS, message: "Vitals saved succesfully" })
     }).catch(err => {
-      dispatch({ type: commonTypes.ERROR, error: err })
+      dispatch({ type: commonTypes.ERROR, payload: err })
     }).finally(() => {
       dispatch({ type: commonTypes.DONE })
     });
@@ -242,7 +242,7 @@ export const saveDischarge = (file_id, data) => (dispatch, getState) => {
       dispatch({ type: commonTypes.SUCCESS, message: "Discharge note saved succesfully" })
       dispatch({ type: outpatientTypes.SAVE_DISCHARGE, payload: data.discharge_note })
     }).catch(err => {
-      dispatch({ type: commonTypes.ERROR, error: err })
+      dispatch({ type: commonTypes.ERROR, payload: err })
     })
     .finally(() =>
       dispatch({ type: commonTypes.DONE })

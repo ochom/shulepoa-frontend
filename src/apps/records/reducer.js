@@ -1,7 +1,7 @@
 import { recordTypes } from './actions.js'
 
 const initialState = {
-  patients_list: [],
+  patients: [],
   patient: null,
   patient_insurance_list: [],
   patient_health_files: [],
@@ -12,7 +12,7 @@ export default function (state = initialState, action) {
     case recordTypes.GET_PATIENTS:
       return {
         ...state,
-        patients_list: action.payload,
+        patients: action.payload,
       };
 
     case recordTypes.GET_PATIENT:
@@ -24,17 +24,17 @@ export default function (state = initialState, action) {
     case recordTypes.ADD_PATIENT:
       return {
         ...state,
-        patients_list: [action.payload,],
+        patients: [action.payload,],
       };
     case recordTypes.UPDATE_PATIENT:
       return {
         ...state,
-        patients_list: [action.payload,],
+        patients: [action.payload,],
       };
     case recordTypes.DELETE_PATIENT:
       return {
         ...state,
-        patients_list: state.patients_list.filter((patient) => patient.id !== action.payload),
+        patients: state.records.filter((patient) => patient.id !== action.payload),
       };
 
     case recordTypes.GET_SCHEMES:

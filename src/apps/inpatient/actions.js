@@ -298,7 +298,7 @@ export const addWard = (data) => (dispatch, getState) => {
       dispatch({ type: inpatientTypes.ADD_WARD, payload: res.data })
       dispatch({ type: commonTypes.SUCCESS, message: "Ward details saved succesfully" })
     }).catch(err => {
-      dispatch({ type: commonTypes.ERROR, error: err })
+      dispatch({ type: commonTypes.ERROR, payload: err })
     })
     .finally(() => {
       dispatch({ type: commonTypes.DONE })
@@ -312,7 +312,7 @@ export const updateWard = (id, data) => (dispatch, getState) => {
       dispatch({ type: inpatientTypes.UPDATE_WARD, payload: res.data })
       dispatch({ type: commonTypes.SUCCESS, message: "Ward details updated succesfully" })
     }).catch(err => {
-      dispatch({ type: commonTypes.ERROR, error: err })
+      dispatch({ type: commonTypes.ERROR, payload: err })
     })
     .finally(() => {
       dispatch({ type: commonTypes.DONE })
@@ -327,7 +327,7 @@ export const deleteWard = (id) => (dispatch, getState) => {
       dispatch({ type: inpatientTypes.DELETE_WARD, payload: id })
       dispatch({ type: commonTypes.SUCCESS, message: "Ward details deleted succesfully" })
     }).catch(err => {
-      // dispatch({ type: commonTypes.ERROR, error: err })
+      // dispatch({ type: commonTypes.ERROR, payload: err })
     })
     .finally(() => {
       dispatch({ type: commonTypes.DONE })
@@ -342,7 +342,7 @@ export const getAdmiedtPatient = (name, id_no, ward) => (dispatch, getState) => 
     .then(res => {
       dispatch({ type: inpatientTypes.GET_ADMITED_PATIENT, payload: res.data })
     }).catch(err => {
-      dispatch({ type: commonTypes.ERROR, error: err })
+      dispatch({ type: commonTypes.ERROR, payload: err })
     })
     .finally(() => {
       dispatch({ type: commonTypes.DONE })
@@ -356,7 +356,7 @@ export const admitPatient = (data) => (dispatch, getState) => {
       dispatch({ type: inpatientTypes.ADMIT_PATIENT, payload: res.data })
       dispatch({ type: commonTypes.SUCCESS, message: "Admission details saved succesfully" })
     }).catch(err => {
-      dispatch({ type: commonTypes.ERROR, error: err })
+      dispatch({ type: commonTypes.ERROR, payload: err })
     })
     .finally(() => {
       dispatch({ type: commonTypes.DONE })

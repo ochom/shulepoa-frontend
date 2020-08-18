@@ -9,14 +9,14 @@ import laboratory from '../apps/laboratory/reducer';
 import outpatient from '../apps/outpatient/reducer';
 import pharmacy from '../apps/pharmacy/reducer';
 import radiology from '../apps/radiology/reducer';
-import patients from '../apps/records/reducer';
+import records from '../apps/records/reducer';
 import revenue from '../apps/revenue/reducer';
 
 export default combineReducers({
   common,
   auth,
   bugs,
-  patients,
+  records,
   hospital,
   outpatient,
   revenue,
