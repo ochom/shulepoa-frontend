@@ -101,7 +101,10 @@ export class Patients extends Component {
 
 
   render() {
-    const { GENDERS, ID_TYPES, KIN_RELATIONSHIPS, MARITAL_STATUSES } = this.props.common.CONSTANTS;
+    const {
+      GENDERS, ID_TYPES, KIN_RELATIONSHIPS,
+      MARITAL_STATUSES, COUNTRIES
+    } = this.props.common.CONSTANTS;
     const { patients } = this.state
 
     const patient_details =
@@ -183,9 +186,13 @@ export class Patients extends Component {
               </div>
               <div className="form-group col-sm-12 col-md-4">
                 <label>Country<sup>*</sup></label>
-                <input className="form-control form-control-sm"
-                  name="country" onChange={this.onChange} value={this.state.country} required={true}
-                />
+                <select className="form-control form-control-sm"
+                  name="country" onChange={this.onChange}
+                  value={this.state.country} required={true}
+                >
+                  <option value="">Select</option>
+                  {COUNTRIES.map((country, index) => <option key={index} value={country}>{country}</option>)}
+                </select>
               </div>
               <div className="form-group col-sm-12 col-md-4">
                 <label>County<sup>*</sup></label>
