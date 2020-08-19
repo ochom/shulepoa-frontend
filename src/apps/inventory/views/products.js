@@ -123,10 +123,11 @@ export class Products extends Component {
 
   render() {
     const { products, categories, stores, units } = this.props.inventory;
+    const { selected_product } = this.state
     const product_modal_view =
       <Modal isOpen={this.state.showModal} size="md">
         <ModalHeader toggle={this.toggleModal}>
-          {this.state.selected_product ? 'Edit Product Details' : 'Add New Product'}
+          {selected_product ? 'Edit Product Details' : 'Add New Product'}
         </ModalHeader>
         <form onSubmit={this.onSubmit}>
           <ModalBody>
@@ -198,7 +199,7 @@ export class Products extends Component {
     const requisition_modal_view =
       <Modal isOpen={this.state.reqModal} size="md">
         <ModalHeader toggle={this.toggleReqModal}>
-          {this.state.selected_product ? 'Edit Product Details' : 'Add New Product'}
+          {selected_product ? 'Edit Product Details' : 'Add New Product'}
         </ModalHeader>
         <form onSubmit={this.onSubmitRequisition}>
           <ModalBody>
@@ -206,7 +207,7 @@ export class Products extends Component {
               <div className="form-group col-12">
                 <label>Product</label>
                 <input className="form-control form-control-sm" name="name" readOnly={true}
-                  value={this.state.selected_product ? this.state.selected_product.name : null} />
+                  value={selected_product ? selected_product.name : null} />
               </div>
               <div className="form-group col-12">
                 <label>Requesting Store<sup>*</sup></label>
@@ -271,14 +272,14 @@ export class Products extends Component {
                     <td>{product.name}</td>
                     <td>{product.label}</td>
                     <td>
-                      {categories.length > 0 ? categories.filter(cat => cat.id === product.category_id)[0].name : ""}
+                      {categories.length > 0 ? categories.find(cat => cat.id === product.category_id).name : ""}
                     </td>
                     <td>
-                      {stores.length > 0 ? stores.filter(store => store.id === product.store_id)[0].name : ""}
+                      {stores.length > 0 ? stores.find(store => store.id === product.store_id).name : ""}
                     </td>
                     <td>
                       {product.inventoryOnHand}{' '}
-                      {units.length > 0 ? units.filter(unit => unit.id === product.unit_id)[0].abbr : ""}
+                      {units.length > 0 ? units.find(unit => unit.id === product.unit_id).abbr : ""}
                     </td>
                     <td>{product.price}</td>
                     <td className="text-center">

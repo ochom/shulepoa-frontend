@@ -54,12 +54,12 @@ export class Requsitions extends Component {
               <div className="form-group col-12">
                 <label>Item</label>
                 <input className="form-control form-control-sm" name="product_id" readOnly={true}
-                  value={selected_requisition ? selected_requisition.product_id : ""} onChange={this.onChange} />
+                  value={(products.length > 0 && selected_requisition) ? products.find(pr => pr.id === selected_requisition.product_id).name : ""} onChange={this.onChange} />
               </div>
               <div className="form-group col-12">
                 <label>Receiving Store</label>
                 <input className="form-control form-control-sm" name="store_id" readOnly={true}
-                  value={selected_requisition ? selected_requisition.store_id : ""} onChange={this.onChange} />
+                  value={(stores.length > 0 && selected_requisition) ? stores.find(store => store.id === selected_requisition.store_id).name : ""} onChange={this.onChange} />
               </div>
               <div className="form-group col-6">
                 <label>Requested Quantity</label>
@@ -107,8 +107,8 @@ export class Requsitions extends Component {
                   <tr key={index}>
                     <td>{index + 1}</td>
                     <td>{new Date(requisition.created).toLocaleDateString('en-uk')}</td>
-                    <td>{products.length > 0 ? products.filter(product => product.id === requisition.product_id)[0].name : ""}</td>
-                    <td>{stores.length > 0 ? stores.filter(store => store.id === requisition.store_id)[0].name : ""}</td>
+                    <td>{products.length > 0 ? products.find(product => product.id === requisition.product_id).name : ""}</td>
+                    <td>{stores.length > 0 ? stores.find(store => store.id === requisition.store_id).name : ""}</td>
                     <td>{requisition.quantity_required}</td>
                     <td>{new Date(requisition.required_by).toLocaleDateString('en-uk')}</td>
                     <td className="text-center">

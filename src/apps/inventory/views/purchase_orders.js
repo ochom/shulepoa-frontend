@@ -100,6 +100,7 @@ export class PurchaseOrders extends Component {
 
   render() {
     const { products, suppliers, orders } = this.props.inventory;
+    const { selected_order } = this.state
 
     const search_item_modal_view =
       <Modal isOpen={this.state.searchModal} size="md">
@@ -189,17 +190,17 @@ export class PurchaseOrders extends Component {
               <div className="form-group col-12">
                 <label>Item</label>
                 <input className="form-control form-control-sm" name="product_id" readOnly={true}
-                  value={(products && this.state.selected_order) ? products.filter(pr => pr.id === this.state.selected_order.product_id)[0].name : ""} />
+                  value={(products.length > 0 && selected_order) ? products.find(pr => pr.id === selected_order.product_id).name : ""} />
               </div>
               <div className="form-group col-12">
                 <label>Supplier</label>
                 <input className="form-control form-control-sm" name="supplier_id" readOnly={true}
-                  value={(suppliers && this.state.selected_order) ? suppliers.filter(supplier => supplier.id === this.state.selected_order.supplier_id)[0].name : ""} />
+                  value={(suppliers.length > 0 && selected_order) ? suppliers.find(supplier => supplier.id === selected_order.supplier_id).name : ""} />
               </div>
               <div className="form-group col-6">
                 <label>Order Quantity</label>
                 <input className="form-control form-control-sm" name="number_ordered" readOnly={true}
-                  value={this.state.selected_order ? this.state.selected_order.number_ordered : ""} />
+                  value={selected_order ? selected_order.number_ordered : ""} />
               </div>
               <div className="form-group col-6">
                 <label>Supply Quantity</label>
@@ -257,8 +258,8 @@ export class PurchaseOrders extends Component {
                   <tr key={index}>
                     <td>{index + 1}</td>
                     <td>{new Date(order.created).toLocaleDateString('en-uk')}</td>
-                    <td>{products.length > 0 ? products.filter(product => product.id === order.product_id)[0].name : ""}</td>
-                    <td>{suppliers.length > 0 ? suppliers.filter(supplier => supplier.id === order.supplier_id)[0].name : ""}</td>
+                    <td>{products.length > 0 ? products.find(product => product.id === order.product_id).name : ""}</td>
+                    <td>{suppliers.length > 0 ? suppliers.find(supplier => supplier.id === order.supplier_id).name : ""}</td>
                     <td>{order.number_ordered}</td>
                     <td>
                       <button className="btn btn-sm rounded btn-primary" onClick={() => this.onNewSupply(order)}>Receive Goods</button>

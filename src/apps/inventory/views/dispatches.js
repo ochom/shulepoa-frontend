@@ -39,8 +39,8 @@ export class Dispatches extends Component {
                   <tr key={index}>
                     <td>{index + 1}</td>
                     <td>{new Date(requisition.created).toLocaleDateString('en-uk')}</td>
-                    <td>{products.length > 0 ? products.filter(product => product.id === requisition.product_id)[0].name : ""}</td>
-                    <td>{stores.length > 0 ? stores.filter(store => store.id === requisition.store_id)[0].name : ""}</td>
+                    <td>{products.length > 0 ? products.find(product => product.id === requisition.product_id).name : ""}</td>
+                    <td>{stores.length > 0 ? stores.find(store => store.id === requisition.store_id).name : ""}</td>
                     <td>{requisition.quantity_required}</td>
                     <td>{new Date(requisition.required_by).toLocaleDateString('en-uk')}</td>
                   </tr>

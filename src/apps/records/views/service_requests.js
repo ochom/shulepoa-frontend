@@ -33,7 +33,7 @@ export class ServiceRequests extends Component {
   addRequest = (service) => {
     const data = {
       patient_id: this.state.patient_id,
-      service_id: service.id,
+      service_name: service.name,
       department: service.department,
       quantity: 1,
       price: service.price,
@@ -112,7 +112,7 @@ export class ServiceRequests extends Component {
                   <tr key={index}>
                     <td>{index + 1}</td>
                     <td>{new Date(req.created).toLocaleString("en-UK")}</td>
-                    <td>{services.length > 0 ? services.find(service => service.id === req.service_id).name : ""}</td>
+                    <td>{req.service_name}</td>
                     <td>{DEPARTMENTS[req.department]}</td>
                     <td>{req.cost}</td>
                   </tr>

@@ -5,7 +5,6 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
 import Auth from './apps/auth';
 import { loadUser } from './apps/auth/actions';
-import AdminRoute from './apps/auth/views/admin_route';
 import PrivateRoute from './apps/auth/views/private_route';
 import Profile from './apps/auth/views/profile';
 import public_page from './apps/auth/views/public_page';
@@ -54,7 +53,8 @@ export class App extends Component {
               <PrivateRoute path="/laboratory" component={laboratory} />
               <PrivateRoute path="/radiology" component={radiology} />
               <PrivateRoute path="/inpatient" component={inpatient} />
-              <AdminRoute path="/revenue" component={Revenue} />
+              <PrivateRoute path="/revenue" component={Revenue} />
+              {/* <AdminRoute path="/revenue" component={Revenue} /> */}
               <PrivateRoute path="/inventory" component={Inventory} />
               <Route exact path="/public/page" component={public_page} />
               <PrivateRoute path="/profile" component={Profile} />

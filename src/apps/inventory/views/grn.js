@@ -41,8 +41,8 @@ export class GRN extends Component {
                   <tr key={index}>
                     <td>{index + 1}</td>
                     <td>{new Date(order.created).toLocaleDateString('en-uk')}</td>
-                    <td>{products.length > 0 ? products.filter(product => product.id === order.product_id)[0].name : ""}</td>
-                    <td>{suppliers.length > 0 ? suppliers.filter(supplier => supplier.id === order.supplier_id)[0].name : ""}</td>
+                    <td>{products.length > 0 ? products.find(product => product.id === order.product_id).name : ""}</td>
+                    <td>{suppliers.length > 0 ? suppliers.find(supplier => supplier.id === order.supplier_id).name : ""}</td>
                     <td>{order.number_ordered}</td>
                     <td>{new Date(order.updated).toLocaleDateString('en-uk')}</td>
                     <td>{order.number_received}</td>

@@ -89,7 +89,7 @@ export class Units extends Component {
         {unit_modal_view}
         <div className="card">
           <div className="card-header py-1 px-3">
-            <div className="py-1 px-2">Store units</div>
+            <div className="py-1 px-2">Measurement units</div>
             <button
               className="btn btn-sm "
               onClick={this.onNewUnit}><i className="fa fa-plus-circle mr-2"></i> Add Unit

@@ -3,7 +3,7 @@ import { Route, Link } from 'react-router-dom'
 import Sidenav from '../common/sidenav'
 import { connect } from 'react-redux'
 import { getServices, getInsurances } from '../hospital/actions'
-import CashPoint from './views/payments_queue'
+import CashPoint from './views/cashpoint'
 import Topnav from '../common/topnav'
 
 export class Revenue extends Component {
@@ -16,10 +16,10 @@ export class Revenue extends Component {
   render() {
     const menu_list =
       <div className="list-group">
-        <Link to="/revenue/cashpoint/payment-queue" className="list-group-item"><i className="fa fa-users"></i> Clients Queue</Link>
-        <Link to="/revenue/cashpoint/custom-payments" className="list-group-item"><i className="fa fa-credit-card"></i> Custom payments</Link>
-        <Link to="/revenue/accounts/invoices" className="list-group-item"><i className="fa fa-list"></i> Billing Invoices</Link>
-        <Link to="/revenue/accounts/claims" className="list-group-item"><i className="fa fa-briefcase"></i> Claims</Link>
+        <Link to="/revenue/cashpoint" className="list-group-item"><i className="fa fa-money"></i> Cashpoint</Link>
+        <Link to="/revenue/billing" className="list-group-item"><i className="fa fa-credit-card"></i> Billing</Link>
+        <Link to="/revenue/invoicing" className="list-group-item"><i className="fa fa-list"></i> Invoices</Link>
+        <Link to="/revenue/claims" className="list-group-item"><i className="fa fa-briefcase"></i> Claims</Link>
       </div>
     return (
       <>

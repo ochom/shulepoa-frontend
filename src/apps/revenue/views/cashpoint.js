@@ -8,7 +8,7 @@ import { loadPaymentQueue, savePayment } from '../actions'
 export class CashPoint extends Component {
   state = {
     showModal: false,
-    selected_payment_data: null,
+    selected_queue: null,
     cart_items: [],
     total_bill: 0,
     receipt: false,
@@ -23,8 +23,9 @@ export class CashPoint extends Component {
   onEditPayment = (data) => {
     this.setState({
       showModal: true,
-      selected_payment_data: data,
+      selected_queue: data,
       cart_items: [],
+      total_bill: 0,
       receipt: false,
     })
   }
@@ -33,7 +34,7 @@ export class CashPoint extends Component {
 
   onCheckChange = (data) => {
     var cart_items = this.state.cart_items.filter(item => item.id === data.id)
-    if (cart_items.length > 0) {
+    if (cart_items.length === 1) {
       this.setState({ cart_items: this.state.cart_items.filter(item => item.id !== data.id) }, () => this.calculateBill());
     } else {
       this.setState({ cart_items: [...this.state.cart_items, data] }, () => this.calculateBill());
@@ -44,7 +45,7 @@ export class CashPoint extends Component {
     var cart_items = this.state.cart_items;
     var total_amount = 0;
     for (var i = 0; i < cart_items.length; i++) {
-      total_amount = parseInt(cart_items[i].amount);
+      total_amount += parseInt(cart_items[i].cost);
     }
     this.setState({ total_bill: total_amount });
   }
@@ -52,7 +53,7 @@ export class CashPoint extends Component {
 
   onSavePayment = () => {
     const {
-      selected_payment_data,
+      selected_queue,
       cart_items, } = this.state;
 
     const data = {
@@ -60,7 +61,7 @@ export class CashPoint extends Component {
     }
 
     if (cart_items.length > 0) {
-      this.props.savePayment(selected_payment_data.patient.id, data);
+      this.props.savePayment(selected_queue.patient.id, data);
       this.setState({ receipt: true });
     }
   }
@@ -85,19 +86,7 @@ export class CashPoint extends Component {
 
   render() {
     const { payment_queue } = this.props.revenue;
-    const { selected_payment_data } = this.state;
-    const queue_list = payment_queue.map((queue, index) =>
-      <tr key={index}>
-        <td>{queue.patient.fullname}</td>
-        <td>{queue.patient.id}</td>
-        <td>{queue.patient.phone}</td>
-        <td>{queue.total_bill}</td>
-        <td className="text-center">
-          <button className="btn btn-sm p-0 border-none text-success"
-            onClick={() => this.onEditPayment(queue)}><i className="fa fa-edit"></i> Make Payments</button></td>
-      </tr>
-    );
-
+    const { selected_queue } = this.state;
     const payment_modal =
       <Modal isOpen={this.state.showModal} size="md">
         <ModalHeader toggle={this.toggleModal}>
@@ -108,7 +97,7 @@ export class CashPoint extends Component {
             <div className="col-12 mx-auto">
               <table className="table table-sm stripped">
                 <tbody>
-                  {selected_payment_data ? selected_payment_data.service_requests.map((service_req, index) =>
+                  {selected_queue ? selected_queue.service_requests.map((service_req, index) =>
                     <tr key={index}>
                       <td>{index + 1}</td>
                       <td>{service_req.service_name}</td>
@@ -122,8 +111,8 @@ export class CashPoint extends Component {
               </div>
             </div>
             : <div className="col-12 mx-auto" id="receipt_div">
-              <h5 className="text-center mt-3 pt-5">Payment Receipt</h5>
-              <p className="p-0 m-0">Ochom Richard</p>
+              <h5 className="text-center mt-3">Payment Receipt</h5>
+              <p className="p-0 m-0">{this.state.selected_queue.patient.fullname}</p>
               <p className="p-0 m-0">{new Date().toLocaleString("en-UK")}</p>
               <table className="table table-bordered table-sm">
                 <thead>
@@ -152,14 +141,16 @@ export class CashPoint extends Component {
             </div>}
         </ModalBody >
         <ModalFooter>
-          {!this.state.receipt ?
-            <Button type="submit" color="primary" size="sm"
-              onClick={this.onSavePayment}><i className="fa fa-check"></i> Submit</Button> :
-            <Button type="submit" color="success" size="sm"
-              onClick={this.printReceipt}> <i className="fa fa-print"></i> Print</Button>}
-          {' '}
-          <Button color="danger" size="sm" onClick={this.toggleModal}>
-            <i className="fa fa-close"></i> Cancel</Button>
+          <Button type="submit" color="primary" size="md"
+            onClick={this.onSavePayment}><i className="fa fa-money"></i> Cash</Button>
+          <Button type="submit" color="success" size="md"
+            onClick={this.onSavePayment}><i className="fa fa-mobile"></i> M-PESA</Button>
+          <Button type="submit" color="secondary" size="md"
+            onClick={this.onSavePayment}><i className="fa fa-credit-card"></i> Credit card</Button>
+          <Button type="submit" color="warning" size="md"
+            onClick={this.onSavePayment}><i className="fa fa-briefcase"></i> Insurance</Button>
+          {/* <Button type="submit" color="success" size="sm"
+            onClick={this.printReceipt}> <i className="fa fa-print"></i> Print</Button> */}
         </ModalFooter>
       </Modal >
 
@@ -174,15 +165,27 @@ export class CashPoint extends Component {
             <table className="table table-sm table-striped table-bordered">
               <thead className="cu-text-primary">
                 <tr>
-                  <th>Patient's Name</th>
-                  <th># Reg.</th>
+                  <th>#</th>
+                  <th>Client</th>
+                  <th>ID No.</th>
                   <th>Mobile</th>
                   <th>Total Bill</th>
                   <th className="text-center">Action</th>
                 </tr>
               </thead>
               <tbody>
-                {queue_list}
+                {payment_queue.map((queue, index) =>
+                  <tr key={index}>
+                    <td>{index + 1}</td>
+                    <td>{queue.patient.fullname}</td>
+                    <td>{queue.patient.id_no}</td>
+                    <td>{queue.patient.phone}</td>
+                    <td>{queue.total_bill}</td>
+                    <td className="text-center">
+                      <button className="btn btn-sm p-0 px-2 border-none rounded btn-primary"
+                        onClick={() => this.onEditPayment(queue)}>Make Payments</button></td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>
