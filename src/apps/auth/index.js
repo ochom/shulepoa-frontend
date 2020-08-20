@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Route, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import login from './views/login'
-import signup from './views/signup'
 import { logout } from './actions'
 
 export class Auth extends Component {
@@ -25,7 +24,6 @@ export class Auth extends Component {
               <>
                 <Route path={`${url}`} component={login} exact />
                 <Route path={`${url}/login`} component={login} />
-                <Route path={`${url}/signup`} component={signup} />
               </>
             )}
           />

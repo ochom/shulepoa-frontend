@@ -15,32 +15,23 @@ export default function (state = initialState, action) {
         isLoading: true,
       };
     case authTypes.USER_LOADED:
-      return {
-        ...state,
-        isAuthenticated: true,
-        isLoading: false,
-        user: action.payload,
-      };
-    case authTypes.LOGIN_SUCCESS:
-    case authTypes.REGISTER_SUCCESS:
+    case authTypes.AUTH_SUCCESS:
       localStorage.setItem('token', action.payload.token);
       return {
         ...state,
-        ...action.payload,
+        user: action.payload.user,
+        token: action.payload.token,
         isAuthenticated: true,
         isLoading: false,
       };
     case authTypes.AUTH_ERROR:
-    case authTypes.LOGIN_FAIL:
-    case authTypes.LOGOUT_SUCCESS:
-    case authTypes.REGISTER_FAIL:
       localStorage.removeItem('token');
       return {
         ...state,
+        isLoading: false,
+        isAuthenticated: false,
         token: null,
         user: null,
-        isAuthenticated: false,
-        isLoading: false,
       };
     default:
       return state;

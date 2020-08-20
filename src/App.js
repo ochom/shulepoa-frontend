@@ -2,6 +2,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
 import Auth from './apps/auth';
 import { loadUser } from './apps/auth/actions';
@@ -30,6 +32,23 @@ export class App extends Component {
     this.props.loadICD10()
     setTimeout(() => this.setState({ isLoading: false }), 6000);
   }
+
+  componentDidUpdate(nextProps) {
+    if (nextProps.common.message !== this.props.common.message && nextProps.common.message) {
+      if (nextProps.common.status === "success") {
+        toast(nextProps.common.message, {
+          type: "success",
+        })
+        //NotificationManager.success(nextProps.message, "Success")
+      } else {
+        toast(nextProps.common.message, {
+          type: "error",
+        })
+        //NotificationManager.error(nextProps.message, "Error")
+      }
+    }
+  }
+
 
   render() {
     const { isLoading } = this.props.auth;
@@ -67,6 +86,8 @@ export class App extends Component {
                 <i className="fa fa-spinner fa-spin"></i>
               </h1>
             </div>
+
+            <ToastContainer />
           </Fragment >
         </Router >
       );
@@ -74,4 +95,7 @@ export class App extends Component {
   }
 }
 
-export default connect(state => ({ auth: state.auth, common: state.common }), { loadUser, loadICD10 })(App);
+export default connect(state => ({
+  auth: state.auth,
+  common: state.common
+}), { loadUser, loadICD10 })(App);
