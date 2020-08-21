@@ -1,36 +1,53 @@
-import html2canvas from 'html2canvas'
-import jsPDF from 'jspdf'
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
-import { loadPaymentQueue, savePayment } from '../actions'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
+import { loadPaymentQueue, savePayment } from '../actions';
+import { getHospital } from '../../hospital/actions'
+import { PrintPDF } from '../../common/actions';
 
 export class CashPoint extends Component {
   state = {
     showModal: false,
+    confDialog: false,
+    stmModal: false,
     selected_queue: null,
     cart_items: [],
     total_bill: 0,
     receipt: false,
+    payment_method: "",
+    transaction_code: "",
   }
 
   componentDidMount() {
+    this.props.getHospital()
     this.props.loadPaymentQueue();
+    setInterval(() => this.props.loadPaymentQueue(), 60000);
   }
 
   toggleModal = () => this.setState({ showModal: !this.state.showModal });
 
+  toggleStatementModal = () => this.setState({ stmModal: !this.setState.stmModal })
+
+  onChange = (e) => this.setState({ [e.target.name]: e.target.value })
+
+  componentDidUpdate(nextProps) {
+    if (nextProps.revenue !== this.props.revenue) {
+      if (nextProps.revenue.payment_saved && this.state.cart_items.length > 0) {
+        //Show printable statement
+        this.toggleStatementModal()
+      }
+    }
+  }
+
   onEditPayment = (data) => {
     this.setState({
-      showModal: true,
       selected_queue: data,
       cart_items: [],
       total_bill: 0,
-      receipt: false,
-    })
+      payment_method: "",
+      transaction_code: "",
+    }, () => this.toggleModal())
   }
-
-  // seth, teddy, raso
 
   onCheckChange = (data) => {
     var cart_items = this.state.cart_items.filter(item => item.id === data.id)
@@ -50,118 +67,167 @@ export class CashPoint extends Component {
     this.setState({ total_bill: total_amount });
   }
 
+  submit = (payment_method) => {
+    this.setState({ payment_method: payment_method }, () => {
+      var { cart_items, } = this.state;
+      if (cart_items.length === 0) { return }
+      this.toggleConfirmDialog()
+      this.toggleModal()
+    })
+  };
 
-  onSavePayment = () => {
+  toggleConfirmDialog = () => this.setState({ confDialog: !this.state.confDialog })
+
+  onSavePayment = (e) => {
+    e.preventDefault()
     const {
-      selected_queue,
-      cart_items, } = this.state;
+      cart_items,
+      payment_method,
+      transaction_code,
+    } = this.state;
 
     const data = {
-      cart_items
+      cart_items,
+      payment_method,
+      transaction_code,
     }
 
     if (cart_items.length > 0) {
-      this.props.savePayment(selected_queue.patient.id, data);
-      this.setState({ receipt: true });
+      this.props.savePayment(data);
+      this.toggleConfirmDialog();
     }
   }
 
   printReceipt = () => {
-    const input = document.getElementById('receipt_div');
-    html2canvas(input)
-      .then((canvas) => {
-        var imgWidth = 70;
-        // var pageHeight = 290;
-        var imgHeight = canvas.height * imgWidth / canvas.width;
-        // var heightLeft = imgHeight;
-        const imgData = canvas.toDataURL('image/png');
-        const pdf = new jsPDF('p', 'mm', 'a6')
-        var position = 0;
-        // var heightLeft = imgHeight;
-        pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
-        pdf.save("receipt.pdf");
-        this.setState({ showModal: !this.state.showModal, receipt: false });
-      });
+    const html = document.getElementById('payment_statement');
+    PrintPDF(html, "Payment Statement")
+    this.toggleStatementModal()
   }
 
   render() {
-    const { payment_queue } = this.props.revenue;
-    const { selected_queue } = this.state;
+    const { revenue: { payment_queue }, hospital } = this.props;
+    const { selected_queue, payment_method, cart_items } = this.state;
+
     const payment_modal =
       <Modal isOpen={this.state.showModal} size="md">
         <ModalHeader toggle={this.toggleModal}>
-          {this.state.receipt ? 'Print Receipt' : 'Requested Services'}
+          {'Make payments'}
         </ModalHeader>
         <ModalBody>
-          {!this.state.receipt ?
-            <div className="col-12 mx-auto">
-              <table className="table table-sm stripped">
-                <tbody>
-                  {selected_queue ? selected_queue.service_requests.map((service_req, index) =>
-                    <tr key={index}>
-                      <td>{index + 1}</td>
-                      <td>{service_req.service_name}</td>
-                      <td>{service_req.amount}</td>
-                      <td><input type="checkbox" onClick={() => this.onCheckChange(service_req)} /></td>
-                    </tr>) : null}
-                </tbody>
-              </table>
-              <div>
-                <span>Total Payable Amount: </span><b>{this.state.total_bill}</b>
+          <div className="col-12">
+            {selected_queue ? selected_queue.service_requests.map((service_req, index) =>
+              <div key={index} className="py-2 row col-12">
+                <div className="col-2">{index + 1}.</div>
+                <div className="col-5">{service_req.service_name}</div>
+                <div className="col-3">{service_req.amount}</div>
+                <div className="col-2"><input type="checkbox" onClick={() => this.onCheckChange(service_req)} /></div>
               </div>
+            ) : null}
+          </div>
+        </ModalBody >
+        <ModalFooter>
+          <div className="row col-12 py-2 mx-auto">
+            <div className="col-8">Total Payable Amount: </div><div className="col-4 text-right"><b>{this.state.total_bill}</b></div>
+          </div>
+          <Button type="submit" color="primary" size="md"
+            onClick={() => this.submit("cash")}><i className="fa fa-money"></i> Cash</Button>
+          <Button type="submit" color="success" size="md"
+            onClick={() => this.submit("mobile")}><i className="fa fa-mobile"></i> M-PESA</Button>
+          <Button type="submit" color="secondary" size="md"
+            onClick={() => this.submit("visa")}><i className="fa fa-credit-card"></i> C. Card</Button>
+          {(selected_queue && (selected_queue.patient.insurance).length > 0) ?
+            <Button type="submit" color="warning" size="md"
+              onClick={() => this.submit("insurance")}><i className="fa fa-briefcase"></i> Insurance</Button> : null}
+        </ModalFooter>
+      </Modal >
+
+    const confirm_dialog =
+      <Modal isOpen={this.state.confDialog}>
+        <ModalHeader className="bg-success text-light">Confirm payment</ModalHeader>
+        <form onSubmit={this.onSavePayment}>
+          <ModalBody>
+            {(payment_method === "mobile" || payment_method === "visa") ?
+              <>
+                <p>Enter the transaction code here !</p>
+                <input className="form-control" name="transaction_code"
+                  placeholder="Transaction ID" value={this.state.transaction_code}
+                  required={true}
+                  onChange={this.onChange} />
+              </> :
+              <p>Do you want to confirm receiving this payment?</p>
+            }
+          </ModalBody>
+          <ModalFooter>
+            <button type="submit" className="btn btn-success mr-3"
+              onSubmit={this.onSavePayment}>Yes</button>
+            <Button onClick={this.toggleConfirmDialog} color="secondary">No</Button>
+          </ModalFooter>
+        </form>
+      </Modal >
+
+    const statement_modal =
+      <Modal isOpen={this.state.stmModal} size="lg">
+        <ModalHeader className="bg-secondary text-light"
+          toggle={this.toggleStatementModal}>Payment statement</ModalHeader>
+        <ModalBody>
+          <div id="payment_statement" className="row col-12 mx-auto">
+            <div className="col-12">
+              <h3 className="col-12 p-0 m-0 text-center">{hospital ? `${hospital.hospital_name}` : ""}</h3>
+              <h6 className="col-12 p-0 m-0 text-center">{hospital ? `MFL ${hospital.mfl_code}` : ""}</h6>
+              <h6 className="col-12 p-0 m-0 text-center">{hospital ? `${hospital.postal_address}, ${hospital.physical_address}` : ""}</h6>
+              {/* <h6 className="col-12 p-0 m-0 text-center">{hospital ? `${hospital.email}. ${hospital.phone}` : ""}</h6> */}
+              <h5 className="col-12 p-0 m-0 text-center mt-3"><u>{`Payment Statement`}</u></h5>
             </div>
-            : <div className="col-12 mx-auto" id="receipt_div">
-              <h5 className="text-center mt-3">Payment Receipt</h5>
-              <p className="p-0 m-0">{this.state.selected_queue.patient.fullname}</p>
-              <p className="p-0 m-0">{new Date().toLocaleString("en-UK")}</p>
-              <table className="table table-bordered table-sm">
+            <div className="col-6 mt-3">
+              <p className="p-0 m-0">Amount:  <b>{hospital ? `${hospital.currency} ${this.state.total_bill}` : ""}</b></p>
+              <p className="p-0 m-0">Payment Method:  <b>{this.state.payment_method}</b></p>
+              <p className="p-0 m-0">Date: <b>{new Date().toLocaleString('en-uk')}</b></p>
+            </div>
+            <div className="col-6 text-right mt-3">
+              <p className="p-0 m-0">Client: <b>{selected_queue ? selected_queue.patient.fullname : ""}</b></p>
+            </div>
+            <div className="col-12 mx-auto mt-3">
+              <b>Items</b>
+              <table className="table table-bordered table-condensed">
                 <thead>
                   <tr>
                     <th>#</th>
-                    <th>Item</th>
-                    <th>Amount</th>
+                    <th>Service</th>
+                    <th className="text-right">Amount</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {this.state.cart_items.map((item, index) =>
-                    <tr key={index}>
+                  {cart_items.map((item, index) =>
+                    <tr>
                       <td>{index + 1}</td>
                       <td>{item.service_name}</td>
-                      <td>{item.amount}</td>
-                    </tr>)
-                  }
+                      <td className="text-right">{item.cost}</td>
+                    </tr>
+                  )}
                 </tbody>
-                <tfoot>
-                  <tr>
-                    <th colSpan="2">Total Amount</th>
-                    <th>{`${this.state.total_bill}.00`}</th>
-                  </tr>
-                </tfoot>
               </table>
-            </div>}
-        </ModalBody >
+            </div>
+          </div>
+        </ModalBody>
         <ModalFooter>
-          <Button type="submit" color="primary" size="md"
-            onClick={this.onSavePayment}><i className="fa fa-money"></i> Cash</Button>
-          <Button type="submit" color="success" size="md"
-            onClick={this.onSavePayment}><i className="fa fa-mobile"></i> M-PESA</Button>
-          <Button type="submit" color="secondary" size="md"
-            onClick={this.onSavePayment}><i className="fa fa-credit-card"></i> Credit card</Button>
-          <Button type="submit" color="warning" size="md"
-            onClick={this.onSavePayment}><i className="fa fa-briefcase"></i> Insurance</Button>
-          {/* <Button type="submit" color="success" size="sm"
-            onClick={this.printReceipt}> <i className="fa fa-print"></i> Print</Button> */}
+          <Button onClick={this.printReceipt} color="primary"><i className="fa fa-print"></i> Print</Button>
+          <Button onClick={this.toggleStatementModal} color="secondary"><i className="fa fa-close"></i> Cancel</Button>
         </ModalFooter>
       </Modal >
 
     return (
       <div className="col-md-10 mx-auto mt-3">
         {payment_modal}
+        {confirm_dialog}
+        {statement_modal}
         <div className="card">
           <div className="card-header py-1 px-3">
             <div>Payment Queue</div>
           </div>
           <div className="card-body p-0 pb-2">
+            {this.props.common.silent_processing ?
+              <span className="text-success"><i className="fa fa-refresh fa-spin"></i></span> : null
+            }
             <table className="table table-sm table-striped table-bordered">
               <thead className="cu-text-primary">
                 <tr>
@@ -198,4 +264,6 @@ export class CashPoint extends Component {
 
 export default connect(state => ({
   revenue: state.revenue,
-}), { loadPaymentQueue, savePayment })(CashPoint)
+  common: state.common,
+  hospital: state.hospital.hospital_profile
+}), { getHospital, loadPaymentQueue, savePayment })(CashPoint)

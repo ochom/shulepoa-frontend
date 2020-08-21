@@ -30,6 +30,7 @@ export const saveSample = (data) => (dispatch, getState) => {
   dispatch({ type: commonTypes.PROCESSING })
   Axios.post(`${API_PATH}laboratory/sampling/`, JSON.stringify(data), tokenConfig(getState))
     .then(res => {
+      dispatch(getSamplingQueue())
       dispatch({ type: commonTypes.SUCCESS, message: "Sample saved succesfully" });
     }).catch(err => {
       dispatch({ type: commonTypes.ERROR, payload: err });

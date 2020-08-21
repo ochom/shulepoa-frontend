@@ -22,6 +22,7 @@ export const recordTypes = {
 
 // Registration
 export const getPatients = () => (dispatch, getState) => {
+  dispatch({ type: commonTypes.SILENT_PROCESSING })
   Axios.get(`${API_PATH}records/patients/`, tokenConfig(getState))
     .then(res => {
       dispatch({ type: recordTypes.GET_PATIENTS, payload: res.data })

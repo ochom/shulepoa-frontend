@@ -2,6 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import 'react-tabs/style/react-tabs.css';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
@@ -67,12 +68,12 @@ export class App extends Component {
               <PrivateRoute exact path="/" component={Dashboard} />
               <PrivateRoute path="/hospital" component={Hospital} />
               <PrivateRoute path="/records" component={Records} />
+              <PrivateRoute path="/revenue" component={Revenue} />
               <PrivateRoute path="/outpatient" component={outpatient} />
               <PrivateRoute path="/pharmacy" component={pharmacy} />
               <PrivateRoute path="/laboratory" component={laboratory} />
               <PrivateRoute path="/radiology" component={radiology} />
               <PrivateRoute path="/inpatient" component={inpatient} />
-              <PrivateRoute path="/revenue" component={Revenue} />
               {/* <AdminRoute path="/revenue" component={Revenue} /> */}
               <PrivateRoute path="/inventory" component={Inventory} />
               <Route exact path="/public/page" component={public_page} />

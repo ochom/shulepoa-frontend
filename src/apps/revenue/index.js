@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { getServices, getInsurances } from '../hospital/actions'
 import CashPoint from './views/cashpoint'
 import Topnav from '../common/topnav'
+import Invoices from './views/invoices'
 
 export class Revenue extends Component {
 
@@ -17,9 +18,8 @@ export class Revenue extends Component {
     const menu_list =
       <div className="list-group">
         <Link to="/revenue/cashpoint" className="list-group-item"><i className="fa fa-money"></i> Cashpoint</Link>
-        <Link to="/revenue/billing" className="list-group-item"><i className="fa fa-credit-card"></i> Billing</Link>
         <Link to="/revenue/invoicing" className="list-group-item"><i className="fa fa-list"></i> Invoices</Link>
-        <Link to="/revenue/claims" className="list-group-item"><i className="fa fa-briefcase"></i> Claims</Link>
+        <Link to="/revenue/claims" className="list-group-item"><i className="fa fa-briefcase"></i> Corporate payments</Link>
       </div>
     return (
       <>
@@ -33,7 +33,7 @@ export class Revenue extends Component {
                 <>
                   <Route path={`${url}`} component={CashPoint} exact />
                   <Route path={`${url}/cashpoint`} component={CashPoint} exact />
-                  <Route path={`${url}/cashpoint/payment-queue`} component={CashPoint} />
+                  <Route path={`${url}/invoicing`} component={Invoices} />
                   <Route path={`${url}/cashpoint/custom-payments`} component={CashPoint} />
                 </>
               )}

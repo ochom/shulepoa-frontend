@@ -274,6 +274,9 @@ export class Patients extends Component {
           <div className="card mt-4">
             <div className="card-header"></div>
             <div className="card-bodyp-0">
+              {this.props.common.silent_processing ?
+                <span className="text-success"><i className="fa fa-refresh fa-spin"></i></span> : null
+              }
               <table className="table table-sm table-striped table-bordered">
                 <caption className="px-2"><i>Recent patients | Search results</i></caption>
                 <thead className="">

@@ -51,7 +51,6 @@ export class Sampling extends Component {
       specimen: "",
       sampling_comment: "",
     });
-    this.props.getSamplingQueue();
   }
 
   render() {

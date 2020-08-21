@@ -16,7 +16,7 @@ class Sidenav extends Component {
             {this.props.menus}
             <div className="list-group">
               <Link to="/issues" className="list-group-item">
-                <i className="fa fa-bug"></i> Bugs &amp; Issues</Link>
+                <i className="fa fa-bug"></i> Report Issues</Link>
             </div>
             {/* <div className="list-group">
               <Link to="/profile" className="list-group-item">

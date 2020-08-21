@@ -1,6 +1,7 @@
 import { revenueTypes } from './actions'
 
 const initialState = {
+  payment_saved: false,
   payment_queue: [],
   opd_ser_reqs: []
 };
@@ -12,10 +13,17 @@ export default function (state = initialState, action) {
         ...state,
         payment_queue: action.payload,
       };
-    case revenueTypes.MAKE_PAYMENTS:
+
+    case revenueTypes.SAVING_PAYMENT:
       return {
         ...state,
-        payment_queue: state.payment_queue.filter((queue) => queue.patient.id !== action.payload),
+        payment_saved: false,
+      };
+
+    case revenueTypes.PAYMENT_SAVED:
+      return {
+        ...state,
+        payment_saved: true,
       };
 
 

@@ -33,6 +33,7 @@ export class ServiceRequests extends Component {
   addRequest = (service) => {
     const data = {
       patient_id: this.state.patient_id,
+      service_id: service.id,
       service_name: service.name,
       department: service.department,
       quantity: 1,
@@ -52,7 +53,7 @@ export class ServiceRequests extends Component {
   }
 
   render() {
-    const { common: { CONSTANTS: { DEPARTMENTS } }, hospital: { services }, opd_ser_reqs } = this.props
+    const { common: { CONSTANTS: { DEPARTMENTS } }, opd_ser_reqs } = this.props
     const book_appointment_view =
       <Modal isOpen={this.state.showModal} size="md">
         <ModalHeader toggle={this.toggleModal}>Request service</ModalHeader>
