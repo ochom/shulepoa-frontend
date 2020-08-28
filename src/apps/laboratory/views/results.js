@@ -92,7 +92,7 @@ export class Results extends Component {
     );
 
     return (
-      <div className="row col-12 mt-2">
+      <div className="row col-12 mx-auto mt-2">
         <div className={`${this.state.selected_queue_data ? 'col-7' : 'col-12'} mx-auto`}>
           <div className="card">
             <div className="card-header py-1 px-3">Running Tests</div>

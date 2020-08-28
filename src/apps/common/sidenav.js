@@ -18,15 +18,6 @@ class Sidenav extends Component {
               <Link to="/issues" className="list-group-item">
                 <i className="fa fa-bug"></i> Report Issues</Link>
             </div>
-            {/* <div className="list-group">
-              <Link to="/profile" className="list-group-item">
-                <i className="fa fa-cog"></i> My Profile</Link>
-              <Link to="/change-password" className="list-group-item">
-                <i className="fa fa-lock"></i> Change password</Link>
-              <button className="list-group-item text-left"
-                onClick={this.logoutUser}>
-                <i className="fa fa-power-off"></i> Logout</button>
-            </div> */}
           </div>
           <a href="https://lysofts.herokuapp.com/"
             className="copyright-text">

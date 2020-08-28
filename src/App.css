@@ -377,12 +377,12 @@ table>tbody>tr>td>.btn:hover{
 
 /* Page body */
 .page_body{
-  background-color: var(--theme-light);
   width: 100%;
   padding-top: 70px;
   height: 100%;
   position: absolute;
   overflow-y: auto;
+  background-image: linear-gradient(20deg, rgba(0,255,0,0.5),rgba(0,0,0,0.5), rgba(0,0,255,0.5));
 }
 
 /* Dashboard */

@@ -19,11 +19,9 @@ export const loadUser = () => (dispatch, getState) => {
     .get(`${API_PATH}auth/user/`, tokenConfig(getState))
     .then((res) => {
       dispatch({ type: authTypes.USER_LOADED, payload: res.data });
-      dispatch({ type: commonTypes.SUCCESS, payload: "Authentication successful" })
     })
     .catch((err) => {
       dispatch({ type: authTypes.AUTH_ERROR, });
-      // dispatch({ type: commonTypes.ERROR, payload: "Authentication failed" });
     });
 };
 

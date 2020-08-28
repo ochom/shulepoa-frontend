@@ -255,55 +255,56 @@ export class Patients extends Component {
       </Modal >
 
     return (
-      <>
+      <div className="col-md-10 mx-auto">
         {patient_details}
-        <div className="col-sm-12 col-md-11 mx-auto mt-3">
-          <div className="card">
-            <div className="card-header py-1 px-3">
-              <div className="py-1 px-2"><i className="fa fa-globe"></i> Manage patient records</div>
-              <input className="form-control form-control-sm"
-                onChange={this.onSearchPatient}
-                placeholder="Search..." />
-              <button
-                className="btn btn-sm py-1 px-2 mr-auto"
-                onClick={this.onNewPatient}><i className="fa fa-plus-circle mr-2"></i> Add Patient
-              </button>
-            </div>
+        <div className="my-2">
+          <input className="form-control"
+            placeholder="Search..." onChange={this.onSearchPatient} />
+        </div>
+        <div className="card">
+          <div className="card-header">
+            <div>Patients</div>
+            <button
+              className="btn btn-sm"
+              onClick={this.onNewPatient}><i className="fa fa-plus-circle mr-2"></i> Add Patient</button>
           </div>
-
-          <div className="card mt-4">
-            <div className="card-header"></div>
-            <div className="card-bodyp-0">
-              {this.props.common.silent_processing ?
-                <span className="text-success"><i className="fa fa-refresh fa-spin"></i></span> : null
-              }
-              <table className="table table-sm table-striped table-bordered">
-                <caption className="px-2"><i>Recent patients | Search results</i></caption>
-                <thead className="">
-                  <tr><th>#</th><th>Full name</th><th>Gender</th><th>Mobile</th><th>Address</th><th className="text-center">Action</th></tr>
-                </thead>
-                <tbody>
-                  {patients.map((patient, index) =>
-                    <tr key={index}>
-                      <td>{index + 1}</td>
-                      <td>{patient.fullname}</td>
-                      <td>{GENDERS[patient.sex]}</td>
-                      <td>{patient.phone}</td>
-                      <td>{`${patient.county}, ${patient.country}`}</td>
-                      <td className="text-center">
-                        <button className="btn btn-sm p-0 border-none text-success"
-                          onClick={() => this.onEditPatient(patient)}><i className="fa fa-edit"></i> Edit</button>{' | '}
-                        <Link to={`/records/patients/${patient.id}`}
-                          className="btn btn-sm p-0 border-none text-primary"><i className="fa fa-user"></i> View profile</Link>
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
-            </div>
+          <div className="card-bodyp-0">
+            {this.props.common.silent_processing ?
+              <span className="text-success"><i className="fa fa-refresh fa-spin"></i></span> : null
+            }
+            <table className="table table-sm table-striped table-bordered">
+              <caption className="px-2"><i>Recent patients | Search results</i></caption>
+              <thead>
+                <tr>
+                  <td>#</td>
+                  <td>Full name</td>
+                  <td>Gender</td>
+                  <td>Mobile</td>
+                  <td>Address</td>
+                  <td className="text-center">Action</td>
+                </tr>
+              </thead>
+              <tbody>
+                {patients.map((patient, index) =>
+                  <tr key={index}>
+                    <td>{index + 1}</td>
+                    <td>{patient.fullname}</td>
+                    <td>{GENDERS[patient.sex]}</td>
+                    <td>{patient.phone}</td>
+                    <td>{`${patient.county}, ${patient.country}`}</td>
+                    <td className="text-center">
+                      <button className="btn btn-sm p-0 border-none text-success"
+                        onClick={() => this.onEditPatient(patient)}><i className="fa fa-edit"></i> Edit</button>{' | '}
+                      <Link to={`/records/patients/${patient.id}`}
+                        className="btn btn-sm p-0 border-none text-primary"><i className="fa fa-user"></i> View profile</Link>
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
           </div>
         </div>
-      </>
+      </div>
     )
   }
 }

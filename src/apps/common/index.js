@@ -58,17 +58,16 @@ export class Dashboard extends Component {
 
     const menus =
       <div className="list-group">
-        <Link className="list-group-item" to="/records"><i className="fa fa-pencil"></i> Records</Link>
-        <Link className="list-group-item" to="/revenue"><i className="fa fa-money"></i> Revenue</Link>
+        <Link className="list-group-item" to="/records"><i className="fa fa-users"></i> Patients</Link>
+        <Link className="list-group-item" to="/revenue"><i className="fa fa-money"></i> Billing</Link>
         <Link className="list-group-item" to="/outpatient"><i className="fa fa-stethoscope"></i> Outpatient</Link>
         <Link className="list-group-item" to="/laboratory"><i className="fa fa-flask"></i> Laboratory</Link>
-        <Link className="list-group-item" to="/radiology"><i className="fa fa-photo"></i> Radiology</Link>
+        <Link className="list-group-item" to="/radiology"><i className="fa fa-photo"></i> Imaging</Link>
         <Link className="list-group-item" to="/pharmacy"><i className="fa fa-medkit"></i> Pharmacy</Link>
         <Link className="list-group-item" to="/inpatient"><i className="fa fa-heartbeat"></i> Inpatient</Link>
         <Link className="list-group-item" to="/inventory"><i className="fa fa-truck"></i> Inventory</Link>
-        <Link className="list-group-item" to="/hospital/users"><i className="fa fa-user-md"></i> Doctors</Link>
         <Link className="list-group-item" to="/hospital/users"><i className="fa fa-users"></i> Users</Link>
-        <Link className="list-group-item" to="/hospital"><i className="fa fa-h-square"></i> Hospital</Link>
+        <Link className="list-group-item" to="/hospital"><i className="fa fa-h-square"></i> Administrator</Link>
       </div>
     return (
       <>

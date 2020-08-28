@@ -24,8 +24,8 @@ class Topnav extends Component {
               toggle={() => this.setState({ dropdown: !this.state.dropdown })}>
               <DropdownToggle color="cu-text-primary" className="bg-transparent border-0" caret><i className="fa fa-user-o"></i></DropdownToggle>
               <DropdownMenu>
-                <DropdownItem>Profile</DropdownItem>
-                <DropdownItem>Settings</DropdownItem>
+                <DropdownItem onClick={() => window.location.href = '/profile'}>Profile</DropdownItem>
+                <DropdownItem onClick={() => window.location.href = '/change-password'}>Settings</DropdownItem>
                 <DropdownItem divider />
                 <DropdownItem onClick={() => this.props.logout()}>Signout</DropdownItem>
               </DropdownMenu>
@@ -40,19 +40,17 @@ class Topnav extends Component {
             <div className="card card-body py-4 px-2">
               <div className="row col-12 mx-auto">
                 <Link className="main-menu-menu text-center" to="/"><i className="fa fa-home"></i><br />Dashboard</Link>
-                <Link className="main-menu-menu text-center" to="/records"><i className="fa fa-pencil"></i><br />Records</Link>
+                <Link className="main-menu-menu text-center" to="/records"><i className="fa fa-users"></i><br />Patients</Link>
                 <Link className="main-menu-menu text-center" to="/outpatient"><i className="fa fa-user-md"></i><br />Out-patient</Link>
                 <Link className="main-menu-menu text-center" to="/laboratory"><i className="fa fa-flask"></i><br />Laboratory</Link>
-                <Link className="main-menu-menu text-center" to="/radiology"><i className="fa fa-photo"></i><br />Radiology</Link>
+                <Link className="main-menu-menu text-center" to="/radiology"><i className="fa fa-photo"></i><br />Imaging</Link>
                 <Link className="main-menu-menu text-center" to="/pharmacy"><i className="fa fa-medkit"></i><br />Pharmacy</Link>
                 <Link className="main-menu-menu text-center" to="/inpatient"><i className="fa fa-heartbeat"></i><br />In-patient</Link>
-                <Link className="main-menu-menu text-center" to="/revenue/cashpoint/payment-queue"><i className="fa fa-dollar"></i><br />Cashpoint</Link>
+                <Link className="main-menu-menu text-center" to="/revenue/cashpoint/payment-queue"><i className="fa fa-dollar"></i><br />Billing</Link>
                 <Link className="main-menu-menu text-center" to="/revenue/accounts"><i className="fa fa-money"></i><br />Accounts</Link>
                 <Link className="main-menu-menu text-center" to="/inventory"><i className="fa fa-truck"></i><br />Inventory</Link>
                 <Link className="main-menu-menu text-center" to="/hospital/services"><i className="fa fa-ambulance"></i><br />Services</Link>
-                <Link className="main-menu-menu text-center" to="/hospital/insurance"><i className="fa fa-briefcase"></i><br />Insurance</Link>
-                <Link className="main-menu-menu text-center" to="/hospital"><i className="fa fa-h-square"></i><br />Hospital</Link>
-                <Link className="main-menu-menu text-center" to="/hospital/users"><i className="fa fa-users"></i><br />Users</Link>
+                <Link className="main-menu-menu text-center" to="/hospital"><i className="fa fa-h-square"></i><br />Admin</Link>
               </div>
             </div>
           </div>

@@ -34,7 +34,7 @@ export class Queue extends Component {
 
 
     return (
-      <div className="col-md-10 mx-auto mt-3">
+      <div className="row col-12 mx-auto mt-2">
         <div className="card">
           <div className="card-header py-1 px-3">Pharmacy Service Queue</div>
           <div className="card-body p-0">

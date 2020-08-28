@@ -17,9 +17,10 @@ export class Revenue extends Component {
   render() {
     const menu_list =
       <div className="list-group">
-        <Link to="/revenue/cashpoint" className="list-group-item"><i className="fa fa-money"></i> Cashpoint</Link>
-        <Link to="/revenue/invoicing" className="list-group-item"><i className="fa fa-list"></i> Invoices</Link>
-        <Link to="/revenue/claims" className="list-group-item"><i className="fa fa-briefcase"></i> Corporate payments</Link>
+        <Link to="/revenue/cashpoint" className="list-group-item"><i className="fa fa-angle-right"></i> Cashier</Link>
+        <Link to="/revenue/invoicing" className="list-group-item"><i className="fa fa-angle-right"></i> Invoices</Link>
+        <Link to="/revenue/invoicing" className="list-group-item"><i className="fa fa-angle-right"></i> Payments</Link>
+        <Link to="/revenue/invoicing" className="list-group-item"><i className="fa fa-angle-right"></i> Pricing</Link>
       </div>
     return (
       <>

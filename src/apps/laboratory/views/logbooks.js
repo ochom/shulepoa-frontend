@@ -50,7 +50,7 @@ export class LogBooks extends Component {
 
 
     return (
-      <div className="col-md-10 mx-auto mt-3">
+      <div className="col-12 mx-auto mt-2">
         <div className="card">
           <div className="card-header py-1 px-3">Logbooks</div>
           <div className="card-body p-0">

@@ -148,27 +148,31 @@ export class Service extends Component {
       </Modal >
 
     return (
-      <>
+      <div className="col-md-10 mx-auto mt-3">
         {service_details}
-        <div className="col-md-10 mx-auto mt-3">
-          <div className="card">
-            <div className="card-header py-1 px-3">
-              <div className="py-1 px-2"><i className="fa fa-ambulance"></i> Manage Hospital Offered Services</div>
-              <input className="form-control form-control-sm"
-                name="service_search_name"
-                onChange={this.onSearch}
-                placeholder="Search..." />
-              <button
-                className="btn btn-sm py-1 px-2 mr-auto"
-                onClick={this.onNewService}><i className="fa fa-plus-circle mr-2"></i> Add Service
+        <div className="my-2">
+          <input className="form-control"
+            onChange={this.onSearch} placeholder="Search..." />
+        </div>
+        <div className="card">
+          <div className="card-header">
+            <div className="">Offered Services</div>
+            <button
+              className="btn btn-sm py-1 px-2 mr-auto"
+              onClick={this.onNewService}><i className="fa fa-plus-circle mr-2"></i> Add Service
               </button>
-            </div>
           </div>
-          <div className="card card-body mt-4 p-0">
+          <div className="card-body p-0">
             <table className="table table-sm table-striped table-bordered table-responsive-sm m-0">
               <caption className="px-2"><i>Recent services | Search results</i></caption>
-              <thead className="cu-bg-secondary">
-                <tr><th>#</th><th>Name</th><th>Department</th><th>Price</th><th className="text-center">Action</th></tr>
+              <thead>
+                <tr>
+                  <td>#</td>
+                  <td>Name</td>
+                  <td>Department</td>
+                  <td>Price</td>
+                  <td className="text-center">Action</td>
+                </tr>
               </thead>
               <tbody>
                 {services.map((service, index) =>
@@ -189,7 +193,7 @@ export class Service extends Component {
             </table>
           </div>
         </div>
-      </>
+      </div>
     )
   }
 }

@@ -18,7 +18,10 @@ export class Records extends Component {
   render() {
     const menu_list =
       <div className="list-group">
-        <Link to="/records" className="list-group-item"><i className="fa fa-pencil"></i> Registration</Link>
+        <Link to="/records" className="list-group-item"><i className="fa fa-angle-right"></i> Patient Listing</Link>
+        <Link to="/records" className="list-group-item"><i className="fa fa-angle-right"></i> Admitted Patients</Link>
+        <Link to="/records" className="list-group-item"><i className="fa fa-angle-right"></i> Outpatient</Link>
+        <Link to="/records" className="list-group-item"><i className="fa fa-angle-right"></i> Reports</Link>
       </div>
     return (
       <>

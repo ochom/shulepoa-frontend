@@ -209,23 +209,17 @@ export class Triage extends Component {
     return (
       <div className="col-md-10 mx-auto mt-3">
         {edit_vitals_view}
+        <div className="row col-12 my-2 mx-0 p-0">
+          <select className="form-control form-control-sm"
+            onChange={this.onSearchPatient}>
+            <option>All clinics</option>
+            {this.props.clinics.map((clinic, index) => <option key={index} value={clinic.id}>{clinic.name}</option>)}
+          </select>
+        </div>
         <div className="card">
           <div className="card-header py-1 px-3">
-            <div className="py-1 px-2"><i className="fa fa-globe"></i> Triage Queue</div>
-            <select className="form-control form-control-sm"
-              onChange={this.onSearchPatient}>
-              <option>All clinics</option>
-              {this.props.clinics.map((clinic, index) => <option key={index} value={clinic.id}>{clinic.name}</option>)}
-            </select>
-            <button
-              className="btn btn-sm py-1 px-2 mr-auto"
-              onClick={this.onNewPatient}><i className="fa fa-plus-circle mr-2"></i> Add Patient
-              </button>
+            <div className=""> Triage Queue</div>
           </div>
-        </div>
-
-        <div className="card mt-4">
-          <div className="card-header"></div>
           <div className="card-body p-0">
             <table className="table table-sm table-striped table-bordered">
               <thead className="cu-text-primary">

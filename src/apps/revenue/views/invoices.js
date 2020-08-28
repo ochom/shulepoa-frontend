@@ -4,17 +4,18 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 export default class Invoices extends Component {
   render() {
     return (
-      <div className="col-12 mx-auto">
-        <div className="card">
-          <div className="card-header">Invoices
+      <div className="col-md-10 mx-auto">
+        <div className="row col-12 my-2 mx-0 p-0">
           <input className="form-control" placeholder="Search..." />
-          </div>
+        </div>
+        <div className="card">
+          <div className="card-header">Invoices</div>
           <div className="card-body p-0">
             <Tabs>
               <TabList>
                 <Tab>All invoices</Tab>
-                <Tab>Pending</Tab>
-                <Tab>Processed</Tab>
+                <Tab>Drafts</Tab>
+                <Tab>Billed</Tab>
                 <Tab>Paid</Tab>
               </TabList>
               <TabPanel>
@@ -36,7 +37,6 @@ export default class Invoices extends Component {
                     <th>Client</th>
                     <th>Items</th>
                     <th>Amount</th>
-                    <th>Status</th>
                     <th>Action</th>
                   </thead>
                 </table>
@@ -44,18 +44,26 @@ export default class Invoices extends Component {
               <TabPanel>
                 <table className="table table-sm">
                   <thead>
+                    <th>#</th>
                     <th>Invoice No.</th>
                     <th>Client</th>
                     <th>Items</th>
                     <th>Amount</th>
-                    <th className="text-primary">
-                      <i className="fa fa-thumbs-o-up"></i> Processed</th>
                     <th>Action</th>
                   </thead>
                 </table>
               </TabPanel>
               <TabPanel>
-                <table></table>
+                <table className="table table-sm">
+                  <thead>
+                    <th>#</th>
+                    <th>Invoice No.</th>
+                    <th>Client</th>
+                    <th>Items</th>
+                    <th>Amount</th>
+                    <th>Action</th>
+                  </thead>
+                </table>
               </TabPanel>
             </Tabs>
           </div>

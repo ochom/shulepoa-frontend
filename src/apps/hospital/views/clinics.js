@@ -99,21 +99,25 @@ export class Clinic extends Component {
         </form>
       </Modal >
     return (
-      <>
+      <div className="col-md-8 mx-auto mt-3">
         {clinic_details}
-        <div className="col-md-8 mx-auto mt-3">
-          <div className="card">
-            <div className="card-header py-1 px-3">
-              <div className="py-1 px-2"><i className="fa fa-stethoscope"></i> Clinics</div>
-              <button
-                className="btn btn-sm py-1 px-2 mr-auto"
-                onClick={this.onNewClinic}><i className="fa fa-plus-circle mr-2"></i> Add Clinic
+        <div className="card">
+          <div className="card-header py-1 px-3">
+            <div className="py-1 px-2"><i className="fa fa-stethoscope"></i> Clinics</div>
+            <button
+              className="btn btn-sm py-1 px-2 mr-auto"
+              onClick={this.onNewClinic}><i className="fa fa-plus-circle mr-2"></i> Add Clinic
               </button>
-            </div></div>
-          <div className="card card-body mt-4 p-0">
+          </div>
+          <div className="card-body p-0">
             <table className="table table-sm table-striped table-bordered">
-              <thead className="cu-bg-secondary">
-                <tr><th>#</th><th>Name</th><th>Desc</th><th className="text-center">Action</th></tr>
+              <thead>
+                <tr>
+                  <td>#</td>
+                  <td>Name</td>
+                  <td>Desc</td>
+                  <td className="text-center">Action</td>
+                </tr>
               </thead>
               <tbody>
                 {this.props.clinics.map((clinic, index) =>
@@ -132,7 +136,7 @@ export class Clinic extends Component {
             </table>
           </div>
         </div>
-      </>
+      </div>
     )
   }
 }

@@ -132,25 +132,29 @@ export class Insurance extends Component {
       </Modal >
 
     return (
-      <>
+      <div className="col-md-10 mx-auto mt-3">
         {insurance_details}
-        <div className="col-md-10 mx-auto mt-3">
-          <div className="card">
-            <div className="card-header py-1 px-3">
-              <div className="py-1 px-2"><i className="fa fa-briefcase"></i> Manage Insurance companies</div>
-              <input className="form-control form-control-sm"
-                onChange={this.onSearch}
-                placeholder="Search..." />
-              <button
-                className="btn btn-sm py-1 px-2 mr-auto"
-                onClick={this.onNewInsurance}><i className="fa fa-plus-circle mr-2"></i> Add Insurance
+        <div className="my-2">
+          <input className="form-control"
+            onChange={this.onSearch} placeholder="Search..." /></div>
+        <div className="card">
+          <div className="card-header">
+            <div className=""> Insurance companies</div>
+            <button
+              className="btn btn-sm py-1 px-2 mr-auto"
+              onClick={this.onNewInsurance}><i className="fa fa-plus-circle mr-2"></i> Add Insurance
               </button>
-            </div>
           </div>
-          <div className="card card-body mt-4 p-0">
+          <div className="card-body p-0">
             <table className="table table-sm table-striped table-bordered">
-              <thead className="cu-bg-secondary">
-                <tr><th>#</th><th>Company</th><th>Email</th><th>Mobile</th><th className="text-center">Action</th></tr>
+              <thead>
+                <tr>
+                  <td>#</td>
+                  <td>Company</td>
+                  <td>Email</td>
+                  <td>Mobile</td>
+                  <td className="text-center">Action</td>
+                </tr>
               </thead>
               <tbody>
                 {insurances.map((insurance, index) =>
@@ -169,7 +173,7 @@ export class Insurance extends Component {
             </table>
           </div>
         </div>
-      </>
+      </div>
     )
   }
 }

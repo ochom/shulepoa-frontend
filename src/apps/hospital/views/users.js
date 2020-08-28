@@ -128,74 +128,51 @@ export class Users extends Component {
           </ModalFooter>
         </form>
       </Modal >
-
-    const users_filter_list = this.props.users.map((user, index) =>
-      <tr key={index}>
-        <td>{index + 1}</td>
-        <td>{user.user_profile ? user.user_profile.fullname : user.username}</td>
-        <td>{user.email}</td>
-        <td>{user.user_profile ? user.user_profile.phone : "---"}</td>
-        <td>{user.is_admin ? "Yes" : "No"}</td>
-        <td>{user.is_staff ? "Yes" : "No"}</td>
-        <td className="text-center">
-          <button className="btn btn-sm p-0 border-none text-success"
-            onClick={null}><i className="fa fa-edit"></i> Edit</button>
-        </td>
-      </tr>
-    )
     return (
-      <>
+      <div className="col-md-10 mx-auto mt-3">
         {users_details}
-        <div className="row col-md-10 mx-auto mt-3">
-          <div className="card col-12 p-0 mt-2">
-            <div className="card-header py-1 px-3">
-              <div className="py-1 px-2"><i className="fa fa-user-md"></i> Manage system Users</div>
-            </div>
-            <div className="card-body p-0 pb-2">
-              <div className="row col-12 mx-auto mt-3">
-                <div className="form-group  col-3">
-                  <label>User name</label>
-                  <input className="form-control form-control-sm"
-                    name="users_search_name"
-                    value={this.state.users_search_name}
-                    onChange={this.onChange}
-                    placeholder="Enter name" />
-                </div>
-                <div className="form-group  col-3">
-                  <label>Phone number</label>
-                  <input className="form-control form-control-sm"
-                    name="users_search_phone"
-                    value={this.state.users_search_phone}
-                    onChange={this.onChange}
-                    placeholder="Enter phone number" />
-                </div>
-              </div>
-              <div className="row col-12 mx-auto">
-                <button
-                  className="btn btn-sm btn-outline-success cu-text-primary ml-4"
-                  onClick={this.onsearchUser}
-                  disabled={this.props.common.isProcessing}><i className="fa fa-search mr-2"></i> Find User</button>
-              </div>
-            </div>
+        <div className="my-2">
+          <input className="form-control"
+            onChange={this.onChange} placeholder="Search..." />
+        </div>
+        <div className="card mt-2">
+          <div className="card-header py-1 px-3">
+            <div className="py-1 px-2">Manage system Users</div>
           </div>
-
-          <div className="card card-body mt-4 p-0">
+          <div className="card-body p-0">
             <table className="table table-sm table-striped table-bordered table-responsive-sm m-0">
               <caption className="px-2"><i>Recent users | Search results</i></caption>
-              <thead className="cu-bg-secondary">
-                <tr><th>#</th><th>Name</th>
-                  <th>Email</th><th>Mobile</th>
-                  <th>IS ADMIN</th><th>IS STAFF</th>
-                  <th className="text-center">Action</th>
+              <thead className="">
+                <tr>
+                  <td>#</td>
+                  <td>Name</td>
+                  <td>Email</td>
+                  <td>Mobile</td>
+                  <td>Group</td>
+                  <td>Status</td>
+                  <td className="text-center">Action</td>
                 </tr>
               </thead>
               <tbody>
-                {users_filter_list}
+                {this.props.users.map((user, index) =>
+                  <tr key={index}>
+                    <td>{index + 1}</td>
+                    <td>{user.user_profile ? user.user_profile.fullname : user.username}</td>
+                    <td>{user.email}</td>
+                    <td>{user.phone ? user.phone : "---"}</td>
+                    <td>{user.is_admin ? "Admin" : "Normal user"}</td>
+                    <td>{user.is_active ? "Active" : "Deactivated"}</td>
+                    <td className="text-center">
+                      <button className="btn btn-sm p-0 border-none text-success"
+                        onClick={null}><i className="fa fa-edit"></i> Edit</button>
+                    </td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>
         </div>
-      </>
+      </div>
     )
   }
 }

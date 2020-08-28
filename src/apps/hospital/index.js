@@ -13,11 +13,12 @@ export class Hospital extends Component {
   render() {
     const menu_list =
       <div className="list-group">
-        <Link to="/hospital" className="list-group-item"><i className="fa fa-h-square"></i> Hospital</Link>
-        <Link to="/hospital/clinics" className="list-group-item"><i className="fa fa-stethoscope"></i> Clinics</Link>
-        <Link to="/hospital/services" className="list-group-item"><i className="fa fa-ambulance"></i> Services</Link>
-        <Link to="/hospital/insurance" className="list-group-item"><i className="fa fa-briefcase"></i> Insurance</Link>
-        <Link to="/hospital/users" className="list-group-item"><i className="fa fa-users"></i> System Users</Link>
+        <Link to="/hospital" className="list-group-item"><i className="fa fa-angle-right"></i> Hospital</Link>
+        <Link to="/hospital/clinics" className="list-group-item"><i className="fa fa-angle-right"></i> Clinics</Link>
+        <Link to="/hospital/services" className="list-group-item"><i className="fa fa-angle-right"></i> Services</Link>
+        <Link to="/hospital/insurance" className="list-group-item"><i className="fa fa-angle-right"></i> Insurance</Link>
+        <Link to="/hospital/users" className="list-group-item"><i className="fa fa-angle-right"></i> Users</Link>
+        <Link to="/hospital/users" className="list-group-item"><i className="fa fa-angle-right"></i> User roles</Link>
       </div>
     return (
       <>
