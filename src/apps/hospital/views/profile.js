@@ -1,7 +1,6 @@
-import React, { Component } from 'react'
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getHospital, addHospital, updateHospital } from '../actions';
+import { addHospital, getHospital, updateHospital } from '../actions';
 
 export class HospitalProfile extends Component {
   state = {
@@ -20,11 +19,10 @@ export class HospitalProfile extends Component {
   }
 
   onChange = (e) => this.setState({ [e.target.name]: e.target.value });
-  toggleModal = () => this.setState({ showModal: !this.state.showModal });
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
+  componentDidUpdate(nextProps) {
     if (nextProps.hospital !== this.props.hospital) {
-      const { hospital_profile } = nextProps.hospital;
+      const { hospital_profile } = this.props.hospital;
       if (hospital_profile) {
         this.setState({
           selected_hospital: hospital_profile,
