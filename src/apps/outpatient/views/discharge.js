@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { saveDischarge } from '../actions'
+import { updateAppointment } from '../actions'
 
 export class Discharge extends Component {
   state = {
@@ -20,7 +20,7 @@ export class Discharge extends Component {
     const data = {
       discharge_note
     }
-    this.props.saveDischarge(this.props.health_file.id, data);
+    this.props.updateAppointment(this.props.health_file.id, data);
   }
 
   render() {
@@ -53,4 +53,4 @@ export default connect(state => ({
   health_file: state.outpatient.selected_health_file,
   discharge_note: state.outpatient.discharge_note,
   common: state.common,
-}), { saveDischarge, })(Discharge)
+}), { updateAppointment, })(Discharge)

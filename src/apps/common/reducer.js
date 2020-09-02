@@ -1,7 +1,8 @@
 import { commonTypes } from './actions';
+import LZString from 'lz-string'
 
 const initialState = {
-  icd_10: [],
+  icd_10: LZString.decompress(localStorage.getItem('icd_10')) || [],
   CONSTANTS: {
     DEPARTMENTS: [
       (0, "Records"), (1, "Revenue"), (2, "Outpatient"),
@@ -94,6 +95,14 @@ export default function (state = initialState, action) {
         status: "",
         message: null,
       }
+    case commonTypes.LOAD_ICD10:
+      localStorage.setItem('icd_10', LZString.compress(JSON.stringify(action.payload)))
+      console.log(action.payload)
+      return {
+        ...state,
+        icd_10: action.payload,
+      }
+
     default:
       return {
         ...state,

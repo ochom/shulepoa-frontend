@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
-import { addAppointment, getPatient, getAppointments } from '../actions';
+import { getPatient } from '../actions'
+import { addAppointment, getAppointments } from '../../outpatient/actions';
 
 var curr = new Date();
 curr.setDate(curr.getDate());
@@ -53,7 +54,7 @@ export class Appointments extends Component {
   }
 
   render() {
-    const { records: { appointments }, clinics } = this.props
+    const { outpatient: { appointments }, clinics } = this.props
     const book_appointment_view =
       <Modal isOpen={this.state.showModal} size="md">
         <ModalHeader toggle={this.toggleModal}>Create appointment</ModalHeader>
@@ -101,21 +102,22 @@ export class Appointments extends Component {
             <table className="table table-sm table-responsive-sm">
               <thead className="">
                 <tr>
-                  <th>#</th>
-                  <th>Created</th>
-                  <th>Clinic</th>
-                  <th>Status</th>
+                  <td>#</td>
+                  <td>Created</td>
+                  <td>Clinic</td>
+                  <td>Status</td>
                 </tr>
               </thead>
               <tbody>
-                {appointments.filter(app => app.patient_id === parseInt(this.state.patient_id)).map((appt, index) =>
+                {appointments.filter(app => app.patient_id === parseInt(this.state.patient_id)).map((app, index) =>
                   <tr key={index}>
                     <td>{index + 1}</td>
-                    <td>{new Date(appt.created).toLocaleDateString("en-UK")}</td>
-                    <td>{clinics.length > 0 ? clinics.find(cln => cln.id === appt.clinic_id).name : ""}</td>
-                    <td>{appt.is_active ?
-                      <span className={`p-1 px-2 text-success`}>Active</span> :
-                      <span className={`p-1 text-primary`}>Closed</span>}
+                    <td>{new Date(app.created).toLocaleDateString("en-UK")}</td>
+                    <td>{clinics.length > 0 ? clinics.find(cln => cln.id === app.clinic_id).name : ""}</td>
+                    <td className="text-center text-success">
+                      {(app.is_checked_in && !app.is_checked_out) ? "Checked In" :
+                        (app.is_checked_out) ? "Checkout Out" : "In Line"
+                      }
                     </td>
                   </tr>
                 )}
@@ -129,7 +131,7 @@ export class Appointments extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  records: state.records,
+  outpatient: state.outpatient,
   clinics: state.hospital.clinics
 });
 

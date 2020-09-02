@@ -3,51 +3,143 @@ import { tokenConfig } from '../auth/actions';
 import Axios from "axios"
 
 export const outpatientTypes = {
+  GET_APPOINTMENTS: 'GET_APPOINTMENTS',
+  GET_APPOINTMENT: 'GET_APPOINTMENT',
 
-  GET_TRIAGE_QUEUE: 'GET_TRIAGE_QUEUE',
-  ADD_VITALS: 'ADD_VITALS',
-
-
-  GET_APPOINTMENT_QUEUE: 'GET_APPOINTMENT_QUEUE',
+  GET_VITALS: 'GET_VITALS',
 
   GET_OBSERVATIONS: 'GET_OBSERVATIONS',
-  ADD_OBSERVATION: 'ADD_OBSERVATION',
-  UPDATE_OBSERVATION: 'UPDATE_OBSERVATION',
-  DELETE_OBSERVATION: 'DELETE_OBSERVATION',
 
   GET_INVESTIGATIONS: 'GET_INVESTIGATIONS',
-  ADD_INVESTIGATION: 'ADD_INVESTIGATION',
-  UPDATE_INVESTIGATION: 'UPDATE_INVESTIGATION',
-  DELETE_INVESTIGATION: 'DELETE_INVESTIGATION',
+
+  GET_DIAGNOSISS: 'GET_DIAGNOSISS',
 
   GET_PRESCRIPTIONS: 'GET_PRESCRIPTIONS',
-  ADD_PRESCRIPTION: 'ADD_PRESCRIPTION',
-  UPDATE_PRESCRIPTION: 'UPDATE_PRESCRIPTION',
-  DELETE_PRESCRIPTION: 'DELETE_PRESCRIPTION',
 
   SAVE_DISCHARGE: 'SAVE_DISCHARGE',
 }
 
-// Triage
-export const loadTriageQueue = () => (dispatch, getState) => {
-  dispatch({ type: commonTypes.PROCESSING })
-  Axios.get(`${API_PATH}outpatient/triage/queues/`, tokenConfig(getState))
+// Appointments
+export const getAppointments = () => (dispatch, getState) => {
+  dispatch({ type: commonTypes.SILENT_PROCESSING });
+  Axios.get(`${API_PATH}outpatient/appointments/`, tokenConfig(getState))
     .then(res => {
-      dispatch({ type: outpatientTypes.GET_TRIAGE_QUEUE, payload: res.data })
+      dispatch({ type: outpatientTypes.GET_APPOINTMENTS, payload: res.data })
+    })
+    .catch((err) => {
+      dispatch({ type: commonTypes.ERROR, payload: err });
+    })
+    .finally(() => {
+      dispatch({ type: commonTypes.DONE });
+    })
+}
+
+
+export const addAppointment = (data) => (dispatch, getState) => {
+  dispatch({ type: commonTypes.PROCESSING });
+  Axios.post(`${API_PATH}outpatient/appointments/`, JSON.stringify(data), tokenConfig(getState))
+    .then(res => {
+      dispatch(getAppointments())
+      dispatch({ type: commonTypes.SUCCESS, payload: "Appointment details saved succesfully" })
+    })
+    .catch((err) => {
+      dispatch({ type: commonTypes.ERROR, payload: err });
+    })
+    .finally(() => {
+      dispatch({ type: commonTypes.DONE });
+    })
+}
+
+export const getAppointment = (id) => (dispatch, getState) => {
+  dispatch({ type: commonTypes.PROCESSING });
+  Axios.get(`${API_PATH}outpatient/appointments/${id}/`, tokenConfig(getState))
+    .then(res => {
+      dispatch({ type: outpatientTypes.GET_APPOINTMENT, payload: res.data })
+    })
+    .catch((err) => {
+      dispatch({ type: commonTypes.ERROR, payload: err });
+    })
+    .finally(() => {
+      dispatch({ type: commonTypes.DONE });
+    })
+}
+
+export const updateAppointment = (id, data) => (dispatch, getState) => {
+  dispatch({ type: commonTypes.PROCESSING });
+  Axios.post(`${API_PATH}outpatient/appointments/${id}/`, JSON.stringify(data), tokenConfig(getState))
+    .then(res => {
+      dispatch(getAppointments())
+      dispatch({ type: commonTypes.SUCCESS, payload: "Appointment details updated succesfully" })
+    })
+    .catch((err) => {
+      dispatch({ type: commonTypes.ERROR, payload: err });
+    })
+    .finally(() => {
+      dispatch({ type: commonTypes.DONE });
+    })
+}
+
+// Vitals
+export const getVitals = () => (dispatch, getState) => {
+  dispatch({ type: commonTypes.SILENT_PROCESSING })
+  Axios.get(`${API_PATH}outpatient/vitals/`, tokenConfig(getState))
+    .then(res => {
+      dispatch({ type: outpatientTypes.GET_VITALS, payload: res.data })
     }).catch(err => {
-      // To do
+      dispatch({ type: commonTypes.ERROR, payload: err })
     })
     .finally(() =>
       dispatch({ type: commonTypes.DONE })
     );
 }
 
-export const addVitals = (data) => (dispatch, getState) => {
-  dispatch({ type: commonTypes.PROCESSING })
-  Axios.post(`${API_PATH}outpatient/triage/vitals/`, JSON.stringify(data), tokenConfig(getState))
+export const addVital = (data) => (dispatch, getState) => {
+  dispatch({ type: commonTypes.PROCESSING });
+  Axios.post(`${API_PATH}outpatient/vitals/`, JSON.stringify(data), tokenConfig(getState))
     .then(res => {
-      dispatch({ type: outpatientTypes.ADD_VITALS, payload: data.health_file })
-      dispatch({ type: commonTypes.SUCCESS, message: "Vitals saved succesfully" })
+      dispatch(getVitals())
+      dispatch({ type: commonTypes.SUCCESS, payload: "Vitals saved succesfully" })
+    }).catch(err => {
+      dispatch({ type: commonTypes.ERROR, payload: err })
+    }).finally(() => {
+      dispatch({ type: commonTypes.DONE })
+    });
+}
+
+export const updateVital = (id, data) => (dispatch, getState) => {
+  dispatch({ type: commonTypes.PROCESSING });
+  Axios.post(`${API_PATH}outpatient/vitals/${id}/`, JSON.stringify(data), tokenConfig(getState))
+    .then(res => {
+      dispatch(getVitals())
+      dispatch({ type: commonTypes.SUCCESS, payload: "Vital details updated succesfully" })
+    })
+    .catch((err) => {
+      dispatch({ type: commonTypes.ERROR, payload: err });
+    })
+    .finally(() => {
+      dispatch({ type: commonTypes.DONE });
+    })
+}
+
+export const deleteVital = (id) => (dispatch, getState) => {
+  dispatch({ type: commonTypes.SILENT_PROCESSING })
+  Axios.delete(`${API_PATH}outpatient/vitals/${id}/`, tokenConfig(getState))
+    .then(() => {
+      dispatch(getVitals())
+      dispatch({ type: commonTypes.SUCCESS, payload: "Vital deleted successfully" })
+    }).catch(err => {
+      dispatch({ type: commonTypes.ERROR, payload: err })
+    }).finally(() => {
+      dispatch({ type: commonTypes.DONE })
+    });
+}
+
+//Observations
+export const getObservations = () => (dispatch, getState) => {
+  dispatch({ type: commonTypes.SILENT_PROCESSING })
+  Axios.get(`${API_PATH}outpatient/observations/`, tokenConfig(getState))
+    .then(res => {
+      dispatch({ type: outpatientTypes.GET_OBSERVATIONS, payload: res.data })
     }).catch(err => {
       dispatch({ type: commonTypes.ERROR, payload: err })
     }).finally(() => {
@@ -56,195 +148,202 @@ export const addVitals = (data) => (dispatch, getState) => {
 }
 
 
-// Consultation
-export const loadAppointmentQueue = () => (dispatch, getState) => {
-  dispatch({ type: commonTypes.PROCESSING })
-  Axios.get(`${API_PATH}outpatient/appointments/queue/`, tokenConfig(getState))
-    .then(res => {
-      dispatch({ type: outpatientTypes.GET_APPOINTMENT_QUEUE, payload: res.data })
+export const addObservation = (data) => (dispatch, getState) => {
+  dispatch({ type: commonTypes.PROCESSING });
+  Axios.post(`${API_PATH}outpatient/observations/`, JSON.stringify(data), tokenConfig(getState))
+    .then(() => {
+      dispatch(getObservations())
+      dispatch({ type: commonTypes.SUCCESS, payload: "Observation added successfully" })
     }).catch(err => {
-      // To do
-    })
-    .finally(() =>
+      dispatch({ type: commonTypes.ERROR, payload: err })
+    }).finally(() => {
       dispatch({ type: commonTypes.DONE })
-    );
+    });
+}
+
+export const updateObservation = (id, data) => (dispatch, getState) => {
+  dispatch({ type: commonTypes.PROCESSING });
+  Axios.put(`${API_PATH}outpatient/observations/${id}/`, JSON.stringify(data), tokenConfig(getState))
+    .then(() => {
+      dispatch(getObservations())
+      dispatch({ type: commonTypes.SUCCESS, payload: "Observation updated successfully" })
+    }).catch(err => {
+      dispatch({ type: commonTypes.ERROR, payload: err })
+    }).finally(() => {
+      dispatch({ type: commonTypes.DONE })
+    });
+}
+
+export const deleteObservation = (id) => (dispatch, getState) => {
+  dispatch({ type: commonTypes.SILENT_PROCESSING })
+  Axios.delete(`${API_PATH}outpatient/observations/${id}/`, tokenConfig(getState))
+    .then(() => {
+      dispatch(getObservations())
+      dispatch({ type: commonTypes.SUCCESS, payload: "Observation deleted successfully" })
+    }).catch(err => {
+      dispatch({ type: commonTypes.ERROR, payload: err })
+    }).finally(() => {
+      dispatch({ type: commonTypes.DONE })
+    });
 }
 
 
-export const getObservations = (file_id) => (dispatch, getState) => {
-  dispatch({ type: commonTypes.PROCESSING })
-  Axios.get(`${API_PATH}outpatient/appointments/${file_id}/observations/`, tokenConfig(getState))
-    .then(res => {
-      dispatch({ type: outpatientTypes.GET_OBSERVATIONS, payload: res.data })
-    }).catch(err => {
-      // To do
-    })
-    .finally(() =>
-      dispatch({ type: commonTypes.DONE })
-    );
-}
-
-
-export const addObservation = (file_id, data) => (dispatch, getState) => {
-  dispatch({ type: commonTypes.PROCESSING })
-  Axios.post(`${API_PATH}outpatient/appointments/${file_id}/observations/`, JSON.stringify(data), tokenConfig(getState))
-    .then(res => {
-      dispatch({ type: outpatientTypes.ADD_OBSERVATION, payload: res.data })
-    }).catch(err => {
-      // To do
-    })
-    .finally(() =>
-      dispatch({ type: commonTypes.DONE })
-    );
-}
-
-export const updateObservation = (file_id, id, data) => (dispatch, getState) => {
-  dispatch({ type: commonTypes.PROCESSING })
-  Axios.put(`${API_PATH}outpatient/appointments/${file_id}/observations/${id}`, JSON.stringify(data), tokenConfig(getState))
-    .then(res => {
-      dispatch({ type: outpatientTypes.UPDATE_OBSERVATION, payload: res.data })
-    }).catch(err => {
-      // To do
-    })
-    .finally(() =>
-      dispatch({ type: commonTypes.DONE })
-    );
-}
-
-export const deleteObservation = (file_id, id) => (dispatch, getState) => {
-  dispatch({ type: commonTypes.PROCESSING })
-  Axios.delete(`${API_PATH}outpatient/appointments/${file_id}/observations/${id}`, tokenConfig(getState))
-    .then(res => {
-      dispatch({ type: outpatientTypes.DELETE_OBSERVATION, payload: id })
-    }).catch(err => {
-      // To do
-    })
-    .finally(() =>
-      dispatch({ type: commonTypes.DONE })
-    );
-}
-
-
-// investigations
-export const getInvestigations = (file_id) => (dispatch, getState) => {
-  dispatch({ type: commonTypes.PROCESSING })
-  Axios.get(`${API_PATH}outpatient/appointments/${file_id}/investigations/`, tokenConfig(getState))
+// Investigations
+export const getInvestigations = () => (dispatch, getState) => {
+  dispatch({ type: commonTypes.SILENT_PROCESSING })
+  Axios.get(`${API_PATH}outpatient/investigations/`, tokenConfig(getState))
     .then(res => {
       dispatch({ type: outpatientTypes.GET_INVESTIGATIONS, payload: res.data })
     }).catch(err => {
-      // To do
-    })
-    .finally(() =>
+      dispatch({ type: commonTypes.ERROR, payload: err })
+    }).finally(() => {
       dispatch({ type: commonTypes.DONE })
-    );
+    });
 }
 
 
-export const addInvestigation = (file_id, data) => (dispatch, getState) => {
-  dispatch({ type: commonTypes.PROCESSING })
-  Axios.post(`${API_PATH}outpatient/appointments/${file_id}/investigations/`, JSON.stringify(data), tokenConfig(getState))
-    .then(res => {
-      dispatch({ type: outpatientTypes.ADD_INVESTIGATION, payload: res.data })
+export const addInvestigation = (data) => (dispatch, getState) => {
+  dispatch({ type: commonTypes.PROCESSING });
+  Axios.post(`${API_PATH}outpatient/investigations/`, JSON.stringify(data), tokenConfig(getState))
+    .then(() => {
+      dispatch(getInvestigations())
+      dispatch({ type: commonTypes.SUCCESS, payload: "Investigation added successfully" })
     }).catch(err => {
-      // To do
-    })
-    .finally(() =>
+      dispatch({ type: commonTypes.ERROR, payload: err })
+    }).finally(() => {
       dispatch({ type: commonTypes.DONE })
-    );
+    });
 }
 
-export const updateInvestigation = (file_id, id, data) => (dispatch, getState) => {
-  dispatch({ type: commonTypes.PROCESSING })
-  Axios.put(`${API_PATH}outpatient/appointments/${file_id}/investigations/${id}`, JSON.stringify(data), tokenConfig(getState))
-    .then(res => {
-      dispatch({ type: outpatientTypes.UPDATE_INVESTIGATION, payload: res.data })
+export const updateInvestigation = (id, data) => (dispatch, getState) => {
+  dispatch({ type: commonTypes.PROCESSING });
+  Axios.put(`${API_PATH}outpatient/investigations/${id}/`, JSON.stringify(data), tokenConfig(getState))
+    .then(() => {
+      dispatch(getInvestigations())
+      dispatch({ type: commonTypes.SUCCESS, payload: "Investigation updated successfully" })
     }).catch(err => {
-      // To do
-    })
-    .finally(() =>
+      dispatch({ type: commonTypes.ERROR, payload: err })
+    }).finally(() => {
       dispatch({ type: commonTypes.DONE })
-    );
+    });
 }
 
-export const deleteInvestigation = (file_id, id) => (dispatch, getState) => {
-  dispatch({ type: commonTypes.PROCESSING })
-  Axios.delete(`${API_PATH}outpatient/appointments/${file_id}/investigations/${id}`, tokenConfig(getState))
-    .then(res => {
-      dispatch({ type: outpatientTypes.DELETE_INVESTIGATION, payload: id })
+export const deleteInvestigation = (id) => (dispatch, getState) => {
+  dispatch({ type: commonTypes.SILENT_PROCESSING })
+  Axios.delete(`${API_PATH}outpatient/investigations/${id}/`, tokenConfig(getState))
+    .then(() => {
+      dispatch(getInvestigations())
+      dispatch({ type: commonTypes.SUCCESS, payload: "Investigation deleted successfully" })
     }).catch(err => {
-      // To do
-    })
-    .finally(() =>
+      dispatch({ type: commonTypes.ERROR, payload: err })
+    }).finally(() => {
       dispatch({ type: commonTypes.DONE })
-    );
+    });
 }
 
 
-// prescriptions
-export const getPrescriptions = (file_id) => (dispatch, getState) => {
-  dispatch({ type: commonTypes.PROCESSING })
-  Axios.get(`${API_PATH}outpatient/appointments/${file_id}/prescriptions/`, tokenConfig(getState))
+// Prescriptions
+export const getPrescriptions = () => (dispatch, getState) => {
+  dispatch({ type: commonTypes.SILENT_PROCESSING })
+  Axios.get(`${API_PATH}outpatient/prescriptions/`, tokenConfig(getState))
     .then(res => {
       dispatch({ type: outpatientTypes.GET_PRESCRIPTIONS, payload: res.data })
     }).catch(err => {
-      // To do
-    })
-    .finally(() =>
+      dispatch({ type: commonTypes.ERROR, payload: err })
+    }).finally(() => {
       dispatch({ type: commonTypes.DONE })
-    );
+    });
 }
 
-
-export const addPrescription = (file_id, data) => (dispatch, getState) => {
-  dispatch({ type: commonTypes.PROCESSING })
-  Axios.post(`${API_PATH}outpatient/appointments/${file_id}/prescriptions/`, JSON.stringify(data), tokenConfig(getState))
-    .then(res => {
-      dispatch({ type: outpatientTypes.ADD_PRESCRIPTION, payload: res.data })
-    }).catch(err => {
-      // To do
-    })
-    .finally(() =>
-      dispatch({ type: commonTypes.DONE })
-    );
-}
-
-export const updatePrescription = (file_id, id, data) => (dispatch, getState) => {
-  dispatch({ type: commonTypes.PROCESSING })
-  Axios.put(`${API_PATH}outpatient/appointments/${file_id}/prescriptions/${id}`, JSON.stringify(data), tokenConfig(getState))
-    .then(res => {
-      dispatch({ type: outpatientTypes.UPDATE_PRESCRIPTION, payload: res.data })
-    }).catch(err => {
-      // To do
-    })
-    .finally(() =>
-      dispatch({ type: commonTypes.DONE })
-    );
-}
-
-export const deletePrescription = (file_id, id) => (dispatch, getState) => {
-  dispatch({ type: commonTypes.PROCESSING })
-  Axios.delete(`${API_PATH}outpatient/appointments/${file_id}/prescriptions/${id}`, tokenConfig(getState))
-    .then(res => {
-      dispatch({ type: outpatientTypes.DELETE_PRESCRIPTION, payload: id })
-    }).catch(err => {
-      // To do
-    })
-    .finally(() =>
-      dispatch({ type: commonTypes.DONE })
-    );
-}
-
-
-export const saveDischarge = (file_id, data) => (dispatch, getState) => {
-  dispatch({ type: commonTypes.PROCESSING })
-  Axios.put(`${API_PATH}outpatient/health-files/${file_id}`, JSON.stringify(data), tokenConfig(getState))
-    .then(res => {
-      dispatch({ type: commonTypes.SUCCESS, message: "Discharge note saved succesfully" })
-      dispatch({ type: outpatientTypes.SAVE_DISCHARGE, payload: data.discharge_note })
+export const addPrescription = (data) => (dispatch, getState) => {
+  dispatch({ type: commonTypes.PROCESSING });
+  Axios.post(`${API_PATH}outpatient/prescriptions/`, JSON.stringify(data), tokenConfig(getState))
+    .then(() => {
+      dispatch(getPrescriptions())
+      dispatch({ type: commonTypes.SUCCESS, payload: "Prescription added successfully" })
     }).catch(err => {
       dispatch({ type: commonTypes.ERROR, payload: err })
-    })
-    .finally(() =>
+    }).finally(() => {
       dispatch({ type: commonTypes.DONE })
-    );
+    });
+}
+
+export const updatePrescription = (id, data) => (dispatch, getState) => {
+  dispatch({ type: commonTypes.PROCESSING });
+  Axios.put(`${API_PATH}outpatient/prescriptions/${id}/`, JSON.stringify(data), tokenConfig(getState))
+    .then(() => {
+      dispatch(getPrescriptions())
+      dispatch({ type: commonTypes.SUCCESS, payload: "Prescription updated successfully" })
+    }).catch(err => {
+      dispatch({ type: commonTypes.ERROR, payload: err })
+    }).finally(() => {
+      dispatch({ type: commonTypes.DONE })
+    });
+}
+
+export const deletePrescription = (id) => (dispatch, getState) => {
+  dispatch({ type: commonTypes.SILENT_PROCESSING })
+  Axios.delete(`${API_PATH}outpatient/prescriptions/${id}/`, tokenConfig(getState))
+    .then(() => {
+      dispatch(getPrescriptions())
+      dispatch({ type: commonTypes.SUCCESS, payload: "Prescription deleted successfully" })
+    }).catch(err => {
+      dispatch({ type: commonTypes.ERROR, payload: err })
+    }).finally(() => {
+      dispatch({ type: commonTypes.DONE })
+    });
+}
+
+
+// Diagnosiss
+export const getDiagnosis = () => (dispatch, getState) => {
+  dispatch({ type: commonTypes.SILENT_PROCESSING })
+  Axios.get(`${API_PATH}outpatient/diagnosis/`, tokenConfig(getState))
+    .then(res => {
+      dispatch({ type: outpatientTypes.GET_DIAGNOSISS, payload: res.data })
+    }).catch(err => {
+      dispatch({ type: commonTypes.ERROR, payload: err })
+    }).finally(() => {
+      dispatch({ type: commonTypes.DONE })
+    });
+}
+
+
+export const addDiagnosis = (data) => (dispatch, getState) => {
+  dispatch({ type: commonTypes.PROCESSING });
+  Axios.post(`${API_PATH}outpatient/diagnosis/`, JSON.stringify(data), tokenConfig(getState))
+    .then(() => {
+      dispatch(getDiagnosis())
+      dispatch({ type: commonTypes.SUCCESS, payload: "Diagnosis added successfully" })
+    }).catch(err => {
+      dispatch({ type: commonTypes.ERROR, payload: err })
+    }).finally(() => {
+      dispatch({ type: commonTypes.DONE })
+    });
+}
+
+export const updateDiagnosis = (id, data) => (dispatch, getState) => {
+  dispatch({ type: commonTypes.PROCESSING });
+  Axios.put(`${API_PATH}outpatient/diagnosis/${id}/`, JSON.stringify(data), tokenConfig(getState))
+    .then(() => {
+      dispatch(getDiagnosis())
+      dispatch({ type: commonTypes.SUCCESS, payload: "Diagnosis updated successfully" })
+    }).catch(err => {
+      dispatch({ type: commonTypes.ERROR, payload: err })
+    }).finally(() => {
+      dispatch({ type: commonTypes.DONE })
+    });
+}
+
+export const deleteDiagnosis = (id) => (dispatch, getState) => {
+  dispatch({ type: commonTypes.SILENT_PROCESSING })
+  Axios.delete(`${API_PATH}outpatient/diagnosis/${id}/`, tokenConfig(getState))
+    .then(() => {
+      dispatch(getDiagnosis())
+      dispatch({ type: commonTypes.SUCCESS, payload: "Diagnosis deleted successfully" })
+    }).catch(err => {
+      dispatch({ type: commonTypes.ERROR, payload: err })
+    }).finally(() => {
+      dispatch({ type: commonTypes.DONE })
+    });
 }

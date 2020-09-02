@@ -1,98 +1,101 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap'
-import { addObservation, updateObservation } from '../actions'
+import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
+import { addDiagnosis, updateDiagnosis, getDiagnosis } from '../actions'
 
 export class Diagnosis extends Component {
   state = {
     showModal: false,
+    search: "",
+    search_result: [],
 
-    selected_observation: null,
-    complaint: "",
-    period: "",
-    period_units: "",
-    pre_med_note: "",
-    physical_examination_note: "",
+    selected_diagnosis: null,
+    disease: "",
+    icd_10: "",
+  }
+
+  componentDidMount() {
+    this.props.getDiagnosis()
   }
 
   onChange = (e) => this.setState({ [e.target.name]: e.target.value });
 
   toggleModal = () => this.setState({ showModal: !this.state.showModal });
 
-  onNewObservation = () => {
-    this.setState({
-      showModal: !this.state.showModal,
-      selected_observation: null,
-      complaint: "",
-      period: "",
-      period_units: "",
-      pre_med_note: "",
-      physical_examination_note: "",
-    });
+  onSearch = (e) => {
+    var search = e.target.value;
+    var search_result = this.props.common.icd_10.length > 0 ?
+      this.props.common.icd_10.filter(icd => icd.desc.includes(search.toLowerCase())).slice(0, 7) :
+      []
+    this.setState({ search_result: search_result })
   }
 
-  onEditObservation = (data) => {
+  onNewDiagnosis = () => {
     this.setState({
-      showModal: !this.state.showModal,
-      selected_observation: data,
-      complaint: data.complaint,
-      period: data.period,
-      period_units: data.period_units,
-      pre_med_note: data.pre_med_note,
-      physical_examination_note: data.physical_examination_note,
-    });
+      search_result: [],
+      selected_diagnosis: null,
+      disease: "",
+      icd_10: "",
+    }, () => this.toggleModal());
   }
+
+  onEditDiagnosis = (data) => {
+    this.setState({
+      search_result: [],
+      selected_diagnosis: data,
+      disease: data.disease,
+      icd_10: data.icd_10,
+    }, () => this.toggleModal());
+  }
+
+  selectDisease = (icd) => this.setState({
+    disease: icd.desc, icd_10: icd.code, search_result: []
+  })
 
   onSubmit = (e) => {
     e.preventDefault();
     const {
-      selected_observation,
-      complaint,
-      period,
-      period_units,
-      pre_med_note,
-      physical_examination_note } = this.state;
+      selected_diagnosis,
+      disease,
+      icd_10 } = this.state;
 
     const data = {
-      health_file: this.props.health_file.id,
-      complaint,
-      period,
-      period_units,
-      pre_med_note,
-      physical_examination_note
+      appointment_id: this.props.appointment.id,
+      disease,
+      icd_10
     }
-    if (selected_observation) {
-      this.props.updateObservation(selected_observation.id, data);
+    if (selected_diagnosis) {
+      this.props.updateDiagnosis(selected_diagnosis.id, data);
     } else {
-      this.props.addObservation(data);
+      this.props.addDiagnosis(data);
     }
-    this.setState({ showModal: !this.state.showModal });
+    this.toggleModal();
   }
 
   render() {
-    const { icd_10 } = this.props.common.CONSTANTS;
-    const { diagnosis } = this.props;
-    const observation_view =
+    const { diagnosis, appointment } = this.props;
+    const diagnosis_view =
       <Modal isOpen={this.state.showModal} size="md">
         <ModalHeader toggle={this.toggleModal}>
-          {this.state.selected_observation ? 'Edit diagnosis' : 'Add diagnosis'}
+          {this.state.selected_diagnosis ? 'Edit diagnosis' : 'Add diagnosis'}
         </ModalHeader>
         <form onSubmit={this.onSubmit}>
           <ModalBody>
             <div className="form-row">
               <div className="form-group col-12">
-                <label>Disease name</label>
-                <select className="form-control form-control-sm" name="search" required={true}
-                  value={this.state.search} onChange={this.onChange} placeholder="Search..." >
-                  {icd_10.map((disease, index) =>
-                    <option key={index} value={disease.code}>{disease.desc}</option>
+                <label>Search</label>
+                <input className="form-control form-control-sm" name="search"
+                  onChange={this.onSearch} placeholder="Search..." />
+                <ul className="list-group">
+                  {this.state.search_result.map((icd, index) =>
+                    <button className="list-group-item border-bottom" key={index} value={icd.code} onClick={() => this.selectDisease(icd)}>{icd.desc}</button>
                   )}
-                </select>
+                </ul>
               </div>
               <div className="form-group col-12">
                 <label>Disease name</label>
                 <input className="form-control form-control-sm" name="disease" required={true}
-                  value={this.state.disease} onChange={this.onChange} placeholder="Search..." />
+                  value={this.state.disease} onChange={this.onChange} />
               </div>
               <div className="form-group col-12">
                 <label>ICD 10</label>
@@ -113,40 +116,38 @@ export class Diagnosis extends Component {
 
     return (
       <>
-        {observation_view}
+        {diagnosis_view}
         <div className="card">
           <div className="card-header py-1 px-3">
             <div className="py-1 px-2"><b>Disease diagnosis</b></div>
             <button
               style={{ float: "right" }}
               className="btn btn-sm "
-              onClick={this.onNewObservation}><i className="fa fa-plus-circle mr-2"></i> Add
+              onClick={this.onNewDiagnosis}><i className="fa fa-plus-circle mr-2"></i> Add
               </button>
           </div>
           <div className="card-body p-0 mt-0">
-            <table className="table table-sm table-bordered m-0">
+            <table className="table table-sm table-bordered table-responsive-sm">
               <thead className="">
                 <tr>
                   <th>#</th>
                   <th>Diagnosis</th>
-                  <th>ICD 10</th>
+                  <th className="text-center">ICD 10</th>
                   <th className="text-center">Action</th>
                 </tr>
               </thead>
               <tbody>
-                {diagnosis.map((observation, index) =>
+                {diagnosis.filter(diagnose => diagnose.appointment_id === appointment.id).map((diagnose, index) =>
                   <tr key={index}>
                     <td>{index + 1}</td>
-                    <td>{observation.complaint}</td>
-                    <td>{observation.period}</td>
-                    <td>{observation.pre_med_note}</td>
-                    <td>{observation.physical_examination_note}</td>
+                    <td>{diagnose.disease}</td>
+                    <td>{diagnose.icd_10}</td>
                     <td className="text-center">
-                      <button className="btn btn-sm p-0 border-none text-success"
-                        onClick={() => this.onEditObservation(observation)}><i className="fa fa-edit"></i></button>
-                      {` | `}
-                      <button className="btn btn-sm p-0 border-none text-danger"
-                        onClick={() => this.onDelete(observation)}><i className="fa fa-close"></i></button>
+                      <button className="btn btn-sm mr-2 border-none btn-success"
+                        onClick={() => this.onEditDiagnosis(diagnose)}><i className="fa fa-edit"></i></button>
+
+                      <button className="btn btn-sm border-none btn-danger"
+                        onClick={() => this.onDelete(diagnose)}><i className="fa fa-trash"></i></button>
                     </td>
                   </tr>)
                 }
@@ -159,7 +160,7 @@ export class Diagnosis extends Component {
   }
 }
 export default connect(state => ({
-  health_file: state.outpatient.selected_health_file,
+  appointment: state.outpatient.appointment,
   diagnosis: state.outpatient.diagnosis,
   common: state.common,
-}), { addObservation, updateObservation })(Diagnosis)
+}), { addDiagnosis, updateDiagnosis, getDiagnosis })(Diagnosis)

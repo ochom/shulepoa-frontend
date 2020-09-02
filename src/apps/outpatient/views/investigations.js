@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Modal, ModalHeader, ModalBody, } from 'reactstrap'
-import { getInvestigations, addInvestigation, deleteInvestigation } from '../actions'
+import { Modal, ModalBody, ModalHeader } from 'reactstrap'
+import { addOPDServiceRequest, deleteServiceRequest, getOPDServiceRequests, updateOPDServiceRequest } from '../../revenue/actions'
 
 export class Investigation extends Component {
   state = {
@@ -9,9 +9,8 @@ export class Investigation extends Component {
     search_result: [],
   }
 
-
   componentDidMount = () => {
-    this.props.getInvestigations(this.props.health_file.id);
+    this.props.getOPDServiceRequests();
   }
 
   onChange = (e) => {
@@ -26,25 +25,27 @@ export class Investigation extends Component {
 
   onNewObservation = () => {
     this.setState({
-      showModal: !this.state.showModal,
       search_result: [],
-    });
+    }, () => this.toggleModal());
   }
 
-  onAddInvestigation = (service) => {
+  addRequest = (service) => {
     const data = {
-      service: service.id,
+      patient_id: this.props.appointment.patient_id,
+      service_id: service.id,
+      service_name: service.name,
+      department: service.department,
+      quantity: 1,
+      price: service.price,
+      cost: service.price
     }
-    this.props.addInvestigation(this.props.health_file.id, data);
-    this.setState({ showModal: !this.state.showModal });
-  }
 
-  onDeleteInvestigation = (data) => {
-    this.props.deleteInvestigation(this.props.health_file.id, data.id)
+    this.props.addOPDServiceRequest(data)
+    this.toggleModal()
   }
 
   render() {
-    const { investigations } = this.props;
+    const { opd_ser_reqs } = this.props
     const investigation_view =
       <Modal isOpen={this.state.showModal} size="md">
         <ModalHeader toggle={this.toggleModal}>Add investigation requests</ModalHeader>
@@ -58,7 +59,7 @@ export class Investigation extends Component {
                   <tr>
                     <th>#</th>
                     <th>Service name</th>
-                    <th>Price</th>
+                    <th className="text-center">Price</th>
                     <th className="text-center">Action</th>
                   </tr>
                 </thead>
@@ -67,10 +68,10 @@ export class Investigation extends Component {
                     <tr key={index}>
                       <td>{index + 1}</td>
                       <td>{search.name}</td>
-                      <td>{search.price}</td>
+                      <td className="text-center">{search.price}</td>
                       <td className="text-center">
                         <button className="btn btn-sm p-0 border-none text-primary"
-                          onClick={() => this.onAddInvestigation(search)}><i className="fa fa-plus"></i> Add</button>
+                          onClick={() => this.addRequest(search)}><i className="fa fa-plus"></i> Add</button>
                       </td>
                     </tr>)
                   }
@@ -92,33 +93,36 @@ export class Investigation extends Component {
               </button>
           </div>
           <div className="card-body p-0 mt-0">
-            <table className="table table-sm table-bordered m-0">
+            <table className="table table-sm table-responsive-sm">
               <thead>
                 <tr>
-                  <th>#</th>
-                  <th>Investigation</th>
-                  <th>Status</th>
-                  <th>Result</th>
-                  <th className="text-center">Action</th>
+                  <td>#</td>
+                  <td>Investigation</td>
+                  <td className="text-center">Status</td>
+                  <td className="text-center">Result</td>
+                  <td className="text-center">Action</td>
                 </tr>
               </thead>
               <tbody>
-                {investigations.map((investigation, index) =>
+                {opd_ser_reqs.filter(request => request.department === 3 || request.department === 4).map((request, index) =>
                   <tr key={index}>
                     <td>{index + 1}</td>
-                    <td>{investigation.service_details.name}</td>
-                    <td>
+                    <td>{request.service_name}</td>
+                    <td className="text-primary text-center">
                       {
-                        (investigation.is_paid && investigation.is_served) ? "Ready" :
-                          (investigation.is_paid && !investigation.is_served) ? "In progress" :
+                        (request.is_approved && request.is_served) ? "Ready" :
+                          (request.is_approved && !request.is_served) ? "In progress" :
                             "Not paid"
                       }
                     </td>
-                    <td>{investigation.description ? investigation.description : "--"}</td>
+                    <td className="text-success text-center">{request.description ? request.description : "--"}</td>
                     <td className="text-center">
-                      {!investigation.is_paid ? <button className="btn btn-sm p-0 border-none text-danger"
-                        onClick={() => this.onDeleteInvestigation(investigation)}><i className="fa fa-close"></i> Remove</button>
-                        : <span className="text-success">Already paid</span>}
+                      {!request.is_approved ?
+                        <button className="btn btn-sm  border-none btn-danger"
+                          onClick={() => this.props.deleteInvestigation(request.id)}><i className="fa fa-trash"></i></button>
+                        : <button className="btn btn-sm btn-secondary disabled">No action</button>
+                      }
+                      {request.is_served ? <button className="btn btn-sm btn-success">View</button> : ""}
                     </td>
                   </tr>)
                 }
@@ -131,8 +135,8 @@ export class Investigation extends Component {
   }
 }
 export default connect(state => ({
-  health_file: state.outpatient.selected_health_file,
-  investigations: state.outpatient.investigations,
+  appointment: state.outpatient.appointment,
+  opd_ser_reqs: state.revenue.opd_ser_reqs,
   common: state.common,
   services: state.hospital.services,
-}), { getInvestigations, addInvestigation, deleteInvestigation })(Investigation)
+}), { getOPDServiceRequests, addOPDServiceRequest, updateOPDServiceRequest, deleteServiceRequest })(Investigation)

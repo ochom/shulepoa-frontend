@@ -4,24 +4,22 @@ import Sidenav from '../common/sidenav'
 import { connect } from 'react-redux'
 import { getClinics, getServices } from '../hospital/actions'
 import Consultation from './views/consultation'
-import Queue from './views/consultation_queue'
-import Triage from './views/triage'
+import AppointmentQueue from './views/appointments'
 import Topnav from '../common/topnav'
+import { getPatients } from '../records/actions'
 
 export class Outpatient extends Component {
   componentDidMount() {
+    this.props.getPatients();
     this.props.getServices()
     this.props.getClinics()
   }
   render() {
     const menu_list =
       <div className="list-group">
-        <Link to="/outpatient/triage"
-          className="list-group-item">
-          <i className="fa fa-stethoscope"></i> Triage</Link>
         {this.props.clinics.map((clinic, index) =>
           <Link key={index}
-            to={`/outpatient/clinic/${clinic.name}`}
+            to={`/outpatient/clinic/${clinic.id}`}
             className="list-group-item">
             <i className="fa fa-user-md"></i> {clinic.name}</Link>
         )}
@@ -36,11 +34,10 @@ export class Outpatient extends Component {
               path="/outpatient"
               render={({ match: { url } }) => (
                 <>
-                  <Route path={`${url}`} component={Triage} exact />
-                  <Route path={`${url}/triage`} component={Triage} />
-                  <Route path={`${url}/clinic/:clinic_name`} component={Queue} />
-                  <Route path={`${url}/appointment-queue`} component={Queue} />
-                  <Route path={`${url}/appointments/file/:file_id`} component={Consultation} />
+                  <Route path={`${url}`} component={AppointmentQueue} exact />
+                  <Route path={`${url}/appointments`} component={AppointmentQueue} exact />
+                  <Route path={`${url}/appointments/:appointment_id`} component={Consultation} />
+                  <Route path={`${url}/clinic/:clinic_id`} component={AppointmentQueue} />
                 </>
               )}
             />
@@ -54,5 +51,5 @@ const mapStateToProps = state => ({
   clinics: state.hospital.clinics
 })
 
-export default connect(mapStateToProps, { getClinics, getServices })(Outpatient);
+export default connect(mapStateToProps, { getPatients, getClinics, getServices })(Outpatient);
 

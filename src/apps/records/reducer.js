@@ -4,7 +4,6 @@ const initialState = {
   patients: [],
   patient: null,
   schemes: [],
-  appointments: [],
 };
 
 export default function (state = initialState, action) {
@@ -26,13 +25,6 @@ export default function (state = initialState, action) {
       return {
         ...state,
         schemes: action.payload,
-      };
-
-
-    case recordTypes.GET_APPOINTMENTS:
-      return {
-        ...state,
-        appointments: action.payload,
       };
 
     default:

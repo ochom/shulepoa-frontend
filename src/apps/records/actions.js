@@ -4,19 +4,9 @@ import Axios from "axios"
 
 export const recordTypes = {
   GET_PATIENTS: 'GET_PATIENTS',
-  ADD_PATIENT: 'ADD_PATIENT',
   GET_PATIENT: 'GET_PATIENT',
-  UPDATE_PATIENT: 'UPDATE_PATIENT',
-  DELETE_PATIENT: 'DELETE_PATIENT',
 
   GET_SCHEMES: 'GET_SCHEMES',
-  DELETE_SCHEME: 'DELETE_SCHEME',
-  ADD_SCHEME: 'ADD_SCHEME',
-  UPDATE_SCHEME: 'UPDATE_SCHEME',
-
-  GET_APPOINTMENTS: 'GET_APPOINTMENTS',
-  GET_PATIENT_APPOINTMENTS: 'GET_PATIENT_APPOINTMENTS',
-  ADD_APPOINTMENT: 'ADD_APPOINTMENT',
 }
 
 
@@ -155,67 +145,3 @@ export const deleteScheme = (id) => (dispatch, getState) => {
       dispatch({ type: commonTypes.DONE });
     })
 }
-
-
-
-
-// Appointments
-export const getAppointments = () => (dispatch, getState) => {
-  Axios.get(`${API_PATH}records/appointments/`, tokenConfig(getState))
-    .then(res => {
-      dispatch({ type: recordTypes.GET_APPOINTMENTS, payload: res.data })
-    })
-    .catch((err) => {
-      dispatch({ type: commonTypes.ERROR, payload: err });
-    })
-    .finally(() => {
-      dispatch({ type: commonTypes.DONE });
-    })
-}
-
-
-export const addAppointment = (data) => (dispatch, getState) => {
-  dispatch({ type: commonTypes.PROCESSING });
-  Axios.post(`${API_PATH}records/appointments/`, JSON.stringify(data), tokenConfig(getState))
-    .then(res => {
-      dispatch(getAppointments())
-      dispatch({ type: commonTypes.SUCCESS, payload: "Appointment details saved succesfully" })
-    })
-    .catch((err) => {
-      dispatch({ type: commonTypes.ERROR, payload: err });
-    })
-    .finally(() => {
-      dispatch({ type: commonTypes.DONE });
-    })
-}
-
-export const getAppointment = (id) => (dispatch, getState) => {
-  dispatch({ type: commonTypes.PROCESSING });
-  Axios.get(`${API_PATH}records/appointments/${id}/`, tokenConfig(getState))
-    .then(res => {
-      dispatch({ type: recordTypes.GET_APPOINTMENT, payload: res.data })
-    })
-    .catch((err) => {
-      dispatch({ type: commonTypes.ERROR, payload: err });
-    })
-    .finally(() => {
-      dispatch({ type: commonTypes.DONE });
-    })
-}
-
-export const updateAppointment = (id, data) => (dispatch, getState) => {
-  dispatch({ type: commonTypes.PROCESSING });
-  Axios.post(`${API_PATH}records/appointments/${id}/`, JSON.stringify(data), tokenConfig(getState))
-    .then(res => {
-      dispatch(getAppointments())
-      dispatch({ type: commonTypes.SUCCESS, payload: "Appointment details saved succesfully" })
-    })
-    .catch((err) => {
-      dispatch({ type: commonTypes.ERROR, payload: err });
-    })
-    .finally(() => {
-      dispatch({ type: commonTypes.DONE });
-    })
-}
-
-

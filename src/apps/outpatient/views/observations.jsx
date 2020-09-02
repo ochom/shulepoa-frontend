@@ -16,7 +16,7 @@ export class Observation extends Component {
   }
 
   componentDidMount = () => {
-    this.props.getObservations(this.props.health_file.id);
+    this.props.getObservations();
   }
 
   onChange = (e) => this.setState({ [e.target.name]: e.target.value });
@@ -25,26 +25,24 @@ export class Observation extends Component {
 
   onNewObservation = () => {
     this.setState({
-      showModal: !this.state.showModal,
       selected_observation: null,
       complaint: "",
       period: "",
       period_units: "",
       pre_med_note: "",
       physical_examination_note: "",
-    });
+    }, () => this.toggleModal());
   }
 
   onEditObservation = (data) => {
     this.setState({
-      showModal: !this.state.showModal,
       selected_observation: data,
       complaint: data.complaint,
       period: data.period,
       period_units: data.period_units,
       pre_med_note: data.pre_med_note,
       physical_examination_note: data.physical_examination_note,
-    });
+    }, () => this.toggleModal());
   }
 
   onSubmit = (e) => {
@@ -58,7 +56,7 @@ export class Observation extends Component {
       physical_examination_note } = this.state;
 
     const data = {
-      health_file: this.props.health_file.id,
+      appointment_id: this.props.appointment.id,
       complaint,
       period,
       period_units,
@@ -66,20 +64,20 @@ export class Observation extends Component {
       physical_examination_note
     }
     if (selected_observation) {
-      this.props.updateObservation(this.props.health_file.id, selected_observation.id, data);
+      this.props.updateObservation(selected_observation.id, data);
     } else {
-      this.props.addObservation(this.props.health_file.id, data);
+      this.props.addObservation(data);
     }
-    this.setState({ showModal: !this.state.showModal });
+    this.toggleModal();
   }
 
   onDelete = (data) => {
-    this.props.deleteObservation(this.props.health_file.id, data.id);
+    this.props.deleteObservation(this.props.appointment.id, data.id);
   }
 
   render() {
     const { TIME_UNITS } = this.props.common.CONSTANTS;
-    const { health_file, observations } = this.props;
+    const { appointment, observations } = this.props;
     const observation_view =
       <Modal isOpen={this.state.showModal} size="md">
         <ModalHeader toggle={this.toggleModal}>
@@ -140,7 +138,7 @@ export class Observation extends Component {
               </button>
           </div>
           <div className="card-body p-0 mt-0">
-            <table className="table table-sm table-bordered m-0">
+            <table className="table table-sm table-responsive-sm">
               <thead className="">
                 <tr>
                   <th>#</th>
@@ -152,7 +150,7 @@ export class Observation extends Component {
                 </tr>
               </thead>
               <tbody>
-                {observations.map((observation, index) =>
+                {observations.filter(observation => observation.appointment_id === appointment.id).map((observation, index) =>
                   <tr key={index}>
                     <td>{index + 1}</td>
                     <td>{observation.complaint}</td>
@@ -160,11 +158,11 @@ export class Observation extends Component {
                     <td>{observation.pre_med_note}</td>
                     <td>{observation.physical_examination_note}</td>
                     <td className="text-center">
-                      <button className="btn btn-sm p-0 border-none text-success"
+                      <button className="btn btn-sm mr-2 border-none btn-success"
                         onClick={() => this.onEditObservation(observation)}><i className="fa fa-edit"></i></button>
-                      {` | `}
-                      <button className="btn btn-sm p-0 border-none text-danger"
-                        onClick={() => this.onDelete(observation)}><i className="fa fa-close"></i></button>
+
+                      <button className="btn btn-sm border-none btn-danger"
+                        onClick={() => this.onDelete(observation)}><i className="fa fa-trash"></i></button>
                     </td>
                   </tr>)
                 }
@@ -172,42 +170,12 @@ export class Observation extends Component {
             </table>
           </div>
         </div>
-        <div className="card mt-3">
-          <div className="card-header py-1 px-3">
-            <div className="py-1 px-2"><b>Triage Vitals</b></div>
-          </div>
-          <div className="card-body p-0">
-            {health_file.file_vitals.length > 0 ? <ul className="list-group">
-              <li className="list-group-item">
-                <span className="m-0">Blood Pressure:</span>
-                <span style={{ float: "right" }}>{`${health_file.file_vitals[0].bp_systolic}/${health_file.file_vitals[0].bp_diastolic}`} bpm</span>
-              </li>
-              <li className="list-group-item">
-                <span className="m-0">Pulse:</span>
-                <span style={{ float: "right" }}>{health_file.file_vitals[0].pulse} bpm</span>
-              </li>
-              <li className="list-group-item">
-                <span className="m-0">Temperature:</span>
-                <span style={{ float: "right" }}>{health_file.file_vitals[0].temperature} <sup>o</sup>C</span>
-              </li>
-              <li className="list-group-item">
-                <span className="m-0">Weight:</span>
-                <span style={{ float: "right" }}>{health_file.file_vitals[0].mass} Kgs</span>
-              </li>
-              <li className="list-group-item">
-                <span className="m-0">Height:</span>
-                <span style={{ float: "right" }}>{health_file.file_vitals[0].height} m</span>
-              </li>
-            </ul>
-              : null}
-          </div>
-        </div>
       </>
     )
   }
 }
 export default connect(state => ({
-  health_file: state.outpatient.selected_health_file,
+  appointment: state.outpatient.appointment,
   observations: state.outpatient.observations,
   common: state.common,
 }), { getObservations, addObservation, updateObservation, deleteObservation })(Observation)
