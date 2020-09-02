@@ -114,9 +114,14 @@ export class Schemes extends Component {
               </button>
           </div>
           <div className="card-body p-0 pb-2">
-            <table className="table table-sm table-striped table-bordered">
-              <thead className="cu-bg-secondary">
-                <tr><th>#</th><th>Scheme</th><th>Card</th><th className="text-center">Action</th></tr>
+            <table className="table table-sm table-responsive-sm">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Scheme</th>
+                  <th>Card</th>
+                  <th className="text-center">Action</th>
+                </tr>
               </thead>
               <tbody>
                 {schemes.filter(sch => sch.id === parseInt(this.state.patient_id)).map((scheme, index) =>
@@ -125,9 +130,9 @@ export class Schemes extends Component {
                     <td>{insurances.length > 0 ? insurances.find(company => company.id === scheme.company_id).company_name : ""}</td>
                     <td>{scheme.card_number}</td>
                     <td className="text-center">
-                      <button className="btn btn-sm p-0 border-none text-success"
-                        onClick={() => this.onEditScheme(scheme)}><i className="fa fa-edit"></i></button>{' | '}
-                      <button className="btn btn-sm p-0 border-none text-danger">
+                      <button className="btn btn-sm mr-2 border-none btn-success"
+                        onClick={() => this.onEditScheme(scheme)}><i className="fa fa-edit"></i></button>
+                      <button className="btn btn-sm border-none btn-danger">
                         <i className="fa fa-trash"></i></button>
                     </td>
                   </tr>)}

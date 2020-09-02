@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
-import { addOPDServiceRequest, getOPDServiceRequests } from '../../revenue/actions';
+import { addOPDServiceRequest, getOPDServiceRequests, deleteServiceRequest } from '../../revenue/actions';
 
 
 export class ServiceRequests extends Component {
@@ -104,9 +104,16 @@ export class ServiceRequests extends Component {
               </button>
           </div>
           <div className="card-body p-0 pb-2">
-            <table className="table table-sm table-striped table-bordered">
+            <table className="table table-sm table-responsive-sm">
               <thead className="">
-                <tr><th>#</th><th>Date</th><th>Service</th><th>Department</th><th>Cost</th></tr>
+                <tr>
+                  <th>#</th>
+                  <th>Date</th>
+                  <th>Service</th>
+                  <th>Department</th>
+                  <th className="text-center">Cost</th>
+                  <th className="text-center">Action</th>
+                </tr>
               </thead>
               <tbody>
                 {opd_ser_reqs.filter(req => req.patient_id === parseInt(this.state.patient_id)).map((req, index) =>
@@ -115,7 +122,14 @@ export class ServiceRequests extends Component {
                     <td>{new Date(req.created).toLocaleString("en-UK")}</td>
                     <td>{req.service_name}</td>
                     <td>{DEPARTMENTS[req.department]}</td>
-                    <td>{req.cost}</td>
+                    <td className="text-center">{req.cost}</td>
+                    <td className="text-center">
+                      {!req.is_approved ?
+                        <button className="btn btn-sm btn-danger"
+                          onClick={() => this.props.deleteServiceRequest(req.id)}>Delete</button> :
+                        <button className="btn btn-sm btn-secondary disabled">No Action</button>
+                      }
+                    </td>
                   </tr>
                 )}
               </tbody>
@@ -135,5 +149,5 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps,
-  { getOPDServiceRequests, addOPDServiceRequest }
+  { getOPDServiceRequests, addOPDServiceRequest, deleteServiceRequest }
 )(ServiceRequests);

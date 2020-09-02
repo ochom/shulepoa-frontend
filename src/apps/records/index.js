@@ -19,9 +19,8 @@ export class Records extends Component {
     const menu_list =
       <div className="list-group">
         <Link to="/records" className="list-group-item"><i className="fa fa-angle-right"></i> Patient Listing</Link>
-        <Link to="/records" className="list-group-item"><i className="fa fa-angle-right"></i> Admitted Patients</Link>
-        <Link to="/records" className="list-group-item"><i className="fa fa-angle-right"></i> Outpatient</Link>
-        <Link to="/records" className="list-group-item"><i className="fa fa-angle-right"></i> Reports</Link>
+        <Link to="/records/admited-patients" className="list-group-item"><i className="fa fa-angle-right"></i> Admitted Patients</Link>
+        <Link to="/records/reports" className="list-group-item"><i className="fa fa-angle-right"></i> Reports</Link>
       </div>
     return (
       <>

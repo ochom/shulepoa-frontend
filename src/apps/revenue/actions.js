@@ -103,3 +103,18 @@ export const updateOPDServiceRequest = (id, data) => (dispatch, getState) => {
 }
 
 
+export const deleteServiceRequest = (id) => (dispatch, getState) => {
+  dispatch({ type: commonTypes.PROCESSING });
+  Axios.delete(`${API_PATH}revenue/opd-services/${id}/`, tokenConfig(getState))
+    .then(res => {
+      dispatch(getOPDServiceRequests())
+      dispatch({ type: commonTypes.SUCCESS, payload: 'Service request deleted' })
+    })
+    .catch((err) => {
+      dispatch({ type: commonTypes.ERROR, payload: err });
+    })
+    .finally(() => {
+      dispatch({ type: commonTypes.DONE });
+    })
+}
+

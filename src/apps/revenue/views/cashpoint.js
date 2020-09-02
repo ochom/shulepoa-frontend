@@ -26,7 +26,7 @@ export class CashPoint extends Component {
 
   toggleModal = () => this.setState({ showModal: !this.state.showModal });
 
-  toggleStatementModal = () => this.setState({ stmModal: !this.setState.stmModal })
+  toggleStatementModal = () => this.setState({ stmModal: !this.state.stmModal })
 
   onChange = (e) => this.setState({ [e.target.name]: e.target.value })
 
@@ -114,16 +114,18 @@ export class CashPoint extends Component {
           {'Make payments'}
         </ModalHeader>
         <ModalBody>
-          <div className="col-12">
-            {selected_queue ? selected_queue.service_requests.map((service_req, index) =>
-              <div key={index} className="py-2 row col-12">
-                <div className="col-2">{index + 1}.</div>
-                <div className="col-5">{service_req.service_name}</div>
-                <div className="col-3">{service_req.amount}</div>
-                <div className="col-2"><input type="checkbox" onClick={() => this.onCheckChange(service_req)} /></div>
-              </div>
-            ) : null}
-          </div>
+          <table className="table table-sm table-responsive-sm">
+            <tbody>
+              {selected_queue ? selected_queue.service_requests.map((service_req, index) =>
+                <tr key={index}>
+                  <td>{index + 1}.</td>
+                  <td>{service_req.service_name}</td>
+                  <td>{service_req.amount}</td>
+                  <td><input type="checkbox" onClick={() => this.onCheckChange(service_req)} /></td>
+                </tr>
+              ) : null}
+            </tbody>
+          </table>
         </ModalBody >
         <ModalFooter>
           <div className="row col-12 py-2 mx-auto">

@@ -104,7 +104,7 @@ table{
 }
 
 button{
-  font-size: 1vw;
+  font-size: 0.9em;
 }
 sup{
   color: red;
@@ -196,17 +196,13 @@ sup{
 }
 
 table>tbody>tr>td{
-  font-size: 1vw;
+  font-size: 0.9em;
 }
 
 table>tbody>tr>td>.btn{
   margin: 0; padding: 1px 10px;
-  font-size: 1vw;
+  font-size: 0.9em;
   transition: ease-in 0.3s;
-}
-
-table>tbody>tr>td>.btn:hover{
-  font-size: 1.1vw;
 }
 
 /* Processing */

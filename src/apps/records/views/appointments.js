@@ -98,9 +98,14 @@ export class Appointments extends Component {
               </button>
           </div>
           <div className="card-body p-0 pb-2">
-            <table className="table table-sm table-striped table-bordered ">
+            <table className="table table-sm table-responsive-sm">
               <thead className="">
-                <tr><th>#</th><th>Created</th><th>Clinic</th><th>Status</th></tr>
+                <tr>
+                  <th>#</th>
+                  <th>Created</th>
+                  <th>Clinic</th>
+                  <th>Status</th>
+                </tr>
               </thead>
               <tbody>
                 {appointments.filter(app => app.patient_id === parseInt(this.state.patient_id)).map((appt, index) =>

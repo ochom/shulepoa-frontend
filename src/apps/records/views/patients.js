@@ -272,13 +272,13 @@ export class Patients extends Component {
             {this.props.common.silent_processing ?
               <span className="text-success"><i className="fa fa-refresh fa-spin"></i></span> : null
             }
-            <table className="table table-sm table-striped table-bordered">
+            <table className="table table-sm table-responsive-sm">
               <caption className="px-2"><i>Recent patients | Search results</i></caption>
               <thead>
                 <tr>
                   <td>#</td>
                   <td>Full name</td>
-                  <td>Gender</td>
+                  <td className="text-center">Sex</td>
                   <td>Mobile</td>
                   <td>Address</td>
                   <td className="text-center">Action</td>
@@ -289,14 +289,14 @@ export class Patients extends Component {
                   <tr key={index}>
                     <td>{index + 1}</td>
                     <td>{patient.fullname}</td>
-                    <td>{GENDERS[patient.sex]}</td>
+                    <td className="text-center">{GENDERS[patient.sex]}</td>
                     <td>{patient.phone}</td>
                     <td>{`${patient.county}, ${patient.country}`}</td>
                     <td className="text-center">
-                      <button className="btn btn-sm p-0 border-none text-success"
-                        onClick={() => this.onEditPatient(patient)}><i className="fa fa-edit"></i> Edit</button>{' | '}
+                      <button className="btn btn-sm border-none btn-success mr-2"
+                        onClick={() => this.onEditPatient(patient)}><i className="fa fa-edit"></i> Edit</button>
                       <Link to={`/records/patients/${patient.id}`}
-                        className="btn btn-sm p-0 border-none text-primary"><i className="fa fa-user"></i> View profile</Link>
+                        className="btn btn-sm border-none btn-primary"><i className="fa fa-user"></i> View</Link>
                     </td>
                   </tr>
                 )}
