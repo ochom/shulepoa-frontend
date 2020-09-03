@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { saveReorder } from '../actions';
+import { addReorder } from '../actions';
 
 
 export class Reorders extends Component {
@@ -48,7 +48,7 @@ export class Reorders extends Component {
       batch,
       supplier,
     }
-    this.props.saveReorder(data);
+    this.props.addReorder(data);
     this.props.history.push('/pharmacy/drugs-reorders/');
   }
 
@@ -120,4 +120,4 @@ const mapStateToProps = state => ({
   common: state.common,
 });
 
-export default connect(mapStateToProps, { saveReorder })(Reorders);
+export default connect(mapStateToProps, { addReorder })(Reorders);

@@ -1,36 +1,61 @@
 import { API_PATH, commonTypes } from '../common/actions'
 import { tokenConfig } from '../auth/actions';
 import Axios from "axios"
-import { getServices } from '../hospital/actions'
-
 export const pharmTypes = {
-  GET_PHARM_QUEUE: 'GET_PHARM_QUEUE',
-  GET_PATIENT_REQUESTS: 'GET_PATIENT_REQUESTS',
-  ADD_DRUG_DISPENSE: 'ADD_DRUG_DISPENSE',
-  GET_PHARM_REORDER_HISTORY: 'GET_PHARM_REORDER_HISTORY',
-  ADD_PHARM_REORDER: 'ADD_PHARM_REORDER',
+  GET_DRUGS: 'GET_DRUGS',
+  GET_REORDERS: 'GET_REORDERS'
 }
 
-export const getQueue = () => (dispatch, getState) => {
-  dispatch({ type: commonTypes.SILENT_PROCESSING })
-  Axios.get(`${API_PATH}pharmacy/queue/`, tokenConfig(getState))
-    .then(res => {
-      dispatch({ type: pharmTypes.GET_PHARM_QUEUE, payload: res.data })
-    }).catch(err => {
-      // To do
-    })
-    .finally(() =>
-      dispatch({ type: commonTypes.DONE })
-    );
-}
-
-export const getPatientRequests = (patient_id) => (dispatch, getState) => {
+//Drugs
+export const getDrugs = () => (dispatch, getState) => {
   dispatch({ type: commonTypes.PROCESSING })
-  Axios.get(`${API_PATH}pharmacy/queue/${patient_id}`, tokenConfig(getState))
+  Axios.get(`${API_PATH}pharmacy/drugs/`, tokenConfig(getState))
     .then(res => {
-      dispatch({ type: pharmTypes.GET_PATIENT_REQUESTS, payload: res.data })
+      dispatch({ type: pharmTypes.GET_DRUGS, payload: res.data });
     }).catch(err => {
-      // To do
+      dispatch({ type: commonTypes.ERROR, payload: err });
+    })
+    .finally(() =>
+      dispatch({ type: commonTypes.DONE })
+    );
+}
+
+export const addDrug = (data) => (dispatch, getState) => {
+  dispatch({ type: commonTypes.PROCESSING })
+  Axios.post(`${API_PATH}pharmacy/drugs/`, JSON.stringify(data), tokenConfig(getState))
+    .then(() => {
+      dispatch(getDrugs());
+      dispatch({ type: commonTypes.SUCCESS, payload: "Drug saved succesfully" });
+    }).catch(err => {
+      dispatch({ type: commonTypes.ERROR, payload: err });
+    })
+    .finally(() =>
+      dispatch({ type: commonTypes.DONE })
+    );
+}
+
+export const updateDrug = (id, data) => (dispatch, getState) => {
+  dispatch({ type: commonTypes.PROCESSING })
+  Axios.put(`${API_PATH}pharmacy/drugs/${id}/`, JSON.stringify(data), tokenConfig(getState))
+    .then(() => {
+      dispatch(getDrugs());
+      dispatch({ type: commonTypes.SUCCESS, payload: "Drug updated succesfully" });
+    }).catch(err => {
+      dispatch({ type: commonTypes.ERROR, payload: err });
+    })
+    .finally(() =>
+      dispatch({ type: commonTypes.DONE })
+    );
+}
+
+export const deleteDrug = (id) => (dispatch, getState) => {
+  dispatch({ type: commonTypes.PROCESSING })
+  Axios.delete(`${API_PATH}pharmacy/drugs/${id}/`, tokenConfig(getState))
+    .then(() => {
+      dispatch(getDrugs());
+      dispatch({ type: commonTypes.SUCCESS, payload: "Drug deleted succesfully" });
+    }).catch(err => {
+      dispatch({ type: commonTypes.ERROR, payload: err });
     })
     .finally(() =>
       dispatch({ type: commonTypes.DONE })
@@ -38,12 +63,14 @@ export const getPatientRequests = (patient_id) => (dispatch, getState) => {
 }
 
 
+
+//Dispense
 export const saveDrugDispense = (data) => (dispatch, getState) => {
   dispatch({ type: commonTypes.PROCESSING })
   Axios.post(`${API_PATH}pharmacy/dispense/`, JSON.stringify(data), tokenConfig(getState))
     .then(res => {
       dispatch({ type: pharmTypes.ADD_DRUG_DISPENSE, payload: res.data });
-      dispatch({ type: commonTypes.SUCCESS, message: "Dispense saved succesfully" });
+      dispatch({ type: commonTypes.SUCCESS, payload: "Dispense saved succesfully" });
     }).catch(err => {
       dispatch({ type: commonTypes.ERROR, payload: err });
     })
@@ -53,32 +80,28 @@ export const saveDrugDispense = (data) => (dispatch, getState) => {
 }
 
 
-export const saveReorder = (data) => (dispatch, getState) => {
+//Reorders
+export const getReorders = () => (dispatch, getState) => {
   dispatch({ type: commonTypes.PROCESSING })
-  Axios.post(`${API_PATH}pharmacy/reorders/`, JSON.stringify(data), tokenConfig(getState))
-    .then(res => {
-      getServices();
-      getReordersHistory();
-      dispatch({ type: pharmTypes.ADD_PHARM_REORDER, payload: res.data });
-      dispatch({ type: commonTypes.SUCCESS, message: "Reorder saved succesfully" });
-    }).catch(err => {
-      dispatch({ type: commonTypes.ERROR, payload: err });
-    })
-    .finally(() =>
-      dispatch({ type: commonTypes.DONE })
-    );
-}
-
-
-
-
-export const getReordersHistory = () => (dispatch, getState) => {
-  dispatch({ type: commonTypes.SILENT_PROCESSING })
   Axios.get(`${API_PATH}pharmacy/reorders/`, tokenConfig(getState))
     .then(res => {
-      dispatch({ type: pharmTypes.GET_PHARM_REORDER_HISTORY, payload: res.data })
+      dispatch({ type: pharmTypes.GET_REORDERS, payload: res.data });
     }).catch(err => {
-      // To do
+      dispatch({ type: commonTypes.ERROR, payload: err });
+    })
+    .finally(() =>
+      dispatch({ type: commonTypes.DONE })
+    );
+}
+
+export const addReorder = (data) => (dispatch, getState) => {
+  dispatch({ type: commonTypes.PROCESSING })
+  Axios.post(`${API_PATH}pharmacy/reorders/`, JSON.stringify(data), tokenConfig(getState))
+    .then(() => {
+      dispatch(getReorders());
+      dispatch({ type: commonTypes.SUCCESS, payload: "Reorder saved succesfully" });
+    }).catch(err => {
+      dispatch({ type: commonTypes.ERROR, payload: err });
     })
     .finally(() =>
       dispatch({ type: commonTypes.DONE })

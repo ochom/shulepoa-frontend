@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { saveReorder } from '../actions';
+import { addReorder } from '../actions';
 
 
 export class Reorders extends Component {
@@ -87,4 +87,4 @@ const mapStateToProps = state => ({
   pharmacy: state.pharmacy,
 });
 
-export default connect(mapStateToProps, { saveReorder })(Reorders);
+export default connect(mapStateToProps, { addReorder })(Reorders);

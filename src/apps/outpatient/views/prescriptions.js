@@ -16,14 +16,14 @@ export class Prescription extends Component {
   }
 
   componentDidMount = () => {
-    this.props.getPrescriptions(this.props.health_file.id);
+    this.props.getPrescriptions();
   }
 
   onSearch = (e) => {
     const search_name = e.target.value;
     const result = this.props.services.filter(service =>
       (service.name.toLowerCase().includes(search_name.toLowerCase()) && service.department === 5)
-    ).slice(0, 15);
+    ).slice(0, 7);
     this.setState({ search_list: result });
   }
 
@@ -68,14 +68,22 @@ export class Prescription extends Component {
       dosage,
       frequency,
       days,
-      quantity, } = this.state;
+      quantity,
+    } = this.state;
 
     const data = {
       service: selected_drug.id,
+      appointment_id: this.props.appointment.id,
+      patient_id: this.props.appointment.patient_id,
+      service_id: selected_drug.id,
+      service_name: selected_drug.name,
+      department: 5,
+      price: selected_drug.price,
+      cost: quantity * selected_drug.price,
       description: dosage + "x" + frequency + "x" + days,
       quantity
     }
-    this.props.addPrescription(this.props.health_file.id, data);
+    this.props.addPrescription(this.props.appointment.id, data);
     this.toggleModal();
   }
 
@@ -89,7 +97,7 @@ export class Prescription extends Component {
         <form onSubmit={this.onSubmit}>
           <ModalBody>
             <div className="row col-12">
-              <div className="col-5">
+              <div className="col-6">
                 <div className="form-group col-12">
                   <input className="form-control form-control-sm"
                     onChange={this.onSearch} placeholder="Search..." />
@@ -112,7 +120,7 @@ export class Prescription extends Component {
                 </div>
               </div>
               {selected_drug ?
-                <div className="row col-7">
+                <div className="row col-6">
                   <div className="form-group  col-12">
                     <label>Drug name</label>
                     <input className="form-control form-control-sm" readOnly={true}
@@ -214,7 +222,7 @@ export class Prescription extends Component {
   }
 }
 export default connect(state => ({
-  health_file: state.outpatient.selected_health_file,
+  appointment: state.outpatient.appointment,
   prescriptions: state.outpatient.prescriptions,
   common: state.common,
   services: state.hospital.services,

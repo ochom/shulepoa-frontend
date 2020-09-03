@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import store from '../../../reducer/store'
-import { getQueue } from '../actions'
+import { getOPDServiceRequests } from '../../revenue/actions'
 
 export class Queue extends Component {
 
   componentDidMount() {
-    this.props.getQueue();
-    setInterval(() => this.props.getQueue(), 300000);
+    this.props.getOPDServiceRequests();
+    setInterval(() => this.props.getOPDServiceRequests(), 5000);
   }
 
   selectQueue = (data) => {
@@ -67,4 +67,4 @@ export default connect(state => ({
   services: state.hospital.services,
   constants: state.common.CONSTANTS,
   common: state.common,
-}), { getQueue, })(Queue)
+}), { getOPDServiceRequests, })(Queue)

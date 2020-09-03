@@ -2,12 +2,13 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import person_icon from '../../../images/person_icon.png'
-import { getPatientRequests, saveDrugDispense } from '../actions'
+import { getOPDServiceRequests } from '../../revenue/actions'
+import { saveDrugDispense } from '../actions'
 
 export class ServePatient extends Component {
 
   componentDidMount() {
-    this.props.getPatientRequests(this.props.match.params.patient_id);
+    this.props.getOPDServiceRequests();
   }
 
   onSubmit = (service_request) => {
@@ -111,4 +112,4 @@ export default connect(state => ({
   services: state.hospital.services,
   constants: state.common.CONSTANTS,
   common: state.common,
-}), { getPatientRequests, saveDrugDispense })(ServePatient)
+}), { getOPDServiceRequests, saveDrugDispense })(ServePatient)

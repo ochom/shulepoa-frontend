@@ -4,6 +4,20 @@ import LZString from 'lz-string'
 const initialState = {
   icd_10: LZString.decompress(localStorage.getItem('icd_10')) || [],
   CONSTANTS: {
+    DRUG_ADMINISTRATION: [
+      "Oral",
+      "Injection",
+      "Sublingual ",
+      "Rectal",
+      "Vaginal",
+      "Ocular",
+      "Otic",
+      "Nasal",
+      "Inhalation",
+      "Nebulization",
+      "Cutaneous",
+      "Transdermal"
+    ],
     DEPARTMENTS: [
       (0, "Records"), (1, "Revenue"), (2, "Outpatient"),
       (3, "Laboratory"), (4, "Radiology"), (5, "Pharmacy"),

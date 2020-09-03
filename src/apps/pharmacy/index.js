@@ -4,7 +4,7 @@ import Sidenav from '../common/sidenav'
 import { connect } from 'react-redux'
 import { getServices } from '../hospital/actions'
 import { getSuppliers } from '../inventory/actions'
-import { getReordersHistory } from './actions'
+import { getReorders } from './actions'
 import Drugs from './views/drugs'
 import Queue from './views/queue'
 import reorders from './views/reorders'
@@ -17,7 +17,7 @@ export class Pharmacy extends Component {
   componentDidMount() {
     this.props.getServices();
     this.props.getSuppliers();
-    this.props.getReordersHistory();
+    this.props.getReorders();
   }
   render() {
     const menu_list =
@@ -56,5 +56,5 @@ const mapStateToProps = state => ({
 
 })
 
-export default connect(mapStateToProps, { getServices, getSuppliers, getReordersHistory })(Pharmacy);
+export default connect(mapStateToProps, { getServices, getSuppliers, getReorders })(Pharmacy);
 
