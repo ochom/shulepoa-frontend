@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
+import { confirmAlert } from 'react-confirm-alert'
 import { connect } from 'react-redux'
-import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap'
-import { getObservations, addObservation, updateObservation, deleteObservation } from '../actions'
+import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
+import { addObservation, deleteObservation, getObservations, updateObservation } from '../actions'
 
 export class Observation extends Component {
   state = {
@@ -71,8 +72,30 @@ export class Observation extends Component {
     this.toggleModal();
   }
 
-  onDelete = (data) => {
-    this.props.deleteObservation(this.props.appointment.id, data.id);
+  onDelete = (id) => {
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <div className='custom-ui'>
+            <div className="card">
+              <div className="card-header">Delete</div>
+              <div className="card-body">
+                <p>You want to delete this file?</p>
+              </div>
+              <div className="card-footer">
+                <button className="btn btn-sm btn-danger"
+                  onClick={() => {
+                    this.props.deleteObservation(id);
+                    onClose();
+                  }}>Yes, Delete it!
+                </button>
+                <button className="btn btn-sm btn-secondary ml-2" onClick={onClose}>No</button>
+              </div>
+            </div>
+          </div>
+        );
+      }
+    });
   }
 
   render() {
@@ -162,7 +185,7 @@ export class Observation extends Component {
                         onClick={() => this.onEditObservation(observation)}><i className="fa fa-edit"></i></button>
 
                       <button className="btn btn-sm border-none btn-danger"
-                        onClick={() => this.onDelete(observation)}><i className="fa fa-trash"></i></button>
+                        onClick={() => this.onDelete(observation.id)}><i className="fa fa-trash"></i></button>
                     </td>
                   </tr>)
                 }

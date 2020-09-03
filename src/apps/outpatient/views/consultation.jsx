@@ -9,6 +9,7 @@ import Investigations from './investigations';
 import Observation from './observations';
 import prescriptions from './prescriptions';
 import Vital from './vitals';
+import Summary from './summary';
 
 export class Consultation extends Component {
   constructor(props) {
@@ -43,22 +44,28 @@ export class Consultation extends Component {
                 </div>
                 <ul className="w-100 mx-auto list-group mt-2">
                   <li className="list-group-item">
-                    <span className="m-0">Name:</span> <span style={{ float: "right" }}>{(patients.length > 0 && patients.find(patient => patient.id === appointment.patient_id)) ? patients.find(patient => patient.id === appointment.patient_id).fullname : ""}</span>
+                    <span className="m-0">Name:</span>
+                    <span style={{ float: "right" }}>{(patients.length > 0 && patients.find(patient => patient.id === appointment.patient_id)) ? patients.find(patient => patient.id === appointment.patient_id).fullname : ""}</span>
                   </li>
                   <li className="list-group-item">
-                    <span className="m-0">Sex:</span> <span style={{ float: "right" }}>{GENDERS[(patients.length > 0 && patients.find(patient => patient.id === appointment.patient_id)) ? patients.find(patient => patient.id === appointment.patient_id).sex : 0]}</span>
+                    <span className="m-0">Sex:</span>
+                    <span style={{ float: "right" }}>{GENDERS[(patients.length > 0 && patients.find(patient => patient.id === appointment.patient_id)) ? patients.find(patient => patient.id === appointment.patient_id).sex : 0]}</span>
                   </li>
                   <li className="list-group-item">
-                    <span className="m-0">DoB:</span> <span style={{ float: "right" }}>{new Date((patients.length > 0 && patients.find(patient => patient.id === appointment.patient_id)) ? patients.find(patient => patient.id === appointment.patient_id).dob : 0).toDateString("en-UK")}</span>
+                    <span className="m-0">DoB:</span>
+                    <span style={{ float: "right" }}>{new Date((patients.length > 0 && patients.find(patient => patient.id === appointment.patient_id)) ? patients.find(patient => patient.id === appointment.patient_id).dob : 0).toDateString("en-UK")}</span>
                   </li>
                   <li className="list-group-item">
-                    <span className="m-0">Marriage:</span> <span style={{ float: "right" }}>{MARITAL_STATUSES[(patients.length > 0 && patients.find(patient => patient.id === appointment.patient_id)) ? patients.find(patient => patient.id === appointment.patient_id).marital_status : 0]}</span>
+                    <span className="m-0">Marriage:</span>
+                    <span style={{ float: "right" }}>{MARITAL_STATUSES[(patients.length > 0 && patients.find(patient => patient.id === appointment.patient_id)) ? patients.find(patient => patient.id === appointment.patient_id).marital_status : 0]}</span>
                   </li>
                   <li className="list-group-item">
-                    <span className="m-0">Mobile:</span> <span style={{ float: "right" }}>{(patients.length > 0 && patients.find(patient => patient.id === appointment.patient_id)) ? patients.find(patient => patient.id === appointment.patient_id).phone : ""}</span>
+                    <span className="m-0">Mobile:</span>
+                    <span style={{ float: "right" }}>{(patients.length > 0 && patients.find(patient => patient.id === appointment.patient_id)) ? patients.find(patient => patient.id === appointment.patient_id).phone : ""}</span>
                   </li>
                   <li className="list-group-item">
-                    <span className="m-0">Address:</span> <span style={{ float: "right" }}>{`${(patients.length > 0 && patients.find(patient => patient.id === appointment.patient_id)) ? patients.find(patient => patient.id === appointment.patient_id).county : ""}, ${(patients.length > 0 && patients.find(patient => patient.id === appointment.patient_id)) ? patients.find(patient => patient.id === appointment.patient_id).country : ""}`}</span>
+                    <span className="m-0">Address:</span>
+                    <span style={{ float: "right" }}>{`${(patients.length > 0 && patients.find(patient => patient.id === appointment.patient_id)) ? patients.find(patient => patient.id === appointment.patient_id).county : ""}, ${(patients.length > 0 && patients.find(patient => patient.id === appointment.patient_id)) ? patients.find(patient => patient.id === appointment.patient_id).country : ""}`}</span>
                   </li>
                 </ul>
               </div>
@@ -76,7 +83,7 @@ export class Consultation extends Component {
                       <Route path={`${url}/diagnosis`} component={diagnosis} />
                       <Route path={`${url}/prescriptions`} component={prescriptions} />
                       <Route path={`${url}/discharge`} component={discharge} />
-                      <Route path={`${url}/summary`} component={Observation} />
+                      <Route path={`${url}/summary`} component={Summary} />
                     </>
                   )}
                 />

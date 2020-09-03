@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import store from '../../../reducer/store'
-import { getOPDServiceRequests } from '../../revenue/actions'
+import { getServiceRequests } from '../../revenue/actions'
 
 export class Queue extends Component {
 
   componentDidMount() {
-    this.props.getOPDServiceRequests();
-    setInterval(() => this.props.getOPDServiceRequests(), 5000);
+    this.props.getServiceRequests();
+    setInterval(() => this.props.getServiceRequests(), 5000);
   }
 
   selectQueue = (data) => {
@@ -16,23 +16,7 @@ export class Queue extends Component {
   }
 
   render() {
-    const { GENDERS } = this.props.constants;
-    const { service_queue } = this.props.pharmacy;
-    const queue_list = service_queue.map((queue, index) =>
-      <tr key={index}>
-        <td>{queue.patient_details.fullname}</td>
-        <td>{queue.patient_details.id}</td>
-        <td>{GENDERS[queue.patient_details.sex]}</td>
-        <td>{queue.patient_details.phone}</td>
-        <td className="text-center">
-          <button className="btn btn-sm p-0 border-none cu-text-primary"
-            onClick={() => this.selectQueue(queue)}
-            to={`/pharmacy/queue/patient/${queue.patient_details.id}`}><i className="fa fa-edit"></i> Servce</button>
-        </td>
-      </tr>
-    );
-
-
+    const { revenue: { payment_queue } } = this.props;
     return (
       <div className="row col-12 mx-auto mt-2">
         <div className="card">
@@ -52,7 +36,18 @@ export class Queue extends Component {
                 </tr>
               </thead>
               <tbody>
-                {queue_list}
+                {payment_queue.map((queue, index) =>
+                  <tr key={index}>
+                    <td>{index + 1}</td>
+                    <td>{queue.patient.fullname}</td>
+                    <td>{queue.patient.id_no}</td>
+                    <td>{queue.patient.phone}</td>
+                    <td>{queue.total_bill}</td>
+                    <td className="text-center">
+                      <button className="btn btn-sm p-0 px-2 border-none rounded btn-primary"
+                        onClick={() => this.onEditPayment(queue)}>Make Payments</button></td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>
@@ -63,8 +58,6 @@ export class Queue extends Component {
 }
 
 export default connect(state => ({
-  pharmacy: state.pharmacy,
-  services: state.hospital.services,
-  constants: state.common.CONSTANTS,
+  revenue: state.revenue,
   common: state.common,
-}), { getOPDServiceRequests, })(Queue)
+}), { getServiceRequests, })(Queue)

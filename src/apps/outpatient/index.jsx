@@ -7,12 +7,14 @@ import Consultation from './views/consultation'
 import AppointmentQueue from './views/appointments'
 import Topnav from '../common/topnav'
 import { getPatients } from '../records/actions'
+import { getDrugs } from '../pharmacy/actions'
 
 export class Outpatient extends Component {
   componentDidMount() {
-    this.props.getPatients();
+    this.props.getPatients()
     this.props.getServices()
     this.props.getClinics()
+    this.props.getDrugs()
   }
   render() {
     const menu_list =
@@ -51,5 +53,5 @@ const mapStateToProps = state => ({
   clinics: state.hospital.clinics
 })
 
-export default connect(mapStateToProps, { getPatients, getClinics, getServices })(Outpatient);
+export default connect(mapStateToProps, { getPatients, getClinics, getServices, getDrugs })(Outpatient);
 

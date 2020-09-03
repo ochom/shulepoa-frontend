@@ -16,6 +16,7 @@
     "jspdf": "^1.5.3",
     "lz-string": "^1.4.4",
     "react": "^16.13.1",
+    "react-confirm-alert": "^2.6.2",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.2.0",

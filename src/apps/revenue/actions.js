@@ -44,7 +44,7 @@ export const savePayment = (data) => (dispatch, getState) => {
 
 
 // Service Requests
-export const getOPDServiceRequests = () => (dispatch, getState) => {
+export const getServiceRequests = () => (dispatch, getState) => {
   Axios.get(`${API_PATH}revenue/opd-services/`, tokenConfig(getState))
     .then(res => {
       dispatch({ type: revenueTypes.GET_OPD_SERV_REQS, payload: res.data })
@@ -58,11 +58,11 @@ export const getOPDServiceRequests = () => (dispatch, getState) => {
 }
 
 
-export const addOPDServiceRequest = (data) => (dispatch, getState) => {
+export const addServiceRequest = (data) => (dispatch, getState) => {
   dispatch({ type: commonTypes.PROCESSING });
   Axios.post(`${API_PATH}revenue/opd-services/`, JSON.stringify(data), tokenConfig(getState))
     .then(res => {
-      dispatch(getOPDServiceRequests())
+      dispatch(getServiceRequests())
       dispatch({ type: commonTypes.SUCCESS, payload: 'Request saved succesfully' })
     })
     .catch((err) => {
@@ -73,7 +73,7 @@ export const addOPDServiceRequest = (data) => (dispatch, getState) => {
     })
 }
 
-export const getOPDServiceRequest = (id) => (dispatch, getState) => {
+export const getServiceRequest = (id) => (dispatch, getState) => {
   dispatch({ type: commonTypes.PROCESSING });
   Axios.get(`${API_PATH}revenue/opd-services/${id}/`, tokenConfig(getState))
     .then(res => {
@@ -87,11 +87,11 @@ export const getOPDServiceRequest = (id) => (dispatch, getState) => {
     })
 }
 
-export const updateOPDServiceRequest = (id, data) => (dispatch, getState) => {
+export const updateServiceRequest = (id, data) => (dispatch, getState) => {
   dispatch({ type: commonTypes.PROCESSING });
   Axios.post(`${API_PATH}revenue/opd-services/${id}/`, JSON.stringify(data), tokenConfig(getState))
     .then(res => {
-      dispatch(getOPDServiceRequests())
+      dispatch(getServiceRequests())
       dispatch({ type: commonTypes.SUCCESS, payload: 'Request updated succesfully' })
     })
     .catch((err) => {
@@ -107,7 +107,7 @@ export const deleteServiceRequest = (id) => (dispatch, getState) => {
   dispatch({ type: commonTypes.PROCESSING });
   Axios.delete(`${API_PATH}revenue/opd-services/${id}/`, tokenConfig(getState))
     .then(res => {
-      dispatch(getOPDServiceRequests())
+      dispatch(getServiceRequests())
       dispatch({ type: commonTypes.SUCCESS, payload: 'Service request deleted' })
     })
     .catch((err) => {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
-import { addOPDServiceRequest, getOPDServiceRequests, deleteServiceRequest } from '../../revenue/actions';
+import { addServiceRequest, getServiceRequests, deleteServiceRequest } from '../../revenue/actions';
 
 
 export class ServiceRequests extends Component {
@@ -14,7 +14,7 @@ export class ServiceRequests extends Component {
   }
 
   componentDidMount() {
-    this.props.getOPDServiceRequests()
+    this.props.getServiceRequests()
   }
 
   onChange = (e) => {
@@ -41,7 +41,7 @@ export class ServiceRequests extends Component {
       cost: service.price
     }
 
-    this.props.addOPDServiceRequest(data)
+    this.props.addServiceRequest(data)
     this.toggleModal()
   }
 
@@ -149,5 +149,5 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps,
-  { getOPDServiceRequests, addOPDServiceRequest, deleteServiceRequest }
+  { getServiceRequests, addServiceRequest, deleteServiceRequest }
 )(ServiceRequests);

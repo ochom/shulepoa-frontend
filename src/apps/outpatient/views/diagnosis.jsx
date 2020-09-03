@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
+import { confirmAlert } from 'react-confirm-alert'
 import { connect } from 'react-redux'
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
-import { addDiagnosis, updateDiagnosis, getDiagnosis } from '../actions'
+import { addDiagnosis, deleteDiagnosis, getDiagnosis, updateDiagnosis } from '../actions'
 
 export class Diagnosis extends Component {
   state = {
@@ -72,6 +73,32 @@ export class Diagnosis extends Component {
     this.toggleModal();
   }
 
+  onDelete = (id) => {
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <div className='custom-ui'>
+            <div className="card">
+              <div className="card-header">Delete</div>
+              <div className="card-body">
+                <p>You want to delete this file?</p>
+              </div>
+              <div className="card-footer">
+                <button className="btn btn-sm btn-danger"
+                  onClick={() => {
+                    this.props.deleteDiagnosis(id);
+                    onClose();
+                  }}>Yes, Delete it!
+                </button>
+                <button className="btn btn-sm btn-secondary ml-2" onClick={onClose}>No</button>
+              </div>
+            </div>
+          </div>
+        );
+      }
+    });
+  }
+
   render() {
     const { diagnosis, appointment } = this.props;
     const diagnosis_view =
@@ -121,7 +148,6 @@ export class Diagnosis extends Component {
           <div className="card-header py-1 px-3">
             <div className="py-1 px-2"><b>Disease diagnosis</b></div>
             <button
-              style={{ float: "right" }}
               className="btn btn-sm "
               onClick={this.onNewDiagnosis}><i className="fa fa-plus-circle mr-2"></i> Add
               </button>
@@ -147,7 +173,7 @@ export class Diagnosis extends Component {
                         onClick={() => this.onEditDiagnosis(diagnose)}><i className="fa fa-edit"></i></button>
 
                       <button className="btn btn-sm border-none btn-danger"
-                        onClick={() => this.onDelete(diagnose)}><i className="fa fa-trash"></i></button>
+                        onClick={() => this.onDelete(diagnose.id)}><i className="fa fa-trash"></i></button>
                     </td>
                   </tr>)
                 }
@@ -163,4 +189,4 @@ export default connect(state => ({
   appointment: state.outpatient.appointment,
   diagnosis: state.outpatient.diagnosis,
   common: state.common,
-}), { addDiagnosis, updateDiagnosis, getDiagnosis })(Diagnosis)
+}), { addDiagnosis, updateDiagnosis, getDiagnosis, deleteDiagnosis })(Diagnosis)

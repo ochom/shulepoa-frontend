@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { confirmAlert } from 'react-confirm-alert';
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import { getDrugs, addDrug, updateDrug, deleteDrug } from '../actions';
 
@@ -131,6 +132,32 @@ export class Drugs extends Component {
   onSearch = (e) => {
     var search = e.target.value
     //
+  }
+
+  onDelete = (id) => {
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <div className='custom-ui'>
+            <div className="card">
+              <div className="card-header">Delete</div>
+              <div className="card-body">
+                <p>You want to delete this file?</p>
+              </div>
+              <div className="card-footer">
+                <button className="btn btn-sm btn-danger"
+                  onClick={() => {
+                    this.props.deleteDrug(id);
+                    onClose();
+                  }}>Yes, Delete it!
+                </button>
+                <button className="btn btn-sm btn-secondary ml-2" onClick={onClose}>No</button>
+              </div>
+            </div>
+          </div>
+        );
+      }
+    });
   }
 
   render() {
@@ -277,7 +304,7 @@ export class Drugs extends Component {
                       <button className="btn btn-sm mr-2 border-none btn-success"
                         onClick={() => this.onEditDrug(drug)}><i className="fa fa-edit"></i> Edit</button>
                       <button className="btn btn-sm border-none btn-danger"
-                        onClick={() => this.props.deleteDrug(drug.id)}><i className="fa fa-trash"></i> Delete</button>
+                        onClick={() => this.onDelete(drug.id)}><i className="fa fa-trash"></i> Delete</button>
                     </td>
                   </tr>
                 )}

@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
+import { confirmAlert } from 'react-confirm-alert'
 import { connect } from 'react-redux'
 import { Modal, ModalBody, ModalHeader } from 'reactstrap'
-import { addOPDServiceRequest, deleteServiceRequest, getOPDServiceRequests, updateOPDServiceRequest } from '../../revenue/actions'
+import { addServiceRequest, deleteServiceRequest, getServiceRequests, updateServiceRequest } from '../../revenue/actions'
 
 export class Investigation extends Component {
   state = {
@@ -10,7 +11,7 @@ export class Investigation extends Component {
   }
 
   componentDidMount = () => {
-    this.props.getOPDServiceRequests();
+    this.props.getServiceRequests();
   }
 
   onChange = (e) => {
@@ -40,8 +41,34 @@ export class Investigation extends Component {
       cost: service.price
     }
 
-    this.props.addOPDServiceRequest(data)
+    this.props.addServiceRequest(data)
     this.toggleModal()
+  }
+
+  onDelete = (id) => {
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <div className='custom-ui'>
+            <div className="card">
+              <div className="card-header">Delete</div>
+              <div className="card-body">
+                <p>You want to delete this file?</p>
+              </div>
+              <div className="card-footer">
+                <button className="btn btn-sm btn-danger"
+                  onClick={() => {
+                    this.props.deleteServiceRequest(id);
+                    onClose();
+                  }}>Yes, Delete it!
+                </button>
+                <button className="btn btn-sm btn-secondary ml-2" onClick={onClose}>No</button>
+              </div>
+            </div>
+          </div>
+        );
+      }
+    });
   }
 
   render() {
@@ -119,7 +146,7 @@ export class Investigation extends Component {
                     <td className="text-center">
                       {!request.is_approved ?
                         <button className="btn btn-sm  border-none btn-danger"
-                          onClick={() => this.props.deleteInvestigation(request.id)}><i className="fa fa-trash"></i></button>
+                          onClick={() => this.onDelete(request.id)}><i className="fa fa-trash"></i></button>
                         : <button className="btn btn-sm btn-secondary disabled">No action</button>
                       }
                       {request.is_served ? <button className="btn btn-sm btn-success">View</button> : ""}
@@ -139,4 +166,4 @@ export default connect(state => ({
   opd_ser_reqs: state.revenue.opd_ser_reqs,
   common: state.common,
   services: state.hospital.services,
-}), { getOPDServiceRequests, addOPDServiceRequest, updateOPDServiceRequest, deleteServiceRequest })(Investigation)
+}), { getServiceRequests, addServiceRequest, updateServiceRequest, deleteServiceRequest })(Investigation)

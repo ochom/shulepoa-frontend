@@ -10,7 +10,7 @@ export class Discharge extends Component {
   onChange = (e) => this.setState({ [e.target.name]: e.target.value });
 
   componentDidMount() {
-    this.setState({ discharge_note: this.props.health_file.discharge_note })
+    this.setState({ discharge_note: this.props.appointment.discharge_note })
   }
 
   onSubmit = (e) => {
@@ -20,7 +20,7 @@ export class Discharge extends Component {
     const data = {
       discharge_note
     }
-    this.props.updateAppointment(this.props.health_file.id, data);
+    this.props.updateAppointment(this.props.appointment.id, data);
   }
 
   render() {
@@ -35,7 +35,7 @@ export class Discharge extends Component {
               <div className="form-row col-12 mx-auto my-3">
                 <div className="form-group col-12">
                   <label>Discharge Note/Cause</label>
-                  <textarea type="text" className="form-control" name="discharge_note" required={true}
+                  <textarea type="text" className="form-control" name="discharge_note" required={true} rows="10"
                     onChange={this.onChange} value={this.state.discharge_note} placeholder="Discharge statement..."></textarea>
                 </div>
                 <div className="form-group col-12">
@@ -50,7 +50,6 @@ export class Discharge extends Component {
   }
 }
 export default connect(state => ({
-  health_file: state.outpatient.selected_health_file,
-  discharge_note: state.outpatient.discharge_note,
+  appointment: state.outpatient.appointment,
   common: state.common,
 }), { updateAppointment, })(Discharge)

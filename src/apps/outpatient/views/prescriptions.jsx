@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
+import { confirmAlert } from 'react-confirm-alert'
 import { connect } from 'react-redux'
-import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap'
-import { getPrescriptions, addPrescription, deletePrescription } from '../actions'
+import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
+import { addServiceRequest, deleteServiceRequest, getServiceRequests, updateServiceRequest } from '../../revenue/actions'
 
 export class Prescription extends Component {
   state = {
     showModal: false,
-    search_list: [],
+    search_result: [],
     selected_drug: null,
     dosage: "",
     frequency: "",
@@ -16,15 +17,15 @@ export class Prescription extends Component {
   }
 
   componentDidMount = () => {
-    this.props.getPrescriptions();
+    this.props.getServiceRequests();
   }
 
   onSearch = (e) => {
-    const search_name = e.target.value;
-    const result = this.props.services.filter(service =>
-      (service.name.toLowerCase().includes(search_name.toLowerCase()) && service.department === 5)
+    const search = e.target.value;
+    const result = this.props.drugs.filter(drug =>
+      (drug.brand_name.toLowerCase().includes(search.toLowerCase()))
     ).slice(0, 7);
-    this.setState({ search_list: result });
+    this.setState({ search_result: result });
   }
 
   onChange = (e) => this.setState({ [e.target.name]: e.target.value }, () => this.calculateDosage());
@@ -39,7 +40,7 @@ export class Prescription extends Component {
 
   toggleModal = () => this.setState({ showModal: !this.state.showModal });
 
-  onNewPrescription = (data) => {
+  onNewPrescription = () => {
     this.setState({
       selected_drug: null,
       dosage: "",
@@ -72,24 +73,48 @@ export class Prescription extends Component {
     } = this.state;
 
     const data = {
-      service: selected_drug.id,
-      appointment_id: this.props.appointment.id,
       patient_id: this.props.appointment.patient_id,
       service_id: selected_drug.id,
-      service_name: selected_drug.name,
+      service_name: selected_drug.brand_name,
       department: 5,
       price: selected_drug.price,
       cost: quantity * selected_drug.price,
       description: dosage + "x" + frequency + "x" + days,
       quantity
     }
-    this.props.addPrescription(this.props.appointment.id, data);
+    this.props.addServiceRequest(data);
     this.toggleModal();
+  }
+
+  onDelete = (id) => {
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <div className='custom-ui'>
+            <div className="card">
+              <div className="card-header">Delete</div>
+              <div className="card-body">
+                <p>You want to delete this file?</p>
+              </div>
+              <div className="card-footer">
+                <button className="btn btn-sm btn-danger"
+                  onClick={() => {
+                    this.props.deleteServiceRequest(id);
+                    onClose();
+                  }}>Yes, Delete it!
+                </button>
+                <button className="btn btn-sm btn-secondary ml-2" onClick={onClose}>No</button>
+              </div>
+            </div>
+          </div>
+        );
+      }
+    });
   }
 
   render() {
     const { selected_drug } = this.state;
-    const { prescriptions } = this.props;
+    const { opd_ser_reqs } = this.props
     const prescription_view =
       <Modal isOpen={this.state.showModal} size="lg">
         <ModalHeader toggle={this.toggleModal}><i className="fa fa-plus-circle"></i> Add prescription
@@ -102,34 +127,34 @@ export class Prescription extends Component {
                   <input className="form-control form-control-sm"
                     onChange={this.onSearch} placeholder="Search..." />
                 </div>
-                <div className="col-12">
-                  <table className="table table-sm table-bordered">
-                    <caption>Drugs list</caption>
-                    <thead className="cu-bg-primary">
-                      <tr><td>Drug name</td><td>Cost</td></tr>
-                    </thead>
-                    <tbody>
-                      {this.state.search_list.map((service, index) =>
-                        <tr key={index} style={{ cursor: "pointer" }} onClick={() => this.onSelectDrug(service)}>
-                          <td>{service.name}</td>
-                          <td>{service.price}</td>
-                        </tr>
-                      )}
-                    </tbody>
-                  </table>
-                </div>
+                <table className="table table-sm table-hover table-responsive-sm">
+                  <thead>
+                    <tr>
+                      <th>Drug name</th>
+                      <th>Cost</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {this.state.search_result.map((drug, index) =>
+                      <tr key={index} style={{ cursor: "pointer" }} onClick={() => this.onSelectDrug(drug)}>
+                        <td>{drug.brand_name}</td>
+                        <td>{drug.price}</td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
               </div>
               {selected_drug ?
                 <div className="row col-6">
                   <div className="form-group  col-12">
                     <label>Drug name</label>
                     <input className="form-control form-control-sm" readOnly={true}
-                      value={selected_drug.name} />
+                      value={selected_drug.brand_name} />
                   </div>
                   <div className="form-group col-6">
                     <label>In store</label>
                     <input className="form-control form-control-sm" readOnly={true}
-                      value={selected_drug.quantity_in_store} />
+                      value={selected_drug.quantity} />
                   </div>
                   <div className="form-group col-6">
                     <label>Cost</label>
@@ -151,7 +176,7 @@ export class Prescription extends Component {
                     <input className="form-control form-control-sm" name="days" required={true}
                       value={this.state.days} onChange={this.onChange} />
                   </div>
-                  <div className="form-group col-6">
+                  <div className="form-group col-12">
                     <label>Dosage to Quantity ?</label>
                     <select className="form-control form-control-sm" name="dos_2_qnty" required={true}
                       value={this.state.dos_2_qnty} onChange={this.onChange} >
@@ -159,7 +184,7 @@ export class Prescription extends Component {
                       <option value={1}>Yes</option>
                     </select>
                   </div>
-                  <div className="form-group col-6">
+                  <div className="form-group col-12">
                     <label>Prescription Quantity</label>
                     <input className="form-control form-control-sm" name="quantity" required={true}
                       value={this.state.quantity} onChange={this.onChange} />
@@ -183,7 +208,7 @@ export class Prescription extends Component {
         {prescription_view}
         <div className="card">
           <div className="card-header py-1 px-3">
-            <div className="py-1 px-2"><b>Drug  &nbsp; &amp; &nbsp; Medicine Prescriptions</b></div>
+            <div className="py-1 px-2"><b>Prescriptions</b></div>
             <button
               className="btn btn-sm "
               onClick={this.onNewPrescription}><i className="fa fa-plus-circle mr-2"></i> Add
@@ -197,20 +222,29 @@ export class Prescription extends Component {
                   <th>Drug</th>
                   <th>Dosage</th>
                   <th>Status</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
-                {prescriptions.map((prescription, index) =>
+                {opd_ser_reqs.filter(request => request.department === 5).map((request, index) =>
                   <tr key={index}>
                     <td>{index + 1}</td>
-                    <td>{prescription.service_details.name}</td>
-                    <td>{prescription.description}</td>
-                    <td>
+                    <td>{request.service_name}</td>
+                    <td>{request.description}</td>
+                    <td className="text-primary">
                       {
-                        (prescription.is_paid && prescription.is_served) ? "Served" :
-                          (prescription.is_paid && !prescription.is_served) ? "In progress" :
+                        (request.is_approved && request.is_served) ? "Served" :
+                          (request.is_approved && !request.is_served) ? "In progress" :
                             "Not paid"
-                      }</td>
+                      }
+                    </td>
+                    <td className="text-center">
+                      {!request.is_approved ?
+                        <button className="btn btn-sm  border-none btn-danger"
+                          onClick={() => this.onDelete(request.id)}><i className="fa fa-trash"></i> delete</button>
+                        : <button className="btn btn-sm btn-secondary disabled">no action</button>
+                      }
+                    </td>
                   </tr>)
                 }
               </tbody>
@@ -223,7 +257,7 @@ export class Prescription extends Component {
 }
 export default connect(state => ({
   appointment: state.outpatient.appointment,
-  prescriptions: state.outpatient.prescriptions,
+  opd_ser_reqs: state.revenue.opd_ser_reqs,
   common: state.common,
-  services: state.hospital.services,
-}), { getPrescriptions, addPrescription, deletePrescription })(Prescription)
+  drugs: state.pharmacy.drugs
+}), { getServiceRequests, addServiceRequest, updateServiceRequest, deleteServiceRequest })(Prescription)

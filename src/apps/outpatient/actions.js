@@ -66,7 +66,7 @@ export const getAppointment = (id) => (dispatch, getState) => {
 
 export const updateAppointment = (id, data) => (dispatch, getState) => {
   dispatch({ type: commonTypes.PROCESSING });
-  Axios.post(`${API_PATH}outpatient/appointments/${id}/`, JSON.stringify(data), tokenConfig(getState))
+  Axios.put(`${API_PATH}outpatient/appointments/${id}/`, JSON.stringify(data), tokenConfig(getState))
     .then(res => {
       dispatch(getAppointments())
       dispatch({ type: commonTypes.SUCCESS, payload: "Appointment details updated succesfully" })
