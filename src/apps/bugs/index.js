@@ -5,9 +5,13 @@ import Sidenav from '../common/sidenav'
 import Topnav from '../common/topnav'
 import Bug from './issue'
 import Bugs from './issues_list'
+import { getUsers } from '../hospital/actions'
 
 
 class Issues extends Component {
+  componentDidMount() {
+    this.props.getUsers()
+  }
   render() {
     return (
       <div>
@@ -27,4 +31,4 @@ class Issues extends Component {
 
 export default connect(state => ({
   bugs: state.bugs.issues
-}))(Issues)
+}), { getUsers })(Issues)

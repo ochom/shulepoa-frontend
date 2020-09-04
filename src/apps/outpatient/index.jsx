@@ -2,23 +2,31 @@ import React, { Component } from 'react'
 import { Route, Link } from 'react-router-dom'
 import Sidenav from '../common/sidenav'
 import { connect } from 'react-redux'
-import { getClinics, getServices } from '../hospital/actions'
+import { getClinics, getServices, getUsers } from '../hospital/actions'
 import Consultation from './views/consultation'
 import AppointmentQueue from './views/appointments'
 import Topnav from '../common/topnav'
 import { getPatients } from '../records/actions'
 import { getDrugs } from '../pharmacy/actions'
+import ClinicQueue from './views/clinics'
 
 export class Outpatient extends Component {
   componentDidMount() {
     this.props.getPatients()
     this.props.getServices()
     this.props.getClinics()
+    this.props.getUsers()
     this.props.getDrugs()
+
   }
   render() {
     const menu_list =
       <div className="list-group">
+        <Link
+          to="/outpatient"
+          className="list-group-item">
+          <i className="fa fa-user-md"></i>All clinics</Link>
+
         {this.props.clinics.map((clinic, index) =>
           <Link key={index}
             to={`/outpatient/clinic/${clinic.id}`}
@@ -39,7 +47,7 @@ export class Outpatient extends Component {
                   <Route path={`${url}`} component={AppointmentQueue} exact />
                   <Route path={`${url}/appointments`} component={AppointmentQueue} exact />
                   <Route path={`${url}/appointments/:appointment_id`} component={Consultation} />
-                  <Route path={`${url}/clinic/:clinic_id`} component={AppointmentQueue} />
+                  <Route path={`${url}/clinic/:clinic_id`} component={ClinicQueue} />
                 </>
               )}
             />
@@ -53,5 +61,5 @@ const mapStateToProps = state => ({
   clinics: state.hospital.clinics
 })
 
-export default connect(mapStateToProps, { getPatients, getClinics, getServices, getDrugs })(Outpatient);
+export default connect(mapStateToProps, { getUsers, getPatients, getClinics, getServices, getDrugs })(Outpatient);
 

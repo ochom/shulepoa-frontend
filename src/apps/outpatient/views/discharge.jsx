@@ -18,6 +18,7 @@ export class Discharge extends Component {
     const { discharge_note } = this.state;
 
     const data = {
+      is_discharged: true,
       discharge_note,
       discharged_by: this.props.auth.user.id
     }

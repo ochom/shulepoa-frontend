@@ -111,7 +111,6 @@ export default function (state = initialState, action) {
       }
     case commonTypes.LOAD_ICD10:
       localStorage.setItem('icd_10', LZString.compress(JSON.stringify(action.payload)))
-      console.log(action.payload)
       return {
         ...state,
         icd_10: action.payload,

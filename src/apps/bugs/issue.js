@@ -34,7 +34,7 @@ class Bug extends Component {
   }
 
   render() {
-    const { bug, replies } = this.props
+    const { bug, replies, users } = this.props
     return (
       <div className="col-md-10 mx-auto">
         {bug ?
@@ -43,7 +43,7 @@ class Bug extends Component {
               <div className="list-group-item" >
                 <small className="time-posted">{new Date(bug.created).toLocaleDateString("en-us")}</small>
                 <b className="p-0 m-0">{bug.title}</b><br />
-                <small>Posted</small>
+                <small>{(users && users.find(user => user.id === bug.created_by)) ? users.find(user => user.id === bug.created_by).username : ""}</small>
                 {/* <small>George, <i>Ombo Hospital</i></small> */}
                 <p className="">{bug.description}</p>
                 {bug.is_resolved ?
@@ -67,7 +67,7 @@ class Bug extends Component {
               <div className="list-group my-3 issues-list">Replies
               {replies.map((reply, index) =>
                 <div className="list-group-item" key={index}>
-                  <small>Posted</small>
+                  <small>{(users && users.find(user => user.id === reply.created_by)) ? users.find(user => user.id === reply.created_by).username : ""}</small>
                   {/* <small>George, <i>Ombo Hospital</i></small> */}
                   <small className="time-posted">{new Date(new Date(reply.created)).toLocaleDateString("en-us")}</small>
                   <p>{reply.reply}</p>
@@ -81,6 +81,7 @@ class Bug extends Component {
   }
 }
 export default connect(state => ({
+  users: state.hospital.users,
   bug: state.bugs.bug,
   replies: state.bugs.replies
 }), { getBug, getReplies, addReply })(Bug)

@@ -21,7 +21,7 @@ export class CashPoint extends Component {
   componentDidMount() {
     this.props.getHospital()
     this.props.loadPaymentQueue();
-    setInterval(() => this.props.loadPaymentQueue(), 60000);
+    setInterval(() => this.props.loadPaymentQueue(), 30000);
   }
 
   toggleModal = () => this.setState({ showModal: !this.state.showModal });
