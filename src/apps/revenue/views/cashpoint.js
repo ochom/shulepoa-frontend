@@ -99,7 +99,7 @@ export class CashPoint extends Component {
   }
 
   printReceipt = () => {
-    const html = document.getElementById('payment_statement');
+    const html = document.getElementById('print_area');
     PrintPDF(html, "Payment Statement")
     this.toggleStatementModal()
   }
@@ -172,7 +172,7 @@ export class CashPoint extends Component {
         <ModalHeader className="bg-secondary text-light"
           toggle={this.toggleStatementModal}>Payment statement</ModalHeader>
         <ModalBody>
-          <div id="payment_statement" className="row col-12 mx-auto">
+          <div id="print_area" className="row col-12 mx-auto">
             <div className="col-12">
               <h3 className="col-12 p-0 m-0 text-center">{hospital ? `${hospital.hospital_name}` : ""}</h3>
               <h6 className="col-12 p-0 m-0 text-center">{hospital ? `MFL ${hospital.mfl_code}` : ""}</h6>

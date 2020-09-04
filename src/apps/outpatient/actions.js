@@ -69,6 +69,7 @@ export const updateAppointment = (id, data) => (dispatch, getState) => {
   Axios.put(`${API_PATH}outpatient/appointments/${id}/`, JSON.stringify(data), tokenConfig(getState))
     .then(res => {
       dispatch(getAppointments())
+      dispatch(getAppointment(id))
       dispatch({ type: commonTypes.SUCCESS, payload: "Appointment details updated succesfully" })
     })
     .catch((err) => {

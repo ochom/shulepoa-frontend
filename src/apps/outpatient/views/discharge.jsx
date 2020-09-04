@@ -18,7 +18,8 @@ export class Discharge extends Component {
     const { discharge_note } = this.state;
 
     const data = {
-      discharge_note
+      discharge_note,
+      discharged_by: this.props.auth.user.id
     }
     this.props.updateAppointment(this.props.appointment.id, data);
   }
@@ -50,6 +51,7 @@ export class Discharge extends Component {
   }
 }
 export default connect(state => ({
+  auth: state.auth,
   appointment: state.outpatient.appointment,
   common: state.common,
 }), { updateAppointment, })(Discharge)

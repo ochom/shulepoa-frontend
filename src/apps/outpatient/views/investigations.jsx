@@ -32,6 +32,7 @@ export class Investigation extends Component {
 
   addRequest = (service) => {
     const data = {
+      appointment_id: this.props.appointment.id,
       patient_id: this.props.appointment.patient_id,
       service_id: service.id,
       service_name: service.name,
@@ -72,7 +73,7 @@ export class Investigation extends Component {
   }
 
   render() {
-    const { opd_ser_reqs } = this.props
+    const { opd_ser_reqs, appointment } = this.props
     const investigation_view =
       <Modal isOpen={this.state.showModal} size="md">
         <ModalHeader toggle={this.toggleModal}>Add investigation requests</ModalHeader>
@@ -131,7 +132,7 @@ export class Investigation extends Component {
                 </tr>
               </thead>
               <tbody>
-                {opd_ser_reqs.filter(request => request.department === 3 || request.department === 4).map((request, index) =>
+                {opd_ser_reqs.filter(request => (request.department === 3 || request.department === 4) && request.appointment_id === appointment.id).map((request, index) =>
                   <tr key={index}>
                     <td>{index + 1}</td>
                     <td>{request.service_name}</td>

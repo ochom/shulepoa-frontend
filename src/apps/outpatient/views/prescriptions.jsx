@@ -73,6 +73,7 @@ export class Prescription extends Component {
     } = this.state;
 
     const data = {
+      appointment_id: this.props.appointment.id,
       patient_id: this.props.appointment.patient_id,
       service_id: selected_drug.id,
       service_name: selected_drug.brand_name,
@@ -114,7 +115,7 @@ export class Prescription extends Component {
 
   render() {
     const { selected_drug } = this.state;
-    const { opd_ser_reqs } = this.props
+    const { opd_ser_reqs, appointment } = this.props
     const prescription_view =
       <Modal isOpen={this.state.showModal} size="lg">
         <ModalHeader toggle={this.toggleModal}><i className="fa fa-plus-circle"></i> Add prescription
@@ -226,7 +227,7 @@ export class Prescription extends Component {
                 </tr>
               </thead>
               <tbody>
-                {opd_ser_reqs.filter(request => request.department === 5).map((request, index) =>
+                {opd_ser_reqs.filter(request => request.department === 5 && request.appointment_id === appointment.id).map((request, index) =>
                   <tr key={index}>
                     <td>{index + 1}</td>
                     <td>{request.service_name}</td>
