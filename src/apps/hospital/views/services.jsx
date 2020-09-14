@@ -109,31 +109,28 @@ export class Service extends Component {
           <ModalBody>
             <div className="row mx-auto">
               <div className="form-group col-12">
-                <label>Sevice Name<sup>*</sup></label>
                 <input className="form-control form-control-sm"
-                  name="name" onChange={this.onChange} value={this.state.name} required={true}
-                  placeholder="Service full name" />
+                  name="name" onChange={this.onChange} value={this.state.name} required={true} />
+                <label>Sevice Name<sup>*</sup></label>
               </div>
               <div className="form-group col-6">
-                <label>Department<sup>*</sup></label>
                 <select className="form-control form-control-sm"
                   name="department" onChange={this.onChange}
                   value={this.state.department} required={true} >
-                  <option value={null}>Select</option>
+                  <option value="">--select--</option>
                   {department_choices}
                 </select>
+                <label>Department<sup>*</sup></label>
               </div>
               <div className="form-group col-6">
-                <label>Price<sup>*</sup></label>
                 <input className="form-control form-control-sm"
-                  name="price" onChange={this.onChange} value={this.state.price} required={true}
-                  placeholder="Service price" />
+                  name="price" onChange={this.onChange} value={this.state.price} required={true} />
+                <label>Price<sup>*</sup></label>
               </div>
               <div className="form-group col-12">
-                <label>Other descriptions</label>
                 <textarea className="form-control form-control-sm"
-                  name="description" onChange={this.onChange} value={this.state.description}
-                  placeholder="Other descriptions of this service" ></textarea>
+                  name="description" onChange={this.onChange} value={this.state.description}></textarea>
+                <label>Other descriptions</label>
               </div>
             </div>
           </ModalBody >
@@ -150,9 +147,9 @@ export class Service extends Component {
     return (
       <div className="col-md-10 mx-auto mt-3">
         {service_details}
-        <div className="my-2">
-          <input className="form-control"
-            onChange={this.onSearch} placeholder="Search..." />
+        <div className="form-group my-2">
+          <input className="form-control" defaultValue="" onChange={this.onSearch} />
+          <label><span role="img" aria-label="search">&#x1F50D;</span> Search...</label>
         </div>
         <div className="card">
           <div className="card-header">

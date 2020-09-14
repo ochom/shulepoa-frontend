@@ -2,7 +2,7 @@ import { commonTypes } from './actions';
 import LZString from 'lz-string'
 
 const initialState = {
-  icd_10: LZString.decompress(localStorage.getItem('icd_10')) || [],
+  icd_10: JSON.parse(LZString.decompress(localStorage.getItem('icd_10'))) || [],
   CONSTANTS: {
     DRUG_ADMINISTRATION: [
       "Oral",

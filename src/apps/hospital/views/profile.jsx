@@ -78,44 +78,44 @@ export class HospitalProfile extends Component {
               <div className="card-body">
                 <div className="row mx-auto">
                   <div className="form-group col-12">
-                    <label>Hospital Name<sup>*</sup></label>
                     <input className="form-control form-control-sm"
                       name="hospital_name" onChange={this.onChange}
                       value={this.state.hospital_name}
-                      required={true} placeholder="Hospital Name" />
+                      required={true} />
+                    <label>Hospital Name<sup>*</sup></label>
                   </div>
                   <div className="form-group col-12">
-                    <label>MFL Code<sup>*</sup></label>
                     <input className="form-control form-control-sm"
                       name="mfl_code" onChange={this.onChange}
                       value={this.state.mfl_code}
-                      required={true} placeholder="MFL Code" />
+                      required={true} />
+                    <label>MFL Code<sup>*</sup></label>
                   </div>
                   <div className="form-group col-6">
-                    <label>Postal Address</label>
                     <input className="form-control form-control-sm"
                       name="postal_address" onChange={this.onChange}
                       value={this.state.postal_address}
-                      required={true} placeholder="Postal Address" />
+                      required={true} />
+                    <label>Postal Address</label>
                   </div>
                   <div className="form-group col-6">
-                    <label>Permanent Address<sup>*</sup></label>
                     <input className="form-control form-control-sm"
                       name="physical_address" onChange={this.onChange}
                       value={this.state.physical_address}
-                      required={true} placeholder="Permanent Address" />
+                      required={true} />
+                    <label>Permanent Address<sup>*</sup></label>
                   </div>
                   <div className="form-group col-6">
-                    <label>Email Address<sup>*</sup></label>
                     <input type="email" className="form-control form-control-sm"
                       name="email" onChange={this.onChange} value={this.state.email}
-                      required={true} placeholder="Email address" />
+                      required={true} />
+                    <label>Email Address<sup>*</sup></label>
                   </div>
                   <div className="form-group col-6">
-                    <label>Phone Number</label>
                     <input className="form-control form-control-sm"
                       name="phone" onChange={this.onChange} value={this.state.phone}
-                      required={true} placeholder="Phone number" />
+                      required={true} />
+                    <label>Phone Number</label>
                   </div>
                 </div>
               </div>

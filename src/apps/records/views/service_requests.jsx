@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import { addServiceRequest, getServiceRequests, deleteServiceRequest } from '../../revenue/actions';
+import { deleteData } from '../../common/actions';
 
 
 export class ServiceRequests extends Component {
@@ -60,7 +61,8 @@ export class ServiceRequests extends Component {
         <ModalBody>
           <div className="form-group">
             <input className="form-control form-control-sm"
-              onChange={this.onSearch} placeholder="Search..." />
+              onChange={this.onSearch} defaultValue="" />
+            <label><span role="img" aria-label="search">&#x1F50D;</span> Search...</label>
           </div>
           <table className="tabble table-sm table-striped table-bordered col-12">
             <thead>
@@ -73,7 +75,7 @@ export class ServiceRequests extends Component {
             </thead>
             <tbody>
               {this.state.filtered_services.map((service, index) =>
-                <tr>
+                <tr key={index}>
                   <td>{service.name}</td>
                   <td>{DEPARTMENTS[service.department]}</td>
                   <td>{service.price}</td>
@@ -126,7 +128,7 @@ export class ServiceRequests extends Component {
                     <td className="text-center">
                       {!req.is_approved ?
                         <button className="btn btn-sm btn-danger"
-                          onClick={() => this.props.deleteServiceRequest(req.id)}>Delete</button> :
+                          onClick={() => deleteData(req.id, this.props.deleteServiceRequest)}>Delete</button> :
                         <button className="btn btn-sm btn-secondary disabled">No Action</button>
                       }
                     </td>

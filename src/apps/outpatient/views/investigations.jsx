@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
-import { confirmAlert } from 'react-confirm-alert'
 import { connect } from 'react-redux'
 import { Modal, ModalBody, ModalHeader } from 'reactstrap'
+import { deleteData } from '../../common/actions'
 import { addServiceRequest, deleteServiceRequest, getServiceRequests, updateServiceRequest } from '../../revenue/actions'
 
 export class Investigation extends Component {
   state = {
     showModal: false,
     search_result: [],
+    search: "",
   }
 
   componentDidMount = () => {
@@ -19,7 +20,7 @@ export class Investigation extends Component {
     var search_result = this.props.services.filter(service =>
       ((service.department === 3 || service.department === 4) && service.name.toLowerCase().includes(search_name.toLowerCase())));
     search_result = search_result.slice(0, 10)
-    this.setState({ search_result: search_result })
+    this.setState({ search_result: search_result, search: e.target.value })
   };
 
   toggleModal = () => this.setState({ showModal: !this.state.showModal });
@@ -46,31 +47,6 @@ export class Investigation extends Component {
     this.toggleModal()
   }
 
-  onDelete = (id) => {
-    confirmAlert({
-      customUI: ({ onClose }) => {
-        return (
-          <div className='custom-ui'>
-            <div className="card">
-              <div className="card-header">Delete</div>
-              <div className="card-body">
-                <p>You want to delete this file?</p>
-              </div>
-              <div className="card-footer">
-                <button className="btn btn-sm btn-danger"
-                  onClick={() => {
-                    this.props.deleteServiceRequest(id);
-                    onClose();
-                  }}>Yes, Delete it!
-                </button>
-                <button className="btn btn-sm btn-secondary ml-2" onClick={onClose}>No</button>
-              </div>
-            </div>
-          </div>
-        );
-      }
-    });
-  }
 
   render() {
     const { opd_ser_reqs, appointment } = this.props
@@ -78,9 +54,12 @@ export class Investigation extends Component {
       <Modal isOpen={this.state.showModal} size="md">
         <ModalHeader toggle={this.toggleModal}>Add investigation requests</ModalHeader>
         <ModalBody>
-          <div className="form-row">
-            <input className="form-control col-12" name="search_name" onChange={this.onChange}
-              placeholder="Search..." />
+          <div>
+            <div className="form-group">
+              <input className="form-control" name="search_name" onChange={this.onChange}
+                value={this.state.search} />
+              <label><span role="img" aria-label="search">&#x1F50D;</span> Search...</label>
+            </div>
             {this.state.search_result.length > 0 ?
               <table className="table table-sm table-bordered mt-2">
                 <thead>
@@ -147,7 +126,7 @@ export class Investigation extends Component {
                     <td className="text-center">
                       {!request.is_approved ?
                         <button className="btn btn-sm  border-none btn-danger"
-                          onClick={() => this.onDelete(request.id)}><i className="fa fa-trash"></i></button>
+                          onClick={() => deleteData(request.id, this.props.deleteServiceRequest)}><i className="fa fa-trash"></i></button>
                         : <button className="btn btn-sm btn-secondary disabled">No action</button>
                       }
                       {request.is_served ? <button className="btn btn-sm btn-success">View</button> : ""}

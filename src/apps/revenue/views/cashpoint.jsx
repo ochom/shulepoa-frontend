@@ -175,7 +175,7 @@ export class CashPoint extends Component {
           <div id="print_area" className="row col-12 mx-auto">
             <div className="col-12">
               <h3 className="col-12 p-0 m-0 text-center">{hospital ? `${hospital.hospital_name}` : ""}</h3>
-              <h6 className="col-12 p-0 m-0 text-center">{hospital ? `MFL ${hospital.mfl_code}` : ""}</h6>
+              {/* <h6 className="col-12 p-0 m-0 text-center">{hospital ? `MFL ${hospital.mfl_code}` : ""}</h6> */}
               <h6 className="col-12 p-0 m-0 text-center">{hospital ? `${hospital.postal_address}, ${hospital.physical_address}` : ""}</h6>
               {/* <h6 className="col-12 p-0 m-0 text-center">{hospital ? `${hospital.email}. ${hospital.phone}` : ""}</h6> */}
               <h5 className="col-12 p-0 m-0 text-center mt-3"><u>{`Payment Statement`}</u></h5>

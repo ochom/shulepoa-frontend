@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { confirmAlert } from 'react-confirm-alert'
 import { connect } from 'react-redux'
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
+import { deleteData } from '../../common/actions'
 import { addObservation, deleteObservation, getObservations, updateObservation } from '../actions'
 
 export class Observation extends Component {
@@ -72,32 +72,6 @@ export class Observation extends Component {
     this.toggleModal();
   }
 
-  onDelete = (id) => {
-    confirmAlert({
-      customUI: ({ onClose }) => {
-        return (
-          <div className='custom-ui'>
-            <div className="card">
-              <div className="card-header">Delete</div>
-              <div className="card-body">
-                <p>You want to delete this file?</p>
-              </div>
-              <div className="card-footer">
-                <button className="btn btn-sm btn-danger"
-                  onClick={() => {
-                    this.props.deleteObservation(id);
-                    onClose();
-                  }}>Yes, Delete it!
-                </button>
-                <button className="btn btn-sm btn-secondary ml-2" onClick={onClose}>No</button>
-              </div>
-            </div>
-          </div>
-        );
-      }
-    });
-  }
-
   render() {
     const { TIME_UNITS } = this.props.common.CONSTANTS;
     const { appointment, observations } = this.props;
@@ -110,32 +84,32 @@ export class Observation extends Component {
           <ModalBody>
             <div className="form-row">
               <div className="form-group col-5">
-                <label>Complaint</label>
                 <input className="form-control form-control-sm" name="complaint" required={true}
-                  value={this.state.complaint} onChange={this.onChange} placeholder="Complaint..." />
+                  value={this.state.complaint} onChange={this.onChange} />
+                <label>Complaint</label>
               </div>
               <div className="form-group col-3">
-                <label>Period</label>
                 <input className="form-control form-control-sm" name="period" required={true}
-                  value={this.state.period} onChange={this.onChange} placeholder="0" />
+                  value={this.state.period} onChange={this.onChange} />
+                <label>Period</label>
               </div>
               <div className="form-group col-4">
-                <label>Units</label>
                 <select className="form-control form-control-sm" name="period_units" required={true}
                   value={this.state.period_units} onChange={this.onChange} >
-                  <option value="">Select</option>
+                  <option value="">--select--</option>
                   {TIME_UNITS.map((unit, index) => <option key={index} value={unit}>{unit}</option>)}
+                  <label>Units</label>
                 </select>
               </div>
               <div className="form-group col-12">
-                <label>Pre-medication Note</label>
                 <textarea className="form-control form-control-sm" name="pre_med_note"
-                  value={this.state.pre_med_note} onChange={this.onChange} placeholder="Pre Meds..."></textarea>
+                  value={this.state.pre_med_note} onChange={this.onChange}></textarea>
+                <label>Pre-medication Note</label>
               </div>
               <div className="form-group col-12">
-                <label>Physical Examination Note</label>
                 <textarea className="form-control form-control-sm" name="physical_examination_note"
-                  value={this.state.physical_examination_note} onChange={this.onChange} placeholder="Any physical Examination..."></textarea>
+                  value={this.state.physical_examination_note} onChange={this.onChange} ></textarea>
+                <label>Physical Examination Note</label>
               </div>
             </div>
           </ModalBody >
@@ -185,7 +159,7 @@ export class Observation extends Component {
                         onClick={() => this.onEditObservation(observation)}><i className="fa fa-edit"></i></button>
 
                       <button className="btn btn-sm border-none btn-danger"
-                        onClick={() => this.onDelete(observation.id)}><i className="fa fa-trash"></i></button>
+                        onClick={() => deleteData(observation.id, this.props.deleteObservation)}><i className="fa fa-trash"></i></button>
                     </td>
                   </tr>)
                 }

@@ -1,10 +1,14 @@
 import Axios from "axios";
 import html2pdf from 'html2pdf.js';
+import React from 'react';
+import { confirmAlert } from 'react-confirm-alert';
 
 export const API_PATH =
   process.env.NODE_ENV === 'development' ?
     'http://127.0.0.1:8000/api/' : process.env.NODE_ENV === 'production' ?
       'https://hosipoa-backend.herokuapp.com/api/' : "/";
+
+// export const API_PATH = 'https://hosipoa-backend.herokuapp.com/api/';
 
 export const commonTypes = {
   PROCESSING: 'PROCESSING',
@@ -44,3 +48,28 @@ export const loadICD10 = () => (dispatch, getState) => {
   }
 }
 
+export const deleteData = (id, deleteFunction) => {
+  confirmAlert({
+    customUI: ({ onClose }) => {
+      return (
+        <div className='custom-ui'>
+          <div className="card">
+            <div className="card-header cu-bg-primary">Delete File</div>
+            <div className="card-body px-3">
+              <p>Are you sure you want to delete this file?</p>
+            </div>
+            <div className="card-footer">
+              <button className="btn btn-sm btn-danger"
+                onClick={() => {
+                  deleteFunction(id);
+                  onClose();
+                }}>Yes, Delete it!
+                </button>
+              <button className="btn btn-sm btn-secondary ml-2 px-3" onClick={onClose}>No</button>
+            </div>
+          </div>
+        </div>
+      );
+    }
+  });
+}

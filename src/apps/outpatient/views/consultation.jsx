@@ -8,8 +8,8 @@ import discharge from './discharge';
 import Investigations from './investigations';
 import Observation from './observations';
 import prescriptions from './prescriptions';
-import Vital from './vitals';
 import Summary from './summary';
+import Vital from './vitals';
 
 export class Consultation extends Component {
   constructor(props) {

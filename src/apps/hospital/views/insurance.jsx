@@ -102,22 +102,22 @@ export class Insurance extends Component {
           <ModalBody>
             <div className="row mx-auto">
               <div className="form-group col-12">
-                <label>Company name<sup>*</sup></label>
                 <input className="form-control form-control-sm"
                   name="company_name" onChange={this.onChange} value={this.state.company_name} required={true}
-                  placeholder="Company full name" />
+                />
+                <label>Company name<sup>*</sup></label>
               </div>
               <div className="form-group col-12">
-                <label>Email Address<sup>*</sup></label>
                 <input type="email" className="form-control form-control-sm"
                   name="company_email" onChange={this.onChange} value={this.state.company_email} required={true}
-                  placeholder="Email Address" />
+                />
+                <label>Email Address<sup>*</sup></label>
               </div>
               <div className="form-group col-12">
-                <label>Phone Nunber<sup>*</sup></label>
                 <input className="form-control form-control-sm"
                   name="company_phone" onChange={this.onChange} value={this.state.company_phone} required={true}
-                  placeholder="Contact phone number" />
+                />
+                <label>Phone Nunber<sup>*</sup></label>
               </div>
             </div>
           </ModalBody >
@@ -134,9 +134,11 @@ export class Insurance extends Component {
     return (
       <div className="col-md-10 mx-auto mt-3">
         {insurance_details}
-        <div className="my-2">
-          <input className="form-control"
-            onChange={this.onSearch} placeholder="Search..." /></div>
+        <div className="form-group my-2">
+          <input className="form-control" defaultValue=""
+            onChange={this.onSearch} />
+          <label><span role="img" aria-label="search">&#x1F50D;</span> Search...</label>
+        </div>
         <div className="card">
           <div className="card-header">
             <div className=""> Insurance companies</div>

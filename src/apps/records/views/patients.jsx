@@ -99,6 +99,9 @@ export class Patients extends Component {
     })
   }
 
+  setInputType = (e) => {
+
+  }
 
   render() {
     const {
@@ -121,126 +124,123 @@ export class Patients extends Component {
             <div className="cu-bg-primary py-1 px-3 my-2 rounded">Personal Details</div>
             <div className="row mx-auto">
               <div className="form-group col-sm-12 col-md-8">
-                <label>Full name<sup>*</sup></label>
                 <input className="form-control form-control-sm"
                   name="fullname" onChange={this.onChange} value={this.state.fullname} required={true}
-                  placeholder="Full name" />
+                />
+                <label>Full name<sup>*</sup></label>
               </div>
               <div className="form-group col-sm-12 col-md-4">
-                <label>Sex<sup>*</sup></label>
                 <select className="form-control form-control-sm"
                   name="sex" onChange={this.onChange} value={this.state.sex} required={true}>
-                  <option value="">Select</option>
+                  <option value="">--select--</option>
                   {GENDERS.map((GENDER, index) => <option key={index} value={index}>{GENDER}</option>)}
                 </select>
+                <label>Sex<sup>*</sup></label>
               </div>
               <div className="form-group col-sm-12 col-md-4">
-                <label>Date of Birth<sup>*</sup></label>
-                <input type="date" className="form-control form-control-sm"
+                <input type="text" className="form-control form-control-sm"
                   name="dob" onChange={this.onChange} value={this.state.dob} required={true}
-                  placeholder="Date" />
+                  onFocus={(e) => e.target.type = 'date'} onBlur={(e) => !e.target.value ? e.target.type = 'text' : 'date'} />
+                <label>Date of Birth<sup>*</sup></label>
               </div>
               <div className="form-group col-sm-12 col-md-4">
-                <label>ID Type<sup>*</sup></label>
                 <select className="form-control form-control-sm"
                   name="id_type" onChange={this.onChange} value={this.state.id_type} required={true}>
-                  <option value="">Select</option>
+                  <option value="">--select--</option>
                   {ID_TYPES.map((ID_TYPE, index) => <option key={index} value={index}>{ID_TYPE}</option>)}
                 </select>
+                <label>ID Type<sup>*</sup></label>
               </div>
               <div className="form-group col-sm-12 col-md-4">
-                <label>ID NO<sup>*</sup></label>
                 <input className="form-control form-control-sm"
-                  name="id_no" onChange={this.onChange} value={this.state.id_no} required={true}
-                  placeholder="Identification Number" />
+                  name="id_no" onChange={this.onChange} value={this.state.id_no} required={true} />
+                <label>ID NO<sup>*</sup></label>
               </div>
               <div className="form-group col-sm-12 col-md-4">
-                <label>Marital Status<sup>*</sup></label>
                 <select className="form-control form-control-sm"
                   name="marital_status" onChange={this.onChange} value={this.state.marital_status} required={true}>
-                  <option value={null}>Select</option>
-                  <option value="">Select</option>
+                  <option value="">--select--</option>
                   {MARITAL_STATUSES.map((MARITAL_STATUS, index) => <option key={index} value={index}>{MARITAL_STATUS}</option>)}
                 </select>
+                <label>Marital Status<sup>*</sup></label>
               </div>
               <div className="form-group col-sm-12 col-md-4">
-                <label>Occupation</label>
                 <input className="form-control form-control-sm"
                   name="occupation" onChange={this.onChange} value={this.state.occupation} />
+                <label>Occupation<sup>*</sup></label>
               </div>
             </div>
             {/* Contact Information */}
             <div className="cu-bg-primary py-1 px-3 my-2 rounded">Contacts and Adress</div>
             <div className="row mx-auto">
               <div className="form-group col-sm-12 col-md-4">
-                <label>Phone Number<sup>*</sup></label>
                 <input className="form-control form-control-sm"
                   name="phone" onChange={this.onChange} value={this.state.phone} required={true}
-                  placeholder="Phone Number" />
+                />
+                <label>Phone Number<sup>*</sup></label>
               </div>
               <div className="form-group col-sm-12 col-md-4">
-                <label>Postal Address</label>
                 <input className="form-control form-control-sm"
                   name="postal_address" onChange={this.onChange} value={this.state.postal_address}
-                  placeholder="Postal Address" />
+                />
+                <label>Postal Address</label>
               </div>
               <div className="form-group col-sm-12 col-md-4">
-                <label>Country<sup>*</sup></label>
                 <select className="form-control form-control-sm"
                   name="country" onChange={this.onChange}
-                  value={this.state.country} required={true}
-                >
-                  <option value="">Select</option>
+                  value={this.state.country} required={true}>
+                  <option value="">--select--</option>
                   {COUNTRIES.map((country, index) => <option key={index} value={country}>{country}</option>)}
                 </select>
+                <label>Country<sup>*</sup></label>
               </div>
               <div className="form-group col-sm-12 col-md-4">
-                <label>County<sup>*</sup></label>
                 <input className="form-control form-control-sm"
                   name="county" onChange={this.onChange} value={this.state.county} required={true}
-                  placeholder="County" />
+                />
+                <label>County<sup>*</sup></label>
               </div>
               <div className="form-group col-sm-12 col-md-4">
-                <label>Sub-county</label>
                 <input className="form-control form-control-sm"
                   name="sub_county" onChange={this.onChange} value={this.state.sub_county}
-                  placeholder="Sub-county" />
+                />
+                <label>Sub-county</label>
               </div>
               <div className="form-group col-sm-12 col-md-4">
-                <label>Ward/Estate</label>
                 <input className="form-control form-control-sm"
                   name="ward_estate" onChange={this.onChange} value={this.state.ward_estate}
-                  placeholder="Ward/ Village/ Estate" />
+                />
+                <label>Ward/Estate</label>
               </div>
             </div>
             {/* NEXT OF KIN */}
             <div className="cu-bg-primary py-1 px-3 my-2 rounded">Next of kin</div>
             <div className="row mx-auto">
               <div className="form-group col-sm-12 col-md-4">
-                <label>Kin's Name <small>(Full name)</small><sup>*</sup></label>
                 <input className="form-control form-control-sm"
                   name="kin_name" onChange={this.onChange} value={this.state.kin_name} required={true}
-                  placeholder="Kin name" />
+                />
+                <label>Kin's Name <small>(Full name)</small><sup>*</sup></label>
               </div>
               <div className="form-group col-sm-12 col-md-4">
-                <label>Kin's Mobile<sup>*</sup></label>
                 <input className="form-control form-control-sm"
                   name="kin_phone" onChange={this.onChange} value={this.state.kin_phone} required={true}
-                  placeholder="Mobile" />
+                />
+                <label>Kin's Mobile<sup>*</sup></label>
               </div>
               <div className="form-group col-sm-12 col-md-4">
-                <label>Relationship<sup>*</sup></label>
                 <select className="form-control form-control-sm"
                   name="kin_relationship" onChange={this.onChange} value={this.state.kin_relationship} required={true}>
-                  <option value="">Select</option>
+                  <option value="">--select--</option>
                   {KIN_RELATIONSHIPS.map((KIN_RELATIONSHIP, index) => <option key={index} value={index}>{KIN_RELATIONSHIP}</option>)}
                 </select>
+                <label>Relationship<sup>*</sup></label>
               </div>
               <div className="form-group col-sm-12 col-md-4">
-                <label>Kin's ID Number</label>
                 <input className="form-control form-control-sm"
                   name="kin_id" onChange={this.onChange} value={this.state.kin_id}
-                  placeholder="Kin's ID number" />
+                />
+                <label>Kin's ID Number</label>
               </div>
             </div>
           </ModalBody >
@@ -257,9 +257,9 @@ export class Patients extends Component {
     return (
       <div className="col-md-10 mx-auto">
         {patient_details}
-        <div className="my-2">
-          <input className="form-control"
-            placeholder="Search..." onChange={this.onSearchPatient} />
+        <div className="form-group col-12">
+          <input className="form-control" onChange={this.onSearchPatient} defaultValue="" />
+          <label><span role="img" aria-label="search">&#x1F50D;</span> Search...</label>
         </div>
         <div className="card">
           <div className="card-header">

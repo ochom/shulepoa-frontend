@@ -62,18 +62,18 @@ export class Appointments extends Component {
           <ModalBody>
             <div className="row mx-auto">
               <div className="form-group col-12">
-                <label>Clinic to visit</label>
                 <select className="form-control form-control-sm"
                   name="clinic_id" onChange={this.onChange} value={this.state.clinic_id} required={true}>
                   <option value="">Select</option>
                   {clinics.map((clinic, index) => <option key={index} value={clinic.id}>{clinic.name}</option>)}
                 </select>
+                <label>Clinic to visit</label>
               </div>
               <div className="form-group col-12">
-                <label>Appointment Date<sup>*</sup></label>
                 <input type="date" className="form-control form-control-sm"
                   name="date" onChange={this.onChange} value={this.state.date} required={true}
                   placeholder="Service name" />
+                <label>Appointment Date<sup>*</sup></label>
               </div>
             </div>
           </ModalBody >

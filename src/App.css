@@ -1,12 +1,9 @@
 :root{
   --theme-dark:rgb(19, 18, 18);
-  --theme-light:rgb(247, 237, 230);
+  --theme-light:rgb(53, 41, 41);
   --theme-white:rgb(255, 255, 255);
-  /* --theme-primary:rgb(15, 83, 2);
-  --theme-secondary:rgb(17, 207, 0); */
-  --theme-primary:rgb(53, 9, 94);
-  --theme-secondary:rgb(180, 6, 180);
-  --theme-background: linear-gradient(20deg, rgba(0,255,0,0.5),rgba(0,0,0,0.5), rgba(0,0,255,0.5));
+  --theme-primary:rgb(17, 88, 3);
+  --theme-secondary:rgb(13, 145, 1);
 }
 
 *{
@@ -23,81 +20,68 @@ body{
   overflow: hidden;
 }
 
-/* Loading animation */
-.loader{
-  background-color: var(--theme-light);
-  height: 100vh; width: 100vw;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
-.loader-icon{
+.form-group{
   position: relative;
-  border-radius: 5px;
-  width: 8rem;
-  height: 8rem;
-  background-color: var(--theme-secondary);
-  border: 0.25rem var(--theme-secondary);
-  outline: 0;
-  overflow: hidden;
+  padding-top: 10px;
 }
 
-.loader-icon::before{
-  content: "H";
-  height: 100%; width: 100%;
-  font-size: 4rem;
-  color: var(--theme-light);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.loader-icon::after{
-  content: "";
+label{
   position: absolute;
-  height: 200%; width: 200%;
-  background-color: var(--theme-light);
-  bottom: -50%;
-  left: -50%;
-  border-radius: 30%;
-  opacity: 0;
-  animation: spin 6s ease-in-out alternate;
+  pointer-events: none;
+  left: 15px;
+  top: 18px;
+  font-size: .9em;
+  opacity: 0.5;
+  transition: 0.2s ease all;
 }
 
-@keyframes spin{
-  0% {
-    transform: translateY(0) rotate(0deg);
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(-100%) rotate(350deg);
-    opacity: 1;
-  }
+.form-control:focus + label,
+.form-control:not([value=""]) + label{
+  top: -6px;
+  opacity: 1;
+  left:10px;
+  font-size: .7em;
+  color: var(--theme-secondary);
 }
 
-/* Auth */
-.auth-temp{
-  position: relative;
-  min-height: 100vh;
-  width: 100vw;
-  display: flex;
-  align-items: center;
-  align-content: center;
-  background-image: var(--theme-background);
+.form-control{
+  border: none;
+  border-radius: 0;
+  border-bottom: 1px solid var(--theme-primary);
 }
 
-
-.login{
-  height: auto;
-  border-radius: 15px;
-  padding: 20px 0px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--theme-light);
+.form-control:focus{
+  outline: none;
+  border-color: inherit;
+  -webkit-box-shadow: none;
+  box-shadow: none;
 }
 
+.form-control[value=""]:invalid{
+  outline: none !important;
+  border-color: inherit !important;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  border-bottom: 1px solid var(--theme-primary) !important;
+} 
+.form-control:not([value=""]):invalid{
+  outline: none !important;
+  border-color: inherit !important;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  border-bottom: 1px solid red !important;
+} 
+
+.form-control:focus:invalid{
+  outline: none;
+  border-color: inherit;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border-bottom: 1px solid var(--theme-primary) !important;
+} 
 
 table{
   font-family: sans-serif;
@@ -134,9 +118,6 @@ sup{
   float: right; font-weight: 400;
 }
 
-.form-control{
-  font-size:13px;
-}
 
 .fa-angle-right{
   margin: 0 10px;
@@ -147,6 +128,12 @@ sup{
   background-color: var(--theme-primary);
   color: white;
 }
+
+.cu-bg-primary:hover,.cu-bg-primary:focus{
+  background-color: var(--theme-primary);
+  color: white;
+}
+
 .cu-bg-secondary{
   background-color: var(--theme-secondary);
   color: white;
@@ -209,11 +196,109 @@ table>tbody>tr>td>.btn{
   transition: ease-in 0.3s;
 }
 
+
 /* Processing */
 #processing{
   position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
   background-color: rgba(0,0,0,0.5); z-index: 999999,
 }
+
+/* Loading animation */
+.loader{
+  background-color: var(--theme-white);
+  height: 100vh; width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loader-icon{
+  position: relative;
+  border-radius: 5px;
+  width: 8rem;
+  height: 8rem;
+  background-color: var(--theme-secondary);
+  border: 0.25rem var(--theme-secondary);
+  outline: 0;
+  overflow: hidden;
+}
+
+.loader-icon::before{
+  content: "HP";
+  height: 100%; width: 100%;
+  font-size: 4rem;
+  color: var(--theme-white);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loader-icon::after{
+  content: "";
+  position: absolute;
+  height: 200%; width: 200%;
+  background-color: var(--theme-white);
+  bottom: -50%;
+  left: -50%;
+  border-radius: 30%;
+  opacity: 0;
+  animation: spin 6s ease-in-out alternate;
+}
+
+@keyframes spin{
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100%) rotate(350deg);
+    opacity: 1;
+  }
+}
+
+
+
+/* Login */
+.auth-temp{
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  overflow-y: auto;
+}
+
+
+.login{
+  height: auto;
+  border-radius: 15px;
+  padding: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--theme-white);
+  box-shadow: 0 0 3px 2px rgba(0,0,0,0.5);
+}
+
+.login img{
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  padding: 3px;
+  border: 3px solid var(--theme-primary);
+  box-shadow: 0 0 1px 1px rgba(0,0,0,0.5);
+  margin-bottom: 20px;
+}
+
+.login .card{
+  border: none;
+  width: 100%;
+  height: 100%;
+}
+
+
 
 /* sidenav */
 .sidenav{
@@ -264,7 +349,7 @@ table>tbody>tr>td>.btn{
 .sidenav .list-group-item{
   font-size: 0.9em;
   background-color: transparent;
-  color: var(--theme-light);
+  color: var(--theme-white);
   cursor: pointer; 
   text-decoration: none; 
   text-align: left;
@@ -273,7 +358,7 @@ table>tbody>tr>td>.btn{
 
 .sidenav .list-group-item:hover{
   background-color: var(--theme-secondary);
-  color: var(--theme-light);
+  color: var(--theme-white);
 }
 
 .sidenav .list-group-item i{
@@ -381,7 +466,7 @@ table>tbody>tr>td>.btn{
   height: 100%;
   position: absolute;
   overflow-y: auto;
-  background-image: var(--theme-background);
+  background-image: var(--theme-light);
 }
 
 /* Dashboard */
@@ -421,5 +506,5 @@ table>tbody>tr>td>.btn{
 .patient_page_tabs .list-group-item:hover{
   text-decoration: none;
   background-color: var(--theme-primary); 
-  color: var(--theme-light);
+  color: var(--theme-white);
 }

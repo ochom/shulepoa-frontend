@@ -76,16 +76,14 @@ export class Clinic extends Component {
           <ModalBody>
             <div className="row mx-auto">
               <div className="form-group col-12">
-                <label>Clininc name<sup>*</sup></label>
                 <input className="form-control form-control-sm"
-                  name="name" onChange={this.onChange} value={this.state.name} required={true}
-                />
+                  name="name" onChange={this.onChange} value={this.state.name} required={true} />
+                <label>Clininc name<sup>*</sup></label>
               </div>
               <div className="form-group col-12">
-                <label>Description<sup>*</sup></label>
                 <textarea className="form-control form-control-sm"
-                  name="desc" onChange={this.onChange} value={this.state.desc} required={true}
-                ></textarea>
+                  name="desc" onChange={this.onChange} value={this.state.desc} required={true}></textarea>
+                <label>Description<sup>*</sup></label>
               </div>
             </div>
           </ModalBody >

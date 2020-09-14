@@ -5,6 +5,8 @@ const initialState = {
   isAuthenticated: null,
   isLoading: false,
   user: null,
+  reset_sent: false,
+  password_changed: false,
 };
 
 export default function (state = initialState, action) {
@@ -23,6 +25,8 @@ export default function (state = initialState, action) {
         token: action.payload.token,
         isAuthenticated: true,
         isLoading: false,
+        reset_sent: false,
+        password_changed: false
       };
     case authTypes.AUTH_ERROR:
       localStorage.removeItem('token');
@@ -32,6 +36,18 @@ export default function (state = initialState, action) {
         isAuthenticated: false,
         token: null,
         user: null,
+        reset_sent: false,
+        password_changed: false
+      };
+    case authTypes.PASSWORD_RESET_SENT:
+      return {
+        ...state,
+        reset_sent: true,
+      };
+    case authTypes.PASSWORD_CHANGE_SUCCESS:
+      return {
+        ...state,
+        password_changed: true,
       };
     default:
       return state;

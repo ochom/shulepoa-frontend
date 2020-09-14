@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { confirmAlert } from 'react-confirm-alert'
 import { connect } from 'react-redux'
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
+import { deleteData } from '../../common/actions'
 import { addDiagnosis, deleteDiagnosis, getDiagnosis, updateDiagnosis } from '../actions'
 
 export class Diagnosis extends Component {
@@ -24,10 +24,11 @@ export class Diagnosis extends Component {
   toggleModal = () => this.setState({ showModal: !this.state.showModal });
 
   onSearch = (e) => {
+    this.onChange(e);
     var search = e.target.value;
-    var search_result = this.props.common.icd_10.length > 0 ?
-      this.props.common.icd_10.filter(icd => icd.desc.includes(search.toLowerCase())).slice(0, 7) :
-      []
+    const icd10 = this.props.common.icd_10;
+    var search_result = (icd10.length > 0 && icd10.filter(icd => icd.desc.includes(search.toLowerCase()))) ?
+      icd10.filter(icd => icd.desc.includes(search.toLowerCase())).slice(0, 7) : []
     this.setState({ search_result: search_result })
   }
 
@@ -73,32 +74,6 @@ export class Diagnosis extends Component {
     this.toggleModal();
   }
 
-  onDelete = (id) => {
-    confirmAlert({
-      customUI: ({ onClose }) => {
-        return (
-          <div className='custom-ui'>
-            <div className="card">
-              <div className="card-header">Delete</div>
-              <div className="card-body">
-                <p>You want to delete this file?</p>
-              </div>
-              <div className="card-footer">
-                <button className="btn btn-sm btn-danger"
-                  onClick={() => {
-                    this.props.deleteDiagnosis(id);
-                    onClose();
-                  }}>Yes, Delete it!
-                </button>
-                <button className="btn btn-sm btn-secondary ml-2" onClick={onClose}>No</button>
-              </div>
-            </div>
-          </div>
-        );
-      }
-    });
-  }
-
   render() {
     const { diagnosis, appointment } = this.props;
     const diagnosis_view =
@@ -110,9 +85,9 @@ export class Diagnosis extends Component {
           <ModalBody>
             <div className="form-row">
               <div className="form-group col-12">
-                <label>Search</label>
                 <input className="form-control form-control-sm" name="search"
-                  onChange={this.onSearch} placeholder="Search..." />
+                  onChange={this.onSearch} value={this.state.search} />
+                <label><span role="img" aria-label="search">&#x1F50D;</span> Search...</label>
                 <ul className="list-group">
                   {this.state.search_result.map((icd, index) =>
                     <button className="list-group-item border-bottom" key={index} value={icd.code} onClick={() => this.selectDisease(icd)}>{icd.desc}</button>
@@ -120,14 +95,14 @@ export class Diagnosis extends Component {
                 </ul>
               </div>
               <div className="form-group col-12">
-                <label>Disease name</label>
                 <input className="form-control form-control-sm" name="disease" required={true}
                   value={this.state.disease} onChange={this.onChange} />
+                <label>Disease name</label>
               </div>
               <div className="form-group col-12">
-                <label>ICD 10</label>
                 <input className="form-control form-control-sm" name="icd_10" required={true}
-                  value={this.state.icd_10} onChange={this.onChange} placeholder="0" />
+                  value={this.state.icd_10} onChange={this.onChange} />
+                <label>ICD 10</label>
               </div>
             </div>
           </ModalBody >
@@ -173,7 +148,7 @@ export class Diagnosis extends Component {
                         onClick={() => this.onEditDiagnosis(diagnose)}><i className="fa fa-edit"></i></button>
 
                       <button className="btn btn-sm border-none btn-danger"
-                        onClick={() => this.onDelete(diagnose.id)}><i className="fa fa-trash"></i></button>
+                        onClick={() => deleteData(diagnose.id, this.props.deleteDiagnosis)}><i className="fa fa-trash"></i></button>
                     </td>
                   </tr>)
                 }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { confirmAlert } from 'react-confirm-alert'
 import { connect } from 'react-redux'
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
+import { deleteData } from '../../common/actions'
 import { addVital, deleteVital, getVitals, updateVital } from '../actions'
 
 export class Vital extends Component {
@@ -86,33 +86,6 @@ export class Vital extends Component {
     return (vital.mass * 1.0 / (vital.height * vital.height)).toFixed(2)
   }
 
-  onDelete = (id) => {
-    confirmAlert({
-      customUI: ({ onClose }) => {
-        return (
-          <div className='custom-ui'>
-            <div className="card">
-              <div className="card-header">Delete</div>
-              <div className="card-body">
-                <p>You want to delete this file?</p>
-              </div>
-              <div className="card-footer">
-                <button className="btn btn-sm btn-danger"
-                  onClick={() => {
-                    this.props.deleteVital(id);
-                    onClose();
-                  }}>Yes, Delete it!
-                </button>
-                <button className="btn btn-sm btn-secondary ml-2" onClick={onClose}>No</button>
-              </div>
-            </div>
-          </div>
-        );
-      }
-    });
-  }
-
-
   render() {
     const { appointment, vitals } = this.props;
     const vital_view =
@@ -125,53 +98,52 @@ export class Vital extends Component {
             <div className="cu-bg-primary py-1 px-3 my-2 rounded">Hypertension Screening/Blood Pressure</div>
             <div className="row col-12 mx-auto">
               <div className="form-group col-md-4">
-                <label>BP Systolic</label>
                 <input className="form-control form-control-sm"
                   name="bp_systolic" onChange={this.onChange} value={this.state.bp_systolic}
-                  placeholder="100-130" />
+                />
+                <label>BP Systolic</label>
               </div>
               <div className="form-group col-md-4">
-                <label>BP Diastolic</label>
                 <input className="form-control form-control-sm"
                   name="bp_diastolic" onChange={this.onChange} value={this.state.bp_diastolic}
-                  placeholder="60-85" />
+                />
+                <label>BP Diastolic</label>
               </div>
               <div className="form-group col-md-4">
-                <label>Pulse (Heart Rate)</label>
                 <input className="form-control form-control-sm"
                   name="pulse" onChange={this.onChange} value={this.state.pulse}
-                  placeholder="60-77" />
+                />
+                <label>Pulse (Heart Rate)</label>
               </div>
             </div>
             <div className="cu-bg-primary py-1 px-3 my-2 rounded">Physical Vitals</div>
             <div className="row col-12 mx-auto">
               <div className="form-group col-md-4">
-                <label>Temperature <small>(<sup>o</sup>C)</small></label>
                 <input className="form-control form-control-sm" required={true}
                   name="temperature" onChange={this.onChange} value={this.state.temperature}
-                  placeholder="0.0" />
+                />
+                <label>Temperature <small>(<sup>o</sup>C)</small></label>
               </div>
               <div className="form-group col-md-4">
-                <label>Mass <small>(Kg)</small> </label>
                 <input className="form-control form-control-sm"
                   name="mass" onChange={this.onChange} value={this.state.mass}
-                  placeholder="0.0" />
+                />
+                <label>Mass <small>(Kg)</small> </label>
               </div>
               <div className="form-group col-md-4">
-                <label>Height (m)</label>
                 <input className="form-control form-control-sm"
                   name="height" onChange={this.onChange} value={this.state.height}
-                  placeholder="0.0" />
+                />
+                <label>Height (m)</label>
               </div>
             </div>
             <div className="cu-bg-primary py-1 px-3 my-2 rounded">Nursing/Vitals Notes</div>
             <div className="row col-12 mx-auto">
               <div className="form-group col-12">
-                <label>Nursing notes</label>
                 <textarea className="form-control form-control-sm"
-                  name="triage_note" onChange={this.onChange} value={this.state.triage_note}
-                  placeholder="Other nusing observations..." >
+                  name="triage_note" onChange={this.onChange} value={this.state.triage_note}>
                 </textarea>
+                <label>Nursing notes</label>
               </div>
             </div>
           </ModalBody >
@@ -221,7 +193,7 @@ export class Vital extends Component {
                       <button className="btn btn-sm mr-2 border-none btn-success"
                         onClick={() => this.onEditVital(vital)}><i className="fa fa-edit"></i></button>
                       <button className="btn btn-sm border-none btn-danger"
-                        onClick={() => this.onDelete(vital.id)}><i className="fa fa-trash"></i></button>
+                        onClick={() => deleteData(vital.id, this.props.deleteVital)}><i className="fa fa-trash"></i></button>
                     </td>
                   </tr>)
                 }

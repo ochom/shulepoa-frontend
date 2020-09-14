@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { updateAppointment } from '../actions'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { updateAppointment } from '../actions';
 
 export class Discharge extends Component {
   state = {
@@ -36,9 +36,9 @@ export class Discharge extends Component {
             <form onSubmit={this.onSubmit}>
               <div className="form-row col-12 mx-auto my-3">
                 <div className="form-group col-12">
-                  <label>Discharge Note/Cause</label>
                   <textarea type="text" className="form-control" name="discharge_note" required={true} rows="10"
                     onChange={this.onChange} value={this.state.discharge_note} placeholder="Discharge statement..."></textarea>
+                  <label>Discharge Note/Cause</label>
                 </div>
                 <div className="form-group col-12">
                   <button className="btn cu-bg-primary btn-sm" onSubmit={this.onSubmit}><i className="fa fa-check"></i> Save</button>

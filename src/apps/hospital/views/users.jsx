@@ -131,9 +131,10 @@ export class Users extends Component {
     return (
       <div className="col-md-10 mx-auto mt-3">
         {users_details}
-        <div className="my-2">
+        <div className="form-group my-2">
           <input className="form-control"
-            onChange={this.onChange} placeholder="Search..." />
+            onChange={this.onChange} defaultValue="" />
+          <label><span role="img" aria-label="search">&#x1F50D;</span> Search...</label>
         </div>
         <div className="card mt-2">
           <div className="card-header py-1 px-3">

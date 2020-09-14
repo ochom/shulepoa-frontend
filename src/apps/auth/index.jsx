@@ -3,6 +3,8 @@ import { Route, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import login from './views/login'
 import { logout } from './actions'
+import reset from './views/reset'
+import change_password from './views/change_password'
 
 export class Auth extends Component {
   render() {
@@ -24,6 +26,8 @@ export class Auth extends Component {
               <>
                 <Route path={`${url}`} component={login} exact />
                 <Route path={`${url}/login`} component={login} />
+                <Route path={`${url}/reset-password`} component={reset} />
+                <Route path={`${url}/change-password`} component={change_password} />
               </>
             )}
           />

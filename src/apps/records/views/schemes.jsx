@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { connect } from 'react-redux';
-import { getPatient, getSchemes, addScheme, updateScheme } from '../actions'
+import { getPatient, getSchemes, addScheme, updateScheme, deleteScheme } from '../actions'
+import { deleteData } from '../../common/actions';
 
 export class Schemes extends Component {
   constructor(props) {
@@ -35,7 +36,7 @@ export class Schemes extends Component {
     this.setState({
       showModal: !this.state.showModal,
       select_scheme: data,
-      company: data.company,
+      company_id: data.company_id,
       card_number: data.card_number,
     });
 
@@ -61,6 +62,7 @@ export class Schemes extends Component {
     this.toggleModal()
   }
 
+
   render() {
 
     const { insurances, records: { schemes } } = this.props;
@@ -76,19 +78,17 @@ export class Schemes extends Component {
           <ModalBody>
             <div className="row mx-auto">
               <div className="form-group col-12">
-                <label>Insurance Company/Scheme<sup>*</sup>
-                </label>
                 <select className="form-control form-control-sm"
                   name="company_id" onChange={this.onChange} value={this.state.company_id} required={true}>
                   <option value="">Select</option>
                   {insurances.map((insurance, index) => <option key={index} value={insurance.id}>{insurance.company_name}</option>)}
                 </select>
+                <label>Insurance Company/Scheme<sup>*</sup></label>
               </div>
               <div className="form-group col-12">
-                <label>Card Number<sup>*</sup></label>
                 <input className="form-control form-control-sm"
-                  name="card_number" onChange={this.onChange} value={this.state.card_number} required={true}
-                  placeholder="Insurance card number" />
+                  name="card_number" onChange={this.onChange} value={this.state.card_number} required={true} />
+                <label>Card Number<sup>*</sup></label>
               </div>
             </div>
           </ModalBody >
@@ -124,7 +124,7 @@ export class Schemes extends Component {
                 </tr>
               </thead>
               <tbody>
-                {schemes.filter(sch => sch.id === parseInt(this.state.patient_id)).map((scheme, index) =>
+                {schemes.filter(sch => sch.patient_id === parseInt(this.state.patient_id)).map((scheme, index) =>
                   <tr key={index}>
                     <td>{index + 1}</td>
                     <td>{insurances.length > 0 ? insurances.find(company => company.id === scheme.company_id).company_name : ""}</td>
@@ -132,7 +132,8 @@ export class Schemes extends Component {
                     <td className="text-center">
                       <button className="btn btn-sm mr-2 border-none btn-success"
                         onClick={() => this.onEditScheme(scheme)}><i className="fa fa-edit"></i></button>
-                      <button className="btn btn-sm border-none btn-danger">
+                      <button className="btn btn-sm border-none btn-danger"
+                        onClick={() => deleteData(scheme.id, this.props.deleteScheme)}>
                         <i className="fa fa-trash"></i></button>
                     </td>
                   </tr>)}
@@ -151,5 +152,5 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps,
-  { getPatient, getSchemes, addScheme, updateScheme }
+  { getPatient, getSchemes, addScheme, updateScheme, deleteScheme }
 )(Schemes);
