@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { getLogBooks } from '../actions'
-import store from '../../../reducer/store'
+import { Link } from 'react-router-dom'
+import { getLogbooks } from '../actions'
 
 
 export class LogBooks extends Component {
@@ -13,42 +13,13 @@ export class LogBooks extends Component {
   }
 
   componentDidMount() {
-    this.props.getLogBooks();
+    this.props.getLogbooks();
   }
-
-  componentWillUnmount() {
-    clearInterval();
-  }
-
-  onViewLogbook = (data) => {
-    store.dispatch({ type: 'SELECT_LOGBOOK', payload: data })
-    this.props.history.push('/laboratory/logbooks/' + data.id);
-  }
-
-
 
   onChange = (e) => this.setState({ [e.target.name]: e.target.value });
 
-
   render() {
-    const { GENDERS } = this.props.constants;
-    const { logbooks } = this.props.laboratory;
-    const queue_list = logbooks.map((logbook, index) =>
-      <tr key={index}>
-        <td>{logbook.id}</td>
-        <td>{logbook.patient_details.fullname}</td>
-        <td>{GENDERS[logbook.patient_details.sex]}</td>
-        <td>{logbook.investigation}</td>
-        <td>{logbook.result ? logbook.result : "---"}</td>
-        <td>{logbook.is_analysed ? "Yes" : "NO"}</td>
-        <td>{logbook.is_verified ? "Yes" : "NO"}</td>
-        <td className="text-center">
-          <button className="btn btn-sm p-0 border-none text-success"
-            onClick={() => this.onViewLogbook(logbook)}><i className="fa fa-book"></i> Open</button></td>
-      </tr>
-    );
-
-
+    const { constants: { GENDERS }, logbooks, records: { patients } } = this.props;
     return (
       <div className="col-12 mx-auto mt-2">
         <div className="card">
@@ -65,13 +36,27 @@ export class LogBooks extends Component {
                   <th>Sex</th>
                   <th>Test</th>
                   <th>Result</th>
-                  <th>Analyzed</th>
-                  <th>Verified</th>
-                  <th className="text-center">Action</th>
+                  <th className="text-center">Analyzed</th>
+                  <th className="text-center">Verified</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
-                {queue_list}
+                {logbooks.map((logbook, index) =>
+                  <tr key={index}>
+                    <td>{logbook.id}</td>
+                    <td>{patients.length > 0 ? patients.find(p => p.id === logbook.patient_id).fullname : ""}</td>
+                    <td>{GENDERS[patients.length > 0 ? patients.find(p => p.id === logbook.patient_id).sex : 0]}</td>
+                    <td>{logbook.investigation}</td>
+                    <td>{logbook.result ? logbook.result : <i className="fa fa-minus text-danger"></i>}</td>
+                    <td className="text-center">{logbook.is_analysed ? <i className="fa fa-check text-danger"></i> : <i className="fa fa-minus text-secondary"></i>}</td>
+                    <td className="text-center">{logbook.is_verified ? <i className="fa fa-check text-success"></i> : <i className="fa fa-minus text-primary"></i>}</td>
+                    <td>
+                      <Link className="btn btn-sm btn-primary" to={`/laboratory/logbooks/${logbook.id}`}
+                      ><i className="fa fa-book"></i> Open</Link>
+                    </td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>
@@ -82,7 +67,9 @@ export class LogBooks extends Component {
 }
 
 export default connect(state => ({
-  laboratory: state.laboratory,
+  logbooks: state.laboratory.logbooks,
+  services: state.hospital.services,
   constants: state.common.CONSTANTS,
+  records: state.records,
   common: state.common,
-}), { getLogBooks })(LogBooks)
+}), { getLogbooks })(LogBooks)

@@ -1,11 +1,16 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './website.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
-import { Provider } from 'react-redux';
-import store from './reducer/store';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
+import React from 'react';
+import 'react-confirm-alert/src/react-confirm-alert.css';
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import 'react-tabs/style/react-tabs.css';
+import 'react-toastify/dist/ReactToastify.css';
+import App from './App';
+import './App.css';
+import store from './reducer/store';
+import * as serviceWorker from './serviceWorker';
+import './website.css';
 
 ReactDOM.render(
   <Provider store={store} >

@@ -92,7 +92,7 @@ export class Prescription extends Component {
 
   render() {
     const { selected_drug } = this.state;
-    const { opd_ser_reqs, appointment } = this.props
+    const { service_requests, appointment } = this.props
     const prescription_view =
       <Modal isOpen={this.state.showModal} size="lg">
         <ModalHeader toggle={this.toggleModal}><i className="fa fa-plus-circle"></i> Add prescription
@@ -205,7 +205,7 @@ export class Prescription extends Component {
                 </tr>
               </thead>
               <tbody>
-                {opd_ser_reqs.filter(request => request.department === 5 && request.appointment_id === appointment.id).map((request, index) =>
+                {service_requests.filter(request => request.department === 5 && request.appointment_id === appointment.id).map((request, index) =>
                   <tr key={index}>
                     <td>{index + 1}</td>
                     <td>{request.service_name}</td>
@@ -236,7 +236,7 @@ export class Prescription extends Component {
 }
 export default connect(state => ({
   appointment: state.outpatient.appointment,
-  opd_ser_reqs: state.revenue.opd_ser_reqs,
+  service_requests: state.revenue.service_requests,
   common: state.common,
   drugs: state.pharmacy.drugs
 }), { getServiceRequests, addServiceRequest, updateServiceRequest, deleteServiceRequest })(Prescription)

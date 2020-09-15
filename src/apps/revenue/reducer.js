@@ -3,7 +3,8 @@ import { revenueTypes } from './actions'
 const initialState = {
   payment_saved: false,
   payment_queue: [],
-  opd_ser_reqs: []
+  service_requests: [],
+  service_request_queue: []
 };
 
 export default function (state = initialState, action) {
@@ -27,10 +28,16 @@ export default function (state = initialState, action) {
       };
 
 
-    case revenueTypes.GET_OPD_SERV_REQS:
+    case revenueTypes.GET_SERVICE_REQUEST_QUEUE:
       return {
         ...state,
-        opd_ser_reqs: action.payload,
+        service_request_queue: action.payload,
+      };
+
+    case revenueTypes.GET_SERVICE_REQUESTS:
+      return {
+        ...state,
+        service_requests: action.payload,
       };
 
     default:

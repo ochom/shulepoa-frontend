@@ -54,7 +54,7 @@ export class ServiceRequests extends Component {
   }
 
   render() {
-    const { common: { CONSTANTS: { DEPARTMENTS } }, opd_ser_reqs } = this.props
+    const { common: { CONSTANTS: { DEPARTMENTS } }, service_requests } = this.props
     const book_appointment_view =
       <Modal isOpen={this.state.showModal} size="md">
         <ModalHeader toggle={this.toggleModal}>Request service</ModalHeader>
@@ -118,7 +118,7 @@ export class ServiceRequests extends Component {
                 </tr>
               </thead>
               <tbody>
-                {opd_ser_reqs.filter(req => req.patient_id === parseInt(this.state.patient_id)).map((req, index) =>
+                {service_requests.filter(req => req.patient_id === parseInt(this.state.patient_id)).map((req, index) =>
                   <tr key={index}>
                     <td>{index + 1}</td>
                     <td>{new Date(req.created).toLocaleString("en-UK")}</td>
@@ -146,7 +146,7 @@ export class ServiceRequests extends Component {
 const mapStateToProps = (state) => ({
   records: state.records,
   common: state.common,
-  opd_ser_reqs: state.revenue.opd_ser_reqs,
+  service_requests: state.revenue.service_requests,
   hospital: state.hospital
 });
 

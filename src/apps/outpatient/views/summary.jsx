@@ -30,7 +30,7 @@ export class Summary extends Component {
       outpatient: { vitals, appointment, observations },
       common: { CONSTANTS: { GENDERS } },
       records: { patients },
-      revenue: { opd_ser_reqs }
+      revenue: { service_requests }
     } = this.props;
     return (
       <div className="card">
@@ -130,7 +130,7 @@ export class Summary extends Component {
                   </tr>
                 </thead>
                 <tbody>
-                  {opd_ser_reqs.filter(request => (request.department === 3 || request.department === 4) && request.appointment_id === appointment.id).map((request, index) =>
+                  {service_requests.filter(request => (request.department === 3 || request.department === 4) && request.appointment_id === appointment.id).map((request, index) =>
                     <tr key={index}>
                       <td>{index + 1}</td>
                       <td>{request.service_name}</td>
@@ -156,7 +156,7 @@ export class Summary extends Component {
                   </tr>
                 </thead>
                 <tbody>
-                  {opd_ser_reqs.filter(request => request.department === 5 && request.appointment_id === appointment.id).map((request, index) =>
+                  {service_requests.filter(request => request.department === 5 && request.appointment_id === appointment.id).map((request, index) =>
                     <tr key={index}>
                       <td>{index + 1}</td>
                       <td>{request.service_name}</td>

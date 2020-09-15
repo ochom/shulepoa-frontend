@@ -272,7 +272,7 @@ export class Patients extends Component {
             {this.props.common.silent_processing ?
               <span className="text-success"><i className="fa fa-refresh fa-spin"></i></span> : null
             }
-            <table className="table table-sm table-responsive-sm">
+            <table className="table table-sm table-bordered table-responsive-sm">
               <caption className="px-2"><i>Recent patients | Search results</i></caption>
               <thead>
                 <tr>
@@ -289,7 +289,7 @@ export class Patients extends Component {
                   <tr key={index}>
                     <td>{index + 1}</td>
                     <td>{patient.fullname}</td>
-                    <td className="text-center">{GENDERS[patient.sex]}</td>
+                    <td className="text-center">{GENDERS[patient.sex].substring(0, 1)}</td>
                     <td>{patient.phone}</td>
                     <td>{`${patient.county}, ${patient.country}`}</td>
                     <td className="text-center">

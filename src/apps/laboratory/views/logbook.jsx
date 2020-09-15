@@ -1,38 +1,58 @@
 import React, { Component } from 'react'
-import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import person_icon from '../../../images/person_icon.png'
+import { getLogbook } from '../actions'
 
 export class LogBook extends Component {
-  state = {
-    tt: "---",
-  }
 
   componentDidMount() {
-    const logbook = this.props.logbook;
-    if (logbook) {
-      if (logbook.sampled_at && logbook.verified_at) {
-        var startTime = new Date(logbook.sampled_at);
-        var endTime = new Date(logbook.verified_at);
-        var diff = endTime - startTime;
-        var d = Math.floor(diff / (1000 * 60 * 60 * 24));
-        var h = Math.floor(diff % (1000 * 60 * 60 * 24) / (1000 * 60 * 60));
-        var m = Math.floor(diff % (1000 * 60 * 60) / (1000 * 60));
-        var s = Math.floor(diff % (1000 * 60) / (1000));
-
-        h = (h < 10) ? '0' + h : h;
-        m = (m < 10) ? '0' + m : m;
-        s = (s < 10) ? '0' + s : s;
-        var timeElapse = d + 'd ' + h + 'h ' + m + 'm ' + s + 's';
-        this.setState({ tt: timeElapse });
-      }
-    }
+    const { match: { params: { pk } } } = this.props
+    console.log(pk)
+    this.props.getLogbook(pk)
   }
+
+  calculateTT1 = () => {
+    window.looper = setInterval(() => {
+      var startDate = new Date(this.props.logbook.created);
+      var currentDate = new Date();
+      var diff = currentDate - startDate;
+      var d = Math.floor(diff / (1000 * 60 * 60 * 24));
+      var h = Math.floor(diff % (1000 * 60 * 60 * 24) / (1000 * 60 * 60));
+      var m = Math.floor(diff % (1000 * 60 * 60) / (1000 * 60));
+      var s = Math.floor(diff % (1000 * 60) / (1000));
+
+      h = (h < 10) ? '0' + h : h;
+      m = (m < 10) ? '0' + m : m;
+      s = (s < 10) ? '0' + s : s;
+      var timeElapse = d + ':' + h + ':' + m + ':' + s;
+      return timeElapse;
+    }, 1000);
+  }
+
+  calculateTT2 = () => {
+    var startDate = new Date(this.props.logbook.created);
+    var currentDate = new Date(this.props.logbook.analysed_at);
+    var diff = currentDate - startDate;
+    var d = Math.floor(diff / (1000 * 60 * 60 * 24));
+    var h = Math.floor(diff % (1000 * 60 * 60 * 24) / (1000 * 60 * 60));
+    var m = Math.floor(diff % (1000 * 60 * 60) / (1000 * 60));
+    var s = Math.floor(diff % (1000 * 60) / (1000));
+
+    h = (h < 10) ? '0' + h : h;
+    m = (m < 10) ? '0' + m : m;
+    s = (s < 10) ? '0' + s : s;
+    var timeElapse = d + ':' + h + ':' + m + ':' + s;
+    return timeElapse;
+  }
+
+  componentWillUnmount() {
+    clearInterval(window.looper)
+  }
+
   render() {
-    const { GENDERS, MARITAL_STATUSES } = this.props.constants;
-    const { logbook } = this.props;
+    const { constants: { GENDERS, MARITAL_STATUSES }, logbook, records: { patients }, users } = this.props;
     if (!logbook) {
-      return (<Redirect to="/laboratory/logbooks" />)
+      return (<div className="col-md-8 mx-auto alert alert-secondary">Loading...</div>)
     }
     return (
       <div className="row col-12 mx-auto mt-3">
@@ -46,22 +66,28 @@ export class LogBook extends Component {
               </div>
               <ul className="w-100 mx-auto list-group mt-2">
                 <li className="list-group-item">
-                  <span className="m-0">Name:</span> <span style={{ float: "right" }}>{logbook.patient_details.fullname}</span>
+                  <span className="m-0">Name:</span>
+                  <span style={{ float: "right" }}>{(patients.length > 0 && patients.find(patient => patient.id === logbook.patient_id)) ? patients.find(patient => patient.id === logbook.patient_id).fullname : ""}</span>
                 </li>
                 <li className="list-group-item">
-                  <span className="m-0">Sex:</span> <span style={{ float: "right" }}>{GENDERS[logbook.patient_details.sex]}</span>
+                  <span className="m-0">Sex:</span>
+                  <span style={{ float: "right" }}>{GENDERS[(patients.length > 0 && patients.find(patient => patient.id === logbook.patient_id)) ? patients.find(patient => patient.id === logbook.patient_id).sex : 0]}</span>
                 </li>
                 <li className="list-group-item">
-                  <span className="m-0">DoB:</span> <span style={{ float: "right" }}>{new Date(logbook.patient_details.dob).toDateString()}</span>
+                  <span className="m-0">DoB:</span>
+                  <span style={{ float: "right" }}>{new Date((patients.length > 0 && patients.find(patient => patient.id === logbook.patient_id)) ? patients.find(patient => patient.id === logbook.patient_id).dob : 0).toDateString("en-UK")}</span>
                 </li>
                 <li className="list-group-item">
-                  <span className="m-0">Marriage:</span> <span style={{ float: "right" }}>{MARITAL_STATUSES[logbook.patient_details.marital_status]}</span>
+                  <span className="m-0">Marriage:</span>
+                  <span style={{ float: "right" }}>{MARITAL_STATUSES[(patients.length > 0 && patients.find(patient => patient.id === logbook.patient_id)) ? patients.find(patient => patient.id === logbook.patient_id).marital_status : 0]}</span>
                 </li>
                 <li className="list-group-item">
-                  <span className="m-0">Mobile:</span> <span style={{ float: "right" }}>{logbook.patient_details.phone}</span>
+                  <span className="m-0">Mobile:</span>
+                  <span style={{ float: "right" }}>{(patients.length > 0 && patients.find(patient => patient.id === logbook.patient_id)) ? patients.find(patient => patient.id === logbook.patient_id).phone : ""}</span>
                 </li>
                 <li className="list-group-item">
-                  <span className="m-0">Address:</span> <span style={{ float: "right" }}>{`${logbook.patient_details.county}, ${logbook.patient_details.country}`}</span>
+                  <span className="m-0">Address:</span>
+                  <span style={{ float: "right" }}>{`${(patients.length > 0 && patients.find(patient => patient.id === logbook.patient_id)) ? patients.find(patient => patient.id === logbook.patient_id).county : ""}, ${(patients.length > 0 && patients.find(patient => patient.id === logbook.patient_id)) ? patients.find(patient => patient.id === logbook.patient_id).country : ""}`}</span>
                 </li>
               </ul>
             </div>
@@ -82,7 +108,7 @@ export class LogBook extends Component {
                       </li>
                       <li className="list-group-item">
                         <span className="m-0">Date:</span>
-                        <span style={{ float: "right" }}>{new Date(logbook.sampled_at).toDateString("en-UK")}</span>
+                        <span style={{ float: "right" }}>{new Date(logbook.created).toDateString("en-UK")}</span>
                       </li>
                       <li className="list-group-item">
                         <span className="m-0">Investigation:</span>
@@ -90,7 +116,8 @@ export class LogBook extends Component {
                       </li>
                       <li className="list-group-item">
                         <span className="m-0">Sampled By:</span>
-                        <span style={{ float: "right" }}>{logbook.sampled_by_user ? logbook.sampled_by_user.username : "---"}</span>
+                        <span style={{ float: "rigusers.length > 0 && users.find(u => u.id === logbook.created_by)ht" }}>
+                          {(users.length > 0 && users.find(u => u.id === logbook.created_by)) ? users.find(u => u.id === logbook.created_by).username : "---"}</span>
                       </li>
                       <li className="list-group-item">
                         <span className="m-0">Sampling Notes:</span><br />
@@ -113,11 +140,11 @@ export class LogBook extends Component {
                       </li>
                       <li className="list-group-item">
                         <span className="m-0">Turn around:</span>
-                        <span style={{ float: "right" }}>{this.state.tt}</span>
+                        <span style={{ float: "right" }}>{!logbook.is_analysed ? this.calculateTT1() : this.calculateTT2()}</span>
                       </li>
                       <li className="list-group-item">
                         <span className="m-0">Analysed By:</span>
-                        <span style={{ float: "right" }}>{logbook.is_analysed ? logbook.analysed_by_user.username : "---"}</span>
+                        <span style={{ float: "right" }}>{(users.length > 0 && users.find(u => u.id === logbook.analysed_by)) ? users.find(u => u.id === logbook.analysed_by).username : "---"}</span>
                       </li>
                       <li className="list-group-item">
                         <span className="m-0">Analysis Notes:</span><br />
@@ -140,7 +167,7 @@ export class LogBook extends Component {
                       </li>
                       <li className="list-group-item">
                         <span className="m-0">verified By:</span>
-                        <span style={{ float: "right" }}>{logbook.is_verified ? logbook.verified_by_user.username : "---"}</span>
+                        <span style={{ float: "right" }}>{(users.length > 0 && users.find(u => u.id === logbook.verified_by)) ? users.find(u => u.id === logbook.verified_by).username : "---"}</span>
                       </li>
                       <li className="list-group-item">
                         <span className="m-0">Verification Notes:</span><br />
@@ -152,14 +179,16 @@ export class LogBook extends Component {
               </div>
             </div>
           </div>
-        </div>
-      </div>
+        </div >
+      </div >
     )
   }
 }
 
 export default connect(state => ({
-  logbook: state.laboratory.selected_logbook,
+  records: state.records,
+  logbook: state.laboratory.logbook,
   services: state.hospital.services,
   constants: state.common.CONSTANTS,
-}))(LogBook)
+  users: state.hospital.users
+}), { getLogbook })(LogBook)

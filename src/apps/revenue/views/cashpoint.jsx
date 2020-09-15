@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
-import { loadPaymentQueue, savePayment } from '../actions';
+import { getPaymentQueue, savePayment } from '../actions';
 import { getHospital } from '../../hospital/actions'
 import { PrintPDF } from '../../common/actions';
 
@@ -20,8 +20,12 @@ export class CashPoint extends Component {
 
   componentDidMount() {
     this.props.getHospital()
-    this.props.loadPaymentQueue();
-    setInterval(() => this.props.loadPaymentQueue(), 30000);
+    this.props.getPaymentQueue();
+    window.interval = setInterval(() => this.props.getPaymentQueue(), 30000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(window.interval)
   }
 
   toggleModal = () => this.setState({ showModal: !this.state.showModal });
@@ -200,7 +204,7 @@ export class CashPoint extends Component {
                 </thead>
                 <tbody>
                   {cart_items.map((item, index) =>
-                    <tr>
+                    <tr key={index}>
                       <td>{index + 1}</td>
                       <td>{item.service_name}</td>
                       <td className="text-right">{item.cost}</td>
@@ -268,4 +272,4 @@ export default connect(state => ({
   revenue: state.revenue,
   common: state.common,
   hospital: state.hospital.hospital_profile
-}), { getHospital, loadPaymentQueue, savePayment })(CashPoint)
+}), { getHospital, getPaymentQueue, savePayment })(CashPoint)

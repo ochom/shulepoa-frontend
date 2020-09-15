@@ -49,7 +49,7 @@ export class Investigation extends Component {
 
 
   render() {
-    const { opd_ser_reqs, appointment } = this.props
+    const { service_requests, appointment } = this.props
     const investigation_view =
       <Modal isOpen={this.state.showModal} size="md">
         <ModalHeader toggle={this.toggleModal}>Add investigation requests</ModalHeader>
@@ -111,7 +111,7 @@ export class Investigation extends Component {
                 </tr>
               </thead>
               <tbody>
-                {opd_ser_reqs.filter(request => (request.department === 3 || request.department === 4) && request.appointment_id === appointment.id).map((request, index) =>
+                {service_requests.filter(request => (request.department === 3 || request.department === 4) && request.appointment_id === appointment.id).map((request, index) =>
                   <tr key={index}>
                     <td>{index + 1}</td>
                     <td>{request.service_name}</td>
@@ -127,9 +127,11 @@ export class Investigation extends Component {
                       {!request.is_approved ?
                         <button className="btn btn-sm  border-none btn-danger"
                           onClick={() => deleteData(request.id, this.props.deleteServiceRequest)}><i className="fa fa-trash"></i></button>
-                        : <button className="btn btn-sm btn-secondary disabled">No action</button>
+                        : (request.is_approved && request.is_served) ?
+                          <button className="btn btn-sm btn-success">View</button>
+                          :
+                          <button className="btn btn-sm btn-secondary disabled">No action</button>
                       }
-                      {request.is_served ? <button className="btn btn-sm btn-success">View</button> : ""}
                     </td>
                   </tr>)
                 }
@@ -143,7 +145,7 @@ export class Investigation extends Component {
 }
 export default connect(state => ({
   appointment: state.outpatient.appointment,
-  opd_ser_reqs: state.revenue.opd_ser_reqs,
+  service_requests: state.revenue.service_requests,
   common: state.common,
   services: state.hospital.services,
 }), { getServiceRequests, addServiceRequest, updateServiceRequest, deleteServiceRequest })(Investigation)

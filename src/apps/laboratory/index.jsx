@@ -2,18 +2,23 @@ import React, { Component } from 'react'
 import { Route, Link } from 'react-router-dom'
 import Sidenav from '../common/sidenav'
 import { connect } from 'react-redux'
-import { getServices } from '../hospital/actions'
+import { getServices, getUsers } from '../hospital/actions'
 import Results from './views/results'
 import Sampling from './views/sampling'
 import verifications from './views/verifications'
 import logbooks from './views/logbooks'
 import logbook from './views/logbook'
 import Topnav from '../common/topnav'
+import { getPatients } from '../records/actions'
 
 export class Laboratory extends Component {
+
   componentDidMount() {
+    this.props.getPatients();
     this.props.getServices();
+    this.props.getUsers();
   }
+
   render() {
     const menu_list =
       <div className="list-group">
@@ -51,5 +56,5 @@ const mapStateToProps = state => ({
 
 })
 
-export default connect(mapStateToProps, { getServices })(Laboratory);
+export default connect(mapStateToProps, { getPatients, getServices, getUsers })(Laboratory);
 
