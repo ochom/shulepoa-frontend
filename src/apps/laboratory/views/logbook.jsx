@@ -116,7 +116,7 @@ export class LogBook extends Component {
                       </li>
                       <li className="list-group-item">
                         <span className="m-0">Sampled By:</span>
-                        <span style={{ float: "rigusers.length > 0 && users.find(u => u.id === logbook.created_by)ht" }}>
+                        <span style={{ float: "right" }}>
                           {(users.length > 0 && users.find(u => u.id === logbook.created_by)) ? users.find(u => u.id === logbook.created_by).username : "---"}</span>
                       </li>
                       <li className="list-group-item">

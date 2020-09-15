@@ -1,22 +1,25 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Button } from 'reactstrap'
-import { getResultsQueue, saveResults } from '../actions'
+import { getLogbooks, updateLogbook } from '../actions'
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
 
 
 export class Results extends Component {
   state = {
     showModal: false,
-    selected_queue_data: null,
+    selected_logbook: null,
     result: "",
+    analysis_comment: "",
+
   }
 
   componentDidMount() {
-    this.props.getResultsQueue();
-    setInterval(() => this.props.getResultsQueue(), 300000);
-    window.loooper = setInterval(() => {
-      this.props.radiology.results_queue.map(result => {
-        var startDate = new Date(result.sampled_at);
+    this.props.getLogbooks();
+    window.looper1 = setInterval(() => this.props.getLogbooks(), 10000);
+
+    window.looper = setInterval(() => {
+      this.props.logbooks.filter(logbook => !logbook.is_analysed).map(logbook => {
+        var startDate = new Date(logbook.created);
         var currentDate = new Date();
         var diff = currentDate - startDate;
         var d = Math.floor(diff / (1000 * 60 * 60 * 24));
@@ -29,142 +32,144 @@ export class Results extends Component {
         s = (s < 10) ? '0' + s : s;
         var timeElapse = d + ':' + h + ':' + m + ':' + s;
 
-        var td = document.getElementById("td-" + result.id);
+        var td = document.getElementById("td-" + logbook.id);
         td.innerText = timeElapse;
         return null;
       });
     }, 1000);
   }
 
+  toggleModal = () => this.setState({ showModal: !this.state.showModal })
+
   componentWillUnmount() {
-    clearInterval(window.loooper);
+    clearInterval(window.looper);
+    clearInterval(window.looper1)
   }
 
-  onEditInvestigations = (data) => {
+  onEditLogbook = (logbook) => {
     this.setState({
-      selected_queue_data: data,
-      investigation_list: data.lab_requests,
+      selected_logbook: logbook,
+      result: "",
+      analysis_comment: "",
     });
+    this.toggleModal()
   }
-
-
 
   onChange = (e) => this.setState({ [e.target.name]: e.target.value });
-
-
 
   onSubmit = (e) => {
     e.preventDefault();
     const {
-      selected_queue_data,
+      selected_logbook,
       result,
+      analysis_comment
     } = this.state;
 
     const data = {
-      log_id: selected_queue_data.id,
       result,
+      is_analysed: true,
+      analysis_comment,
+      analysed_at: new Date(),
+      analysed_by: this.props.user.id
     }
-    this.props.saveResults(data);
-    this.setState({
-      selected_queue_data: null,
-      result: "",
-    });
+
+    this.props.updateLogbook(selected_logbook.id, data);
+    this.toggleModal()
   }
 
   render() {
-    const { GENDERS } = this.props.constants;
-    const { results_queue } = this.props.radiology;
-    const queue_list = results_queue.map((queue, index) =>
-      <tr key={index}>
-        <td>{queue.patient_details.fullname}</td>
-        <td>{GENDERS[queue.patient_details.sex]}</td>
-        <td>{queue.investigation}</td>
-        <td id={`td-${queue.id}`}>---</td>
-        <td className="text-center">
-          <button className="btn btn-sm p-0 border-none cu-text-primary"
-            onClick={() => this.onEditInvestigations(queue)}><i className="fa fa-edit"></i> Results</button></td>
-      </tr>
-    );
+    const { constants: { GENDERS }, records: { patients }, logbooks } = this.props;
+    const { selected_logbook } = this.state
+    const result_modal =
+      <Modal isOpen={this.state.showModal}>
+        <ModalHeader toggle={this.toggleModal}></ModalHeader>
+        <form onSubmit={this.onSubmit}>
+          <ModalBody>
+            {selected_logbook ?
+              <div className="form-row">
+                <div className="form-group col-9">
+                  <input className="form-control form-control-sm" readOnly={true}
+                    value={patients.length > 0 ? patients.find(p => p.id === selected_logbook.patient_id).fullname : ""} />
+                  <label>Patient name</label>
+                </div>
+                <div className="form-group col-3">
+                  <input className="form-control form-control-sm" readOnly={true}
+                    value={GENDERS[patients.length > 0 ? patients.find(p => p.id === selected_logbook.patient_id).sex : 0]} />
+                  <label>Sex</label>
+                </div>
 
-
+                <div className="form-group col-12">
+                  <input className="form-control form-control-sm" readOnly={true}
+                    value={selected_logbook.investigation} />
+                  <label>Investigation</label>
+                </div>
+                <div className="form-group col-12">
+                  <textarea className="form-control form-control-sm" name="result" required={true}
+                    value={this.state.result} onChange={this.onChange} ></textarea>
+                  <label>Result <sup>*</sup></label>
+                </div>
+                <div className="form-group col-12">
+                  <textarea className="form-control form-control-sm" name="analysis_comment"
+                    value={this.state.analysis_comment} onChange={this.onChange} ></textarea>
+                  <label>Results Note:</label>
+                </div>
+              </div>
+              : null
+            }
+          </ModalBody>
+          <ModalFooter>
+            <Button type="submit" size="md" color="success"
+              onSubmit={this.onSubmit}>Submit</Button>
+          </ModalFooter>
+        </form>
+      </Modal>
     return (
       <div className="row col-12 mx-auto mt-2">
-        <div className={`${this.state.selected_queue_data ? 'col-7' : 'col-12'} mx-auto`}>
+        {result_modal}
+        <div className="col-12 mx-auto">
           <div className="card">
-            <div className="card">
-              <div className="card-header py-1 px-3">Pending results</div>
-              <div className="card-body p-0">
-                {this.props.common.silent_processing ?
-                  <span className="text-success"><i className="fa fa-refresh fa-spin"></i></span> : null
-                }
-                <table className="table table-sm table-striped table-bordered">
-                  <thead className="">
-                    <tr>
-                      <th>Patient's Name</th>
-                      <th>Sex</th>
-                      <th>Investigation</th>
-                      <th>T.T</th>
-                      <th className="text-center">Action</th>
+            <div className="card-header py-1 px-3">Running Tests</div>
+            <div className="card-body p-0">
+              {this.props.common.silent_processing ?
+                <span className="text-success"><i className="fa fa-refresh fa-spin"></i></span> : null
+              }
+              <table className="table table-sm table-striped table-bordered">
+                <thead className="">
+                  <tr>
+                    <th>Patient's Name</th>
+                    <th>Sex</th>
+                    <th>Investigation</th>
+                    <th>T.T</th>
+                    <th className="text-center">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {logbooks.filter(logbook => !logbook.is_analysed).map((logbook, index) =>
+                    <tr key={index}>
+                      <td>{patients.length > 0 ? patients.find(p => p.id === logbook.patient_id).fullname : ""}</td>
+                      <td>{GENDERS[patients.length > 0 ? patients.find(p => p.id === logbook.patient_id).sex : 0]}</td>
+                      <td>{logbook.investigation}</td>
+                      <td id={`td-${logbook.id}`}>---</td>
+                      <td className="text-center">
+                        <button className="btn btn-sm btn-primary"
+                          onClick={() => this.onEditLogbook(logbook)}><i className="fa fa-edit"></i>Enter Results</button></td>
                     </tr>
-                  </thead>
-                  <tbody>
-                    {queue_list}
-                  </tbody>
-                </table>
-              </div>
+                  )}
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
-        {this.state.selected_queue_data ?
-          <div className="col-5 mx-auto">
-            <div className="card">
-              <div className="card-header cu-bg-secondary py-1 px-3">
-                <div className="py-1 px-2">Result Entry</div>
-              </div>
-              <div className="card-body">
-                <form onSubmit={this.onSubmit}>
-                  <div className="form-row">
-                    <div className="form-group col-9">
-                      <label>Patient name</label>
-                      <input className="form-control form-control-sm" readOnly={true}
-                        value={this.state.selected_queue_data.patient_details.fullname} />
-                    </div>
-                    <div className="form-group col-3">
-                      <label>Sex</label>
-                      <input className="form-control form-control-sm" readOnly={true}
-                        value={GENDERS[this.state.selected_queue_data.patient_details.sex]} />
-                    </div>
-
-                    <div className="form-group col-12">
-                      <label>Investigation</label>
-                      <input className="form-control form-control-sm" readOnly={true}
-                        value={this.state.selected_queue_data.investigation} />
-                    </div>
-                    <div className="form-group col-12">
-                      <label>Result <sup>*</sup></label>
-                      <textarea className="form-control form-control-sm" name="result" required={true}
-                        value={this.state.result} onChange={this.onChange} ></textarea>
-                    </div>
-                    <div className="form-group col-12">
-                      <Button size="sm" color="primary"
-                        onClick={this.onSubmit}>Submit</Button>
-                    </div>
-                  </div>
-                </form>
-                <hr className="border-primary" />
-              </div>
-            </div>
-          </div>
-          : null
-        }
       </div>
     )
   }
 }
 
 export default connect(state => ({
-  radiology: state.radiology,
+  logbooks: state.radiology.logbooks,
   services: state.hospital.services,
   constants: state.common.CONSTANTS,
+  records: state.records,
   common: state.common,
-}), { getResultsQueue, saveResults, })(Results)
+  user: state.auth.user,
+}), { getLogbooks, updateLogbook, })(Results)

@@ -1,60 +1,47 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Button } from 'reactstrap'
-import { getSamplingQueue, saveSample } from '../actions'
+import { getServiceRequestQueue } from '../../revenue/actions'
+import { addLogbook } from '../actions'
 
 export class Sampling extends Component {
   state = {
     showModal: false,
     selected_queue_data: null,
-
     investigation_list: [],
   }
 
   componentDidMount() {
-    this.props.getSamplingQueue();
-    setInterval(() => this.props.getSamplingQueue(), 300000);
+    this.props.getServiceRequestQueue(4)
+    window.looper = setInterval(() => this.props.getServiceRequestQueue(4), 10000);
   }
 
   onEditInvestigations = (data) => {
     this.setState({
       selected_queue_data: data,
-      investigation_list: data.requests,
+      investigation_list: data.service_requests,
     });
   }
 
-
+  componentWillUnmount() {
+    clearInterval(window.looper)
+  }
 
   onChange = (e) => this.setState({ [e.target.name]: e.target.value });
 
-
-
   onSubmit = (_data) => {
     const data = {
-      service_request: _data.id,
+      service_request_id: _data.id,
+      investigation: _data.service_name,
     }
-    this.props.saveSample(data);
+    this.props.addLogbook(data);
     this.setState({
       investigation_list: this.state.investigation_list.filter(investigation => investigation.id !== _data.id),
     });
-    this.props.getSamplingQueue();
   }
 
   render() {
-    const { GENDERS } = this.props.constants;
-    const { sampling_queue } = this.props.radiology;
-    const queue_list = sampling_queue.map((queue, index) =>
-      <tr key={index}>
-        <td>{queue.patient_details.fullname}</td>
-        <td>{queue.patient_details.id}</td>
-        <td>{GENDERS[queue.patient_details.sex]}</td>
-        <td>{queue.patient_details.phone}</td>
-        <td className="text-center">
-          <button className="btn btn-sm p-0 border-none cu-text-primary"
-            onClick={() => this.onEditInvestigations(queue)}><i className="fa fa-edit"></i> Sample</button></td>
-      </tr>
-    );
-
+    const { constants: { GENDERS }, service_request_queue } = this.props;
 
     return (
       <div className="row col-12 mx-auto mt-2">
@@ -77,7 +64,17 @@ export class Sampling extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                    {queue_list}
+                    {service_request_queue.map((queue, index) =>
+                      <tr key={index}>
+                        <td>{queue.patient.fullname}</td>
+                        <td>{queue.patient.id}</td>
+                        <td>{GENDERS[queue.patient.sex]}</td>
+                        <td>{queue.patient.phone}</td>
+                        <td className="text-center">
+                          <button className="btn btn-sm btn-primary"
+                            onClick={() => this.onEditInvestigations(queue)}><i className="fa fa-edit"></i> Sample</button></td>
+                      </tr>
+                    )}
                   </tbody>
                 </table>
               </div>
@@ -95,20 +92,20 @@ export class Sampling extends Component {
                   <div key={index} >
                     <div className="form-row">
                       <div className="form-group col-8">
-                        <label>Patient name</label>
                         <input className="form-control form-control-sm" readOnly={true}
-                          value={this.state.selected_queue_data.patient_details.fullname} />
+                          value={this.state.selected_queue_data.patient.fullname} />
+                        <label>Patient name</label>
                       </div>
                       <div className="form-group col-4">
-                        <label>Sex</label>
                         <input className="form-control form-control-sm" readOnly={true}
-                          value={GENDERS[this.state.selected_queue_data.patient_details.sex]} />
+                          value={GENDERS[this.state.selected_queue_data.patient.sex]} />
+                        <label>Sex</label>
                       </div>
 
-                      <div className="form-group col-12">
-                        <label>Investigation</label>
+                      <div className="form-group col-8">
                         <input className="form-control form-control-sm" readOnly={true}
-                          value={this.props.services.filter(service => service.id === investigation.service)[0].name} />
+                          value={investigation.service_name} />
+                        <label>Investigation</label>
                       </div>
                       <div className="form-group col-12">
                         <Button size="sm" color="primary"
@@ -128,8 +125,9 @@ export class Sampling extends Component {
 }
 
 export default connect(state => ({
-  radiology: state.radiology,
+  laboratory: state.laboratory,
+  service_request_queue: state.revenue.service_request_queue,
   services: state.hospital.services,
   constants: state.common.CONSTANTS,
   common: state.common,
-}), { getSamplingQueue, saveSample, })(Sampling)
+}), { getServiceRequestQueue, addLogbook, })(Sampling)

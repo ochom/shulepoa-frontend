@@ -45,6 +45,7 @@ export class Sampling extends Component {
       specimen,
       sampling_comment
     }
+
     this.props.addLogbook(data);
     this.setState({
       investigation_list: this.state.investigation_list.filter(investigation => investigation.id !== _data.id),

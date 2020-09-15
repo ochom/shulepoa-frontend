@@ -2,15 +2,18 @@ import React, { Component } from 'react'
 import { Route, Link } from 'react-router-dom'
 import Sidenav from '../common/sidenav'
 import { connect } from 'react-redux'
-import { getServices } from '../hospital/actions'
+import { getServices, getUsers } from '../hospital/actions'
 import Results from './views/results'
 import Sampling from './views/sampling'
 import logbooks from './views/logbooks'
 import logbook from './views/logbook'
 import Topnav from '../common/topnav'
+import { getPatients } from '../records/actions'
 
 export class Radiology extends Component {
   componentDidMount() {
+    this.props.getPatients()
+    this.props.getUsers();
     this.props.getServices();
   }
   render() {
@@ -48,5 +51,5 @@ const mapStateToProps = state => ({
 
 })
 
-export default connect(mapStateToProps, { getServices })(Radiology);
+export default connect(mapStateToProps, { getPatients, getUsers, getServices })(Radiology);
 
