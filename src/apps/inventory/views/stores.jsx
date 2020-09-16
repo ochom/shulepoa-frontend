@@ -69,14 +69,14 @@ export class Stores extends Component {
         <form onSubmit={this.onSubmit}>
           <ModalBody>
             <div className="form-group">
-              <label>Name</label>
               <input className="form-control form-control-sm" name="name" required={true}
                 onChange={this.onChange} value={this.state.name} />
+              <label>Name</label>
             </div>
             <div className="form-group">
-              <label>Description</label>
               <textarea className="form-control form-control-sm" name="description" required={true}
                 onChange={this.onChange} value={this.state.description} ></textarea>
+              <label>Description</label>
             </div>
           </ModalBody >
           <ModalFooter>

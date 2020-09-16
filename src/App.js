@@ -35,6 +35,7 @@ export class App extends Component {
       if (nextProps.common.status === "success") {
         toast(nextProps.common.message, {
           type: "success",
+          position: 'bottom-right'
         })
         //NotificationManager.success(nextProps.message, "Success")
       } else {

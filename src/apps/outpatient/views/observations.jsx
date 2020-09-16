@@ -94,12 +94,12 @@ export class Observation extends Component {
                 <label>Period</label>
               </div>
               <div className="form-group col-4">
-                <select className="form-control form-control-sm" name="period_units" required={true}
-                  value={this.state.period_units} onChange={this.onChange} >
-                  <option value="">--select--</option>
+                <select className="form-control form-control-sm" name="period_units" data-value={this.state.period_units}
+                  required={true} value={this.state.period_units} onChange={this.onChange} >
+                  <option value=""></option>
                   {TIME_UNITS.map((unit, index) => <option key={index} value={unit}>{unit}</option>)}
-                  <label>Units</label>
                 </select>
+                <label>Units</label>
               </div>
               <div className="form-group col-12">
                 <textarea className="form-control form-control-sm" name="pre_med_note"

@@ -20,7 +20,6 @@ body{
   overflow: hidden;
 }
 
-
 .form-group{
   position: relative;
   padding-top: 10px;
@@ -36,8 +35,12 @@ label{
   transition: 0.2s ease all;
 }
 
-.form-control:focus + label,
-.form-control:not([value=""]) + label{
+input:focus + label,
+textarea:focus + label,
+select:focus + label,
+input:not([value=""]) + label,
+textarea:not(:empty) + label,
+select:not([data-value=""]) + label{
   top: -6px;
   opacity: 1;
   left:10px;
@@ -45,43 +48,19 @@ label{
   color: var(--theme-secondary);
 }
 
-.form-control{
-  border: none;
-  border-radius: 0;
-  border-bottom: 1px solid var(--theme-primary);
-}
-
-.form-control:focus{
-  outline: none;
-  border-color: inherit;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-}
-
-.form-control[value=""]:invalid{
+.form-control,
+.form-control:focus
+.form-control:invalid{
+  border-radius: 0 !important;
   outline: none !important;
-  border-color: inherit !important;
+  border-color: none !important;
   -webkit-box-shadow: none !important;
   box-shadow: none !important;
   border: none !important;
   border-bottom: 1px solid var(--theme-primary) !important;
-} 
-.form-control:not([value=""]):invalid{
-  outline: none !important;
-  border-color: inherit !important;
-  -webkit-box-shadow: none !important;
-  box-shadow: none !important;
-  border: none !important;
-  border-bottom: 1px solid red !important;
-} 
+}
 
-.form-control:focus:invalid{
-  outline: none;
-  border-color: inherit;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-  border-bottom: 1px solid var(--theme-primary) !important;
-} 
+
 
 table{
   font-family: sans-serif;

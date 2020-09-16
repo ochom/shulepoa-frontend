@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { confirmAlert } from 'react-confirm-alert';
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
-import { getDrugs, addDrug, updateDrug, deleteDrug } from '../actions';
+import { addDrug, addReorder, deleteDrug, getDrugs, updateDrug } from '../actions';
 
 export class Drugs extends Component {
   state = {
     showModal: false,
+    showModal2: false,
     selected_drug: null,
     search: "",
 
@@ -22,7 +22,13 @@ export class Drugs extends Component {
     quantity: "",
     units: "",
     reorder_level: "",
-    price: ""
+    price: "",
+
+    quantity_before: "",
+    new_stock_quantity: "",
+    quantity_after: "",
+    batch_number: "",
+    expiry_date: ""
   }
 
   componentDidMount() {
@@ -104,25 +110,12 @@ export class Drugs extends Component {
       quantity,
       units,
       reorder_level,
-    }
-
-    const updateData = {
-      brand_name,
-      act_ing_name,
-      exc_name,
-      act_ing_short_name,
-      formula,
-      color,
-      form,
-      smell,
-      taste,
-      units,
-      reorder_level,
       price
     }
 
     if (selected_drug) {
-      this.props.updateDrug(selected_drug.id, updateData);
+      delete data.quantity
+      this.props.updateDrug(selected_drug.id, data);
     } else {
       this.props.addDrug(data)
     }
@@ -134,35 +127,35 @@ export class Drugs extends Component {
     //
   }
 
-  onDelete = (id) => {
-    confirmAlert({
-      customUI: ({ onClose }) => {
-        return (
-          <div className='custom-ui'>
-            <div className="card">
-              <div className="card-header">Delete</div>
-              <div className="card-body">
-                <p>You want to delete this file?</p>
-              </div>
-              <div className="card-footer">
-                <button className="btn btn-sm btn-danger"
-                  onClick={() => {
-                    this.props.deleteDrug(id);
-                    onClose();
-                  }}>Yes, Delete it!
-                </button>
-                <button className="btn btn-sm btn-secondary ml-2" onClick={onClose}>No</button>
-              </div>
-            </div>
-          </div>
-        );
-      }
-    });
+  onAdjustStock = (data) => {
+    this.setState({
+      selected_drug: data,
+      brand_name: data.brand_name,
+      quantity_before: data.quantity,
+      new_stock_quantity: "",
+      batch_number: "",
+      expiry_date: "",
+    }, () => this.toggleModal2())
+  }
+
+  toggleModal2 = () => this.setState({ showModal2: !this.state.showModal2 })
+
+  onSubmitNewStock = (e) => {
+    e.preventDefault()
+    const { selected_drug, new_stock_quantity, batch_number, expiry_date } = this.state
+    var data = {
+      drug_id: selected_drug.id, new_stock_quantity, batch_number, expiry_date
+    }
+    this.props.addReorder(data)
+    this.toggleModal2()
   }
 
   render() {
-    const { drugs,
-      common: { CONSTANTS: { DRUG_ADMINISTRATION } } } = this.props;
+    const {
+      drugs,
+      common: { CONSTANTS: { DRUG_ADMINISTRATION } }
+    } = this.props;
+
     const service_details =
       <Modal isOpen={this.state.showModal} size="lg">
         <ModalHeader toggle={this.toggleModal}>
@@ -175,78 +168,77 @@ export class Drugs extends Component {
           <ModalBody>
             <div className="row mx-auto">
               <div className="form-group col-md-6">
-                <label>Name<sup>*</sup></label>
                 <input className="form-control form-control-sm"
-                  name="brand_name" onChange={this.onChange} value={this.state.brand_name} required={true}
-                  placeholder="Drug name" />
+                  name="brand_name" onChange={this.onChange} value={this.state.brand_name} required={true} />
+                <label>Name<sup>*</sup></label>
               </div>
               <div className="form-group col-md-6">
-                <label>Active ingredient name<sup>*</sup></label>
                 <input className="form-control form-control-sm"
                   name="act_ing_name" required={true} value={this.state.act_ing_name}
                   onChange={this.onChange} />
+                <label>Active ingredient name<sup>*</sup></label>
               </div>
               <div className="form-group col-md-6">
-                <label>Active ingredient short name<sup>*</sup></label>
                 <input className="form-control form-control-sm"
                   name="act_ing_short_name" required={true} value={this.state.act_ing_short_name}
                   onChange={this.onChange} />
+                <label>Active ingredient short name<sup>*</sup></label>
               </div>
               <div className="form-group col-md-6">
-                <label>Excipient name</label>
                 <input className="form-control form-control-sm"
                   name="exc_name" value={this.state.exc_name}
                   onChange={this.onChange} />
+                <label>Excipient name</label>
               </div>
               <div className="form-group col-md-6">
-                <label>Chemical formula</label>
                 <input className="form-control form-control-sm"
                   name="formula" required={true} value={this.state.formula}
                   onChange={this.onChange} />
+                <label>Chemical formula</label>
               </div>
               <div className="form-group col-6">
-                <label>Administration <sup>*</sup></label>
                 <select className="form-control form-control-sm"
                   name="form" required={true} value={this.state.form} onChange={this.onChange}>
                   <option value="">Select</option>
                   {DRUG_ADMINISTRATION.sort().map((admin, index) => <option key={index} value={admin}>{admin}</option>)}
                 </select>
+                <label>Administration <sup>*</sup></label>
               </div>
               <div className="form-group col-6">
-                <label>Color<sup>*</sup></label>
                 <input className="form-control form-control-sm"
                   name="color" onChange={this.onChange} value={this.state.color} required={true} />
+                <label>Color<sup>*</sup></label>
               </div>
               <div className="form-group col-6">
-                <label>Smell<sup>*</sup></label>
                 <input className="form-control form-control-sm"
                   name="smell" onChange={this.onChange} value={this.state.smell} required={true} />
+                <label>Smell<sup>*</sup></label>
               </div>
               <div className="form-group col-6">
-                <label>Taste<sup>*</sup></label>
                 <input className="form-control form-control-sm"
                   name="taste" onChange={this.onChange} value={this.state.taste} required={true} />
+                <label>Taste<sup>*</sup></label>
               </div>
               <div className="form-group col-6">
-                <label>Start Quantity<sup>*</sup></label>
                 <input className="form-control form-control-sm"
                   name="quantity" onChange={this.onChange} value={this.state.quantity} required={true} />
+                <label>Start Quantity<sup>*</sup></label>
               </div>
               <div className="form-group col-6">
-                <label>Units<sup>*</sup></label>
                 <input className="form-control form-control-sm"
                   name="units" onChange={this.onChange} value={this.state.units} required={true} />
+                <label>Units<sup>*</sup></label>
               </div>
               <div className="form-group col-6">
-                <label>Re-order Level<sup>*</sup></label>
                 <input className="form-control form-control-sm"
                   name="reorder_level" onChange={this.onChange} value={this.state.reorder_level}
                   required={true} />
+                <label>Re-order Level<sup>*</sup></label>
               </div>
               <div className="form-group col-6">
-                <label>Price<sup>*</sup></label>
                 <input className="form-control form-control-sm"
                   name="price" onChange={this.onChange} value={this.state.price} required={true} />
+                <label>Price<sup>*</sup></label>
               </div>
             </div>
           </ModalBody >
@@ -259,11 +251,58 @@ export class Drugs extends Component {
           </ModalFooter>
         </form>
       </Modal >
+
+    const reorder_modal =
+      <Modal isOpen={this.state.showModal2}>
+        <ModalHeader toggle={this.toggleModal2}>Adjust with reorder</ModalHeader>
+        <form onSubmit={this.onSubmitNewStock}>
+          <ModalBody>
+            <div className="row col-12">
+              <div className="form-group col-12">
+                <input type="text" className="form-control form-control-sm" readOnly={true}
+                  name="brand_name" value={this.state.brand_name} />
+                <label>Drug name</label>
+              </div>
+              <div className="form-group col-md-6">
+                <input type="text" className="form-control form-control-sm" readOnly={true}
+                  name="quantity_before" value={this.state.quantity_before} />
+                <label>Current Quantity</label>
+              </div>
+              <div className="form-group col-md-6">
+                <input type="text" className="form-control form-control-sm" required={true}
+                  name="new_stock_quantity" value={this.state.new_stock_quantity} onChange={this.onChange} />
+                <label>New Stock Quantity</label>
+              </div>
+              <div className="form-group col-12">
+                <input type="text" className="form-control form-control-sm" required={true}
+                  name="batch_number" value={this.state.batch_number} onChange={this.onChange} />
+                <label>Batch Number</label>
+              </div>
+              <div className="form-group col-12">
+                <input type="text" className="form-control form-control-sm" required={true}
+                  name="expiry_date" value={this.state.expiry_date} onChange={this.onChange}
+                  onFocus={(e) => e.target.type = 'date'} onBlur={(e) => !e.target.value ? e.target.type = 'text' : 'date'} />
+                <label>Expiry Date</label>
+              </div>
+            </div>
+          </ModalBody>
+          <ModalFooter>
+            <button type="submit" className="btn btn-sm btn-success">Submit</button>
+            <button type="button" className="btn btn-sm btn-secondary"
+              onClick={this.toggleModal2}>Cancel</button>
+          </ModalFooter>
+        </form>
+      </Modal>
+
     return (
-      <div className="col-md-10 mx-auto mt-3">
+      <div className="col-md-10 mx-auto mt-3" >
         {service_details}
-        <input className="form-control form-control-sm my-2" name="search"
-          onChange={this.onSearch} placeholder="Search..." />
+        {reorder_modal}
+        < div className="form-group col-12" >
+          <input className="form-control form-control-sm" name="search"
+            onChange={this.onSearch} value={this.state.search} />
+          <label><span role="img" aria-label="search">&#x1F50D;</span> Search...</label>
+        </div>
         <div className="card">
           <div className="card-header py-2 px-3">
             <div>Drugs</div>
@@ -281,7 +320,7 @@ export class Drugs extends Component {
                   <th>Active</th>
                   <th>Atx.</th>
                   <th>Formula</th>
-                  <th>Administration</th>
+                  <th>Admin.</th>
                   <th className="text-center">Qty.</th>
                   <th>Color</th>
                   <th>Smell</th>
@@ -303,8 +342,8 @@ export class Drugs extends Component {
                     <td>
                       <button className="btn btn-sm mr-2 border-none btn-success"
                         onClick={() => this.onEditDrug(drug)}><i className="fa fa-edit"></i> Edit</button>
-                      <button className="btn btn-sm border-none btn-danger"
-                        onClick={() => this.onDelete(drug.id)}><i className="fa fa-trash"></i> Delete</button>
+                      <button className="btn btn-sm border-none btn-primary"
+                        onClick={() => this.onAdjustStock(drug)}><i className="fa fa-plus"></i> Adjust Stock</button>
                     </td>
                   </tr>
                 )}
@@ -312,7 +351,7 @@ export class Drugs extends Component {
             </table>
           </div>
         </div>
-      </div>
+      </div >
     )
   }
 }
@@ -323,4 +362,4 @@ const mapStateToProps = state => ({
   common: state.common,
 });
 
-export default connect(mapStateToProps, { getDrugs, addDrug, updateDrug, deleteDrug })(Drugs);
+export default connect(mapStateToProps, { getDrugs, addDrug, updateDrug, deleteDrug, addReorder })(Drugs);

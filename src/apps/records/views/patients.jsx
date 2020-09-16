@@ -130,9 +130,9 @@ export class Patients extends Component {
                 <label>Full name<sup>*</sup></label>
               </div>
               <div className="form-group col-sm-12 col-md-4">
-                <select className="form-control form-control-sm"
+                <select className="form-control form-control-sm" data-value={this.state.sex}
                   name="sex" onChange={this.onChange} value={this.state.sex} required={true}>
-                  <option value="">--select--</option>
+                  <option value=""></option>
                   {GENDERS.map((GENDER, index) => <option key={index} value={index}>{GENDER}</option>)}
                 </select>
                 <label>Sex<sup>*</sup></label>
@@ -145,8 +145,9 @@ export class Patients extends Component {
               </div>
               <div className="form-group col-sm-12 col-md-4">
                 <select className="form-control form-control-sm"
-                  name="id_type" onChange={this.onChange} value={this.state.id_type} required={true}>
-                  <option value="">--select--</option>
+                  name="id_type" onChange={this.onChange} data-value={this.state.id_type}
+                  value={this.state.id_type} required={true}>
+                  <option value=""></option>
                   {ID_TYPES.map((ID_TYPE, index) => <option key={index} value={index}>{ID_TYPE}</option>)}
                 </select>
                 <label>ID Type<sup>*</sup></label>
@@ -158,8 +159,9 @@ export class Patients extends Component {
               </div>
               <div className="form-group col-sm-12 col-md-4">
                 <select className="form-control form-control-sm"
-                  name="marital_status" onChange={this.onChange} value={this.state.marital_status} required={true}>
-                  <option value="">--select--</option>
+                  name="marital_status" onChange={this.onChange} data-value={this.state.marital_status}
+                  value={this.state.marital_status} required={true}>
+                  <option value=""></option>
                   {MARITAL_STATUSES.map((MARITAL_STATUS, index) => <option key={index} value={index}>{MARITAL_STATUS}</option>)}
                 </select>
                 <label>Marital Status<sup>*</sup></label>
@@ -187,9 +189,9 @@ export class Patients extends Component {
               </div>
               <div className="form-group col-sm-12 col-md-4">
                 <select className="form-control form-control-sm"
-                  name="country" onChange={this.onChange}
+                  name="country" onChange={this.onChange} data-value={this.state.country}
                   value={this.state.country} required={true}>
-                  <option value="">--select--</option>
+                  <option value=""></option>
                   {COUNTRIES.map((country, index) => <option key={index} value={country}>{country}</option>)}
                 </select>
                 <label>Country<sup>*</sup></label>
@@ -230,8 +232,9 @@ export class Patients extends Component {
               </div>
               <div className="form-group col-sm-12 col-md-4">
                 <select className="form-control form-control-sm"
-                  name="kin_relationship" onChange={this.onChange} value={this.state.kin_relationship} required={true}>
-                  <option value="">--select--</option>
+                  name="kin_relationship" onChange={this.onChange} data-value={this.state.kin_relationship}
+                  value={this.state.kin_relationship} required={true}>
+                  <option value=""></option>
                   {KIN_RELATIONSHIPS.map((KIN_RELATIONSHIP, index) => <option key={index} value={index}>{KIN_RELATIONSHIP}</option>)}
                 </select>
                 <label>Relationship<sup>*</sup></label>

@@ -62,9 +62,9 @@ export class Appointments extends Component {
           <ModalBody>
             <div className="row mx-auto">
               <div className="form-group col-12">
-                <select className="form-control form-control-sm"
+                <select className="form-control form-control-sm" data-value={this.state.clinic_id}
                   name="clinic_id" onChange={this.onChange} value={this.state.clinic_id} required={true}>
-                  <option value="">Select</option>
+                  <option value=""></option>
                   {clinics.map((clinic, index) => <option key={index} value={clinic.id}>{clinic.name}</option>)}
                 </select>
                 <label>Clinic to visit</label>
@@ -115,9 +115,10 @@ export class Appointments extends Component {
                     <td>{new Date(app.created).toLocaleDateString("en-UK")}</td>
                     <td>{clinics.length > 0 ? clinics.find(cln => cln.id === app.clinic_id).name : ""}</td>
                     <td className="text-center text-success">
-                      {(app.is_checked_in && !app.is_checked_out) ? "Checked In" :
-                        (app.is_checked_out) ? "Checkout Out" : "In Line"
-                      }
+                      <button className="btn btn-warning btn-sm disabled">
+                        {(app.is_checked_in && !app.is_discharged) ? "Checked In" :
+                          (!app.is_checked_in) ? "In Line" : "Discharged"
+                        }</button>
                     </td>
                   </tr>
                 )}

@@ -55,13 +55,13 @@ class Patient extends Component {
                 </div>
               </div>
               <div className="row col-9">
-                <div className="col-md-6">
+                <div className="col-md-6 my-2">
                   <HealthFiles patient_id={this.state.patient_id} />
                 </div>
-                <div className="col-md-6">
+                <div className="col-md-6 my-2">
                   <Schemes patient_id={this.state.patient_id} />
                 </div>
-                <div className="col-12">
+                <div className="col-12 my-2">
                   <ServiceRequests patient_id={this.state.patient_id} />
                 </div>
               </div>

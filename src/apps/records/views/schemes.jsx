@@ -79,8 +79,9 @@ export class Schemes extends Component {
             <div className="row mx-auto">
               <div className="form-group col-12">
                 <select className="form-control form-control-sm"
-                  name="company_id" onChange={this.onChange} value={this.state.company_id} required={true}>
-                  <option value="">Select</option>
+                  name="company_id" onChange={this.onChange} data-value={this.state.company_id}
+                  value={this.state.company_id} required={true}>
+                  <option value=""></option>
                   {insurances.map((insurance, index) => <option key={index} value={insurance.id}>{insurance.company_name}</option>)}
                 </select>
                 <label>Insurance Company/Scheme<sup>*</sup></label>

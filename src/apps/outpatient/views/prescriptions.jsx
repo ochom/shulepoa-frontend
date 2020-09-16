@@ -14,7 +14,7 @@ export class Prescription extends Component {
     dosage: "",
     frequency: "",
     days: "",
-    dos_2_qnty: 0,
+    dos_2_qnty: 1,
     quantity: 1,
   }
 
@@ -156,12 +156,12 @@ export class Prescription extends Component {
                     <label>Days</label>
                   </div>
                   <div className="form-group col-12">
-                    <select className="form-control form-control-sm" name="dos_2_qnty" required={true}
-                      value={this.state.dos_2_qnty} onChange={this.onChange} >
-                      <option value={0}>No</option>
+                    <select className="form-control form-control-sm" name="dos_2_qnty" data-value={this.state.dos_2_qnty}
+                      required={true} value={this.state.dos_2_qnty} onChange={this.onChange} >
                       <option value={1}>Yes</option>
-                      <label>Dosage to Quantity ?</label>
+                      <option value={0}>No</option>
                     </select>
+                    <label>Dosage to Quantity ?</label>
                   </div>
                   <div className="form-group col-12">
                     <input className="form-control form-control-sm" name="quantity" required={true}

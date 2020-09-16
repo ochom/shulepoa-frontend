@@ -50,7 +50,6 @@ export const getLogbook = (id) => (dispatch, getState) => {
     );
 }
 
-
 export const updateLogbook = (id, data) => (dispatch, getState) => {
   dispatch({ type: commonTypes.SILENT_PROCESSING })
   Axios.put(`${API_PATH}laboratory/logbooks/${id}/`, JSON.stringify(data), tokenConfig(getState))
@@ -64,7 +63,6 @@ export const updateLogbook = (id, data) => (dispatch, getState) => {
       dispatch({ type: commonTypes.DONE })
     );
 }
-
 
 export const deleteLogbook = (id) => (dispatch, getState) => {
   dispatch({ type: commonTypes.SILENT_PROCESSING })

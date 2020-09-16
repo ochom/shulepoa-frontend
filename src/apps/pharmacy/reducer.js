@@ -3,6 +3,8 @@ import { pharmTypes } from './actions'
 const initialState = {
   drugs: [],
   reorders: [],
+  logbooks: [],
+  logbook: null,
 };
 
 export default function (state = initialState, action) {

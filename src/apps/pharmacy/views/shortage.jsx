@@ -51,13 +51,56 @@ export class ShortageNotice extends Component {
   }
 
   render() {
-    const { pharmacy: { reorders } } = this.props;
+    const { pharmacy: { drugs } } = this.props;
+
+    const reorder_modal =
+      <Modal isOpen={this.state.showModal}>
+        <ModalHeader toggle={this.toggleModal}>Adjust with reorder</ModalHeader>
+        <form onSubmit={this.onSubmitNewStock}>
+          <ModalBody>
+            <div className="row col-12">
+              <div className="form-group col-12">
+                <input type="text" className="form-control form-control-sm" readOnly={true}
+                  name="brand_name" value={this.state.brand_name} />
+                <label>Drug name</label>
+              </div>
+              <div className="form-group col-md-6">
+                <input type="text" className="form-control form-control-sm" readOnly={true}
+                  name="quantity_before" value={this.state.quantity_before} />
+                <label>Current Quantity</label>
+              </div>
+              <div className="form-group col-md-6">
+                <input type="text" className="form-control form-control-sm" required={true}
+                  name="new_stock_quantity" value={this.state.new_stock_quantity} onChange={this.onChange} />
+                <label>New Stock Quantity</label>
+              </div>
+              <div className="form-group col-12">
+                <input type="text" className="form-control form-control-sm" required={true}
+                  name="batch_number" value={this.state.batch_number} onChange={this.onChange} />
+                <label>Batch Number</label>
+              </div>
+              <div className="form-group col-12">
+                <input type="text" className="form-control form-control-sm" required={true}
+                  name="expiry_date" value={this.state.expiry_date} onChange={this.onChange}
+                  onFocus={(e) => e.target.type = 'date'} onBlur={(e) => !e.target.value ? e.target.type = 'text' : 'date'} />
+                <label>Expiry Date</label>
+              </div>
+            </div>
+          </ModalBody>
+          <ModalFooter>
+            <button type="submit" className="btn btn-sm btn-success">Submit</button>
+            <button type="button" className="btn btn-sm btn-secondary"
+              onClick={this.toggleModal}>Cancel</button>
+          </ModalFooter>
+        </form>
+      </Modal>
 
     return (
       <div className="col-md-10 mx-auto mt-3">
+        {reorder_modal}
         <div className="card">
           <div className="card-header py-2 px-3">
-            <div>Stock ajustment records</div>
+            <div>Shortage Notice</div>
             <button
               className="btn btn-sm"
               onClick={this.onNewDrug}><i className="fa fa-file-excel-o"></i> Export
@@ -65,6 +108,7 @@ export class ShortageNotice extends Component {
           </div>
           <div className="card-body p-0">
             <table className="table table-sm table-hover table-responsive-sm">
+              <caption className="px-2"><i>Drugs on Reorder level</i></caption>
               <thead className="">
                 <tr>
                   <th>#</th>
@@ -78,7 +122,7 @@ export class ShortageNotice extends Component {
                 </tr>
               </thead>
               <tbody>
-                {reorders.map((drug, index) =>
+                {drugs.filter(d => d.quantity <= d.reorder_level).map((drug, index) =>
                   <tr key={index}>
                     <td>{index + 1}</td>
                     <td>{drug.brand_name}</td>
@@ -87,6 +131,8 @@ export class ShortageNotice extends Component {
                     <td className="text-center text-success">{drug.reorder_level}</td>
                     <td>{drug.color}</td>
                     <td>{drug.smell}</td>
+                    <td><button className="btn btn-sm btn-primary"
+                      onClick={() => this.onAdjustStock(drug)}>Adjust stock</button></td>
                   </tr>
                 )}
               </tbody>

@@ -37,7 +37,7 @@ export class Discharge extends Component {
               <div className="form-row col-12 mx-auto my-3">
                 <div className="form-group col-12">
                   <textarea type="text" className="form-control" name="discharge_note" required={true} rows="10"
-                    onChange={this.onChange} value={this.state.discharge_note} placeholder="Discharge statement..."></textarea>
+                    onChange={this.onChange} value={this.state.discharge_note}></textarea>
                   <label>Discharge Note/Cause</label>
                 </div>
                 <div className="form-group col-12">

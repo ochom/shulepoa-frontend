@@ -1,30 +1,32 @@
 import React, { Component } from 'react'
-import { Route, Link } from 'react-router-dom'
-import Sidenav from '../common/sidenav'
 import { connect } from 'react-redux'
-import { getServices } from '../hospital/actions'
+import { Link, Route } from 'react-router-dom'
+import Sidenav from '../common/sidenav'
+import Topnav from '../common/topnav'
 import { getSuppliers } from '../inventory/actions'
-import { getReorders } from './actions'
+import { getDrugs } from './actions'
 import Drugs from './views/drugs'
 import Queue from './views/queue'
-import reorders from './views/reorders'
-import reorder_edit from './views/reorder_edit'
-import history_details from './views/history_details'
-import serve_patient from './views/serve_patient'
-import Topnav from '../common/topnav'
+import Reorders from './views/reorders'
+import ShortageNotice from './views/shortage'
 
 export class Pharmacy extends Component {
   componentDidMount() {
-    this.props.getServices();
     this.props.getSuppliers();
-    this.props.getReorders();
+    this.props.getDrugs();
+  }
+
+  shortage = () => {
+    var total = this.props.drugs.filter(d => d.quantity <= d.reorder_level).length;
+    return total;
   }
   render() {
     const menu_list =
       <div className="list-group">
         <Link to="/pharmacy/queue" className="list-group-item"><i className="fa fa-users"></i> Queue</Link>
         <Link to="/pharmacy/drugs" className="list-group-item"><i className="fa fa-list"></i> Drugs</Link>
-        <Link to="/pharmacy/drugs-reorders" className="list-group-item"><i className="fa fa-edit"></i> Re-orders</Link>
+        <Link to="/pharmacy/notification" className="list-group-item"><i className="fa fa-bell"></i> Shortage ({this.shortage()})</Link>
+        <Link to="/pharmacy/reorders" className="list-group-item"><i className="fa fa-clock-o"></i> Stock Monitor</Link>
       </div>
     return (
       <>
@@ -38,11 +40,9 @@ export class Pharmacy extends Component {
                 <>
                   <Route path={`${url}`} exact component={Queue} />
                   <Route path={`${url}/queue`} component={Queue} exact />
-                  <Route path={`${url}/queue/patient/:patient_id`} component={serve_patient} />
                   <Route path={`${url}/drugs`} component={Drugs} />
-                  <Route path={`${url}/drugs-reorders`} component={reorders} exact />
-                  <Route path={`${url}/drugs-reorders/:pk/edit`} component={reorder_edit} />
-                  <Route path={`${url}/drugs-reorders/:pk/history`} component={history_details} />
+                  <Route path={`${url}/notification`} component={ShortageNotice} exact />
+                  <Route path={`${url}/reorders`} component={Reorders} />
                 </>
               )}
             />
@@ -53,8 +53,8 @@ export class Pharmacy extends Component {
   }
 }
 const mapStateToProps = state => ({
-
+  drugs: state.pharmacy.drugs,
 })
 
-export default connect(mapStateToProps, { getServices, getSuppliers, getReorders })(Pharmacy);
+export default connect(mapStateToProps, { getSuppliers, getDrugs })(Pharmacy);
 
