@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Link, Route } from 'react-router-dom'
 import Sidenav from '../common/sidenav'
 import Topnav from '../common/topnav'
-import { getProducts, getStores, getCategories, getUnits, getSuppliers } from './actions'
+import { getProducts, getStores, getCategories, getUnits, getSuppliers, getRequisitions } from './actions'
 import Dispatches from './views/dispatches'
 import GRN from './views/grn'
 import PurchaseOrders from './views/purchase_orders'
@@ -19,13 +19,19 @@ class Inventory extends Component {
     this.props.getUnits();
     this.props.getProducts();
     this.props.getSuppliers()
+    this.props.getRequisitions();
   }
+
+  newRequisitions = () => {
+    return this.props.inventory.requisitions.filter(req => req.is_dispatched === false).length
+  }
+
   render() {
     const menu_list =
       <div className="list-group">
         <Link to="/inventory/stores" className="list-group-item"><i className="fa fa-building-o"></i> Stores</Link>
         <Link to="/inventory/products" className="list-group-item"><i className="fa fa-line-chart"></i> Products</Link>
-        <Link to="/inventory/requisitions" className="list-group-item"><i className="fa fa-cart-plus"></i> New Requisitions</Link>
+        <Link to="/inventory/requisitions" className="list-group-item"><i className="fa fa-cart-plus"></i> New Requisitions ({this.newRequisitions()})</Link>
         <Link to="/inventory/dispatches" className="list-group-item"><i className="fa fa-history"></i> Dispatch</Link>
         <Link to="/inventory/suppliers" className="list-group-item"><i className="fa fa-handshake-o"></i> Suppliers</Link>
         <Link to="/inventory/orders" className="list-group-item"><i className="fa fa-briefcase"></i> Active Orders</Link>
@@ -59,4 +65,6 @@ class Inventory extends Component {
   }
 }
 
-export default connect(null, { getStores, getCategories, getUnits, getProducts, getSuppliers })(Inventory)
+export default connect(state => ({
+  inventory: state.inventory
+}), { getStores, getCategories, getUnits, getProducts, getSuppliers, getRequisitions })(Inventory)

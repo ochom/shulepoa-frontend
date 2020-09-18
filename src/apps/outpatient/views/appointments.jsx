@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getAppointments, updateAppointment } from '../actions';
+import { getAppointments, updateAppointment } from '../../outpatient/actions';
 
 export class AppointmentQueue extends Component {
   state = {}

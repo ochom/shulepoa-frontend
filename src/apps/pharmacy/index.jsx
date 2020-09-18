@@ -5,6 +5,7 @@ import Sidenav from '../common/sidenav'
 import Topnav from '../common/topnav'
 import { getSuppliers } from '../inventory/actions'
 import { getDrugs } from './actions'
+import { getUsers } from '../hospital/actions'
 import Drugs from './views/drugs'
 import Queue from './views/queue'
 import Reorders from './views/reorders'
@@ -13,7 +14,8 @@ import ShortageNotice from './views/shortage'
 export class Pharmacy extends Component {
   componentDidMount() {
     this.props.getSuppliers();
-    this.props.getDrugs();
+    this.props.getDrugs()
+    this.props.getUsers()
   }
 
   shortage = () => {
@@ -56,5 +58,5 @@ const mapStateToProps = state => ({
   drugs: state.pharmacy.drugs,
 })
 
-export default connect(mapStateToProps, { getSuppliers, getDrugs })(Pharmacy);
+export default connect(mapStateToProps, { getSuppliers, getDrugs, getUsers })(Pharmacy);
 

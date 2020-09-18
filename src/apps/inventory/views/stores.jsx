@@ -107,7 +107,7 @@ export class Stores extends Component {
                     <th>#</th>
                     <th>Store name</th>
                     <th>Store Description</th>
-                    <th className="text-center">Action</th>
+                    <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -116,8 +116,8 @@ export class Stores extends Component {
                       <td>{index + 1}</td>
                       <td>{store.name}</td>
                       <td>{store.description}</td>
-                      <td className="text-center">
-                        <button className="btn btn-sm p-0 border-none text-success"
+                      <td>
+                        <button className="btn btn-sm btn-success"
                           onClick={() => this.onEditStore(store)}><i className="fa fa-edit"></i> Edit</button></td>
                     </tr>
                   )}

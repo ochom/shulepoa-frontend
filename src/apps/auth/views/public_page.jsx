@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import sal from 'sal.js'
 import { connect } from 'react-redux';
 import { logout } from '../actions'
 import Sidenav from '../../common/sidenav';
@@ -8,7 +7,6 @@ import { Redirect } from 'react-router-dom';
 export class PublicPage extends Component {
 
   componentDidMount() {
-    sal();
   }
 
   render() {

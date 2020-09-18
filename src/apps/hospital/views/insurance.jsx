@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getInsurances, addInsurance, updateInsurance } from '../actions';
+import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
+import { addInsurance, getInsurances, updateInsurance } from '../actions';
 
 export class Insurance extends Component {
   constructor(props) {
@@ -56,7 +56,7 @@ export class Insurance extends Component {
     })
   }
 
-  onSubmitInsurance = (e) => {
+  onSubmit = (e) => {
     e.preventDefault();
     const {
       select_insurance,
@@ -98,7 +98,7 @@ export class Insurance extends Component {
             <span><i className="fa fa-plus-circle"></i> Register Insurance</span>
           }
         </ModalHeader>
-        <form onSubmit={this.onSubmitInsurance}>
+        <form onSubmit={this.onSubmit}>
           <ModalBody>
             <div className="row mx-auto">
               <div className="form-group col-12">
@@ -122,11 +122,12 @@ export class Insurance extends Component {
             </div>
           </ModalBody >
           <ModalFooter>
-            <button type="submit" className="btn btn-sm cu-bg-primary"
-              onSubmit={this.onSubmitInsurance}>
-              <i className="fa fa-check"></i> Save</button>{' '}
-            <Button color="danger" size="sm" onClick={this.toggleModal}>
-              <i className="fa fa-close"></i> Cancel</Button>
+            <button type="submit" className="btn btn-sm btn-success"
+              onSubmit={this.onSubmit}>
+              <i className="fa fa-check"></i> Save</button>
+            <button type="button" className="btn btn-sm btn-secondary"
+              onClick={this.toggleModal}>
+              <i className="fa fa-close"></i> Cancel</button>
           </ModalFooter>
         </form>
       </Modal >
@@ -155,7 +156,7 @@ export class Insurance extends Component {
                   <td>Company</td>
                   <td>Email</td>
                   <td>Mobile</td>
-                  <td className="text-center">Action</td>
+                  <td>Action</td>
                 </tr>
               </thead>
               <tbody>
@@ -165,8 +166,8 @@ export class Insurance extends Component {
                     <td>{insurance.company_name}</td>
                     <td>{insurance.company_email}</td>
                     <td>{insurance.company_phone}</td>
-                    <td className="text-center">
-                      <button className="btn btn-sm p-0 border-none text-success"
+                    <td>
+                      <button className="btn btn-sm btn-success"
                         onClick={() => this.onEditInsurance(insurance)}><i className="fa fa-edit"></i> Edit</button>
                     </td>
                   </tr>

@@ -19,7 +19,7 @@ class Sidenav extends Component {
                 <i className="fa fa-bug"></i> Report Issues</Link>
             </div>
           </div>
-          <a href="https://lysofts.herokuapp.com/"
+          <a href="https://lysofts.co.ke"
             className="copyright-text">
             <b>&copy; {new Date().getFullYear()} Lysofts Ke.</b></a>
         </div >

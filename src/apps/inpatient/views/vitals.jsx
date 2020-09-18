@@ -65,7 +65,7 @@ export class Vital extends Component {
       triage_note, } = this.state;
 
     const data = {
-      appointment_id: this.props.appointment.id,
+      admission_id: this.props.admission.id,
       bp_systolic,
       bp_diastolic,
       pulse,
@@ -87,7 +87,7 @@ export class Vital extends Component {
   }
 
   render() {
-    const { appointment, vitals } = this.props;
+    const { admission, vitals } = this.props;
     const vital_view =
       <Modal isOpen={this.state.showModal} size="lg">
         <ModalHeader toggle={this.toggleModal}>
@@ -181,7 +181,7 @@ export class Vital extends Component {
                 </tr>
               </thead>
               <tbody>
-                {vitals.filter(vital => vital.appointment_id === appointment.id).map((vital, index) =>
+                {vitals.filter(vital => vital.admission_id === admission.id).map((vital, index) =>
                   <tr key={index}>
                     <td>{vital.bp_systolic}/{vital.bp_diastolic}bpm</td>
                     <td>{vital.pulse}bpm</td>
@@ -206,7 +206,7 @@ export class Vital extends Component {
   }
 }
 export default connect(state => ({
-  appointment: state.outpatient.appointment,
-  vitals: state.outpatient.vitals,
+  admission: state.inpatient.admission,
+  vitals: state.inpatient.vitals,
   common: state.common,
 }), { getVitals, addVital, updateVital, deleteVital })(Vital)

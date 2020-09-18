@@ -6,7 +6,7 @@ export class HospitalProfile extends Component {
   state = {
     showModal: false,
     selected_hospital: null,
-    hospital_name: "",
+    organization_name: "",
     mfl_code: "",
     postal_address: "",
     physical_address: "",
@@ -26,7 +26,7 @@ export class HospitalProfile extends Component {
       if (hospital_profile) {
         this.setState({
           selected_hospital: hospital_profile,
-          hospital_name: hospital_profile.hospital_name,
+          organization_name: hospital_profile.organization_name,
           mfl_code: hospital_profile.mfl_code,
           postal_address: hospital_profile.postal_address,
           physical_address: hospital_profile.physical_address,
@@ -41,7 +41,7 @@ export class HospitalProfile extends Component {
     e.preventDefault();
     const {
       selected_hospital,
-      hospital_name,
+      organization_name,
       mfl_code,
       postal_address,
       physical_address,
@@ -50,7 +50,7 @@ export class HospitalProfile extends Component {
     } = this.state;
 
     const data = {
-      hospital_name,
+      organization_name,
       mfl_code,
       postal_address,
       physical_address,
@@ -79,8 +79,8 @@ export class HospitalProfile extends Component {
                 <div className="row mx-auto">
                   <div className="form-group col-12">
                     <input className="form-control form-control-sm"
-                      name="hospital_name" onChange={this.onChange}
-                      value={this.state.hospital_name}
+                      name="organization_name" onChange={this.onChange}
+                      value={this.state.organization_name}
                       required={true} />
                     <label>Hospital Name<sup>*</sup></label>
                   </div>
@@ -120,7 +120,7 @@ export class HospitalProfile extends Component {
                 </div>
               </div>
               <div className="card-footer">
-                <button type="submit" className="btn btn-sm cu-bg-primary"
+                <button type="submit" className="btn btn-sm btn-success"
                   onSubmit={this.onSubmitHospital}>
                   <i className="fa fa-check"></i> Update</button>
               </div>

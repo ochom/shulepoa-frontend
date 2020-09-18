@@ -65,14 +65,14 @@ export class Units extends Component {
         <form onSubmit={this.onSubmit}>
           <ModalBody>
             <div className="form-group">
-              <label>Abbr.</label>
               <input className="form-control form-control-sm" name="abbr" required={true}
                 onChange={this.onChange} value={this.state.abbr} />
+              <label>Abbr.</label>
             </div>
             <div className="form-group">
-              <label>Label</label>
               <input className="form-control form-control-sm" name="desc" required={true}
                 onChange={this.onChange} value={this.state.desc} />
+              <label>Label</label>
             </div>
           </ModalBody >
           <ModalFooter>
@@ -102,7 +102,7 @@ export class Units extends Component {
                   <th>#</th>
                   <th>Abbr.</th>
                   <th>Label</th>
-                  <th className="text-center">Action</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -111,8 +111,8 @@ export class Units extends Component {
                     <td>{index + 1}</td>
                     <td>{unit.abbr}</td>
                     <td>{unit.desc}</td>
-                    <td className="text-center">
-                      <button className="btn btn-sm p-0 border-none text-success"
+                    <td>
+                      <button className="btn btn-sm btn-success"
                         onClick={() => this.onEditUnit(unit)}><i className="fa fa-edit"></i> Edit</button></td>
                   </tr>
                 )}

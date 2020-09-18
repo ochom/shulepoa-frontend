@@ -1,7 +1,8 @@
-import React, { Component } from 'react'
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getClinics, addClinic, updateClinic } from '../actions';
+import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
+import { deleteData } from '../../common/actions';
+import { addClinic, deleteClinic, getClinics, updateClinic } from '../actions';
 
 export class Clinic extends Component {
   state = {
@@ -9,7 +10,7 @@ export class Clinic extends Component {
     select_clinic: null,
 
     name: "",
-    desc: "",
+    appointment_fee: "",
 
   }
 
@@ -30,7 +31,7 @@ export class Clinic extends Component {
       showModal: !this.state.showModal,
       select_clinic: null,
       name: "",
-      desc: "",
+      appointment_fee: "",
     })
   }
 
@@ -39,21 +40,21 @@ export class Clinic extends Component {
       showModal: !this.state.showModal,
       select_clinic: data,
       name: data.name,
-      desc: data.desc,
+      appointment_fee: data.appointment_fee,
     })
   }
 
-  onSubmitClinic = (e) => {
+  onSubmit = (e) => {
     e.preventDefault();
     const {
       select_clinic,
       name,
-      desc
+      appointment_fee
     } = this.state;
 
     const data = {
       name,
-      desc
+      appointment_fee
     }
     if (select_clinic) {
       this.props.updateClinic(select_clinic.id, data);
@@ -72,7 +73,7 @@ export class Clinic extends Component {
         <ModalHeader toggle={this.toggleModal}>
           {this.state.select_clinic ? "Edit Clinic Details" : "Add Clinic"}
         </ModalHeader>
-        <form onSubmit={this.onSubmitClinic}>
+        <form onSubmit={this.onSubmit}>
           <ModalBody>
             <div className="row mx-auto">
               <div className="form-group col-12">
@@ -81,18 +82,19 @@ export class Clinic extends Component {
                 <label>Clininc name<sup>*</sup></label>
               </div>
               <div className="form-group col-12">
-                <textarea className="form-control form-control-sm"
-                  name="desc" onChange={this.onChange} value={this.state.desc} required={true}></textarea>
-                <label>Description<sup>*</sup></label>
+                <input className="form-control form-control-sm"
+                  name="appointment_fee" onChange={this.onChange} value={this.state.appointment_fee} required={true} />
+                <label>Appointment Fee<sup>*</sup></label>
               </div>
             </div>
           </ModalBody >
           <ModalFooter>
-            <button type="submit" className="btn btn-sm cu-bg-primary"
-              onSubmit={this.onSubmitClinic}>
+            <button type="submit" className="btn btn-sm btn-success"
+              onSubmit={this.onSubmit}>
               <i className="fa fa-check"></i> Save</button>
-            <Button color="danger" size="sm" onClick={this.toggleModal}>
-              <i className="fa fa-close"></i> Cancel</Button>
+            <button type="button" className="btn btn-sm btn-secondary"
+              onClick={this.toggleModal}>
+              <i className="fa fa-close"></i> Cancel</button>
           </ModalFooter>
         </form>
       </Modal >
@@ -113,8 +115,8 @@ export class Clinic extends Component {
                 <tr>
                   <td>#</td>
                   <td>Name</td>
-                  <td>Desc</td>
-                  <td className="text-center">Action</td>
+                  <td>Appointment Fee</td>
+                  <td>Action</td>
                 </tr>
               </thead>
               <tbody>
@@ -122,11 +124,12 @@ export class Clinic extends Component {
                   <tr key={index}>
                     <td>{index + 1}</td>
                     <td>{clinic.name}</td>
-                    <td>{clinic.desc}</td>
-                    <td className="text-center">
-                      <button className="btn btn-sm p-0 border-none text-success"
-                        onClick={() => this.onEditClinic(clinic)}><i className="fa fa-edit"></i> Edit</button>{' | '}
-                      <button className="btn btn-sm p-0 border-none text-danger"><i className="fa fa-trash"></i> Delete</button>
+                    <td>{clinic.appointment_fee}</td>
+                    <td>
+                      <button className="btn btn-sm btn-success mr-2"
+                        onClick={() => this.onEditClinic(clinic)}><i className="fa fa-edit"></i> Edit</button>
+                      <button className="btn btn-sm btn-danger"
+                        onClick={() => deleteData(clinic.id, this.props.deleteClinic)}><i className="fa fa-trash"></i> Delete</button>
                     </td>
                   </tr>
                 )}
@@ -144,4 +147,4 @@ const mapStateToProps = state => ({
   common: state.common,
 });
 
-export default connect(mapStateToProps, { getClinics, addClinic, updateClinic })(Clinic);
+export default connect(mapStateToProps, { getClinics, addClinic, updateClinic, deleteClinic })(Clinic);

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import { getDrugs, addReorder } from '../actions';
+import ReactHTMLTableToExcel from '../../common/actions';
 
 
 export class ShortageNotice extends Component {
@@ -101,13 +102,16 @@ export class ShortageNotice extends Component {
         <div className="card">
           <div className="card-header py-2 px-3">
             <div>Shortage Notice</div>
-            <button
+            <ReactHTMLTableToExcel
+              id="test-table-xls-button"
               className="btn btn-sm"
-              onClick={this.onNewDrug}><i className="fa fa-file-excel-o"></i> Export
-              </button>
+              table="data_table"
+              filename="tablexls"
+              sheet="tablexls"
+              buttonText="Export" />
           </div>
           <div className="card-body p-0">
-            <table className="table table-sm table-hover table-responsive-sm">
+            <table id="data_table" className="table table-sm table-hover table-responsive-sm">
               <caption className="px-2"><i>Drugs on Reorder level</i></caption>
               <thead className="">
                 <tr>

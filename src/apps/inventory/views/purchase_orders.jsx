@@ -151,22 +151,22 @@ export class PurchaseOrders extends Component {
           <ModalBody>
             <div className="row col-12 mx-auto">
               <div className="form-group col-12">
-                <label>Item</label>
                 <input className="form-control form-control-sm" name="product_id" readOnly={true}
                   value={(products && this.state.product_id) ? products.filter(pr => pr.id === this.state.product_id)[0].name : ""} onChange={this.onChange} />
+                <label>Item</label>
               </div>
               <div className="form-group col-12">
-                <label>Supplier</label>
                 <select className="form-control form-control-sm" name="supplier_id" required={true}
-                  value={this.state.supplier_id} onChange={this.onChange} >
-                  <option value="">Select</option>
+                  value={this.state.supplier_id} onChange={this.onChange} data-value={this.state.supplier_id}>
+                  <option value=""></option>
                   {suppliers.map((supplier, index) => <option key={index} value={supplier.id}>{supplier.name}</option>)}
                 </select>
+                <label>Supplier</label>
               </div>
               <div className="form-group col-12">
-                <label>Order Quantity</label>
                 <input className="form-control form-control-sm" name="number_ordered" required={true}
                   onChange={this.onChange} value={this.state.number_ordered} />
+                <label>Order Quantity</label>
               </div>
             </div>
           </ModalBody >
@@ -188,34 +188,34 @@ export class PurchaseOrders extends Component {
           <ModalBody>
             <div className="row col-12 mx-auto">
               <div className="form-group col-12">
-                <label>Item</label>
                 <input className="form-control form-control-sm" name="product_id" readOnly={true}
                   value={(products.length > 0 && selected_order) ? products.find(pr => pr.id === selected_order.product_id).name : ""} />
+                <label>Item</label>
               </div>
               <div className="form-group col-12">
-                <label>Supplier</label>
                 <input className="form-control form-control-sm" name="supplier_id" readOnly={true}
                   value={(suppliers.length > 0 && selected_order) ? suppliers.find(supplier => supplier.id === selected_order.supplier_id).name : ""} />
+                <label>Supplier</label>
               </div>
               <div className="form-group col-6">
-                <label>Order Quantity</label>
                 <input className="form-control form-control-sm" name="number_ordered" readOnly={true}
                   value={selected_order ? selected_order.number_ordered : ""} />
+                <label>Order Quantity</label>
               </div>
               <div className="form-group col-6">
-                <label>Supply Quantity</label>
                 <input className="form-control form-control-sm" name="number_received" required={true}
                   onChange={this.onChange} value={this.state.number_received} />
+                <label>Supply Quantity</label>
               </div>
               <div className="form-group col-8">
-                <label>Batch No_<sup>*</sup> </label>
                 <input className="form-control form-control-sm" name="batch_number" required={true}
                   onChange={this.onChange} value={this.state.batch_number} />
+                <label>Batch No_<sup>*</sup> </label>
               </div>
               <div className="form-group col-4">
-                <label>Cost<sup>*</sup> </label>
                 <input className="form-control form-control-sm" name="cost" required={true}
                   onChange={this.onChange} value={this.state.cost} />
+                <label>Cost<sup>*</sup> </label>
               </div>
             </div>
           </ModalBody >
@@ -262,7 +262,7 @@ export class PurchaseOrders extends Component {
                     <td>{suppliers.length > 0 ? suppliers.find(supplier => supplier.id === order.supplier_id).name : ""}</td>
                     <td>{order.number_ordered}</td>
                     <td>
-                      <button className="btn btn-sm rounded btn-primary" onClick={() => this.onNewSupply(order)}>Receive Goods</button>
+                      <button className="btn btn-sm btn-primary" onClick={() => this.onNewSupply(order)}>Receive Goods</button>
                     </td>
                   </tr>
                 )}

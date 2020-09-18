@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
+import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import { getUsers, updateUser } from '../actions';
 
 export class Users extends Component {
@@ -52,7 +52,7 @@ export class Users extends Component {
     })
   }
 
-  onSubmitUser = (e) => {
+  onSubmit = (e) => {
     e.preventDefault();
     const {
       select_users,
@@ -96,7 +96,7 @@ export class Users extends Component {
             <span><i className="fa fa-plus-circle"></i> Register User</span>
           }
         </ModalHeader>
-        <form onSubmit={this.onSubmitUser}>
+        <form onSubmit={this.onSubmit}>
           <ModalBody>
             <div className="row mx-auto">
               <div className="form-group col-12">
@@ -120,11 +120,12 @@ export class Users extends Component {
             </div>
           </ModalBody >
           <ModalFooter>
-            <button type="submit" className="btn btn-sm cu-bg-primary"
-              onSubmit={this.onSubmitUser}>
-              <i className="fa fa-check"></i> Save</button>{' '}
-            <Button color="danger" size="sm" onClick={this.toggleModal}>
-              <i className="fa fa-close"></i> Cancel</Button>
+            <button type="submit" className="btn btn-sm btn-success"
+              onSubmit={this.onSubmit}>
+              <i className="fa fa-check"></i> Save</button>
+            <button type="button" className="btn btn-sm btn-secondary"
+              onClick={this.toggleModal}>
+              <i className="fa fa-close"></i> Cancel</button>
           </ModalFooter>
         </form>
       </Modal >
@@ -151,7 +152,7 @@ export class Users extends Component {
                   <td>Mobile</td>
                   <td>Group</td>
                   <td>Status</td>
-                  <td className="text-center">Action</td>
+                  <td>Action</td>
                 </tr>
               </thead>
               <tbody>
@@ -163,7 +164,7 @@ export class Users extends Component {
                     <td>{user.phone ? user.phone : "---"}</td>
                     <td>{user.is_admin ? "Admin" : "Normal user"}</td>
                     <td>{user.is_active ? "Active" : "Deactivated"}</td>
-                    <td className="text-center">
+                    <td>
                       <button className="btn btn-sm p-0 border-none text-success"
                         onClick={null}><i className="fa fa-edit"></i> Edit</button>
                     </td>

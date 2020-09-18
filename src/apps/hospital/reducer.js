@@ -8,6 +8,7 @@ const initialState = {
   insurances: [],
   services: [],
   users: [],
+  wards: [],
 };
 
 export default function (state = initialState, action) {
@@ -15,7 +16,7 @@ export default function (state = initialState, action) {
     case hospitalTypes.GET_HOSPITAL:
       return {
         ...state,
-        hospital_profile: action.payload[0],
+        hospital_profile: action.payload,
       };
 
     case hospitalTypes.GET_CLINICS:
@@ -43,6 +44,13 @@ export default function (state = initialState, action) {
         ...state,
         users: action.payload,
       };
+
+    case hospitalTypes.GET_WARDS:
+      return {
+        ...state,
+        wards: action.payload,
+      };
+
 
     default:
       return state;

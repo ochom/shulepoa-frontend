@@ -8,6 +8,7 @@ import Insurance from './views/insurance'
 import HospitalProfile from './views/profile'
 import Services from './views/services'
 import Users from './views/users'
+import Wards from './views/wards'
 
 export class Hospital extends Component {
   render() {
@@ -15,6 +16,7 @@ export class Hospital extends Component {
       <div className="list-group">
         <Link to="/hospital" className="list-group-item"><i className="fa fa-angle-right"></i> Hospital</Link>
         <Link to="/hospital/clinics" className="list-group-item"><i className="fa fa-angle-right"></i> Clinics</Link>
+        <Link to="/hospital/wards" className="list-group-item"><i className="fa fa-angle-right"></i> Wards</Link>
         <Link to="/hospital/services" className="list-group-item"><i className="fa fa-angle-right"></i> Services</Link>
         <Link to="/hospital/insurance" className="list-group-item"><i className="fa fa-angle-right"></i> Insurance</Link>
         <Link to="/hospital/users" className="list-group-item"><i className="fa fa-angle-right"></i> Users</Link>
@@ -32,6 +34,7 @@ export class Hospital extends Component {
                 <>
                   <Route path={`${url}`} component={HospitalProfile} exact />
                   <Route path={`${url}/clinics`} component={Clinics} />
+                  <Route path={`${url}/wards`} component={Wards} />
                   <Route path={`${url}/insurance`} component={Insurance} />
                   <Route path={`${url}/services`} component={Services} />
                   <Route path={`${url}/users`} component={Users} />

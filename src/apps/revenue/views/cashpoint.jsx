@@ -228,7 +228,8 @@ export class CashPoint extends Component {
         {statement_modal}
         <div className="card">
           <div className="card-header py-1 px-3">
-            <div>Payment Queue</div>
+            <div>Active Invoices</div>
+            <button className="btn btn-sm"><i className="fa fa-plus-circle"></i> Add deposite</button>
           </div>
           <div className="card-body p-0 pb-2">
             {this.props.common.silent_processing ?
@@ -237,11 +238,12 @@ export class CashPoint extends Component {
             <table className="table table-sm table-striped table-bordered">
               <thead className="cu-text-primary">
                 <tr>
-                  <th>#</th>
-                  <th>Client</th>
-                  <th>ID No.</th>
-                  <th>Mobile</th>
-                  <th>Total Bill</th>
+                  <th>#Number</th>
+                  <th>Bill Date</th>
+                  <th>Status</th>
+                  <th>Patient</th>
+                  <th>Total</th>
+                  <th>Balance</th>
                   <th className="text-center">Action</th>
                 </tr>
               </thead>

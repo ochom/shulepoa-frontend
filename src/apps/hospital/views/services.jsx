@@ -1,7 +1,8 @@
-import React, { Component } from 'react'
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getServices, addService, updateService, deleteService } from '../actions';
+import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
+import { deleteData } from '../../common/actions';
+import { addService, deleteService, getServices, updateService } from '../actions';
 
 export class Service extends Component {
   constructor(props) {
@@ -59,7 +60,7 @@ export class Service extends Component {
     })
   }
 
-  onSubmitService = (e) => {
+  onSubmit = (e) => {
     e.preventDefault();
     const {
       select_service,
@@ -105,7 +106,7 @@ export class Service extends Component {
             <span><i className="fa fa-plus-circle"></i> Register Service</span>
           }
         </ModalHeader>
-        <form onSubmit={this.onSubmitService}>
+        <form onSubmit={this.onSubmit}>
           <ModalBody>
             <div className="row mx-auto">
               <div className="form-group col-12">
@@ -115,9 +116,9 @@ export class Service extends Component {
               </div>
               <div className="form-group col-6">
                 <select className="form-control form-control-sm"
-                  name="department" onChange={this.onChange}
+                  name="department" onChange={this.onChange} data-value={this.state.department}
                   value={this.state.department} required={true} >
-                  <option value="">--select--</option>
+                  <option value=""></option>
                   {department_choices}
                 </select>
                 <label>Department<sup>*</sup></label>
@@ -135,11 +136,12 @@ export class Service extends Component {
             </div>
           </ModalBody >
           <ModalFooter>
-            <button type="submit" className="btn btn-sm cu-bg-primary"
-              onSubmit={this.onSubmitService}>
-              <i className="fa fa-check"></i> Save</button>{' '}
-            <Button color="danger" size="sm" onClick={this.toggleModal}>
-              <i className="fa fa-close"></i> Cancel</Button>
+            <button type="submit" className="btn btn-sm btn-success"
+              onSubmit={this.onSubmit}>
+              <i className="fa fa-check"></i> Save</button>
+            <button type="button" className="btn btn-sm btn-secondary"
+              onClick={this.toggleModal}>
+              <i className="fa fa-close"></i> Cancel</button>
           </ModalFooter>
         </form>
       </Modal >
@@ -168,7 +170,7 @@ export class Service extends Component {
                   <td>Name</td>
                   <td>Department</td>
                   <td>Price</td>
-                  <td className="text-center">Action</td>
+                  <td>Action</td>
                 </tr>
               </thead>
               <tbody>
@@ -178,11 +180,11 @@ export class Service extends Component {
                     <td>{service.name}</td>
                     <td>{DEPARTMENTS[service.department]}</td>
                     <td>{service.price}</td>
-                    <td className="text-center">
-                      <button className="btn btn-sm p-0 border-none text-success"
-                        onClick={() => this.onEditService(service)}><i className="fa fa-edit"></i> Edit</button>{' | '}
-                      <button className="btn btn-sm p-0 border-none text-danger"
-                        onClick={() => this.props.deleteService(service.id)}><i className="fa fa-trash"></i> Delete</button>
+                    <td>
+                      <button className="btn btn-sm btn-success mr-2"
+                        onClick={() => this.onEditService(service)}><i className="fa fa-edit"></i> Edit</button>
+                      <button className="btn btn-sm btn-danger"
+                        onClick={() => deleteData(service.id, this.props.deleteService)}><i className="fa fa-trash"></i> Delete</button>
                     </td>
                   </tr>
                 )}

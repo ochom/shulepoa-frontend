@@ -4,32 +4,17 @@ import Axios from "axios"
 
 export const hospitalTypes = {
   GET_HOSPITAL: 'GET_HOSPITAL',
-  ADD_HOSPITAL: 'ADD_HOSPITAL',
-  UPDATE_HOSPITAL: 'UPDATE_HOSPITAL',
-
   GET_CLINICS: "GET_CLINICS",
-  ADD_CLINIC: 'ADD_CLINIC',
-  UPDATE_CLINIC: 'UPDATE_CLINIC',
-  DELETE_CLINIC: 'DELETE_CLINIC',
-
   GET_INSURANCES: 'GET_INSURANCES',
-  ADD_INSURANCE: 'ADD_INSURANCE',
-  UPDATE_INSURANCE: 'UPDATE_INSURANCE',
-  DELETE_INSURANCE: 'DELETE_INSURANCE',
-
-
   GET_SERVICES: 'GET_SERVICES',
-  ADD_SERVICE: 'ADD_SERVICE',
-  UPDATE_SERVICE: 'UPDATE_SERVICE',
-  DELETE_SERVICE: 'DELETE_SERVICE',
-
+  GET_WARDS: 'GET_WARDS',
   GET_USERS: 'GET_USERS',
-  UPDATE_USER: 'UPDATE_USER',
 }
 
 // Hospital
 export const getHospital = () => (dispatch, getState) => {
-  Axios.get(`${API_PATH}organization/hospital/`, tokenConfig(getState))
+  var id = getState().auth.user.organization;
+  Axios.get(`${API_PATH}organization/hospital/${id}/`, tokenConfig(getState))
     .then(res => {
       dispatch({ type: hospitalTypes.GET_HOSPITAL, payload: res.data })
     }).catch(err => {
@@ -264,4 +249,63 @@ export const updateUser = (id, data) => (dispatch, getState) => {
     .finally(() => {
       dispatch({ type: commonTypes.DONE })
     });
+}
+
+
+
+// Wards
+export const getWards = () => (dispatch, getState) => {
+  Axios.get(`${API_PATH}organization/wards/`, tokenConfig(getState))
+    .then(res => {
+      dispatch({ type: hospitalTypes.GET_WARDS, payload: res.data })
+    }).catch(err => {
+      dispatch({ type: commonTypes.ERROR, payload: err })
+    })
+    .finally(() => {
+      dispatch({ type: commonTypes.DONE })
+    })
+}
+
+
+export const addWard = (data) => (dispatch, getState) => {
+  dispatch({ type: commonTypes.PROCESSING })
+  Axios.post(`${API_PATH}organization/wards/`, JSON.stringify(data), tokenConfig(getState))
+    .then(res => {
+      dispatch(getWards())
+      dispatch({ type: commonTypes.SUCCESS, payload: "Ward details saved succesfully" })
+    }).catch(err => {
+      dispatch({ type: commonTypes.ERROR, payload: err })
+    })
+    .finally(() => {
+      dispatch({ type: commonTypes.DONE })
+    })
+}
+
+export const updateWard = (id, data) => (dispatch, getState) => {
+  dispatch({ type: commonTypes.PROCESSING })
+  Axios.put(`${API_PATH}organization/wards/${id}/`, JSON.stringify(data), tokenConfig(getState))
+    .then(res => {
+      dispatch(getWards())
+      dispatch({ type: commonTypes.SUCCESS, payload: "Ward details updated succesfully" })
+    }).catch(err => {
+      dispatch({ type: commonTypes.ERROR, payload: err })
+    })
+    .finally(() => {
+      dispatch({ type: commonTypes.DONE })
+    })
+}
+
+
+export const deleteWard = (id) => (dispatch, getState) => {
+  dispatch({ type: commonTypes.PROCESSING })
+  Axios.delete(`${API_PATH}organization/wards/${id}/`, tokenConfig(getState))
+    .then(res => {
+      dispatch(getWards())
+      dispatch({ type: commonTypes.SUCCESS, payload: "Ward details deleted succesfully" })
+    }).catch(err => {
+      dispatch({ type: commonTypes.ERROR, payload: err })
+    })
+    .finally(() => {
+      dispatch({ type: commonTypes.DONE })
+    })
 }

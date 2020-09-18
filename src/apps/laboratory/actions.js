@@ -1,7 +1,7 @@
-import { API_PATH, commonTypes } from '../common/actions'
+import Axios from "axios";
 import { tokenConfig } from '../auth/actions';
-import Axios from "axios"
-import { getServiceRequests, getServiceRequestQueue } from '../revenue/actions';
+import { API_PATH, commonTypes } from '../common/actions';
+import { getServiceRequestQueue } from '../revenue/actions';
 
 export const labTypes = {
   GET_LOGBOOKS: 'GET_LAB_LOGBOOKS',

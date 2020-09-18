@@ -52,24 +52,24 @@ export class Requsitions extends Component {
           <ModalBody>
             <div className="row col-12 mx-auto">
               <div className="form-group col-12">
-                <label>Item</label>
                 <input className="form-control form-control-sm" name="product_id" readOnly={true}
                   value={(products.length > 0 && selected_requisition) ? products.find(pr => pr.id === selected_requisition.product_id).name : ""} onChange={this.onChange} />
+                <label>Item</label>
               </div>
               <div className="form-group col-12">
-                <label>Receiving Store</label>
                 <input className="form-control form-control-sm" name="store_id" readOnly={true}
                   value={(stores.length > 0 && selected_requisition) ? stores.find(store => store.id === selected_requisition.store_id).name : ""} onChange={this.onChange} />
+                <label>Receiving Store</label>
               </div>
               <div className="form-group col-6">
-                <label>Requested Quantity</label>
                 <input className="form-control form-control-sm" name="quantity_required" readOnly={true}
                   onChange={this.onChange} value={selected_requisition ? selected_requisition.quantity_required : ""} />
+                <label>Requested Quantity</label>
               </div>
               <div className="form-group col-6">
-                <label>Dispatch Quantity <sup>*</sup></label>
                 <input className="form-control form-control-sm" name="quantity_released" required={true}
                   onChange={this.onChange} value={this.state.quantity_released} />
+                <label>Dispatch Quantity <sup>*</sup></label>
               </div>
             </div>
           </ModalBody >
@@ -99,7 +99,7 @@ export class Requsitions extends Component {
                   <th>Requesting Store</th>
                   <th>Quantity</th>
                   <th>Required By</th>
-                  <th className="text-center">Action</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -111,8 +111,8 @@ export class Requsitions extends Component {
                     <td>{stores.length > 0 ? stores.find(store => store.id === requisition.store_id).name : ""}</td>
                     <td>{requisition.quantity_required}</td>
                     <td>{new Date(requisition.required_by).toLocaleDateString('en-uk')}</td>
-                    <td className="text-center">
-                      <button className="btn btn-sm p-0 border-none text-primary"
+                    <td>
+                      <button className="btn btn-sm btn-primary"
                         onClick={() => this.onNewDispatch(requisition)}><i className="fa fa-truck"></i> Dispatch</button></td>
                   </tr>
                 )}

@@ -133,56 +133,57 @@ export class Products extends Component {
           <ModalBody>
             <div className="row col-12 mx-auto">
               <div className="form-group col-12">
-                <label>Name<sup>*</sup></label>
                 <input className="form-control form-control-sm" name="name" required={true}
                   onChange={this.onChange} value={this.state.name} />
+                <label>Name<sup>*</sup></label>
               </div>
               <div className="form-group col-12">
-                <label>Label<sup>*</sup></label>
                 <input className="form-control form-control-sm" name="label" required={true}
                   onChange={this.onChange} value={this.state.label} />
+                <label>Label<sup>*</sup></label>
               </div>
               <div className="form-group col-12">
-                <label>Category<sup>*</sup></label>
-                <select className="form-control form-control-sm" name="category_id" required={true}
+                <select className="form-control form-control-sm" name="category_id"
+                  required={true} data-value={this.state.category_id}
                   onChange={this.onChange} value={this.state.category_id} >
-                  <option value="">Select</option>
+                  <option value=""></option>
                   {categories.map((cat, index) =>
                     <option key={index} value={cat.id}>{cat.name}</option>)}
                 </select>
+                <label>Category<sup>*</sup></label>
               </div>
               <div className="form-group col-12">
-                <label>Store<sup>*</sup></label>
                 <select className="form-control form-control-sm" name="store_id" required={true}
-                  onChange={this.onChange} value={this.state.store_id} >
-                  <option value="">Select</option>
+                  onChange={this.onChange} value={this.state.store_id} data-value={this.state.store_id}>
+                  <option value=""></option>
                   {stores.map((store, index) =>
                     <option key={index} value={store.id}>{store.name}</option>)}
                 </select>
+                <label>Store<sup>*</sup></label>
               </div>
               <div className="form-group col-6">
-                <label>Price<sup>*</sup></label>
                 <input className="form-control form-control-sm" name="price" required={true}
                   onChange={this.onChange} value={this.state.price} />
+                <label>Price<sup>*</sup></label>
               </div>
               <div className="form-group col-6">
-                <label>Units<sup>*</sup></label>
                 <select className="form-control form-control-sm" name="unit_id" required={true}
-                  onChange={this.onChange} value={this.state.unit_id} >
-                  <option value="">Select</option>
+                  onChange={this.onChange} value={this.state.unit_id} data-value={this.state.unit_id}>
+                  <option value=""></option>
                   {units.map((unit, index) =>
                     <option key={index} value={unit.id}>{unit.abbr}</option>)}
                 </select>
+                <label>Units<sup>*</sup></label>
               </div>
               <div className="form-group col-6">
-                <label>Start Inventory<sup>*</sup></label>
                 <input className="form-control form-control-sm" name="startingInventory" required={true}
                   onChange={this.onChange} value={this.state.startingInventory} />
+                <label>Start Inventory<sup>*</sup></label>
               </div>
               <div className="form-group col-6">
-                <label>Minimum Required<sup>*</sup></label>
                 <input className="form-control form-control-sm" name="minimumRequired" required={true}
                   onChange={this.onChange} value={this.state.minimumRequired} />
+                <label>Minimum Required<sup>*</sup></label>
               </div>
             </div>
           </ModalBody >
@@ -205,28 +206,29 @@ export class Products extends Component {
           <ModalBody>
             <div className="row col-12 mx-auto">
               <div className="form-group col-12">
-                <label>Product</label>
                 <input className="form-control form-control-sm" name="name" readOnly={true}
                   value={selected_product ? selected_product.name : null} />
+                <label>Product</label>
               </div>
               <div className="form-group col-12">
-                <label>Requesting Store<sup>*</sup></label>
                 <select className="form-control form-control-sm" name="store_id" required={true}
-                  onChange={this.onChange} value={this.state.store_id} >
-                  <option value="">Select</option>
+                  onChange={this.onChange} value={this.state.store_id} data-value={this.state.store_id}>
+                  <option value=""></option>
                   {stores.map((store, index) =>
                     <option key={index} value={store.id}>{store.name}</option>)}
                 </select>
+                <label>Requesting Store<sup>*</sup></label>
               </div>
               <div className="form-group col-6">
-                <label>Quantity Required<sup>*</sup></label>
                 <input className="form-control form-control-sm" name="quantity_required" required={true}
                   onChange={this.onChange} value={this.state.quantity_required} />
+                <label>Quantity Required<sup>*</sup></label>
               </div>
               <div className="form-group col-6">
+                <input type="text" className="form-control form-control-sm" name="required_by" required={true}
+                  onChange={this.onChange} value={this.state.required_by} 
+                  onFocus={(e) => e.target.type = 'date'} onBlur={(e) => !e.target.value ? e.target.type = 'text' : 'date'} />
                 <label>Required BY<sup>*</sup></label>
-                <input type="date" className="form-control form-control-sm" name="required_by" required={true}
-                  onChange={this.onChange} value={this.state.required_by} />
               </div>
             </div>
           </ModalBody >
@@ -262,7 +264,7 @@ export class Products extends Component {
                   <th>Store</th>
                   <th>In Store</th>
                   <th>Price</th>
-                  <th className="text-center">Action</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -282,10 +284,10 @@ export class Products extends Component {
                       {units.length > 0 ? units.find(unit => unit.id === product.unit_id).abbr : ""}
                     </td>
                     <td>{product.price}</td>
-                    <td className="text-center">
-                      <button className="btn btn-sm p-0 border-none text-success"
+                    <td>
+                      <button className="btn btn-sm btn-success"
                         onClick={() => this.onEditProduct(product)}><i className="fa fa-edit"></i> Edit</button> {` | `}
-                      <button className="btn btn-sm p-0 border-none text-primary"
+                      <button className="btn btn-sm btn-primary"
                         onClick={() => this.onNewRequsition(product)}><i className="fa fa-plus"></i> Requisition</button>
                     </td>
                   </tr>
