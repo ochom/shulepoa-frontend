@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
-import { addServiceRequest, getServiceRequests, deleteServiceRequest } from '../../revenue/actions';
+import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import { deleteData } from '../../common/actions';
+import { addServiceRequest, deleteServiceRequest, getServiceRequests } from '../../revenue/actions';
 
 
 export class ServiceRequests extends Component {
@@ -89,8 +89,9 @@ export class ServiceRequests extends Component {
           </table>
         </ModalBody >
         <ModalFooter>
-          <Button color="danger" size="sm" onClick={this.toggleModal}>
-            <i className="fa fa-close"></i> Cancel</Button>
+          <button type="button" className="btn btn-sm btn-secondary"
+            onClick={this.toggleModal}>
+            <i className="fa fa-close"></i> Cancel</button>
         </ModalFooter>
       </Modal >
 

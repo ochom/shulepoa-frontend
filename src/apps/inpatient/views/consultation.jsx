@@ -26,7 +26,6 @@ export class Consultation extends Component {
   render() {
     const {
       common: { CONSTANTS: { GENDERS, MARITAL_STATUSES } },
-      records: { patients },
       match: { params: { admission_id } },
       inpatient: { admission }
     } = this.props;
@@ -45,31 +44,32 @@ export class Consultation extends Component {
                 <ul className="w-100 mx-auto list-group mt-2">
                   <li className="list-group-item">
                     <span className="m-0">Name:</span>
-                    <span style={{ float: "right" }}>{(patients.length > 0 && patients.find(patient => patient.id === admission.patient_id)) ? patients.find(patient => patient.id === admission.patient_id).fullname : ""}</span>
+                    <span style={{ float: "right" }}>{admission.patient.fullname}</span>
                   </li>
                   <li className="list-group-item">
                     <span className="m-0">Sex:</span>
-                    <span style={{ float: "right" }}>{GENDERS[(patients.length > 0 && patients.find(patient => patient.id === admission.patient_id)) ? patients.find(patient => patient.id === admission.patient_id).sex : 0]}</span>
+                    <span style={{ float: "right" }}>{GENDERS[admission.patient.sex]}</span>
                   </li>
                   <li className="list-group-item">
                     <span className="m-0">DoB:</span>
-                    <span style={{ float: "right" }}>{new Date((patients.length > 0 && patients.find(patient => patient.id === admission.patient_id)) ? patients.find(patient => patient.id === admission.patient_id).dob : 0).toDateString("en-UK")}</span>
+                    <span style={{ float: "right" }}>{new Date(admission.patient.dob).toDateString("en-UK")}</span>
                   </li>
                   <li className="list-group-item">
                     <span className="m-0">Marriage:</span>
-                    <span style={{ float: "right" }}>{MARITAL_STATUSES[(patients.length > 0 && patients.find(patient => patient.id === admission.patient_id)) ? patients.find(patient => patient.id === admission.patient_id).marital_status : 0]}</span>
+                    <span style={{ float: "right" }}>{MARITAL_STATUSES[admission.patient.marital_status]}</span>
                   </li>
                   <li className="list-group-item">
                     <span className="m-0">Mobile:</span>
-                    <span style={{ float: "right" }}>{(patients.length > 0 && patients.find(patient => patient.id === admission.patient_id)) ? patients.find(patient => patient.id === admission.patient_id).phone : ""}</span>
+                    <span style={{ float: "right" }}>{admission.patient.phone}</span>
                   </li>
                   <li className="list-group-item">
                     <span className="m-0">Address:</span>
-                    <span style={{ float: "right" }}>{`${(patients.length > 0 && patients.find(patient => patient.id === admission.patient_id)) ? patients.find(patient => patient.id === admission.patient_id).county : ""}, ${(patients.length > 0 && patients.find(patient => patient.id === admission.patient_id)) ? patients.find(patient => patient.id === admission.patient_id).country : ""}`}</span>
+                    <span style={{ float: "right" }}>{`${admission.patient.county}, ${admission.patient.country}`}</span>
                   </li>
                 </ul>
               </div>
             </div>
+
             <div className="col-7">
               <div style={{ maxHeight: "75vh", overflowY: "auto" }}>
                 <Route

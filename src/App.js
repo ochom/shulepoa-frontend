@@ -19,6 +19,7 @@ import pharmacy from './apps/pharmacy';
 import radiology from './apps/radiology';
 import Records from './apps/records/index';
 import Revenue from './apps/revenue';
+import { Loader } from './apps/common/layouts';
 
 export class App extends Component {
 
@@ -27,7 +28,6 @@ export class App extends Component {
   componentDidMount() {
     this.props.loadUser();
     this.props.loadICD10()
-    setTimeout(() => this.setState({ isLoading: false }), 6000);
   }
 
   componentDidUpdate(nextProps) {
@@ -37,25 +37,20 @@ export class App extends Component {
           type: "success",
           position: 'bottom-right'
         })
-        //NotificationManager.success(nextProps.message, "Success")
       } else {
         toast(nextProps.common.message, {
           type: "error",
         })
-        //NotificationManager.error(nextProps.message, "Error")
       }
     }
   }
 
 
   render() {
-    const { isLoading } = this.props.auth;
-    const { isProcessing } = this.props.common;
-    if (this.state.isLoading) {
+    const { auth: { isLoading }, common: { isProcessing } } = this.props;
+    if (isLoading) {
       return (
-        <div className="loader">
-          <div className="loader-icon"></div>
-        </div>
+        <Loader />
       )
     } else {
       return (
@@ -71,7 +66,6 @@ export class App extends Component {
               <PrivateRoute path="/laboratory" component={laboratory} />
               <PrivateRoute path="/radiology" component={radiology} />
               <PrivateRoute path="/inpatient" component={inpatient} />
-              {/* <AdminRoute path="/revenue" component={Revenue} /> */}
               <PrivateRoute path="/inventory" component={Inventory} />
               <Route exact path="/public/page" component={public_page} />
               <PrivateRoute path="/profile" component={Profile} />

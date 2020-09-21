@@ -123,8 +123,6 @@ export class Drugs extends Component {
   }
 
   onSearch = (e) => {
-    var search = e.target.value
-    //
   }
 
   onAdjustStock = (data) => {

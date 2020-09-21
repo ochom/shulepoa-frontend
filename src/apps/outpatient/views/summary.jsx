@@ -4,6 +4,7 @@ import { getObservations, getVitals, getDiagnosis } from '../actions'
 import { getServiceRequests } from '../../revenue/actions'
 import { getHospital, getUsers } from '../../hospital/actions'
 import { PrintPDF } from '../../common/actions'
+import { PrintHeader } from '../../common/layouts';
 
 export class Summary extends Component {
   componentDidMount() {
@@ -43,13 +44,10 @@ export class Summary extends Component {
         </div>
         <div className="card-body p-0 mt-0">
           <div id="print_area" className="row col-12 mx-auto">
-            <div className="col-12">
-              <h3 className="col-12 p-0 m-0 text-center">{hospital_profile ? `${hospital_profile.hospital_name}` : ""}</h3>
-              <h6 className="col-12 p-0 m-0 text-center">{hospital_profile ? `MFL ${hospital_profile.mfl_code}` : ""}</h6>
-              <h6 className="col-12 p-0 m-0 text-center">{hospital_profile ? `${hospital_profile.postal_address}, ${hospital_profile.physical_address}` : ""}</h6>
-              {/* <h6 className="col-12 p-0 m-0 text-center">{hospital_profile ? `${hospital_profile.email}. ${hospital_profile.phone}` : ""}</h6> */}
-              <h5 className="col-12 p-0 m-0 text-center mt-3"><u>Appointment Summary</u></h5>
-            </div>
+            <PrintHeader
+              hospital={hospital_profile}
+              tittle="Appointment Summary" />
+
             <div className="col-12 mt-3">
               <p className="p-0 m-0">Client: <b>{(patients.length > 0 && patients.find(patient => patient.id === appointment.patient_id)) ? patients.find(patient => patient.id === appointment.patient_id).fullname : ""}</b></p>
               <p className="p-0 m-0">Sex: <b>{GENDERS[(patients.length > 0 && patients.find(patient => patient.id === appointment.patient_id)) ? patients.find(patient => patient.id === appointment.patient_id).sex : 0]}</b></p>

@@ -93,7 +93,7 @@ export const getStore = (id) => (dispatch, getState) => {
 
 export const updateStore = (id, data) => (dispatch, getState) => {
   dispatch({ type: commonTypes.PROCESSING });
-  Axios.put(`${API_PATH}inventory/stores/${id}/`, JSON.stringify(data), tokenConfig(getState))
+  Axios.patch(`${API_PATH}inventory/stores/${id}/`, JSON.stringify(data), tokenConfig(getState))
     .then((res) => {
       dispatch(getStores());
       dispatch({ type: commonTypes.SUCCESS, message: "Store updated succesfully" })
@@ -168,7 +168,7 @@ export const getCategory = (id) => (dispatch, getState) => {
 
 export const updateCategory = (id, data) => (dispatch, getState) => {
   dispatch({ type: commonTypes.PROCESSING });
-  Axios.put(`${API_PATH}inventory/categories/${id}/`, JSON.stringify(data), tokenConfig(getState))
+  Axios.patch(`${API_PATH}inventory/categories/${id}/`, JSON.stringify(data), tokenConfig(getState))
     .then((res) => {
       dispatch(getCategories());
       dispatch({ type: commonTypes.SUCCESS, message: "Category updated succesfully" })
@@ -243,7 +243,7 @@ export const getUnit = (id) => (dispatch, getState) => {
 
 export const updateUnit = (id, data) => (dispatch, getState) => {
   dispatch({ type: commonTypes.PROCESSING });
-  Axios.put(`${API_PATH}inventory/units/${id}/`, JSON.stringify(data), tokenConfig(getState))
+  Axios.patch(`${API_PATH}inventory/units/${id}/`, JSON.stringify(data), tokenConfig(getState))
     .then((res) => {
       dispatch(getUnits())
       dispatch({ type: commonTypes.SUCCESS, message: "Unit updated succesfully" })
@@ -318,7 +318,7 @@ export const getProduct = (id) => (dispatch, getState) => {
 
 export const updateProduct = (id, data) => (dispatch, getState) => {
   dispatch({ type: commonTypes.PROCESSING });
-  Axios.put(`${API_PATH}inventory/products/${id}/`, JSON.stringify(data), tokenConfig(getState))
+  Axios.patch(`${API_PATH}inventory/products/${id}/`, JSON.stringify(data), tokenConfig(getState))
     .then((res) => {
       dispatch(getProducts())
       dispatch({ type: commonTypes.SUCCESS, message: "Product updated succesfully" })
@@ -393,7 +393,7 @@ export const getRequisition = (id) => (dispatch, getState) => {
 
 export const updateRequisition = (id, data) => (dispatch, getState) => {
   dispatch({ type: commonTypes.PROCESSING });
-  Axios.put(`${API_PATH}inventory/requisitions/${id}/`, JSON.stringify(data), tokenConfig(getState))
+  Axios.patch(`${API_PATH}inventory/requisitions/${id}/`, JSON.stringify(data), tokenConfig(getState))
     .then((res) => {
       dispatch(getRequisitions())
       dispatch({ type: commonTypes.SUCCESS, message: "Requisition updated succesfully" })
@@ -467,7 +467,7 @@ export const getSupplier = (id) => (dispatch, getState) => {
 
 export const updateSupplier = (id, data) => (dispatch, getState) => {
   dispatch({ type: commonTypes.PROCESSING })
-  Axios.put(`${API_PATH}inventory/suppliers/${id}/`, JSON.stringify(data), tokenConfig(getState))
+  Axios.patch(`${API_PATH}inventory/suppliers/${id}/`, JSON.stringify(data), tokenConfig(getState))
     .then(res => {
       dispatch(getSuppliers())
       dispatch({ type: commonTypes.SUCCESS, message: "Supplier details updated succesfully" })
@@ -540,7 +540,7 @@ export const getOrder = (id) => (dispatch, getState) => {
 
 export const updateOrder = (id, data) => (dispatch, getState) => {
   dispatch({ type: commonTypes.PROCESSING })
-  Axios.put(`${API_PATH}inventory/orders/${id}/`, JSON.stringify(data), tokenConfig(getState))
+  Axios.patch(`${API_PATH}inventory/orders/${id}/`, JSON.stringify(data), tokenConfig(getState))
     .then(res => {
       dispatch(getOrders())
       dispatch({ type: commonTypes.SUCCESS, message: "Order details updated succesfully" })

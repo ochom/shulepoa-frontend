@@ -1,6 +1,7 @@
 import { API_PATH, commonTypes } from '../common/actions'
 import { tokenConfig } from '../auth/actions';
 import Axios from "axios"
+import { getPatients } from '../records/actions';
 
 export const inpatientTypes = {
   GET_ADMISSIONS: 'GET_ADMISSIONS',
@@ -30,6 +31,7 @@ export const addAdmission = (data) => (dispatch, getState) => {
   dispatch({ type: commonTypes.PROCESSING })
   Axios.post(`${API_PATH}inpatient/admissions/`, JSON.stringify(data), tokenConfig(getState))
     .then(() => {
+      dispatch(getPatients())
       dispatch(getAdmissions())
       dispatch({ type: commonTypes.SUCCESS, payload: "Admission saved" })
     }).catch((err) => {
@@ -56,7 +58,7 @@ export const getAdmission = (id) => (dispatch, getState) => {
 
 export const updateAdmission = (id, data) => (dispatch, getState) => {
   dispatch({ type: commonTypes.PROCESSING })
-  Axios.put(`${API_PATH}inpatient/admissions/${id}/`, JSON.stringify(data), tokenConfig(getState))
+  Axios.patch(`${API_PATH}inpatient/admissions/${id}/`, JSON.stringify(data), tokenConfig(getState))
     .then(() => {
       dispatch(getAdmissions())
       dispatch({ type: commonTypes.SUCCESS, payload: "Admission updated" })
@@ -113,7 +115,7 @@ export const addIntervention = (data) => (dispatch, getState) => {
 
 export const updateIntervention = (id, data) => (dispatch, getState) => {
   dispatch({ type: commonTypes.PROCESSING })
-  Axios.put(`${API_PATH}inpatient/interventions/${id}/`, JSON.stringify(data), tokenConfig(getState))
+  Axios.patch(`${API_PATH}inpatient/interventions/${id}/`, JSON.stringify(data), tokenConfig(getState))
     .then(() => {
       dispatch(getInterventions())
       dispatch({ type: commonTypes.SUCCESS, payload: "Intervention updated" })
@@ -169,7 +171,7 @@ export const addVital = (data) => (dispatch, getState) => {
 
 export const updateVital = (id, data) => (dispatch, getState) => {
   dispatch({ type: commonTypes.PROCESSING });
-  Axios.put(`${API_PATH}inpatient/vitals/${id}/`, JSON.stringify(data), tokenConfig(getState))
+  Axios.patch(`${API_PATH}inpatient/vitals/${id}/`, JSON.stringify(data), tokenConfig(getState))
     .then(res => {
       dispatch(getVitals())
       dispatch({ type: commonTypes.SUCCESS, payload: "Vital details updated succesfully" })
@@ -226,7 +228,7 @@ export const addReview = (data) => (dispatch, getState) => {
 
 export const updateReview = (id, data) => (dispatch, getState) => {
   dispatch({ type: commonTypes.PROCESSING })
-  Axios.put(`${API_PATH}inpatient/reviews/${id}/`, JSON.stringify(data), tokenConfig(getState))
+  Axios.patch(`${API_PATH}inpatient/reviews/${id}/`, JSON.stringify(data), tokenConfig(getState))
     .then(() => {
       dispatch(getReviews())
       dispatch({ type: commonTypes.SUCCESS, payload: "Review updated" })

@@ -41,7 +41,7 @@ export const addHospital = (data) => (dispatch, getState) => {
 
 export const updateHospital = (id, data) => (dispatch, getState) => {
   dispatch({ type: commonTypes.PROCESSING })
-  Axios.put(`${API_PATH}organization/hospital/${id}/`, JSON.stringify(data), tokenConfig(getState))
+  Axios.patch(`${API_PATH}organization/hospital/${id}/`, JSON.stringify(data), tokenConfig(getState))
     .then(res => {
       dispatch(getHospital())
       dispatch({ type: commonTypes.SUCCESS, payload: "Hospital details saved succesfully" })
@@ -83,7 +83,7 @@ export const addClinic = (data) => (dispatch, getState) => {
 
 export const updateClinic = (id, data) => (dispatch, getState) => {
   dispatch({ type: commonTypes.PROCESSING })
-  Axios.put(`${API_PATH}organization/clinics/${id}/`, JSON.stringify(data), tokenConfig(getState))
+  Axios.patch(`${API_PATH}organization/clinics/${id}/`, JSON.stringify(data), tokenConfig(getState))
     .then(res => {
       dispatch(getClinics())
       dispatch({ type: commonTypes.SUCCESS, payload: "Clinic details updated succesfully" })
@@ -139,7 +139,7 @@ export const addInsurance = (data) => (dispatch, getState) => {
 
 export const updateInsurance = (id, data) => (dispatch, getState) => {
   dispatch({ type: commonTypes.PROCESSING })
-  Axios.put(`${API_PATH}organization/insurance/${id}/`, JSON.stringify(data), tokenConfig(getState))
+  Axios.patch(`${API_PATH}organization/insurance/${id}/`, JSON.stringify(data), tokenConfig(getState))
     .then(res => {
       dispatch(getInsurances())
       dispatch({ type: commonTypes.SUCCESS, payload: "Insurance details updated succesfully" })
@@ -196,7 +196,7 @@ export const addService = (data) => (dispatch, getState) => {
 
 export const updateService = (id, data) => (dispatch, getState) => {
   dispatch({ type: commonTypes.PROCESSING })
-  Axios.put(`${API_PATH}organization/service/${id}/`, JSON.stringify(data), tokenConfig(getState))
+  Axios.patch(`${API_PATH}organization/service/${id}/`, JSON.stringify(data), tokenConfig(getState))
     .then(res => {
       dispatch(getServices())
       dispatch({ type: commonTypes.SUCCESS, payload: "Service details updated succesfully" })
@@ -239,7 +239,7 @@ export const getUsers = () => (dispatch, getState) => {
 
 export const updateUser = (id, data) => (dispatch, getState) => {
   dispatch({ type: commonTypes.PROCESSING })
-  Axios.put(`${API_PATH}users/${id}/`, JSON.stringify(data), tokenConfig(getState))
+  Axios.patch(`${API_PATH}users/${id}/`, JSON.stringify(data), tokenConfig(getState))
     .then(res => {
       dispatch(getUsers())
       dispatch({ type: commonTypes.SUCCESS, payload: "User details updated succesfully" })
@@ -283,7 +283,7 @@ export const addWard = (data) => (dispatch, getState) => {
 
 export const updateWard = (id, data) => (dispatch, getState) => {
   dispatch({ type: commonTypes.PROCESSING })
-  Axios.put(`${API_PATH}organization/wards/${id}/`, JSON.stringify(data), tokenConfig(getState))
+  Axios.patch(`${API_PATH}organization/wards/${id}/`, JSON.stringify(data), tokenConfig(getState))
     .then(res => {
       dispatch(getWards())
       dispatch({ type: commonTypes.SUCCESS, payload: "Ward details updated succesfully" })

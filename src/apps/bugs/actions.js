@@ -59,7 +59,7 @@ const getBug = (id) => (dispatch, getState) => {
 
 const updateBug = (id, data) => (dispatch, getState) => {
   dispatch({ type: commonTypes.PROCESSING })
-  Axios.put(`${API_PATH}bugs/${id}/`, JSON.stringify(data), tokenConfig(getState))
+  Axios.patch(`${API_PATH}bugs/${id}/`, JSON.stringify(data), tokenConfig(getState))
     .then(res => {
       dispatch(getBugs())
       //dispatch({ type: bugTypes.ADD_BUG, payload: res.data })

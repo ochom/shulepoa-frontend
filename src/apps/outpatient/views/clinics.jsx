@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getAppointments, updateAppointment } from '../actions';
+import { Link } from 'react-router-dom';
 
 export class ClinicQueue extends Component {
   state = {}
@@ -14,19 +15,13 @@ export class ClinicQueue extends Component {
     clearInterval(this.interval)
   }
 
-
-  checkIn = (id) => {
-    this.props.updateAppointment(id, { session_with: this.props.auth.user.id, is_checked_in: true })
-    this.props.history.push(`/outpatient/appointments/${id}`)
-  }
-
-  checkOut = (id) => {
-    this.props.updateAppointment(id, { is_checked_in: false })
-  }
-
   render() {
-    const { outpatient: { appointments }, records: { patients }, hospital: { clinics, users } } = this.props;
+    const { outpatient: { appointments },
+      common: { CONSTANTS: { GENDERS } },
+      hospital: { clinics } } = this.props;
+
     const { match: { params: { clinic_id } } } = this.props
+
     return (
       <div className="col-md-10 mx-auto mt-3">
         <div className="card">
@@ -41,10 +36,11 @@ export class ClinicQueue extends Component {
             <table className="table table-sm table-hover table-responsive-sm">
               <thead className="cu-text-primary">
                 <tr>
-                  <th>Date</th>
-                  <th>Name</th>
+                  <th>Queued Date</th>
+                  <th>Patient</th>
+                  <th>Sex</th>
+                  <th>Clinic</th>
                   <th>Mobile</th>
-                  <th>With</th>
                   <th>Status</th>
                   <th>Action</th>
                 </tr>
@@ -53,17 +49,13 @@ export class ClinicQueue extends Component {
                 {appointments.filter(appointment => !appointment.is_discharged && appointment.clinic_id === parseInt(clinic_id)).map((appointment, index) =>
                   <tr key={index}>
                     <td>{new Date(appointment.created).toLocaleString('en-UK')}</td>
-                    <td>{(patients && patients.find(patient => patient.id === appointment.patient_id)) ? patients.find(patient => patient.id === appointment.patient_id).fullname : ""}</td>
-                    <td>{(patients && patients.find(patient => patient.id === appointment.patient_id)) ? patients.find(patient => patient.id === appointment.patient_id).phone : ""}</td>
-                    <td>{(users && users.find(user => user.id === appointment.session_with)) ? users.find(user => user.id === appointment.session_with).username : "In Line"}</td>
+                    <td>{appointment.patient.fullname}</td>
+                    <td>{GENDERS[appointment.patient.sex]}</td>
+                    <td>{appointment.clinic.name}</td>
+                    <td>{appointment.patient.phone}</td>
                     <td>{appointment.is_checked_in ? <span className="text-success">IN</span> : <span className="text-primary">Waiting</span>}</td>
                     <td>
-                      {!appointment.is_checked_in ?
-                        <button onClick={() => this.checkIn(appointment.id)}
-                          className="btn btn-sm border-none btn-success"><i className="fa fa-sign-in"></i> Check In</button> :
-                        <button onClick={() => this.checkOut(appointment.id)}
-                          className="btn btn-sm border-none btn-primary"><i className="fa fa-sign-out"></i> Check Out</button>
-                      }
+                      <Link to={`/outpatient/appointments/${appointment.id}`} className="btn btn-sm btn-success">Open file</Link>
                     </td>
                   </tr>
                 )}

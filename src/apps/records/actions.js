@@ -56,7 +56,7 @@ export const addPatient = (data) => (dispatch, getState) => {
 
 export const updatePatient = (id, data) => (dispatch, getState) => {
   dispatch({ type: commonTypes.PROCESSING })
-  Axios.put(`${API_PATH}records/patients/${id}/`, JSON.stringify(data), tokenConfig(getState))
+  Axios.patch(`${API_PATH}records/patients/${id}/`, JSON.stringify(data), tokenConfig(getState))
     .then(res => {
       dispatch(getPatients())
       dispatch({ type: commonTypes.SUCCESS, payload: "Patient details updated succesfully" })
@@ -104,7 +104,7 @@ export const addScheme = (data) => (dispatch, getState) => {
   dispatch({ type: commonTypes.PROCESSING })
   Axios.post(`${API_PATH}records/schemes/`, JSON.stringify(data), tokenConfig(getState))
     .then(res => {
-      dispatch(getSchemes())
+      dispatch(getPatient(data.patient_id))
       dispatch({ type: commonTypes.SUCCESS, payload: "Scheme details saved succesfully" })
     })
     .catch((err) => {
@@ -117,9 +117,9 @@ export const addScheme = (data) => (dispatch, getState) => {
 
 export const updateScheme = (id, data) => (dispatch, getState) => {
   dispatch({ type: commonTypes.PROCESSING })
-  Axios.put(`${API_PATH}records/schemes/${id}/`, JSON.stringify(data), tokenConfig(getState))
+  Axios.patch(`${API_PATH}records/schemes/${id}/`, JSON.stringify(data), tokenConfig(getState))
     .then(res => {
-      dispatch(getSchemes())
+      dispatch(getPatient(data.patient_id))
       dispatch({ type: commonTypes.SUCCESS, payload: "Scheme details updated succesfully" })
     })
     .catch((err) => {

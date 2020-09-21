@@ -6,6 +6,7 @@ import { getServices, getInsurances } from '../hospital/actions'
 import CashPoint from './views/cashpoint'
 import Topnav from '../common/topnav'
 import Invoices from './views/invoices'
+import deposits from './views/deposits'
 
 export class Revenue extends Component {
 
@@ -18,9 +19,10 @@ export class Revenue extends Component {
     const menu_list =
       <div className="list-group">
         <Link to="/revenue/cashpoint" className="list-group-item"><i className="fa fa-angle-right"></i> Cashier</Link>
-        <Link to="/revenue/invoicing" className="list-group-item"><i className="fa fa-angle-right"></i> Invoices</Link>
-        <Link to="/revenue/invoicing" className="list-group-item"><i className="fa fa-angle-right"></i> Payments</Link>
-        <Link to="/revenue/invoicing" className="list-group-item"><i className="fa fa-angle-right"></i> Pricing</Link>
+        <Link to="/revenue/invoices" className="list-group-item"><i className="fa fa-angle-right"></i> Invoices</Link>
+        <Link to="/revenue/deposits" className="list-group-item"><i className="fa fa-angle-right"></i> Deposits</Link>
+        <Link to="/revenue/pricing" className="list-group-item"><i className="fa fa-angle-right"></i> Pricing</Link>
+        <Link to="/revenue/profits" className="list-group-item"><i className="fa fa-angle-right"></i> Profit &amp; Loss</Link>
       </div>
     return (
       <>
@@ -34,8 +36,8 @@ export class Revenue extends Component {
                 <>
                   <Route path={`${url}`} component={CashPoint} exact />
                   <Route path={`${url}/cashpoint`} component={CashPoint} exact />
-                  <Route path={`${url}/invoicing`} component={Invoices} />
-                  <Route path={`${url}/cashpoint/custom-payments`} component={CashPoint} />
+                  <Route path={`${url}/invoices`} component={Invoices} />
+                  <Route path={`${url}/deposits`} component={deposits} />
                 </>
               )}
             />

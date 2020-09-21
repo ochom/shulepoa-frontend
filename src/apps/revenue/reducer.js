@@ -4,7 +4,10 @@ const initialState = {
   payment_saved: false,
   payment_queue: [],
   service_requests: [],
-  service_request_queue: []
+  service_request_queue: [],
+  invoices: [],
+  invoice: null,
+  deposits: [],
 };
 
 export default function (state = initialState, action) {
@@ -39,6 +42,26 @@ export default function (state = initialState, action) {
         ...state,
         service_requests: action.payload,
       };
+
+    case revenueTypes.GET_INVOICES:
+      return {
+        ...state,
+        invoices: action.payload,
+      };
+
+    case revenueTypes.GET_INVOICE:
+      return {
+        ...state,
+        invoice: action.payload,
+      };
+
+    case revenueTypes.GET_DEPOSITS:
+      return {
+        ...state,
+        deposits: action.payload,
+      };
+
+
 
     default:
       return state;

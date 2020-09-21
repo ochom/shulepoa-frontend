@@ -52,7 +52,7 @@ export const getLogbook = (id) => (dispatch, getState) => {
 
 export const updateLogbook = (id, data) => (dispatch, getState) => {
   dispatch({ type: commonTypes.SILENT_PROCESSING })
-  Axios.put(`${API_PATH}radiology/logbooks/${id}/`, JSON.stringify(data), tokenConfig(getState))
+  Axios.patch(`${API_PATH}radiology/logbooks/${id}/`, JSON.stringify(data), tokenConfig(getState))
     .then(res => {
       dispatch(getLogbooks())
       dispatch({ type: commonTypes.SUCCESS, payload: "logbook data updated" })

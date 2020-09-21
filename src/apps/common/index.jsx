@@ -1,61 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import CanvasJSReact from '../../lib/canvasjs.react';
 import Sidenav from './sidenav';
 import Topnav from './topnav';
-
-//var CanvasJS = CanvasJSReact.CanvasJS;
-var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 export class Dashboard extends Component {
   componentDidMount() {
   }
 
   render() {
-    const top_infections = {
-      exportEnabled: true,
-      animationEnabled: true,
-      title: {
-        text: "Most infectious diseases"
-      },
-      data: [{
-        type: "pie",
-        dataPoints: [
-          { label: "TB", y: 10 },
-          { label: "Typhoid", y: 15 },
-          { label: "Ulcers", y: 25 },
-          { label: "Malaria", y: 30 },
-          { label: "Others", y: 28 }
-        ]
-      }]
-    }
-
-    const daily_visits = {
-      title: {
-        text: "Daily Visits"
-      },
-      data: [{
-        type: "spline",
-        dataPoints: [
-          { label: "TB", y: 10 },
-          { label: "Typhoid", y: 15 },
-          { label: "Ulcers", y: 25 },
-          { label: "Malaria", y: 30 },
-          { label: "Others", y: 28 }
-        ]
-      }, {
-        type: "spline",
-        dataPoints: [
-          { label: "TB", y: 8 },
-          { label: "Typhoid", y: 22 },
-          { label: "Ulcers", y: 25 },
-          { label: "Malaria", y: 28 },
-          { label: "Others", y: 30 }
-        ]
-      }]
-    }
-
     const menus =
       <div className="list-group">
         <Link className="list-group-item" to="/records"><i className="fa fa-users"></i> Patients</Link>
@@ -75,32 +28,6 @@ export class Dashboard extends Component {
         <div className="page_container">
           <Topnav page="Dashboard" />
           <div className="page_body">
-            {/* <div className="row col-12 mx-auto">
-              <div className="col-md-6 col-lg-6 dash_item">
-                <CanvasJSChart className="canvas" options={top_infections} />
-              </div>
-              <div className="col-md-6 col-lg-6 dash_item">
-                <CanvasJSChart className="canvas" options={daily_visits} />
-              </div>
-              <div className="col-md-12 dash_item">
-                <CanvasJSChart className="canvas" options={top_infections} />
-              </div>
-              <div className="col-md-6 col-lg-4 dash_item">
-                <CanvasJSChart className="canvas" options={top_infections} />
-              </div>
-              <div className="col-md-6 col-lg-4 dash_item">
-                <CanvasJSChart className="canvas" options={top_infections} />
-              </div>
-              <div className="col-md-6 col-lg-4 dash_item">
-                <CanvasJSChart className="canvas" options={top_infections} />
-              </div>
-              <div className="col-md-6 col-lg-6 dash_item">
-                <CanvasJSChart className="canvas" options={top_infections} />
-              </div>
-              <div className="col-md-6 col-lg-6 dash_item">
-                <CanvasJSChart className="canvas" options={top_infections} />
-              </div>
-            </div> */}
             <div className="dashboard-image-div row col-12 justify-content-center mx-auto">
               <img
                 src="/static/undraw_medicine_b1ol.svg"

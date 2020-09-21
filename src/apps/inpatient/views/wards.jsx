@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getAdmissions, updateAdmission } from '../actions';
+import PaginatedTable from '../../common/pagination';
 
 export class ClinicQueue extends Component {
   state = {}
@@ -21,49 +22,65 @@ export class ClinicQueue extends Component {
 
   render() {
     const {
-      inpatient: { admissions }, records: { patients },
+      inpatient: { admissions },
       hospital: { wards },
       common: { CONSTANTS: { GENDERS } },
       match: { params: { ward_id } }
     } = this.props;
+
+
+    const columns = [
+      {
+        title: '#Reg',
+        render: rowData => {
+          return <span>{rowData.patient.id}</span>;
+        }
+      },
+      {
+        title: 'Name',
+        render: rowData => {
+          return <span>{rowData.patient.fullname}</span>;
+        }
+      },
+      {
+        title: 'Sex',
+        render: rowData => {
+          return <span>{GENDERS[rowData.patient.sex]}</span>;
+        }
+      },
+      {
+        title: 'ID Number',
+        render: rowData => {
+          return <span>{rowData.patient.id_no}</span>;
+        }
+      },
+      {
+        title: 'Ward',
+        render: rowData => {
+          return <span>{rowData.ward.name}</span>;
+        }
+      },
+      {
+        title: 'Action',
+        render: rowData => {
+          return <Link to={`/inpatient/admissions/${rowData.id}`}
+            className="btn btn-sm border-none btn-success"> Open file</Link>
+
+        }
+      },
+    ]
+
+    const rows = admissions.filter(adm => !adm.is_discharged && adm.ward_id === parseInt(ward_id))
+
     return (
       <div className="col-md-10 mx-auto mt-3">
         <div className="card">
           <div className="card-header py-1 px-3">
-            Patients in: {(wards && wards.find(ward => ward.id === parseInt(ward_id))) ?
+            Patients in: {(wards.find(ward => ward.id === parseInt(ward_id))) ?
               wards.find(ward => ward.id === parseInt(ward_id)).name : ""
             }</div>
           <div className="card-body p-0 pb-2">
-            {this.props.common.silent_processing ?
-              <span className="text-success"><i className="fa fa-refresh fa-spin"></i></span> : null
-            }
-            <table className="table table-sm table-hover table-responsive-sm">
-              <thead className="cu-text-primary">
-                <tr>
-                  <th>#</th>
-                  <th>Name</th>
-                  <th>Sex</th>
-                  <th>Ward</th>
-                  <th>Mobile</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {admissions.filter(admission => !admission.is_discharged).map((admission, index) =>
-                  <tr key={index}>
-                    <td>{index + 1}</td>
-                    <td>{(patients.find(p => p.id === admission.patient_id)) ? patients.find(patient => patient.id === admission.patient_id).fullname : ""}</td>
-                    <td>{GENDERS[(patients.find(p => p.id === admission.patient_id)) ? patients.find(patient => patient.id === admission.patient_id).sex : 0]}</td>
-                    <td>{(wards.find(ward => ward.id === admission.ward_id)) ? wards.find(ward => ward.id === admission.ward_id).name : ""}</td>
-                    <td>{(patients.find(p => p.id === admission.patient_id)) ? patients.find(patient => patient.id === admission.patient_id).phone : ""}</td>
-                    <td>
-                      <Link to={`/inpatient/admissions/${admission.id}`}
-                        className="btn btn-sm border-none btn-success"> Open file</Link>
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
+            <PaginatedTable cols={columns} rows={rows} />
           </div>
         </div>
 

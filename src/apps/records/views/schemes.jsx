@@ -1,8 +1,7 @@
-import React, { Component } from 'react'
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getPatient, getSchemes, addScheme, updateScheme, deleteScheme } from '../actions'
-import { deleteData } from '../../common/actions';
+import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
+import { addScheme, deleteScheme, getPatient, updateScheme } from '../actions';
 
 export class Schemes extends Component {
   constructor(props) {
@@ -17,7 +16,7 @@ export class Schemes extends Component {
   }
 
   componentDidMount() {
-    this.props.getSchemes(this.props.patient_id);
+    this.props.getPatient(this.props.patient.id)
   }
 
   onChange = (e) => this.setState({ [e.target.name]: e.target.value });
@@ -44,13 +43,12 @@ export class Schemes extends Component {
     e.preventDefault();
     const {
       select_scheme,
-      patient_id,
       company_id,
       card_number,
     } = this.state;
 
     const data = {
-      patient_id,
+      patient_id: this.props.patient.id,
       company_id,
       card_number,
     }
@@ -65,7 +63,7 @@ export class Schemes extends Component {
 
   render() {
 
-    const { insurances, records: { schemes } } = this.props;
+    const { patient, insurances } = this.props;
     const scheme_details =
       <Modal isOpen={this.state.showModal} size="md">
         <ModalHeader toggle={this.toggleModal}>
@@ -94,11 +92,12 @@ export class Schemes extends Component {
             </div>
           </ModalBody >
           <ModalFooter>
-            <button type="submit" className="btn btn-sm cu-bg-primary"
+            <button type="submit" className="btn btn-sm btn-success"
               onSubmit={this.onSubmitScheme}>
-              <i className="fa fa-check"></i> Save</button>{' '}
-            <Button color="danger" size="sm" onClick={this.toggleModal}>
-              <i className="fa fa-close"></i> Cancel</Button>
+              <i className="fa fa-check"></i> Save</button>
+            <button type="button" className="btn btn-sm btn-secondary"
+              onClick={this.toggleModal}>
+              <i className="fa fa-close"></i> Cancel</button>
           </ModalFooter>
         </form>
       </Modal >
@@ -125,17 +124,17 @@ export class Schemes extends Component {
                 </tr>
               </thead>
               <tbody>
-                {schemes.filter(sch => sch.patient_id === parseInt(this.state.patient_id)).map((scheme, index) =>
+                {patient.insurance.map((scheme, index) =>
                   <tr key={index}>
                     <td>{index + 1}</td>
-                    <td>{insurances.length > 0 ? insurances.find(company => company.id === scheme.company_id).company_name : ""}</td>
+                    <td>{scheme.company.company_name}</td>
                     <td>{scheme.card_number}</td>
                     <td className="text-center">
                       <button className="btn btn-sm mr-2 border-none btn-success"
                         onClick={() => this.onEditScheme(scheme)}><i className="fa fa-edit"></i></button>
-                      <button className="btn btn-sm border-none btn-danger"
+                      {/* <button className="btn btn-sm border-none btn-danger"
                         onClick={() => deleteData(scheme.id, this.props.deleteScheme)}>
-                        <i className="fa fa-trash"></i></button>
+                        <i className="fa fa-trash"></i></button> */}
                     </td>
                   </tr>)}
               </tbody>
@@ -153,5 +152,5 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps,
-  { getPatient, getSchemes, addScheme, updateScheme, deleteScheme }
+  { getPatient, addScheme, updateScheme, deleteScheme }
 )(Schemes);

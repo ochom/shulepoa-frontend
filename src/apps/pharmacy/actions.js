@@ -55,7 +55,7 @@ export const getDispense = (id) => (dispatch, getState) => {
 
 export const updateDispense = (id, data) => (dispatch, getState) => {
   dispatch({ type: commonTypes.SILENT_PROCESSING })
-  Axios.put(`${API_PATH}pharmacy/dispense/${id}/`, JSON.stringify(data), tokenConfig(getState))
+  Axios.patch(`${API_PATH}pharmacy/dispense/${id}/`, JSON.stringify(data), tokenConfig(getState))
     .then(res => {
       dispatch(getDispenses())
       dispatch({ type: commonTypes.SUCCESS, payload: "logbook data updated" })
@@ -112,7 +112,7 @@ export const addDrug = (data) => (dispatch, getState) => {
 
 export const updateDrug = (id, data) => (dispatch, getState) => {
   dispatch({ type: commonTypes.PROCESSING })
-  Axios.put(`${API_PATH}pharmacy/drugs/${id}/`, JSON.stringify(data), tokenConfig(getState))
+  Axios.patch(`${API_PATH}pharmacy/drugs/${id}/`, JSON.stringify(data), tokenConfig(getState))
     .then(() => {
       dispatch(getDrugs());
       dispatch({ type: commonTypes.SUCCESS, payload: "Drug updated succesfully" });

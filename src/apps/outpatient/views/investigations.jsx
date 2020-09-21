@@ -126,7 +126,7 @@ export class Investigation extends Component {
                     <td className="text-center">
                       {!request.is_approved ?
                         <button className="btn btn-sm  border-none btn-danger"
-                          onClick={() => deleteData(request.id, this.props.deleteServiceRequest)}><i className="fa fa-trash"></i></button>
+                          onClick={() => deleteData(request.id, this.props.deleteServiceRequest)}><i className="fa fa-trash"></i> Delete</button>
                         : (request.is_approved && request.is_served) ?
                           <button className="btn btn-sm btn-success">View</button>
                           :

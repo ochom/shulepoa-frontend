@@ -5,10 +5,10 @@ import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import { addAdmission } from '../../inpatient/actions';
 import { addPatient, getPatients, updatePatient } from '../actions';
 import { addAppointment } from '../../outpatient/actions';
+import PaginatedTable from '../../common/pagination';
 
 export class Patients extends Component {
   state = {
-    patients: [],
     showModal: false,
     showModal2: false,
     showModal3: false,
@@ -33,12 +33,6 @@ export class Patients extends Component {
 
   componentDidMount() {
     this.props.getPatients()
-  }
-
-  componentDidUpdate(nextProps) {
-    if (nextProps !== this.props) {
-      this.setState({ patients: nextProps.patients })
-    }
   }
 
   onChange = (e) => this.setState({ [e.target.name]: e.target.value });
@@ -99,18 +93,6 @@ export class Patients extends Component {
     }
 
     this.toggleModal();
-  }
-
-  onSearchPatient = (e) => {
-    const search_val = (e.target.value).toLowerCase();
-    this.setState({
-      patients: this.props.patients.filter(pt =>
-        (pt.fullname.toLowerCase().includes(search_val) ||
-          pt.id_no.toLowerCase().includes(search_val) ||
-          pt.phone.toLowerCase().includes(search_val)
-        )
-      )
-    })
   }
 
   onNewAppointment = (data) => {
@@ -182,10 +164,9 @@ export class Patients extends Component {
   render() {
     const { common: { CONSTANTS: { GENDERS, ID_TYPES, KIN_RELATIONSHIPS,
       MARITAL_STATUSES, COUNTRIES } },
-      hospital: { wards, clinics }
+      hospital: { wards, clinics },
+      records: { patients }
     } = this.props;
-
-    const { patients } = this.state
 
     const patient_details =
       <Modal isOpen={this.state.showModal} size="lg">
@@ -435,67 +416,75 @@ export class Patients extends Component {
         </form>
       </Modal>
 
+    const columns = [
+      {
+        title: '#Reg',
+        render: rowData => {
+          return <span>{rowData.id}</span>;
+        }
+      },
+      {
+        title: 'Fullname',
+        render: rowData => {
+          return <span>{rowData.fullname}</span>;
+        }
+      },
+      {
+        title: 'Sex',
+        render: rowData => {
+          return <span>{GENDERS[rowData.sex]}</span>;
+        }
+      },
+      {
+        title: 'Mobile',
+        render: rowData => {
+          return <span>{rowData.phone}</span>;
+        }
+      },
+      {
+        title: 'Address',
+        render: rowData => {
+          return <span>{`${rowData.county}, ${rowData.country}`}</span>;
+        }
+      },
+      {
+        title: 'Action',
+        render: rowData => {
+          return <>
+            <button className="btn btn-sm btn-success mr-2"
+              onClick={() => this.onEditPatient(rowData)}><i className="fa fa-edit"></i> Edit</button>
+            {rowData.is_booked ?
+              <button className="btn btn-sm btn-secondary disabled mr-2"><i className="fa fa-user-md"></i> Booked</button> :
+              <button className="btn btn-sm btn-primary mr-2"
+                onClick={() => this.onNewAppointment(rowData)}><i className="fa fa-user-md"></i> Book</button>
+            }
+            {rowData.is_admitted ?
+              <button className="btn btn-sm btn-secondary disabled mr-2"><i className="fa fa-bed"></i> Admitted</button> :
+              <button className="btn btn-sm btn-danger mr-2"
+                onClick={() => this.onNewAdmission(rowData)}><i className="fa fa-bed"></i> Admit</button>
+            }
+            <Link to={`/records/patients/${rowData.id}`}
+              className="btn btn-sm btn-warning"><i className="fa fa-user"></i> View</Link>
+          </>;
+        }
+      },
+    ]
 
     return (
       <div className="col-md-10 mx-auto">
         {patient_details}
         {admission_modal}
         {book_appointment_view}
-        <div className="form-group col-12">
-          <input className="form-control" onChange={this.onSearchPatient} defaultValue="" />
-          <label><span role="img" aria-label="search">&#x1F50D;</span> Search...</label>
-        </div>
         <div className="card">
           <div className="card-header">
             <div>Patients</div>
             <button
               className="btn btn-sm"
-              onClick={this.onNewPatient}><i className="fa fa-plus-circle mr-2"></i> Add Patient</button>
+              onClick={this.onNewPatient}>
+              <i className="fa fa-plus-circle mr-2"></i> Add Patient</button>
           </div>
           <div className="card-bodyp-0">
-            {this.props.common.silent_processing ?
-              <span className="text-success"><i className="fa fa-refresh fa-spin"></i></span> : null
-            }
-            <table className="table table-sm table-bordered table-responsive-sm">
-              <caption className="px-2"><i>Recent patients | Search results</i></caption>
-              <thead>
-                <tr>
-                  <td>#</td>
-                  <td>Full name</td>
-                  <td className="text-center">Sex</td>
-                  <td>Mobile</td>
-                  <td>Address</td>
-                  <td>Action</td>
-                </tr>
-              </thead>
-              <tbody>
-                {patients.map((patient, index) =>
-                  <tr key={index}>
-                    <td>{index + 1}</td>
-                    <td>{patient.fullname}</td>
-                    <td className="text-center">{GENDERS[patient.sex].substring(0, 1)}</td>
-                    <td>{patient.phone}</td>
-                    <td>{`${patient.county}, ${patient.country}`}</td>
-                    <td>
-                      <button className="btn btn-sm btn-success mr-2"
-                        onClick={() => this.onEditPatient(patient)}><i className="fa fa-edit"></i> Edit</button>
-                      {patient.is_booked ?
-                        <button className="btn btn-sm btn-secondary disabled mr-2"><i className="fa fa-user-md"></i> Booked</button> :
-                        <button className="btn btn-sm btn-primary mr-2"
-                          onClick={() => this.onNewAppointment(patient)}><i className="fa fa-user-md"></i> Book</button>
-                      }
-                      {patient.is_admitted ?
-                        <button className="btn btn-sm btn-secondary disabled mr-2"><i className="fa fa-bed"></i> Admitted</button> :
-                        <button className="btn btn-sm btn-danger mr-2"
-                          onClick={() => this.onNewAdmission(patient)}><i className="fa fa-bed"></i> Admit</button>
-                      }
-                      <Link to={`/records/patients/${patient.id}`}
-                        className="btn btn-sm btn-warning"><i className="fa fa-user"></i> View</Link>
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
+            <PaginatedTable cols={columns} rows={patients} />
           </div>
         </div>
       </div>
@@ -504,7 +493,7 @@ export class Patients extends Component {
 }
 
 const mapStateToProps = state => ({
-  patients: state.records.patients,
+  records: state.records,
   common: state.common,
   hospital: state.hospital
 });
