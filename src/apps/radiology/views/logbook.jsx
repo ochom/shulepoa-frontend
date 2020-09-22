@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import person_icon from '../../../images/person_icon.png'
+
 import { getLogbook } from '../actions'
 
 export class LogBook extends Component {
@@ -61,33 +61,33 @@ export class LogBook extends Component {
             <div className="patient_profile row border border-light rounded ">
               <div className="row col-12 mx-auto justify-content-center"
                 style={{ marginTop: "2vw", zIndex: "1" }}>
-                <img src={person_icon} alt="DP" style={{ height: "5vw", width: "5vw", borderRadius: "50%" }} />
-                <p className="cu-text-primary col-12 text-center text-white mt-2">Patient Profile</p>
+                <div className="image"></div>
+                <p>Patient Profile</p>
               </div>
               <ul className="w-100 mx-auto list-group mt-2">
                 <li className="list-group-item">
                   <span className="m-0">Name:</span>
-                  <span style={{ float: "right" }}>{(patients.length > 0 && patients.find(patient => patient.id === logbook.patient_id)) ? patients.find(patient => patient.id === logbook.patient_id).fullname : ""}</span>
+                  <span>{(patients.length > 0 && patients.find(patient => patient.id === logbook.patient_id)) ? patients.find(patient => patient.id === logbook.patient_id).fullname : ""}</span>
                 </li>
                 <li className="list-group-item">
                   <span className="m-0">Sex:</span>
-                  <span style={{ float: "right" }}>{GENDERS[(patients.length > 0 && patients.find(patient => patient.id === logbook.patient_id)) ? patients.find(patient => patient.id === logbook.patient_id).sex : 0]}</span>
+                  <span>{GENDERS[(patients.length > 0 && patients.find(patient => patient.id === logbook.patient_id)) ? patients.find(patient => patient.id === logbook.patient_id).sex : 0]}</span>
                 </li>
                 <li className="list-group-item">
                   <span className="m-0">DoB:</span>
-                  <span style={{ float: "right" }}>{new Date((patients.length > 0 && patients.find(patient => patient.id === logbook.patient_id)) ? patients.find(patient => patient.id === logbook.patient_id).dob : 0).toDateString("en-UK")}</span>
+                  <span>{new Date((patients.length > 0 && patients.find(patient => patient.id === logbook.patient_id)) ? patients.find(patient => patient.id === logbook.patient_id).dob : 0).toDateString("en-UK")}</span>
                 </li>
                 <li className="list-group-item">
                   <span className="m-0">Marriage:</span>
-                  <span style={{ float: "right" }}>{MARITAL_STATUSES[(patients.length > 0 && patients.find(patient => patient.id === logbook.patient_id)) ? patients.find(patient => patient.id === logbook.patient_id).marital_status : 0]}</span>
+                  <span>{MARITAL_STATUSES[(patients.length > 0 && patients.find(patient => patient.id === logbook.patient_id)) ? patients.find(patient => patient.id === logbook.patient_id).marital_status : 0]}</span>
                 </li>
                 <li className="list-group-item">
                   <span className="m-0">Mobile:</span>
-                  <span style={{ float: "right" }}>{(patients.length > 0 && patients.find(patient => patient.id === logbook.patient_id)) ? patients.find(patient => patient.id === logbook.patient_id).phone : ""}</span>
+                  <span>{(patients.length > 0 && patients.find(patient => patient.id === logbook.patient_id)) ? patients.find(patient => patient.id === logbook.patient_id).phone : ""}</span>
                 </li>
                 <li className="list-group-item">
                   <span className="m-0">Address:</span>
-                  <span style={{ float: "right" }}>{`${(patients.length > 0 && patients.find(patient => patient.id === logbook.patient_id)) ? patients.find(patient => patient.id === logbook.patient_id).county : ""}, ${(patients.length > 0 && patients.find(patient => patient.id === logbook.patient_id)) ? patients.find(patient => patient.id === logbook.patient_id).country : ""}`}</span>
+                  <span>{`${(patients.length > 0 && patients.find(patient => patient.id === logbook.patient_id)) ? patients.find(patient => patient.id === logbook.patient_id).county : ""}, ${(patients.length > 0 && patients.find(patient => patient.id === logbook.patient_id)) ? patients.find(patient => patient.id === logbook.patient_id).country : ""}`}</span>
                 </li>
               </ul>
             </div>
@@ -104,19 +104,19 @@ export class LogBook extends Component {
                     <ul className="list-group">
                       <li className="list-group-item">
                         <span className="m-0">Logbook Number:</span>
-                        <span style={{ float: "right" }}>{logbook.id}</span>
+                        <span>{logbook.id}</span>
                       </li>
                       <li className="list-group-item">
                         <span className="m-0">Date:</span>
-                        <span style={{ float: "right" }}>{new Date(logbook.created).toDateString("en-UK")}</span>
+                        <span>{new Date(logbook.created).toDateString("en-UK")}</span>
                       </li>
                       <li className="list-group-item">
                         <span className="m-0">Investigation:</span>
-                        <span style={{ float: "right" }}>{logbook.investigation}</span>
+                        <span>{logbook.investigation}</span>
                       </li>
                       <li className="list-group-item">
                         <span className="m-0">Sampled By:</span>
-                        <span style={{ float: "right" }}>
+                        <span>
                           {(users.length > 0 && users.find(u => u.id === logbook.created_by)) ? users.find(u => u.id === logbook.created_by).username : "---"}</span>
                       </li>
                       <li className="list-group-item">
@@ -136,15 +136,15 @@ export class LogBook extends Component {
                     <ul className="list-group">
                       <li className="list-group-item">
                         <span className="m-0">Result</span>
-                        <span style={{ float: "right" }}>{logbook.is_analysed ? logbook.result : "---"}</span>
+                        <span>{logbook.is_analysed ? logbook.result : "---"}</span>
                       </li>
                       <li className="list-group-item">
                         <span className="m-0">Turn around:</span>
-                        <span style={{ float: "right" }}>{!logbook.is_analysed ? this.calculateTT1() : this.calculateTT2()}</span>
+                        <span>{!logbook.is_analysed ? this.calculateTT1() : this.calculateTT2()}</span>
                       </li>
                       <li className="list-group-item">
                         <span className="m-0">Analysed By:</span>
-                        <span style={{ float: "right" }}>{(users.length > 0 && users.find(u => u.id === logbook.analysed_by)) ? users.find(u => u.id === logbook.analysed_by).username : "---"}</span>
+                        <span>{(users.length > 0 && users.find(u => u.id === logbook.analysed_by)) ? users.find(u => u.id === logbook.analysed_by).username : "---"}</span>
                       </li>
                       <li className="list-group-item">
                         <span className="m-0">Analysis Notes:</span><br />

@@ -10,6 +10,17 @@ export const Loader = () =>
     </div>
   </div>
 
+export const DateInput = (props) =>
+  <input type="text"
+    className="form-control form-control-sm"
+    name={props.name}
+    value={props.value}
+    onChange={props.onChange}
+    required={props.required}
+    onFocus={(e) => e.target.type = 'date'}
+    onBlur={(e) => !e.target.value ? e.target.type = 'text' : 'date'} />
+
+
 export function PrintHeader(props) {
   const { hospital, title } = props;
   return (

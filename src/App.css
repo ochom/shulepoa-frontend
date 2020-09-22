@@ -136,7 +136,8 @@ sup{
   align-content: center;
   color: white;
 }
-.card-header .btn{
+
+.card-header button{
   position: absolute;
   right: 20px;
   color: var(--theme-dark);
@@ -176,6 +177,15 @@ table>tbody>tr>td>.btn{
   transition: ease-in 0.3s;
 }
 
+.list-group{
+  margin: 0;
+  padding: 0;
+}
+
+.list-group-item span:last-child{
+  float: right;
+  font-weight: bolder;
+}
 
 /* Processing */
 #processing{
@@ -476,8 +486,22 @@ table>tbody>tr>td>.btn{
   background-image: linear-gradient(200deg, var(--theme-primary), var(--theme-secondary),rgb(248, 24, 24));
 }
 
+.patient_profile .image{
+  height: 5vw;
+  width: 5vw;
+  border-radius: 50%;
+  background-image: url(/static/person_icon.png);
+  background-size: cover;
+  background-position: center;
+}
+
 .patient_profile p{
- font-weight: bolder; font-size: 1em;
+  width: 100%;
+  text-align: center;
+  color: var(--theme-white);
+  font-weight: bolder;
+  font-size: 1em;
+  margin-top: 10px;
 }
 
 .patient_page_tabs{

@@ -7,6 +7,7 @@ import CashPoint from './views/cashpoint'
 import Topnav from '../common/topnav'
 import Invoices from './views/invoices'
 import deposits from './views/deposits'
+import Invoice from './views/invoice'
 
 export class Revenue extends Component {
 
@@ -35,8 +36,9 @@ export class Revenue extends Component {
               render={({ match: { url } }) => (
                 <>
                   <Route path={`${url}`} component={CashPoint} exact />
-                  <Route path={`${url}/cashpoint`} component={CashPoint} exact />
-                  <Route path={`${url}/invoices`} component={Invoices} />
+                  <Route path={`${url}/cashpoint`} component={CashPoint} />
+                  <Route path={`${url}/invoices`} component={Invoices} exact />
+                  <Route path={`${url}/invoices/:invoice_id`} component={Invoice} />
                   <Route path={`${url}/deposits`} component={deposits} />
                 </>
               )}

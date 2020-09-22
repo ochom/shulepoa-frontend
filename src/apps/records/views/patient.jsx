@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { getPatient } from '../actions'
-import person_icon from '../../../images/person_icon.png'
+
 import HealthFiles from './appointments'
 import Schemes from './schemes'
 import ServiceRequests from './service_requests'
@@ -15,12 +15,13 @@ class Patient extends Component {
   }
 
   componentDidMount() {
-    this.props.getPatient(this.props.match.params.patient_id)
+    const { match: { params: { patient_id } } } = this.props
+    this.props.getPatient(patient_id)
   }
 
   render() {
-    const { patient } = this.props
-    const { GENDERS, MARITAL_STATUSES } = this.props.common.CONSTANTS;
+    const { patient,
+      common: { CONSTANTS: { GENDERS, MARITAL_STATUSES } } } = this.props
     return (
       <div>
         {patient ?
@@ -29,27 +30,33 @@ class Patient extends Component {
               <div className="col-3">
                 <div className="patient_profile p-0 border border-light rounded ">
                   <div className="row mx-auto justify-content-center mt-4">
-                    <img src={person_icon} alt="DP" style={{ height: "5vw", width: "5vw", borderRadius: "50%" }} />
-                    <p className="cu-text-primary col-12 text-center text-white mt-2">Patient Profile</p>
+                    <div className="image"></div>
+                    <p>Patient Profile</p>
                   </div>
                   <ul className="w-100 mx-auto list-group mt-2">
                     <li className="list-group-item">
-                      <span className="m-0">Name:</span> <span style={{ float: "right" }}>{patient.fullname}</span>
+                      <span className="m-0">Name:</span>
+                      <span>{patient.fullname}</span>
                     </li>
                     <li className="list-group-item">
-                      <span className="m-0">Sex:</span> <span style={{ float: "right" }}>{GENDERS[patient.sex]}</span>
+                      <span className="m-0">Sex:</span>
+                      <span>{GENDERS[patient.sex]}</span>
                     </li>
                     <li className="list-group-item">
-                      <span className="m-0">DoB:</span> <span style={{ float: "right" }}>{new Date(patient.dob).toDateString("en-UK")}</span>
+                      <span className="m-0">DoB:</span>
+                      <span>{new Date(patient.dob).toDateString("en-UK")}</span>
                     </li>
                     <li className="list-group-item">
-                      <span className="m-0">Marriage:</span> <span style={{ float: "right" }}>{MARITAL_STATUSES[patient.marital_status]}</span>
+                      <span className="m-0">Marriage:</span>
+                      <span>{MARITAL_STATUSES[patient.marital_status]}</span>
                     </li>
                     <li className="list-group-item">
-                      <span className="m-0">Mobile:</span> <span style={{ float: "right" }}>{patient.phone}</span>
+                      <span className="m-0">Mobile:</span>
+                      <span>{patient.phone}</span>
                     </li>
                     <li className="list-group-item">
-                      <span className="m-0">Address:</span> <span style={{ float: "right" }}>{`${patient.county}, ${patient.country}`}</span>
+                      <span className="m-0">Address:</span>
+                      <span>{`${patient.county}, ${patient.country}`}</span>
                     </li>
                   </ul>
                 </div>

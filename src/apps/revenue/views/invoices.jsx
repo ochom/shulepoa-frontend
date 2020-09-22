@@ -4,10 +4,11 @@ import { getHospital } from '../../hospital/actions';
 import { addInvoice, getInvoices, updateInvoice } from '../actions';
 import PaginatedTable from '../../common/pagination';
 import { ModalHeader, Modal, ModalBody, ModalFooter } from 'reactstrap';
+import { Link } from 'react-router-dom';
 
 class Invoices extends Component {
   state = {
-    status: "DRAFT",
+    status: "ALL",
     showModal: false,
     showModal2: false,
     selected_invoice: null,
@@ -23,7 +24,7 @@ class Invoices extends Component {
 
   onChange = (e) => this.setState({ [e.target.name]: e.target.value })
 
-  calalucateTotal = (invoice) => {
+  calculateTotal = (invoice) => {
     var total = 0;
     invoice.service_requests.forEach(request => {
       total += +request.cost
@@ -56,11 +57,6 @@ class Invoices extends Component {
   onRecordPayment = (invoice) => {
     this.setState({ selected_invoice: invoice })
     this.toggleModal2()
-  }
-
-  onSubmitPayment = (e) => {
-    e.preventDefault()
-    const {selected_invoice, account_number, amount_paid, } = this.state
   }
 
   render() {
@@ -96,7 +92,7 @@ class Invoices extends Component {
       {
         title: 'Total',
         render: rowData => {
-          return <span>{this.calalucateTotal(rowData)}</span>;
+          return <span>{this.calculateTotal(rowData)}</span>;
         },
       },
       {
@@ -108,25 +104,7 @@ class Invoices extends Component {
       {
         title: 'Action',
         render: rowData => {
-          return <>
-            {rowData.status === "DRAFT" ?
-              <button className="btn btn-sm btn-success mr-2"
-                onClick={() => this.onBillNow(rowData)}>Bill Now</button> :
-              rowData.status === "BILLED" ?
-                <button className="btn btn-sm btn-primary mr-2"
-                  onClick={() => this.onRecordPayment(rowData)}>Record payments</button> : null
-            }
-            {
-              this.calculateBalance(rowData) === 0 ?
-                rowData.status === "DRAFT" ?
-                  <button className="btn btn-sm btn-danger mr-2"
-                    onClick={() => this.props.updateInvoice(rowData.id, { patient_id: rowData.patient_id, status: "PAID" })}>Cleared</button>
-                  : rowData.status === "PAID" ?
-                    <button className="btn btn-sm btn-danger mr-2"
-                      onClick={() => this.props.updateInvoice(rowData.id, { patient_id: rowData.patient_id, status: "DRAFT" })}>Bill Again</button>
-                    : null : null
-            }
-            <button className="btn btn-sm btn-dark">Print</button> </>;
+          return <Link to={`/revenue/invoices/${rowData.id}`} className="btn btn-sm btn-success">Open</Link>
         },
       },
     ];
@@ -188,7 +166,9 @@ class Invoices extends Component {
           </div>
         </div>
         <div className="card">
-          <div className="card-header">Invoices</div>
+          <div className="card-header">
+            <div>Invoices</div>
+          </div>
           <div className="card-body p-0">
             <div className="card-body p-0 pb-2">
               <PaginatedTable cols={columns} rows={rows} />
