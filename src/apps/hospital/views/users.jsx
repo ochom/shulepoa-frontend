@@ -1,77 +1,88 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
-import { getUsers, updateUser } from '../actions';
+import { getUsers, addUser, updateUser } from '../actions';
 
 export class Users extends Component {
   state = {
-    users_search_name: "",
-    users_search_phone: "",
     showModal: false,
-    select_users: null,
+    select_user: null,
+    username: "",
+    email: "",
+    phone: "",
 
-
-    company_name: "",
-    company_email: "",
-    company_phone: "",
-    is_primary: 0,
-
+    user_level: 1
   }
 
   componentDidMount() {
     this.props.getUsers();
   }
 
-  onChange = (e) => this.setState({ [e.target.name]: e.target.value });
 
-  toggleCheck = (e) => {
-    this.setState({ [e.target.name]: e.target.checked ? 1 : 0 })
-  };
+  onChange = (e) => this.setState({ [e.target.name]: e.target.value });
 
   toggleModal = () => this.setState({ showModal: !this.state.showModal });
 
   onNewUser = () => {
     this.setState({
       showModal: !this.state.showModal,
-      select_users: null,
-      company_name: "",
-      company_email: "",
-      company_phone: "",
-      is_primary: 0,
+      select_user: null,
+      username: "",
+      email: "",
+      phone: "",
+
+      user_level: 0
     })
   }
 
   onEditUser = (data) => {
     this.setState({
       showModal: !this.state.showModal,
-      select_users: data,
-      company_name: data.company_name,
-      company_email: data.company_email,
-      company_phone: data.company_phone,
-      is_primary: data.is_primary,
+      select_user: data,
+      username: data.username,
+      email: data.email,
+      phone: data.phone,
+
+      user_level: data.is_admin ? 3 : data.is_senior ? 2 : data.is_junior ? 1 : 0
     })
   }
 
   onSubmit = (e) => {
     e.preventDefault();
     const {
-      select_users,
-      company_name,
-      company_email,
-      company_phone,
-      is_primary
+      select_user,
+      username,
+      email,
+      phone,
+
+      user_level
     } = this.state;
 
-    const data = {
-      company_name,
-      company_email,
-      company_phone,
-      is_primary
+    console.log(typeof user_level)
+
+    const create_data = {
+      username,
+      email,
+      phone,
+      password: phone,
+      is_admin: parseInt(user_level) === 3,
+      is_senior: parseInt(user_level) === 2,
+      is_junior: parseInt(user_level) === 1,
     }
-    if (select_users) {
-      this.props.updateUser(select_users.id, data);
+
+    const update_data = {
+      username,
+      email,
+      phone,
+      is_admin: parseInt(user_level) === 3,
+      is_senior: parseInt(user_level) === 2,
+      is_junior: parseInt(user_level) === 1,
+    }
+
+    if (select_user) {
+      this.props.updateUser(select_user.id, update_data);
     } else {
-      this.props.addUser(data)
+      this.props.addUser(create_data)
     }
 
     this.setState({
@@ -79,19 +90,11 @@ export class Users extends Component {
     })
   }
 
-  onsearchUser = () => {
-    const data = {
-      "company_name": this.state.users_search_name,
-      "company_phone": this.state.users_search_phone,
-    }
-    this.props.searchUser(data);
-  }
-
   render() {
     const users_details =
       <Modal isOpen={this.state.showModal} size="md">
         <ModalHeader toggle={this.toggleModal}>
-          {this.state.select_users ?
+          {this.state.select_user ?
             <span><i className="fa fa-edit"></i> Edit User Details</span> :
             <span><i className="fa fa-plus-circle"></i> Register User</span>
           }
@@ -99,23 +102,33 @@ export class Users extends Component {
         <form onSubmit={this.onSubmit}>
           <ModalBody>
             <div className="row mx-auto">
-              <div className="form-group col-12">
-                <label>Company name<sup>*</sup></label>
+              <div className="form-group col-12 my-2">
                 <input className="form-control form-control-sm"
-                  name="company_name" onChange={this.onChange} value={this.state.company_name} required={true}
-                  placeholder="Company full name" />
+                  name="username" onChange={this.onChange} value={this.state.username}
+                  required={true} />
+                <label>Full name<sup>*</sup></label>
               </div>
-              <div className="form-group col-12">
-                <label>Email Address<sup>*</sup></label>
+              <div className="form-group col-12 my-2">
                 <input type="email" className="form-control form-control-sm"
-                  name="company_email" onChange={this.onChange} value={this.state.company_email} required={true}
-                  placeholder="Email Address" />
+                  name="email" onChange={this.onChange} value={this.state.email}
+                  required={true} />
+                <label>Email<sup>*</sup></label>
               </div>
-              <div className="form-group col-12">
-                <label>Phone Nunber<sup>*</sup></label>
+              <div className="form-group col-12 my-2">
                 <input className="form-control form-control-sm"
-                  name="company_phone" onChange={this.onChange} value={this.state.company_phone} required={true}
-                  placeholder="Contact phone number" />
+                  name="phone" onChange={this.onChange} value={this.state.phone}
+                  required={true} />
+                <label>Phone Nunber<sup>*</sup></label>
+              </div>
+              <div className="form-group col-12 my-2">
+                <select className="form-control form-control-sm"
+                  name="user_level" onChange={this.onChange} value={this.state.user_level}
+                  required={true}>
+                  <option value={1}>Junior staff</option>
+                  <option value={2}>Senior staff</option>
+                  <option value={3}>Administrator</option>
+                </select>
+                <label>User Level<sup>*</sup></label>
               </div>
             </div>
           </ModalBody >
@@ -129,59 +142,71 @@ export class Users extends Component {
           </ModalFooter>
         </form>
       </Modal >
+
     return (
-      <div className="col-md-10 mx-auto mt-3">
+      <>
         {users_details}
-        <div className="form-group my-2">
-          <input className="form-control"
-            onChange={this.onChange} defaultValue="" />
-          <label><span role="img" aria-label="search">&#x1F50D;</span> Search...</label>
-        </div>
-        <div className="card mt-2">
-          <div className="card-header py-1 px-3">
-            <div className="py-1 px-2">Manage system Users</div>
+        <div className="col-md-10 mx-auto mt-3">
+          <div className="card">
+            <div className="card-header">
+              <div>Manage Users</div>
+              <button className="btn" onClick={this.onNewUser}>
+                <i className="fa fa-plus-circle"></i> Add User</button>
+            </div>
+            <div className="card-body p-0">
+              <table className="table table-sm table-striped">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Mobile</th>
+                    <th>Level</th>
+                    <th>Status</th>
+                    <th>Action</th></tr>
+                </thead>
+                <tbody>
+                  {this.props.users.map((user, index) =>
+                    <tr key={index}>
+                      <td>{index + 1}</td>
+                      <td>{user.username}</td>
+                      <td>{user.email}</td>
+                      <td>{user.phone}</td>
+                      <td>{user.is_admin ? "Administrator" : user.is_senior ? "Senior staff" : user.is_junior ? "Junior staff" : "Client"}</td>
+                      <td>{user.is_active ? "Active" : "Inactive"}</td>
+                      <td>
+                        <button className="btn btn-sm p-0 px-1 border-none btn-success"
+                          onClick={() => this.onEditUser(user)}><i className="fa fa-edit"></i> Edit</button>
+                        {user.id !== this.props.auth.user.id ?
+                          <>
+                            {' | '}
+                            {user.is_active ?
+                              <button className="btn btn-sm p-0 px-1 border-none btn-secondary"
+                                onClick={() => this.props.updateUser(user.id, { is_active: false })}>Deactivate
+                        </button> :
+                              <button className="btn btn-sm p-0 px-1 border-none btn-primary"
+                                onClick={() => this.props.updateUser(user.id, { is_active: true })}>Activate
+                        </button>
+                            }
+                          </> : null
+                        }
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
           </div>
-          <div className="card-body p-0">
-            <table className="table table-sm table-striped table-bordered table-responsive-sm m-0">
-              <caption className="px-2"><i>Recent users | Search results</i></caption>
-              <thead className="">
-                <tr>
-                  <td>#</td>
-                  <td>Name</td>
-                  <td>Email</td>
-                  <td>Mobile</td>
-                  <td>Group</td>
-                  <td>Status</td>
-                  <td>Action</td>
-                </tr>
-              </thead>
-              <tbody>
-                {this.props.users.map((user, index) =>
-                  <tr key={index}>
-                    <td>{index + 1}</td>
-                    <td>{user.user_profile ? user.user_profile.fullname : user.username}</td>
-                    <td>{user.email}</td>
-                    <td>{user.phone ? user.phone : "---"}</td>
-                    <td>{user.is_admin ? "Admin" : "Normal user"}</td>
-                    <td>{user.is_active ? "Active" : "Deactivated"}</td>
-                    <td>
-                      <button className="btn btn-sm p-0 border-none text-success"
-                        onClick={null}><i className="fa fa-edit"></i> Edit</button>
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
         </div>
-      </div>
+      </>
     )
   }
 }
 
 const mapStateToProps = state => ({
+  auth: state.auth,
   users: state.hospital.users,
   common: state.common,
 });
 
-export default connect(mapStateToProps, { getUsers, updateUser })(Users);
+export default connect(mapStateToProps, { getUsers, addUser, updateUser })(Users);

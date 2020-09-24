@@ -237,6 +237,21 @@ export const getUsers = () => (dispatch, getState) => {
 }
 
 
+export const addUser = (data) => (dispatch, getState) => {
+  dispatch({ type: commonTypes.PROCESSING })
+  Axios.post(`${API_PATH}users/`, JSON.stringify(data), tokenConfig(getState))
+    .then(res => {
+      dispatch(getUsers())
+      dispatch({ type: commonTypes.SUCCESS, payload: "User registered" })
+    }).catch(err => {
+      dispatch({ type: commonTypes.ERROR, payload: err })
+    })
+    .finally(() => {
+      dispatch({ type: commonTypes.DONE })
+    });
+}
+
+
 export const updateUser = (id, data) => (dispatch, getState) => {
   dispatch({ type: commonTypes.PROCESSING })
   Axios.patch(`${API_PATH}users/${id}/`, JSON.stringify(data), tokenConfig(getState))
