@@ -271,8 +271,9 @@ export class Invoice extends Component {
                     onClick={this.uploadExcelFile}><i className="fa fa-cloud-upload"></i> Upload from Excel</button>
                   <button className="btn btn-warning m-1">Mark as Billed</button>
                   <button className="btn btn-danger m-1">Mark as cleared</button>
-                  <a href="http://localhost:8000/api/revenue/download-invoice"
-                    className="btn btn-dark m-1" download><i className="fa fa-cloud-download"></i> Download PDF</a>
+                  <a href={`http://localhost:8000/api/revenue/download-invoice/${invoice.id}`} target="_blank"
+                    className="btn btn-dark m-1" download>
+                    <i className="fa fa-cloud-download"></i> Download PDF</a>
                 </div>
 
                 <div className="card mt-3">
