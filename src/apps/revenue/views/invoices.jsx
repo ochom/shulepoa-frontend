@@ -161,7 +161,7 @@ class Invoices extends Component {
               <option value="ALL">All Invoices</option>
               <option value="DRAFT">Draft Invoices</option>
               <option value="BILLED">Billed Invoices</option>
-              <option value="PAID">Paid Invoices</option>
+              <option value="CLEARED">Cleared Bills</option>
             </select>
           </div>
         </div>

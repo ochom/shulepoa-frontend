@@ -183,7 +183,7 @@ export const updateInvoice = (id, data) => (dispatch, getState) => {
   dispatch({ type: commonTypes.PROCESSING });
   Axios.patch(`${API_PATH}revenue/invoices/${id}/`, JSON.stringify(data), tokenConfig(getState))
     .then(res => {
-      dispatch(getInvoices())
+      dispatch(getInvoice(id))
       dispatch({ type: commonTypes.SUCCESS, payload: 'Invoice updated' })
     })
     .catch((err) => {
@@ -200,6 +200,36 @@ export const deleteInvoice = (id) => (dispatch, getState) => {
     .then(res => {
       dispatch(getInvoices())
       dispatch({ type: commonTypes.SUCCESS, payload: 'Invoice deleted' })
+    })
+    .catch((err) => {
+      dispatch({ type: commonTypes.ERROR, payload: err });
+    })
+    .finally(() => {
+      dispatch({ type: commonTypes.DONE });
+    })
+}
+
+
+
+export const downloadInvoice = (id) => (dispatch, getState) => {
+  dispatch({ type: commonTypes.PROCESSING });
+  Axios.get(`${API_PATH}revenue/upload-download/${id}/`, tokenConfig(getState))
+    .then(res => {
+    })
+    .catch((err) => {
+      dispatch({ type: commonTypes.ERROR, payload: err });
+    })
+    .finally(() => {
+      dispatch({ type: commonTypes.DONE });
+    })
+}
+
+export const uploadInvoice = (id, data) => (dispatch, getState) => {
+  dispatch({ type: commonTypes.PROCESSING });
+  Axios.patch(`${API_PATH}revenue/upload-download/${id}/`, JSON.stringify(data), tokenConfig(getState))
+    .then(res => {
+      dispatch(getInvoice(id))
+      dispatch({ type: commonTypes.SUCCESS, payload: 'Invoice updated' })
     })
     .catch((err) => {
       dispatch({ type: commonTypes.ERROR, payload: err });

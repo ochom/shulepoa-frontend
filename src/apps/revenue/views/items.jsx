@@ -40,7 +40,7 @@ export default function Items(props) {
 
   useEffect(() => {
     setrows(props.data)
-  }, [props.data, rows])
+  }, [props.data])
 
   return <PaginatedTable cols={columns} rows={rows} />
 }
