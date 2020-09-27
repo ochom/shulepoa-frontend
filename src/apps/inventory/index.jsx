@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Link, Route } from 'react-router-dom'
+import { Link, Route, Redirect } from 'react-router-dom'
 import Sidenav from '../common/sidenav'
 import Topnav from '../common/topnav'
 import { getProducts, getStores, getCategories, getUnits, getSuppliers, getRequisitions } from './actions'
@@ -27,6 +27,10 @@ class Inventory extends Component {
   }
 
   render() {
+    const { user } = this.props
+    if (!user.rights.can_view_inventory) {
+      return <Redirect to="/" />
+    }
     const menu_list =
       <div className="list-group">
         <Link to="/inventory/stores" className="list-group-item"><i className="fa fa-building-o"></i> Stores</Link>
@@ -66,5 +70,6 @@ class Inventory extends Component {
 }
 
 export default connect(state => ({
+  user: state.auth.user,
   inventory: state.inventory
 }), { getStores, getCategories, getUnits, getProducts, getSuppliers, getRequisitions })(Inventory)

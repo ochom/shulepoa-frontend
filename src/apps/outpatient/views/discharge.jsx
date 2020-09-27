@@ -26,6 +26,7 @@ export class Discharge extends Component {
   }
 
   render() {
+    const { appointment, rights } = this.props
     return (
       <>
         <div className="card m-0">
@@ -41,7 +42,9 @@ export class Discharge extends Component {
                   <label>Discharge Note/Cause</label>
                 </div>
                 <div className="form-group col-12">
-                  <button className="btn cu-bg-primary btn-sm" onSubmit={this.onSubmit}><i className="fa fa-check"></i> Save</button>
+                  {rights.can_discharge && !appointment.is_discharged ?
+                    <button className="btn btn-sm btn-success"
+                      onSubmit={this.onSubmit}>Save and Discharge</button> : null}
                 </div>
               </div>
             </form>
@@ -55,4 +58,5 @@ export default connect(state => ({
   auth: state.auth,
   appointment: state.outpatient.appointment,
   common: state.common,
+  rights: state.auth.user.rights
 }), { updateAppointment, })(Discharge)

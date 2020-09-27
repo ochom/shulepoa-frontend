@@ -60,7 +60,7 @@ export class Review extends Component {
   }
 
   render() {
-    const { reviews, admission } = this.props;
+    const { reviews, admission, rights } = this.props;
     const review_view =
       <Modal isOpen={this.state.showModal} size="md">
         <ModalHeader toggle={this.toggleModal}>
@@ -95,11 +95,12 @@ export class Review extends Component {
         {review_view}
         <div className="card">
           <div className="card-header py-1 px-3">
-            <div className="py-1 px-2"><b>Nursing review</b></div>
-            <button
-              className="btn btn-sm "
-              onClick={this.onNewReview}><i className="fa fa-plus-circle mr-2"></i> Add
-              </button>
+            <div className="py-1 px-2"><b>Doctor review</b></div>
+            {rights.can_add_review ?
+              <button
+                className="btn btn-sm "
+                onClick={this.onNewReview}><i className="fa fa-plus-circle mr-2"></i> Add
+              </button> : null}
           </div>
           <div className="card-body p-0 mt-0">
             <table className="table table-sm table-bordered table-responsive-sm">
@@ -118,10 +119,13 @@ export class Review extends Component {
                     <td>{review.condition}</td>
                     <td>{review.note}</td>
                     <td>
-                      <button className="btn btn-sm mr-2 border-none btn-success"
-                        onClick={() => this.onEditReview(review)}><i className="fa fa-edit"></i></button>
-                      <button className="btn btn-sm border-none btn-danger"
-                        onClick={() => deleteData(review.id, this.props.deleteReview)}><i className="fa fa-trash"></i></button>
+                      {rights.can_add_review ?
+                        <>
+                          <button className="btn btn-sm mr-2 border-none btn-success"
+                            onClick={() => this.onEditReview(review)}><i className="fa fa-edit"></i></button>
+                          <button className="btn btn-sm border-none btn-danger"
+                            onClick={() => deleteData(review.id, this.props.deleteReview)}><i className="fa fa-trash"></i></button>
+                        </> : null}
                     </td>
                   </tr>
                 )}
@@ -137,4 +141,5 @@ export default connect(state => ({
   admission: state.inpatient.admission,
   reviews: state.inpatient.reviews,
   common: state.common,
+  rights: state.auth.user.rights
 }), { addReview, updateReview, getReviews, deleteReview })(Review)

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Link, Route } from 'react-router-dom'
+import { Link, Route, Redirect } from 'react-router-dom'
 import Sidenav from '../common/sidenav'
 import Topnav from '../common/topnav'
 import Clinics from './views/clinics'
@@ -9,9 +9,14 @@ import HospitalProfile from './views/profile'
 import Services from './views/services'
 import Users from './views/users'
 import Wards from './views/wards'
+import Group from './views/user_roles'
 
 export class Hospital extends Component {
   render() {
+    const { user } = this.props
+    if (!user.rights.can_view_administration) {
+      return <Redirect to="/" />
+    }
     const menu_list =
       <div className="list-group">
         <Link to="/hospital" className="list-group-item"><i className="fa fa-angle-right"></i> Hospital</Link>
@@ -19,8 +24,8 @@ export class Hospital extends Component {
         <Link to="/hospital/wards" className="list-group-item"><i className="fa fa-angle-right"></i> Wards</Link>
         <Link to="/hospital/services" className="list-group-item"><i className="fa fa-angle-right"></i> Services</Link>
         <Link to="/hospital/insurance" className="list-group-item"><i className="fa fa-angle-right"></i> Insurance</Link>
+        <Link to="/hospital/roles" className="list-group-item"><i className="fa fa-angle-right"></i> User Roles</Link>
         <Link to="/hospital/users" className="list-group-item"><i className="fa fa-angle-right"></i> Users</Link>
-        <Link to="/hospital/users" className="list-group-item"><i className="fa fa-angle-right"></i> User roles</Link>
       </div>
     return (
       <>
@@ -38,6 +43,7 @@ export class Hospital extends Component {
                   <Route path={`${url}/insurance`} component={Insurance} />
                   <Route path={`${url}/services`} component={Services} />
                   <Route path={`${url}/users`} component={Users} />
+                  <Route path={`${url}/roles`} component={Group} />
                 </>
               )}
             />
@@ -48,5 +54,7 @@ export class Hospital extends Component {
   }
 }
 
-export default connect(null)(Hospital);
+export default connect(state => ({
+  user: state.auth.user
+}))(Hospital);
 

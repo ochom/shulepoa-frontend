@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
+import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
 import { addUnit, deleteUnit, getUnits, updateUnit } from '../actions'
 
 export class Units extends Component {
@@ -74,15 +74,17 @@ export class Units extends Component {
                 onChange={this.onChange} value={this.state.desc} />
               <label>Label</label>
             </div>
-          </ModalBody >
+          </ModalBody>
           <ModalFooter>
-            <Button type="submit" color="primary" size="sm"
-              onSubmit={this.onSubmit}><i className="fa fa-check"></i> Submit</Button>
-            <Button color="danger" size="sm" onClick={this.toggleModal}>
-              <i className="fa fa-close"></i> Cancel</Button>
+            <button type="submit" className="btn btn-sm btn-success"
+              onSubmit={this.onSubmit}>
+              <i className="fa fa-check"></i> Save</button>
+            <button type="button" className="btn btn-sm btn-secondary"
+              onClick={this.toggleModal}>
+              <i className="fa fa-close"></i> Cancel</button>
           </ModalFooter>
         </form>
-      </Modal >
+      </Modal>
 
     return (
       <div className="col-5 mt-3">

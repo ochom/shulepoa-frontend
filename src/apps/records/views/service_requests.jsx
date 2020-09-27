@@ -54,7 +54,7 @@ export class ServiceRequests extends Component {
   }
 
   render() {
-    const { common: { CONSTANTS: { DEPARTMENTS } }, service_requests } = this.props
+    const { common: { CONSTANTS: { DEPARTMENTS } }, service_requests, rights } = this.props
     const book_appointment_view =
       <Modal isOpen={this.state.showModal} size="md">
         <ModalHeader toggle={this.toggleModal}>Request service</ModalHeader>
@@ -99,39 +99,38 @@ export class ServiceRequests extends Component {
       <>
         {book_appointment_view}
         <div className="card">
-          <div className="card-header py-1 px-3">
-            <div className="py-1 px-2">Service Requests</div>
-            <button
-              className="btn btn-sm"
-              onClick={this.onNewAppointment}><i className="fa fa-plus-circle mr-2"></i> New request
-              </button>
+          <div className="card-header">
+            <div>Service Requests</div>
+            {rights.can_add_service_request ?
+              <button
+                className="btn btn-sm"
+                onClick={this.onNewAppointment}><i className="fa fa-plus-circle mr-2"></i> New request
+              </button> : null}
           </div>
           <div className="card-body p-0 pb-2">
             <table className="table table-sm table-responsive-sm">
               <thead className="">
                 <tr>
-                  <th>#</th>
-                  <th>Date</th>
                   <th>Service</th>
                   <th>Department</th>
-                  <th className="text-center">Cost</th>
-                  <th className="text-center">Action</th>
+                  <th>Cost</th>
+                  <th>Date Requested</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
                 {service_requests.filter(req => req.patient_id === parseInt(this.state.patient_id)).map((req, index) =>
                   <tr key={index}>
-                    <td>{index + 1}</td>
-                    <td>{new Date(req.created).toLocaleString("en-UK")}</td>
                     <td>{req.service_name}</td>
                     <td>{DEPARTMENTS[req.department]}</td>
-                    <td className="text-center">{req.cost}</td>
-                    <td className="text-center">
-                      {!req.is_approved ?
+                    <td>{req.cost}</td>
+                    <td>{new Date(req.created).toLocaleDateString("en-UK")}</td>
+                    <td>
+                      {rights.can_delete_service_request ? !req.is_approved ?
                         <button className="btn btn-sm btn-danger"
                           onClick={() => deleteData(req.id, this.props.deleteServiceRequest)}>Delete</button> :
                         <button className="btn btn-sm btn-secondary disabled">No Action</button>
-                      }
+                        : null}
                     </td>
                   </tr>
                 )}
@@ -148,7 +147,8 @@ const mapStateToProps = (state) => ({
   records: state.records,
   common: state.common,
   service_requests: state.revenue.service_requests,
-  hospital: state.hospital
+  hospital: state.hospital,
+  rights: state.auth.user.rights
 });
 
 export default connect(mapStateToProps,

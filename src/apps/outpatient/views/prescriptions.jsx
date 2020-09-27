@@ -92,7 +92,7 @@ export class Prescription extends Component {
 
   render() {
     const { selected_drug } = this.state;
-    const { service_requests, appointment } = this.props
+    const { service_requests, appointment, rights } = this.props
     const prescription_view =
       <Modal isOpen={this.state.showModal} size="lg">
         <ModalHeader toggle={this.toggleModal}><i className="fa fa-plus-circle"></i> Add prescription
@@ -157,7 +157,7 @@ export class Prescription extends Component {
                   </div>
                   <div className="form-group col-12">
                     <select className="form-control form-control-sm" name="dos_2_qnty" data-value={this.state.dos_2_qnty}
-                      required={true} value={this.state.dos_2_qnty} onChange={this.onChange} >
+                      required={true} value={this.state.dos_2_qnty} onChange={this.onChange}>
                       <option value={1}>Yes</option>
                       <option value={0}>No</option>
                     </select>
@@ -171,7 +171,7 @@ export class Prescription extends Component {
                 </div>
                 : null}
             </div>
-          </ModalBody >
+          </ModalBody>
           <ModalFooter>
             <Button type="submit" color="primary" size="sm"
               onClick={this.onSubmit}><i className="fa fa-check"></i> Submit</Button>
@@ -179,8 +179,7 @@ export class Prescription extends Component {
               <i className="fa fa-close"></i> Cancel</Button>
           </ModalFooter>
         </form>
-      </Modal >
-
+      </Modal>
 
     return (
       <>
@@ -188,10 +187,11 @@ export class Prescription extends Component {
         <div className="card">
           <div className="card-header py-1 px-3">
             <div className="py-1 px-2"><b>Prescriptions</b></div>
-            <button
-              className="btn btn-sm "
-              onClick={this.onNewPrescription}><i className="fa fa-plus-circle mr-2"></i> Add
-              </button>
+            {rights.can_add_prescription ?
+              <button
+                className="btn btn-sm "
+                onClick={this.onNewPrescription}><i className="fa fa-plus-circle mr-2"></i> Add
+              </button> : null}
           </div>
           <div className="card-body p-0 mt-0">
             <table className="table table-sm table-bordered m-0">
@@ -218,14 +218,16 @@ export class Prescription extends Component {
                       }
                     </td>
                     <td className="text-center">
-                      {!request.is_approved ?
-                        <button className="btn btn-sm  border-none btn-danger"
-                          onClick={() => deleteData(request.id, this.props.deleteServiceRequest)}><i className="fa fa-trash"></i> delete</button>
-                        : <button className="btn btn-sm btn-secondary disabled">no action</button>
+                      {rights.can_add_prescription ?
+                        !request.is_approved ?
+                          <button className="btn btn-sm  border-none btn-danger"
+                            onClick={() => deleteData(request.id, this.props.deleteServiceRequest)}><i className="fa fa-trash"></i> delete</button>
+                          : <button className="btn btn-sm btn-secondary disabled">no action</button>
+                        : null
                       }
                     </td>
-                  </tr>)
-                }
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>
@@ -238,5 +240,6 @@ export default connect(state => ({
   appointment: state.outpatient.appointment,
   service_requests: state.revenue.service_requests,
   common: state.common,
-  drugs: state.pharmacy.drugs
+  drugs: state.pharmacy.drugs,
+  rights: state.auth.user.rights
 }), { getServiceRequests, addServiceRequest, updateServiceRequest, deleteServiceRequest })(Prescription)

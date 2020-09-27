@@ -35,18 +35,18 @@ export class Profile extends Component {
                       </div>
                       <div className="col-md-12 col-lg-5">
                         <div className="form-group">
-                          <label><b>Email</b></label>
                           <input type="email" className="form-control form-control-sm" name="email"
                             value={this.state.email} />
+                          <label><b>Email</b></label>
                         </div>
                         <div className="form-group">
-                          <label><b>Name (Optional)</b></label>
                           <input className="form-control form-control-sm" name="email"
                             value={this.state.username} />
+                          <label><b>Name (Optional)</b></label>
                         </div>
                       </div>
                     </div>
-                    <div className="col-10 mx-auto my-5" style={{ height: "1px", backgroundColor: "rgba(0,255,0,0.5)" }} ></div>
+                    <hr className="col-10 mx-auto my-5 bg-success" />
                   </> : null}
                 <div className="row col-12 mx-auto">
                   <div className="col-md-12 col-lg-5">
@@ -56,21 +56,20 @@ export class Profile extends Component {
                   </div>
                   <div className="col-md-12 col-lg-5">
                     <div className="form-group">
-                      <label><b>Current Password</b></label>
                       <input type="password" className="form-control form-control-sm" name="old_password"
-                        value={this.state.old_password} placeholder="enter your current password" />
+                        value={this.state.old_password} />
+                      <label><b>Current Password</b></label>
                     </div>
-                    <div className="col-10 mx-auto my-4" style={{ height: "1px", backgroundColor: "rgba(0,255,0,0.5)" }} ></div>
                     <div className="form-group">
-                      <label><b>New Password</b></label>
                       <input type="password" className="form-control form-control-sm" name="new_password"
-                        value={this.state.new_password} placeholder="enter a new password" />
+                        value={this.state.new_password} />
+                      <label><b>New Password</b></label>
                       <p>Password must be 8 or more characters.</p>
                     </div>
                     <div className="form-group">
-                      <label><b>Confirm New Password</b></label>
                       <input type="password" className="form-control form-control-sm" name="new_password"
-                        value={this.state.new_password} placeholder="enter the new password again" />
+                        value={this.state.new_password} />
+                      <label><b>Confirm New Password</b></label>
                     </div>
                     <div className="form-group mt-4">
                       <button className="btn cu-bg-primary">Update password</button>

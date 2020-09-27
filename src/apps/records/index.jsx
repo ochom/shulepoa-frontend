@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Link, Route } from 'react-router-dom'
+import { Link, Route, Redirect } from 'react-router-dom'
 import Sidenav from '../common/sidenav'
 import Topnav from '../common/topnav'
 import { getClinics, getServices, getInsurances, getWards } from '../hospital/actions'
@@ -17,6 +17,10 @@ export class Records extends Component {
   }
 
   render() {
+    const { user } = this.props
+    if (!user.rights.can_view_records) {
+      return <Redirect to="/" />
+    }
     const menu_list =
       <div className="list-group">
         <Link to="/records" className="list-group-item"><i className="fa fa-angle-right"></i> Patient Listing</Link>
@@ -46,5 +50,7 @@ export class Records extends Component {
   }
 }
 
-export default connect(null, { getClinics, getServices, getInsurances, getWards })(Records);
+export default connect(state => ({
+  user: state.auth.user
+}), { getClinics, getServices, getInsurances, getWards })(Records);
 

@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
+import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
 import { addStore, deleteStore, getStores, updateStore } from '../actions'
-import Units from './units'
 import Categories from './categories'
+import Units from './units'
 
 export class Stores extends Component {
   state = {
@@ -75,18 +75,20 @@ export class Stores extends Component {
             </div>
             <div className="form-group">
               <textarea className="form-control form-control-sm" name="description" required={true}
-                onChange={this.onChange} value={this.state.description} ></textarea>
+                onChange={this.onChange} value={this.state.description}></textarea>
               <label>Description</label>
             </div>
-          </ModalBody >
+          </ModalBody>
           <ModalFooter>
-            <Button type="submit" color="primary" size="sm"
-              onSubmit={this.onSubmit}><i className="fa fa-check"></i> Submit</Button>
-            <Button color="danger" size="sm" onClick={this.toggleModal}>
-              <i className="fa fa-close"></i> Cancel</Button>
+            <button type="submit" className="btn btn-sm btn-success"
+              onSubmit={this.onSubmit}>
+              <i className="fa fa-check"></i> Save</button>
+            <button type="button" className="btn btn-sm btn-secondary"
+              onClick={this.toggleModal}>
+              <i className="fa fa-close"></i> Cancel</button>
           </ModalFooter>
         </form>
-      </Modal >
+      </Modal>
 
     return (
       <div className="row col-12 mx-auto">
@@ -95,10 +97,12 @@ export class Stores extends Component {
           <div className="card">
             <div className="card-header py-1 px-3">
               <div className="py-1 px-2">Store Management</div>
-              <button
-                className="btn btn-sm "
-                onClick={this.onNewStore}><i className="fa fa-plus-circle mr-2"></i> Add Store
-              </button>
+              {this.props.rights.can_add_store ?
+                <button
+                  className="btn btn-sm "
+                  onClick={this.onNewStore}><i className="fa fa-plus-circle mr-2"></i> Add Store
+              </button> : null
+              }
             </div>
             <div className="card-body p-0 pb-2">
               <table className="table table-sm table-striped table-bordered">
@@ -117,8 +121,11 @@ export class Stores extends Component {
                       <td>{store.name}</td>
                       <td>{store.description}</td>
                       <td>
-                        <button className="btn btn-sm btn-success"
-                          onClick={() => this.onEditStore(store)}><i className="fa fa-edit"></i> Edit</button></td>
+                        {this.props.rights.can_edit_store ?
+                          <button className="btn btn-sm btn-success"
+                            onClick={() => this.onEditStore(store)}><i className="fa fa-edit"></i> Edit</button> :
+                          <button className="btn btn-sm btn-secondary disabled">No Action</button>}
+                      </td>
                     </tr>
                   )}
                 </tbody>
@@ -135,4 +142,5 @@ export class Stores extends Component {
 
 export default connect(state => ({
   inventory: state.inventory,
+  rights: state.auth.user.rights
 }), { getStores, addStore, updateStore, deleteStore })(Stores)

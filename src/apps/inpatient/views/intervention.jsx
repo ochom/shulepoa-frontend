@@ -55,7 +55,7 @@ export class Intervention extends Component {
   }
 
   render() {
-    const { interventions, admission } = this.props;
+    const { interventions, admission, rights } = this.props;
 
     const intervention_view =
       <Modal isOpen={this.state.showModal} size="md">
@@ -86,11 +86,12 @@ export class Intervention extends Component {
         {intervention_view}
         <div className="card">
           <div className="card-header py-1 px-3">
-            <div className="py-1 px-2"><b>Nursing intervention</b></div>
-            <button
-              className="btn btn-sm "
-              onClick={this.onNewIntervention}><i className="fa fa-plus-circle mr-2"></i> Add
-              </button>
+            <div className="py-1 px-2">Nursing Intervention</div>
+            {rights.can_add_intervention ?
+              <button
+                className="btn btn-sm "
+                onClick={this.onNewIntervention}><i className="fa fa-plus-circle mr-2"></i> Add
+              </button> : null}
           </div>
           <div className="card-body p-0 mt-0">
             <table className="table table-sm table-bordered table-responsive-sm">
@@ -126,4 +127,5 @@ export default connect(state => ({
   admission: state.inpatient.admission,
   interventions: state.inpatient.interventions,
   common: state.common,
+  rights: state.auth.user.rights
 }), { addIntervention, updateIntervention, getInterventions, deleteIntervention })(Intervention)

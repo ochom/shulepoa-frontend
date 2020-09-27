@@ -50,7 +50,7 @@ export class Investigation extends Component {
 
 
   render() {
-    const { service_requests, admission } = this.props
+    const { service_requests, admission, rights } = this.props
     const investigation_view =
       <Modal isOpen={this.state.showModal} size="md">
         <ModalHeader toggle={this.toggleModal}>Add investigation requests</ModalHeader>
@@ -67,8 +67,8 @@ export class Investigation extends Component {
                   <tr>
                     <th>#</th>
                     <th>Service name</th>
-                    <th className="text-center">Price</th>
-                    <th className="text-center">Action</th>
+                    <th>Price</th>
+                    <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -76,8 +76,8 @@ export class Investigation extends Component {
                     <tr key={index}>
                       <td>{index + 1}</td>
                       <td>{search.name}</td>
-                      <td className="text-center">{search.price}</td>
-                      <td className="text-center">
+                      <td>{search.price}</td>
+                      <td>
                         <button className="btn btn-sm p-0 border-none text-primary"
                           onClick={() => this.addRequest(search)}><i className="fa fa-plus"></i> Add</button>
                       </td>
@@ -96,9 +96,10 @@ export class Investigation extends Component {
         <div className="card">
           <div className="card-header py-1 px-3">
             <div className="py-1 px-2"><b>Laboratory  &nbsp; &amp; &nbsp; Radiology Requests</b></div>
-            <button className="btn btn-sm "
-              onClick={this.onNewObservation}><i className="fa fa-plus-circle mr-2"></i> Add
-              </button>
+            {rights.can_add_investigation ?
+              <button className="btn btn-sm "
+                onClick={this.onNewObservation}><i className="fa fa-plus-circle mr-2"></i> Add
+              </button> : null}
           </div>
           <div className="card-body p-0 mt-0">
             <table className="table table-sm table-responsive-sm">
@@ -107,8 +108,8 @@ export class Investigation extends Component {
                   <td>#</td>
                   <td>Investigation</td>
                   <td>Result</td>
-                  <td className="text-center">Served</td>
-                  <td className="text-center">Action</td>
+                  <td>Served</td>
+                  <td>Action</td>
                 </tr>
               </thead>
               <tbody>
@@ -118,21 +119,22 @@ export class Investigation extends Component {
                     <td>{request.service_name}</td>
                     <td className="text-success">{request.description ? request.description : "Not ready"}</td>
 
-                    <td className="text-center">
+                    <td>
                       {
                         request.is_served ? <i className="fa fa-check text-success"></i> :
                           <i className="fa fa-minus text-secondary"></i>
                       }
                     </td>
-                    <td className="text-center">
-                      {!request.is_served ?
-                        <button className="btn btn-sm  border-none btn-danger"
-                          onClick={() => deleteData(request.id, this.props.deleteServiceRequest)}><i className="fa fa-trash"></i> delete</button>
-                        : <button className="btn btn-sm btn-secondary disabled">no action</button>
-                      }
+                    <td>
+                      {rights.can_add_investigation ?
+                        !request.is_served ?
+                          <button className="btn btn-sm  border-none btn-danger"
+                            onClick={() => deleteData(request.id, this.props.deleteServiceRequest)}><i className="fa fa-trash"></i> delete</button>
+                          : <button className="btn btn-sm btn-secondary disabled">no action</button>
+                        : null}
                     </td>
-                  </tr>)
-                }
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>
@@ -146,4 +148,5 @@ export default connect(state => ({
   service_requests: state.revenue.service_requests,
   common: state.common,
   services: state.hospital.services,
+  rights: state.auth.user.rights
 }), { getServiceRequests, addServiceRequest, updateServiceRequest, deleteServiceRequest })(Investigation)

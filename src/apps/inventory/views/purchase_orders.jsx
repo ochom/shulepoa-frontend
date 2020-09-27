@@ -236,10 +236,12 @@ export class PurchaseOrders extends Component {
         <div className="card mt-3">
           <div className="card-header py-1 px-3">
             <div className="py-1 px-2">Active Purchase Orders</div>
-            <button
-              className="btn btn-sm "
-              onClick={this.onNewOrder}><i className="fa fa-plus-circle mr-2"></i> Create purchase order
-              </button>
+            {this.props.rights.can_add_order ?
+              <button
+                className="btn btn-sm "
+                onClick={this.onNewOrder}><i className="fa fa-plus-circle mr-2"></i> Create purchase order
+              </button> : null
+            }
           </div>
           <div className="card-body p-0 pb-2">
             <table className="table table-sm table-striped table-bordered">
@@ -258,11 +260,13 @@ export class PurchaseOrders extends Component {
                   <tr key={index}>
                     <td>{index + 1}</td>
                     <td>{new Date(order.created).toLocaleDateString('en-uk')}</td>
-                    <td>{products.length > 0 ? products.find(product => product.id === order.product_id).name : ""}</td>
-                    <td>{suppliers.length > 0 ? suppliers.find(supplier => supplier.id === order.supplier_id).name : ""}</td>
+                    <td>{order.product.name}</td>
+                    <td>{order.supplier.name}</td>
                     <td>{order.number_ordered}</td>
                     <td>
-                      <button className="btn btn-sm btn-primary" onClick={() => this.onNewSupply(order)}>Receive Goods</button>
+                      {this.props.rights.can_edit_order ?
+                        <button className="btn btn-sm btn-primary" onClick={() => this.onNewSupply(order)}>Receive Goods</button>
+                        : null}
                     </td>
                   </tr>
                 )}
@@ -277,4 +281,5 @@ export class PurchaseOrders extends Component {
 
 export default connect(state => ({
   inventory: state.inventory,
+  rights: state.auth.user.rights
 }), { getOrders, addOrder, updateOrder })(PurchaseOrders)

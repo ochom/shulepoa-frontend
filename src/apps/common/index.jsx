@@ -11,7 +11,7 @@ export class Dashboard extends Component {
   render() {
     const menus =
       <div className="list-group">
-        <Link className="list-group-item" to="/records"><i className="fa fa-users"></i> Patients</Link>
+        <Link className="list-group-item" to="/records"><i className="fa fa-users"></i> Records</Link>
         <Link className="list-group-item" to="/outpatient"><i className="fa fa-stethoscope"></i> Outpatient</Link>
         <Link className="list-group-item" to="/inpatient"><i className="fa fa-heartbeat"></i> Inpatient</Link>
         <Link className="list-group-item" to="/laboratory"><i className="fa fa-flask"></i> Laboratory</Link>

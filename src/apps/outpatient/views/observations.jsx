@@ -74,7 +74,7 @@ export class Observation extends Component {
 
   render() {
     const { TIME_UNITS } = this.props.common.CONSTANTS;
-    const { appointment, observations } = this.props;
+    const { appointment, observations, rights } = this.props;
     const observation_view =
       <Modal isOpen={this.state.showModal} size="md">
         <ModalHeader toggle={this.toggleModal}>
@@ -129,10 +129,11 @@ export class Observation extends Component {
         <div className="card">
           <div className="card-header py-1 px-3">
             <div className="py-1 px-2"><b>Observations &nbsp; &amp; &nbsp; Pre-medications</b></div>
-            <button
-              className="btn btn-sm "
-              onClick={this.onNewObservation}><i className="fa fa-plus-circle mr-2"></i> Add
-              </button>
+            {rights.can_add_observation ?
+              <button
+                className="btn btn-sm "
+                onClick={this.onNewObservation}><i className="fa fa-plus-circle mr-2"></i> Add
+              </button> : null}
           </div>
           <div className="card-body p-0 mt-0">
             <table className="table table-sm table-responsive-sm">
@@ -143,7 +144,7 @@ export class Observation extends Component {
                   <th>Period</th>
                   <th>Pre-med</th>
                   <th>P.E</th>
-                  <th className="text-center">Action</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -154,12 +155,14 @@ export class Observation extends Component {
                     <td>{observation.period} {observation.period_units}</td>
                     <td>{observation.pre_med_note}</td>
                     <td>{observation.physical_examination_note}</td>
-                    <td className="text-center">
-                      <button className="btn btn-sm mr-2 border-none btn-success"
-                        onClick={() => this.onEditObservation(observation)}><i className="fa fa-edit"></i></button>
+                    <td>
+                      {rights.can_add_observation ? <>
+                        <button className="btn btn-sm mr-2 border-none btn-success"
+                          onClick={() => this.onEditObservation(observation)}><i className="fa fa-edit"></i></button>
 
-                      <button className="btn btn-sm border-none btn-danger"
-                        onClick={() => deleteData(observation.id, this.props.deleteObservation)}><i className="fa fa-trash"></i></button>
+                        <button className="btn btn-sm border-none btn-danger"
+                          onClick={() => deleteData(observation.id, this.props.deleteObservation)}><i className="fa fa-trash"></i></button>
+                      </> : null}
                     </td>
                   </tr>)
                 }
@@ -175,4 +178,5 @@ export default connect(state => ({
   appointment: state.outpatient.appointment,
   observations: state.outpatient.observations,
   common: state.common,
+  rights: state.auth.user.rights
 }), { getObservations, addObservation, updateObservation, deleteObservation })(Observation)

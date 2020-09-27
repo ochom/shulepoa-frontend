@@ -93,7 +93,7 @@ export class Prescription extends Component {
 
   render() {
     const { selected_drug } = this.state;
-    const { service_requests, admission } = this.props
+    const { service_requests, admission, rights } = this.props
     const prescription_view =
       <Modal isOpen={this.state.showModal} size="lg">
         <ModalHeader toggle={this.toggleModal}><i className="fa fa-plus-circle"></i> Add prescription
@@ -189,10 +189,11 @@ export class Prescription extends Component {
         <div className="card">
           <div className="card-header py-1 px-3">
             <div className="py-1 px-2"><b>Prescriptions</b></div>
-            <button
-              className="btn btn-sm "
-              onClick={this.onNewPrescription}><i className="fa fa-plus-circle mr-2"></i> Add
-              </button>
+            {rights.can_add_prescription ?
+              <button
+                className="btn btn-sm "
+                onClick={this.onNewPrescription}><i className="fa fa-plus-circle mr-2"></i> Add
+              </button> : null}
           </div>
           <div className="card-body p-0 mt-0">
             <table className="table table-sm table-bordered m-0">
@@ -218,10 +219,12 @@ export class Prescription extends Component {
                       }
                     </td>
                     <td className="text-center">
-                      {!request.is_served ?
-                        <button className="btn btn-sm  border-none btn-danger"
-                          onClick={() => deleteData(request.id, this.props.deleteServiceRequest)}><i className="fa fa-trash"></i> delete</button>
-                        : <button className="btn btn-sm btn-secondary disabled">no action</button>
+                      {rights.can_add_prescription ?
+                        !request.is_served ?
+                          <button className="btn btn-sm  border-none btn-danger"
+                            onClick={() => deleteData(request.id, this.props.deleteServiceRequest)}><i className="fa fa-trash"></i> delete</button>
+                          : <button className="btn btn-sm btn-secondary disabled">no action</button>
+                        : null
                       }
                     </td>
                   </tr>
@@ -238,5 +241,6 @@ export default connect(state => ({
   admission: state.inpatient.admission,
   service_requests: state.revenue.service_requests,
   common: state.common,
-  drugs: state.pharmacy.drugs
+  drugs: state.pharmacy.drugs,
+  rights: state.auth.user.rights
 }), { getServiceRequests, addServiceRequest, updateServiceRequest, deleteServiceRequest })(Prescription)

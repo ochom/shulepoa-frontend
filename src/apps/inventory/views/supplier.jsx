@@ -1,8 +1,8 @@
-import React, { Component } from 'react'
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getSuppliers, addSupplier, updateSupplier, deleteSupplier } from '../actions';
+import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import { deleteData } from '../../common/actions';
+import { addSupplier, deleteSupplier, getSuppliers, updateSupplier } from '../actions';
 
 export class Supplier extends Component {
   state = {
@@ -50,7 +50,7 @@ export class Supplier extends Component {
     })
   }
 
-  onSubmitSupplier = (e) => {
+  onSubmit = (e) => {
     e.preventDefault();
     const {
       select_supplier,
@@ -77,14 +77,6 @@ export class Supplier extends Component {
     })
   }
 
-  onsearchSupplier = () => {
-    const data = {
-      "name": this.state.supplier_search_name,
-      "phone": this.state.supplier_search_phone,
-    }
-    this.props.searchSupplier(data);
-  }
-
   render() {
     const supplier_details =
       <Modal isOpen={this.state.showModal} size="md">
@@ -94,7 +86,7 @@ export class Supplier extends Component {
             <span><i className="fa fa-plus-circle"></i> Register Supplier</span>
           }
         </ModalHeader>
-        <form onSubmit={this.onSubmitSupplier}>
+        <form onSubmit={this.onSubmit}>
           <ModalBody>
             <div className="row mx-auto">
               <div className="form-group col-12">
@@ -122,16 +114,17 @@ export class Supplier extends Component {
                 <label>Physical Address<sup>*</sup></label>
               </div>
             </div>
-          </ModalBody >
+          </ModalBody>
           <ModalFooter>
-            <button type="submit" className="btn btn-sm cu-bg-primary"
-              onSubmit={this.onSubmitSupplier}>
-              <i className="fa fa-check"></i> Save</button>{' '}
-            <Button color="danger" size="sm" onClick={this.toggleModal}>
-              <i className="fa fa-close"></i> Cancel</Button>
+            <button type="submit" className="btn btn-sm btn-success"
+              onSubmit={this.onSubmit}>
+              <i className="fa fa-check"></i> Save</button>
+            <button type="button" className="btn btn-sm btn-secondary"
+              onClick={this.toggleModal}>
+              <i className="fa fa-close"></i> Cancel</button>
           </ModalFooter>
         </form>
-      </Modal >
+      </Modal>
 
     return (
       <>
@@ -140,10 +133,11 @@ export class Supplier extends Component {
           <div className="card">
             <div className="card-header py-1 px-3">
               <div className="py-1 px-2">Manage Suppliers</div>
-              <button
-                className="btn btn-sm py-1 px-2 mr-auto"
-                onClick={this.onNewSupplier}><i className="fa fa-plus-circle mr-2"></i> Add Supplier
-              </button>
+              {this.props.rights.can_add_supplier ?
+                <button
+                  className="btn btn-sm py-1 px-2 mr-auto"
+                  onClick={this.onNewSupplier}><i className="fa fa-plus-circle mr-2"></i> Add Supplier
+              </button> : null}
             </div>
             <div className="card-body p-0">
               <table className="table table-sm table-striped table-bordered">
@@ -159,10 +153,14 @@ export class Supplier extends Component {
                       <td>{supplier.email}</td>
                       <td>{supplier.phone}</td>
                       <td>
-                        <button className="btn btn-sm btn-success"
-                          onClick={() => this.onEditSupplier(supplier)}><i className="fa fa-edit"></i> Edit</button>{' | '}
-                        <button className="btn btn-sm btn-danger"
-                          onClick={() => deleteData(supplier.id, this.props.deleteSupplier)}><i className="fa fa-trash"></i> Delete</button>
+                        {this.props.rights.can_edit_supplier ?
+                          <>
+                            <button className="btn btn-sm btn-success mr-2"
+                              onClick={() => this.onEditSupplier(supplier)}><i className="fa fa-edit"></i> Edit</button>
+                            <button className="btn btn-sm btn-danger"
+                              onClick={() => deleteData(supplier.id, this.props.deleteSupplier)}><i className="fa fa-trash"></i> Delete</button>
+                          </> : null
+                        }
                       </td>
                     </tr>
                   )}
@@ -179,6 +177,7 @@ export class Supplier extends Component {
 const mapStateToProps = state => ({
   suppliers: state.inventory.suppliers,
   common: state.common,
+  rights: state.auth.user.rights
 });
 
 export default connect(mapStateToProps, { getSuppliers, addSupplier, updateSupplier, deleteSupplier })(Supplier);

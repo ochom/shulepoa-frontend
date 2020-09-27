@@ -165,7 +165,8 @@ export class Patients extends Component {
     const { common: { CONSTANTS: { GENDERS, ID_TYPES, KIN_RELATIONSHIPS,
       MARITAL_STATUSES, COUNTRIES } },
       hospital: { wards, clinics },
-      records: { patients }
+      records: { patients },
+      rights,
     } = this.props;
 
     const patient_details =
@@ -451,18 +452,18 @@ export class Patients extends Component {
         title: 'Action',
         render: rowData => {
           return <>
-            <button className="btn btn-sm btn-success mr-2"
-              onClick={() => this.onEditPatient(rowData)}><i className="fa fa-edit"></i> Edit</button>
-            {rowData.is_booked ?
-              <button className="btn btn-sm btn-secondary disabled mr-2"><i className="fa fa-user-md"></i> Booked</button> :
-              <button className="btn btn-sm btn-primary mr-2"
+            {rights.can_edit_patient ? <button className="btn btn-sm btn-success mr-2"
+              onClick={() => this.onEditPatient(rowData)}><i className="fa fa-edit"></i> Edit</button> : null}
+            {rights.can_add_appointment ? rowData.is_booked ?
+              <button className="btn btn-sm btn-secondary disabled mr-2"><i className="fa fa-user-md"></i> Booked</button>
+              : <button className="btn btn-sm btn-primary mr-2"
                 onClick={() => this.onNewAppointment(rowData)}><i className="fa fa-user-md"></i> Book</button>
-            }
-            {rowData.is_admitted ?
-              <button className="btn btn-sm btn-secondary disabled mr-2"><i className="fa fa-bed"></i> Admitted</button> :
-              <button className="btn btn-sm btn-danger mr-2"
+              : null}
+            {rights.can_add_admission ? rowData.is_admitted ?
+              <button className="btn btn-sm btn-secondary disabled mr-2"><i className="fa fa-bed"></i> Admitted</button>
+              : <button className="btn btn-sm btn-danger mr-2"
                 onClick={() => this.onNewAdmission(rowData)}><i className="fa fa-bed"></i> Admit</button>
-            }
+              : null}
             <Link to={`/records/patients/${rowData.id}`}
               className="btn btn-sm btn-warning"><i className="fa fa-user"></i> View</Link>
           </>;
@@ -478,10 +479,11 @@ export class Patients extends Component {
         <div className="card">
           <div className="card-header">
             <div>Patients</div>
-            <button
-              className="btn btn-sm"
-              onClick={this.onNewPatient}>
-              <i className="fa fa-plus-circle mr-2"></i> Add Patient</button>
+            {rights.can_add_patient ?
+              <button
+                className="btn btn-sm"
+                onClick={this.onNewPatient}>
+                <i className="fa fa-plus-circle mr-2"></i> Add Patient</button> : null}
           </div>
           <div className="card-bodyp-0">
             <PaginatedTable cols={columns} rows={patients} />
@@ -495,7 +497,8 @@ export class Patients extends Component {
 const mapStateToProps = state => ({
   records: state.records,
   common: state.common,
-  hospital: state.hospital
+  hospital: state.hospital,
+  rights: state.auth.user.rights
 });
 
 export default connect(mapStateToProps, { getPatients, addPatient, updatePatient, addAdmission, addAppointment })(Patients);

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Route, Link } from 'react-router-dom'
+import { Route, Link, Redirect } from 'react-router-dom'
 import Sidenav from '../common/sidenav'
 import { connect } from 'react-redux'
 import { getClinics, getServices, getUsers } from '../hospital/actions'
@@ -20,6 +20,10 @@ export class Outpatient extends Component {
 
   }
   render() {
+    const { user } = this.props
+    if (!user.rights.can_view_ipd_opd) {
+      return <Redirect to="/" />
+    }
     const menu_list =
       <div className="list-group">
         <Link
@@ -58,7 +62,8 @@ export class Outpatient extends Component {
   }
 }
 const mapStateToProps = state => ({
-  clinics: state.hospital.clinics
+  clinics: state.hospital.clinics,
+  user: state.auth.user
 })
 
 export default connect(mapStateToProps, { getUsers, getPatients, getClinics, getServices, getDrugs })(Outpatient);

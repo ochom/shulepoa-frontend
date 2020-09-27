@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import { deleteData } from '../../common/actions';
 import { addService, deleteService, getServices, updateService } from '../actions';
+import PaginatedTable from '../../common/pagination';
 
 export class Service extends Component {
   constructor(props) {
@@ -98,6 +99,7 @@ export class Service extends Component {
     const { services } = this.state;
     const { DEPARTMENTS } = this.props.common.CONSTANTS;
     const department_choices = DEPARTMENTS.map((department, index) => <option key={index} value={index}>{department}</option>)
+
     const service_details =
       <Modal isOpen={this.state.showModal} size="md">
         <ModalHeader toggle={this.toggleModal}>
@@ -146,50 +148,55 @@ export class Service extends Component {
         </form>
       </Modal >
 
+    const columns = [
+      {
+        title: "Service Name",
+        render: rowData => {
+          return <span>{rowData.name}</span>
+        }
+      },
+      {
+        title: "Department",
+        render: rowData => {
+          return <span>{DEPARTMENTS[rowData.department]}</span>
+        }
+      },
+      {
+        title: "Cost",
+        render: rowData => {
+          return <span>{rowData.price}</span>
+        }
+      },
+      {
+        title: "Action",
+        render: rowData => {
+          return <>
+            {this.props.rights.can_edit_insurance ?
+              <>
+                <button className="btn btn-sm btn-success mr-2"
+                  onClick={() => this.onEditService(rowData)}><i className="fa fa-edit"></i> Edit</button>
+                <button className="btn btn-sm btn-danger"
+                  onClick={() => deleteData(rowData.id, this.props.deleteService)}><i className="fa fa-trash"></i> Delete</button>
+              </> : <button className="btn btn-sm btn-secondary disabled">No Action</button>
+            }
+          </>
+        }
+      },
+    ]
     return (
       <div className="col-md-10 mx-auto mt-3">
         {service_details}
-        <div className="form-group my-2">
-          <input className="form-control" defaultValue="" onChange={this.onSearch} />
-          <label><span role="img" aria-label="search">&#x1F50D;</span> Search...</label>
-        </div>
         <div className="card">
           <div className="card-header">
-            <div className="">Offered Services</div>
-            <button
-              className="btn btn-sm py-1 px-2 mr-auto"
-              onClick={this.onNewService}><i className="fa fa-plus-circle mr-2"></i> Add Service
-              </button>
+            <div>Services</div>
+            {this.props.rights.can_add_service ?
+              <button
+                className="btn btn-sm"
+                onClick={this.onNewService}><i className="fa fa-plus-circle"></i>  Add Service
+              </button> : null}
           </div>
           <div className="card-body p-0">
-            <table className="table table-sm table-striped table-bordered table-responsive-sm m-0">
-              <caption className="px-2"><i>Recent services | Search results</i></caption>
-              <thead>
-                <tr>
-                  <td>#</td>
-                  <td>Name</td>
-                  <td>Department</td>
-                  <td>Price</td>
-                  <td>Action</td>
-                </tr>
-              </thead>
-              <tbody>
-                {services.map((service, index) =>
-                  <tr key={index}>
-                    <td>{index + 1}</td>
-                    <td>{service.name}</td>
-                    <td>{DEPARTMENTS[service.department]}</td>
-                    <td>{service.price}</td>
-                    <td>
-                      <button className="btn btn-sm btn-success mr-2"
-                        onClick={() => this.onEditService(service)}><i className="fa fa-edit"></i> Edit</button>
-                      <button className="btn btn-sm btn-danger"
-                        onClick={() => deleteData(service.id, this.props.deleteService)}><i className="fa fa-trash"></i> Delete</button>
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
+            <PaginatedTable cols={columns} rows={services} />
           </div>
         </div>
       </div>
@@ -200,6 +207,7 @@ export class Service extends Component {
 const mapStateToProps = state => ({
   hospital: state.hospital,
   common: state.common,
+  rights: state.auth.user.rights
 });
 
 export default connect(mapStateToProps, { getServices, addService, updateService, deleteService })(Service);

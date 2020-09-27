@@ -87,7 +87,7 @@ export class Vital extends Component {
   }
 
   render() {
-    const { appointment, vitals } = this.props;
+    const { appointment, vitals, rights } = this.props;
     const vital_view =
       <Modal isOpen={this.state.showModal} size="lg">
         <ModalHeader toggle={this.toggleModal}>
@@ -162,10 +162,11 @@ export class Vital extends Component {
         <div className="card">
           <div className="card-header py-1 px-3">
             <div className="py-1 px-2">Vitals</div>
-            <button
-              className="btn btn-sm "
-              onClick={this.onNewVital}><i className="fa fa-plus-circle mr-2"></i> Add
-              </button>
+            {rights.can_add_vitals ?
+              <button
+                className="btn btn-sm "
+                onClick={this.onNewVital}><i className="fa fa-plus-circle mr-2"></i> Add
+              </button> : null}
           </div>
           <div className="card-body p-0 mt-0">
             <table className="table table-sm table-responsive-sm">
@@ -190,13 +191,15 @@ export class Vital extends Component {
                     <td>{vital.mass}Kg</td>
                     <td>{this.calculateBMI(vital)}</td>
                     <td className="text-center">
-                      <button className="btn btn-sm mr-2 border-none btn-success"
-                        onClick={() => this.onEditVital(vital)}><i className="fa fa-edit"></i></button>
-                      <button className="btn btn-sm border-none btn-danger"
-                        onClick={() => deleteData(vital.id, this.props.deleteVital)}><i className="fa fa-trash"></i></button>
+                      {rights.can_add_vitals ? <>
+                        <button className="btn btn-sm mr-2 border-none btn-success"
+                          onClick={() => this.onEditVital(vital)}><i className="fa fa-edit"></i></button>
+                        <button className="btn btn-sm border-none btn-danger"
+                          onClick={() => deleteData(vital.id, this.props.deleteVital)}><i className="fa fa-trash"></i></button>
+                      </> : null}
                     </td>
-                  </tr>)
-                }
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>
@@ -209,4 +212,5 @@ export default connect(state => ({
   appointment: state.outpatient.appointment,
   vitals: state.outpatient.vitals,
   common: state.common,
+  rights: state.auth.user.rights
 }), { getVitals, addVital, updateVital, deleteVital })(Vital)

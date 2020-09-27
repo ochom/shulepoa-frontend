@@ -318,26 +318,16 @@ table>tbody>tr>td>.btn{
   width: 100%;
   background-color: var(--theme-primary);
   border-bottom:1px solid rgba(222, 248, 223, 0.342);
-  display: inline-flex;
+  display: flex;
   align-items: center;
   align-content: center;
   height: 50px;
-}
-
-.sidenav-logo::after{
-  top: 0;
-  left: 0;
-  height: 100%;
-  position: absolute;
   content: "Hosipoa";
-  display: flex;
-  align-content: center;
-  align-items: center;
-  font-size: 1.5em;
-  left:10px;
   color: lime;
+  font-size: 1.5em;
   font-weight: bold;
   font-style: italic;
+  padding-left: 10px;
 }
 
 .sidenav_body{

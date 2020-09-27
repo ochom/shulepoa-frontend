@@ -35,7 +35,6 @@ export class AppointmentQueue extends Component {
                   <th>Sex</th>
                   <th>Clinic</th>
                   <th>Mobile</th>
-                  <th>Status</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -47,7 +46,6 @@ export class AppointmentQueue extends Component {
                     <td>{GENDERS[appointment.patient.sex]}</td>
                     <td>{appointment.clinic.name}</td>
                     <td>{appointment.patient.phone}</td>
-                    <td>{appointment.is_checked_in ? <span className="text-success">IN</span> : <span className="text-primary">Waiting</span>}</td>
                     <td>
                       <Link to={`/outpatient/appointments/${appointment.id}`} className="btn btn-sm btn-success">Open file</Link>
                     </td>

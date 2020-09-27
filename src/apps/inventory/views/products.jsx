@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
+import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
+import PaginatedTable from '../../common/pagination'
 import {
-  addProduct, deleteProduct, getProducts, updateProduct,
-  addRequisition,
+  addProduct,
+  addRequisition, deleteProduct, getProducts, updateProduct
 } from '../actions'
 
 export class Products extends Component {
@@ -164,7 +165,7 @@ export class Products extends Component {
               <div className="form-group col-6">
                 <input className="form-control form-control-sm" name="price" required={true}
                   onChange={this.onChange} value={this.state.price} />
-                <label>Price<sup>*</sup></label>
+                <label>Cost<sup>*</sup></label>
               </div>
               <div className="form-group col-6">
                 <select className="form-control form-control-sm" name="unit_id" required={true}
@@ -188,14 +189,15 @@ export class Products extends Component {
             </div>
           </ModalBody >
           <ModalFooter>
-            <Button type="submit" color="primary" size="sm"
-              onSubmit={this.onSubmit}><i className="fa fa-check"></i> Submit</Button>
-            <Button color="danger" size="sm" onClick={this.toggleModal}>
-              <i className="fa fa-close"></i> Cancel</Button>
+            <button type="submit" className="btn btn-sm btn-success"
+              onSubmit={this.onSubmit}>
+              <i className="fa fa-check"></i> Save</button>
+            <button type="button" className="btn btn-sm btn-secondary"
+              onClick={this.toggleModal}>
+              <i className="fa fa-close"></i> Cancel</button>
           </ModalFooter>
         </form>
       </Modal >
-
 
     const requisition_modal_view =
       <Modal isOpen={this.state.reqModal} size="md">
@@ -226,21 +228,76 @@ export class Products extends Component {
               </div>
               <div className="form-group col-6">
                 <input type="text" className="form-control form-control-sm" name="required_by" required={true}
-                  onChange={this.onChange} value={this.state.required_by} 
+                  onChange={this.onChange} value={this.state.required_by}
                   onFocus={(e) => e.target.type = 'date'} onBlur={(e) => !e.target.value ? e.target.type = 'text' : 'date'} />
                 <label>Required BY<sup>*</sup></label>
               </div>
             </div>
           </ModalBody >
           <ModalFooter>
-            <Button type="submit" color="primary" size="sm"
-              onSubmit={this.onSubmitRequisition}><i className="fa fa-check"></i> Submit</Button>
-            <Button color="danger" size="sm" onClick={this.toggleReqModal}>
-              <i className="fa fa-close"></i> Cancel</Button>
+            <button type="submit" className="btn btn-sm btn-success"
+              onSubmit={this.onSubmitRequisition}>
+              <i className="fa fa-check"></i> Save</button>
+            <button type="button" className="btn btn-sm btn-secondary"
+              onClick={this.toggleReqModal}>
+              <i className="fa fa-close"></i> Cancel</button>
           </ModalFooter>
         </form>
       </Modal >
-
+    const columns = [
+      {
+        title: "",
+        render: rowData => {
+          return <span>{rowData.name}</span>
+        }
+      },
+      {
+        title: "",
+        render: rowData => {
+          return <span>{rowData.label}</span>
+        }
+      },
+      {
+        title: "",
+        render: rowData => {
+          return <span>{rowData.category.name}</span>
+        }
+      },
+      {
+        title: "",
+        render: rowData => {
+          return <span>{rowData.store.name}</span>
+        }
+      },
+      {
+        title: "",
+        render: rowData => {
+          return <span>
+            {rowData.inventoryOnHand}{' '}
+            {rowData.units.abbr}
+          </span>
+        }
+      },
+      {
+        title: "",
+        render: rowData => {
+          return <span>{rowData.price}</span>
+        }
+      },
+      {
+        title: "",
+        render: rowData => {
+          return <>
+            {this.props.rights.can_edit_product ? <button className="btn btn-sm btn-success mr-2"
+              onClick={() => this.onEditProduct(rowData)}><i className="fa fa-edit"></i> Edit</button> : null}
+            {this.props.rights.can_add_requisition ?
+              <button className="btn btn-sm btn-primary"
+                onClick={() => this.onNewRequsition(rowData)}><i className="fa fa-plus"></i> Requisition</button>
+              : null}
+          </>
+        }
+      },
+    ]
     return (
       <div className="col-md-10 mx-auto mt-3">
         {product_modal_view}
@@ -248,61 +305,24 @@ export class Products extends Component {
         <div className="card mt-3">
           <div className="card-header py-1 px-3">
             <div className="py-1 px-2">Product Management</div>
-            <button
-              className="btn btn-sm "
-              onClick={this.onNewProduct}><i className="fa fa-plus-circle mr-2"></i> Add Product
-              </button>
+            {this.props.rights.can_add_product ?
+              <button
+                className="btn btn-sm "
+                onClick={this.onNewProduct}><i className="fa fa-plus-circle mr-2"></i> Add Product
+              </button> : null}
           </div>
-          <div className="card-body p-0 pb-2">
-            <table className="table table-sm table-striped table-bordered">
-              <thead className="cu-text-primary">
-                <tr>
-                  <th>#</th>
-                  <th>Product</th>
-                  <th>Label</th>
-                  <th>Category</th>
-                  <th>Store</th>
-                  <th>In Store</th>
-                  <th>Price</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {products.map((product, index) =>
-                  <tr key={index}>
-                    <td>{index + 1}</td>
-                    <td>{product.name}</td>
-                    <td>{product.label}</td>
-                    <td>
-                      {categories.length > 0 ? categories.find(cat => cat.id === product.category_id).name : ""}
-                    </td>
-                    <td>
-                      {stores.length > 0 ? stores.find(store => store.id === product.store_id).name : ""}
-                    </td>
-                    <td>
-                      {product.inventoryOnHand}{' '}
-                      {units.length > 0 ? units.find(unit => unit.id === product.unit_id).abbr : ""}
-                    </td>
-                    <td>{product.price}</td>
-                    <td>
-                      <button className="btn btn-sm btn-success"
-                        onClick={() => this.onEditProduct(product)}><i className="fa fa-edit"></i> Edit</button> {` | `}
-                      <button className="btn btn-sm btn-primary"
-                        onClick={() => this.onNewRequsition(product)}><i className="fa fa-plus"></i> Requisition</button>
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
+          <div className="card-body p-0">
+            <PaginatedTable cols={columns} rows={products} />
           </div>
         </div>
-      </div>
+      </div >
     )
   }
 }
 
 export default connect(state => ({
   inventory: state.inventory,
+  rights: state.auth.user.rights
 }), {
   getProducts, addProduct, updateProduct, deleteProduct,
   addRequisition

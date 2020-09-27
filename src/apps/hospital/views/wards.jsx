@@ -127,12 +127,14 @@ export class Wards extends Component {
       <div className="col-md-10 mx-auto mt-3">
         {ward_details_view}
         <div className="card">
-          <div className="card-header py-1 px-3">
-            <div className="py-1 px-2">Inpatient Wards
-              </div>
-            <button className="btn btn-sm"
-              onClick={this.onNewWard}><i className="fa fa-plus-circle"></i> Add Ward</button>
-
+          <div className="card-header">
+            <div>Wards</div>
+            {this.props.rights.can_add_ward ?
+              <button
+                className="btn btn-sm"
+                onClick={this.onNewWard}><i className="fa fa-plus-circle"></i>  Add Ward
+              </button> :
+              null}
           </div>
           <div className="card-body p-0">
             <table className="table table-sm table-bordered">
@@ -159,8 +161,11 @@ export class Wards extends Component {
                     <td>{ward.daily_fee}</td>
                     <td>{ward.description}</td>
                     <td className="text-center">
-                      <button className="btn btn-sm btn-success mr-2"
-                        onClick={() => this.onEditWard(ward)}><i className="fa fa-edit"></i> Edit</button>
+                      {this.props.rights.can_edit_ward ?
+                        <button className="btn btn-sm btn-success mr-2"
+                          onClick={() => this.onEditWard(ward)}><i className="fa fa-edit"></i> Edit</button>
+                        : <button className="btn btn-sm btn-secondary"> No Action</button>
+                      }
                     </td>
                   </tr >
                 )}
@@ -175,4 +180,5 @@ export class Wards extends Component {
 
 export default connect(state => ({
   hospital: state.hospital,
+  rights: state.auth.user.rights
 }), { getWards, addWard, updateWard })(Wards)

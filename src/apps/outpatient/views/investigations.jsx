@@ -49,7 +49,7 @@ export class Investigation extends Component {
 
 
   render() {
-    const { service_requests, appointment } = this.props
+    const { service_requests, appointment, rights } = this.props
     const investigation_view =
       <Modal isOpen={this.state.showModal} size="md">
         <ModalHeader toggle={this.toggleModal}>Add investigation requests</ModalHeader>
@@ -95,9 +95,10 @@ export class Investigation extends Component {
         <div className="card">
           <div className="card-header py-1 px-3">
             <div className="py-1 px-2"><b>Laboratory  &nbsp; &amp; &nbsp; Radiology Requests</b></div>
-            <button className="btn btn-sm "
-              onClick={this.onNewObservation}><i className="fa fa-plus-circle mr-2"></i> Add
-              </button>
+            {rights.can_add_investigation ?
+              <button className="btn btn-sm "
+                onClick={this.onNewObservation}><i className="fa fa-plus-circle mr-2"></i> Add
+              </button> : null}
           </div>
           <div className="card-body p-0 mt-0">
             <table className="table table-sm table-responsive-sm">
@@ -105,9 +106,9 @@ export class Investigation extends Component {
                 <tr>
                   <td>#</td>
                   <td>Investigation</td>
-                  <td className="text-center">Status</td>
-                  <td className="text-center">Result</td>
-                  <td className="text-center">Action</td>
+                  <td>Status</td>
+                  <td>Result</td>
+                  <td>Action</td>
                 </tr>
               </thead>
               <tbody>
@@ -115,26 +116,27 @@ export class Investigation extends Component {
                   <tr key={index}>
                     <td>{index + 1}</td>
                     <td>{request.service_name}</td>
-                    <td className="text-primary text-center">
+                    <td>
                       {
                         (request.is_approved && request.is_served) ? "Ready" :
                           (request.is_approved && !request.is_served) ? "In progress" :
                             "Not paid"
                       }
                     </td>
-                    <td className="text-success text-center">{request.description ? request.description : "--"}</td>
-                    <td className="text-center">
-                      {!request.is_approved ?
-                        <button className="btn btn-sm  border-none btn-danger"
-                          onClick={() => deleteData(request.id, this.props.deleteServiceRequest)}><i className="fa fa-trash"></i> Delete</button>
-                        : (request.is_approved && request.is_served) ?
-                          <button className="btn btn-sm btn-success">View</button>
-                          :
-                          <button className="btn btn-sm btn-secondary disabled">No action</button>
-                      }
+                    <td>{request.description ? request.description : "--"}</td>
+                    <td>
+                      {rights.can_add_investigation ?
+                        !request.is_approved ?
+                          <button className="btn btn-sm  border-none btn-danger"
+                            onClick={() => deleteData(request.id, this.props.deleteServiceRequest)}><i className="fa fa-trash"></i> Delete</button>
+                          : (request.is_approved && request.is_served) ?
+                            <button className="btn btn-sm btn-success">View</button>
+                            :
+                            <button className="btn btn-sm btn-secondary disabled">No action</button>
+                        : null}
                     </td>
-                  </tr>)
-                }
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>
@@ -148,4 +150,5 @@ export default connect(state => ({
   service_requests: state.revenue.service_requests,
   common: state.common,
   services: state.hospital.services,
+  rights: state.auth.user.rights
 }), { getServiceRequests, addServiceRequest, updateServiceRequest, deleteServiceRequest })(Investigation)

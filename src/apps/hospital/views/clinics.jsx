@@ -79,7 +79,7 @@ export class Clinic extends Component {
               <div className="form-group col-12">
                 <input className="form-control form-control-sm"
                   name="name" onChange={this.onChange} value={this.state.name} required={true} />
-                <label>Clininc name<sup>*</sup></label>
+                <label>Clinic name<sup>*</sup></label>
               </div>
               <div className="form-group col-12">
                 <input className="form-control form-control-sm"
@@ -102,12 +102,14 @@ export class Clinic extends Component {
       <div className="col-md-8 mx-auto mt-3">
         {clinic_details}
         <div className="card">
-          <div className="card-header py-1 px-3">
-            <div className="py-1 px-2"><i className="fa fa-stethoscope"></i> Clinics</div>
-            <button
-              className="btn btn-sm py-1 px-2 mr-auto"
-              onClick={this.onNewClinic}><i className="fa fa-plus-circle mr-2"></i> Add Clinic
-              </button>
+          <div className="card-header">
+            <div>Groups</div>
+            {this.props.rights.can_add_clinic ?
+              <button
+                className="btn btn-sm"
+                onClick={this.onNewClinic}><i className="fa fa-plus-circle"></i>  Add Clinic
+              </button> :
+              null}
           </div>
           <div className="card-body p-0">
             <table className="table table-sm table-striped table-bordered">
@@ -126,10 +128,13 @@ export class Clinic extends Component {
                     <td>{clinic.name}</td>
                     <td>{clinic.appointment_fee}</td>
                     <td>
-                      <button className="btn btn-sm btn-success mr-2"
-                        onClick={() => this.onEditClinic(clinic)}><i className="fa fa-edit"></i> Edit</button>
-                      <button className="btn btn-sm btn-danger"
-                        onClick={() => deleteData(clinic.id, this.props.deleteClinic)}><i className="fa fa-trash"></i> Delete</button>
+                      {this.props.rights.can_edit_clinic ? <>
+                        <button className="btn btn-sm btn-success mr-2"
+                          onClick={() => this.onEditClinic(clinic)}><i className="fa fa-edit"></i> Edit</button>
+                        <button className="btn btn-sm btn-danger"
+                          onClick={() => deleteData(clinic.id, this.props.deleteClinic)}><i className="fa fa-trash"></i> Delete</button>
+                      </> :
+                        <button className="btn btn-sm btn-secondary disabled">No Action</button>}
                     </td>
                   </tr>
                 )}
@@ -145,6 +150,7 @@ export class Clinic extends Component {
 const mapStateToProps = state => ({
   clinics: state.hospital.clinics,
   common: state.common,
+  rights: state.auth.user.rights
 });
 
 export default connect(mapStateToProps, { getClinics, addClinic, updateClinic, deleteClinic })(Clinic);

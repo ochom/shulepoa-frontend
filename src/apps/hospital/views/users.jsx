@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
-import { getUsers, addUser, updateUser } from '../actions';
+import { getUsers, addUser, updateUser, getGroups } from '../actions';
 
 export class Users extends Component {
   state = {
@@ -10,12 +10,12 @@ export class Users extends Component {
     username: "",
     email: "",
     phone: "",
-
-    user_level: 1
+    group: ""
   }
 
   componentDidMount() {
     this.props.getUsers();
+    this.props.getGroups()
   }
 
 
@@ -30,8 +30,7 @@ export class Users extends Component {
       username: "",
       email: "",
       phone: "",
-
-      user_level: 0
+      group: ""
     })
   }
 
@@ -42,8 +41,7 @@ export class Users extends Component {
       username: data.username,
       email: data.email,
       phone: data.phone,
-
-      user_level: data.is_admin ? 3 : data.is_senior ? 2 : data.is_junior ? 1 : 0
+      group: data.group
     })
   }
 
@@ -55,28 +53,24 @@ export class Users extends Component {
       email,
       phone,
 
-      user_level
+      group
     } = this.state;
 
-    console.log(typeof user_level)
+    console.log(typeof group)
 
     const create_data = {
       username,
       email,
       phone,
       password: phone,
-      is_admin: parseInt(user_level) === 3,
-      is_senior: parseInt(user_level) === 2,
-      is_junior: parseInt(user_level) === 1,
+      group
     }
 
     const update_data = {
       username,
       email,
       phone,
-      is_admin: parseInt(user_level) === 3,
-      is_senior: parseInt(user_level) === 2,
-      is_junior: parseInt(user_level) === 1,
+      group
     }
 
     if (select_user) {
@@ -85,9 +79,7 @@ export class Users extends Component {
       this.props.addUser(create_data)
     }
 
-    this.setState({
-      showModal: !this.state.showModal,
-    })
+    this.toggleModal()
   }
 
   render() {
@@ -122,13 +114,12 @@ export class Users extends Component {
               </div>
               <div className="form-group col-12 my-2">
                 <select className="form-control form-control-sm"
-                  name="user_level" onChange={this.onChange} value={this.state.user_level}
+                  name="group" onChange={this.onChange} value={this.state.group}
                   required={true}>
-                  <option value={1}>Junior staff</option>
-                  <option value={2}>Senior staff</option>
-                  <option value={3}>Administrator</option>
+                  <option value=""></option>
+                  {this.props.groups.map((group, index) => <option value={group.id} key={index}>{group.name}</option>)}
                 </select>
-                <label>User Level<sup>*</sup></label>
+                <label>Role<sup>*</sup></label>
               </div>
             </div>
           </ModalBody >
@@ -149,9 +140,11 @@ export class Users extends Component {
         <div className="col-md-10 mx-auto mt-3">
           <div className="card">
             <div className="card-header">
-              <div>Manage Users</div>
-              <button className="btn" onClick={this.onNewUser}>
-                <i className="fa fa-plus-circle"></i> Add User</button>
+              <div>Users</div>
+              {this.props.rights.can_edit_user ?
+                <button
+                  className="btn btn-sm"
+                  onClick={this.onNewUser}><i className="fa fa-plus-circle"></i>  Add User</button> : null}
             </div>
             <div className="card-body p-0">
               <table className="table table-sm table-striped">
@@ -161,7 +154,7 @@ export class Users extends Component {
                     <th>Name</th>
                     <th>Email</th>
                     <th>Mobile</th>
-                    <th>Level</th>
+                    <th>Role</th>
                     <th>Status</th>
                     <th>Action</th></tr>
                 </thead>
@@ -172,23 +165,21 @@ export class Users extends Component {
                       <td>{user.username}</td>
                       <td>{user.email}</td>
                       <td>{user.phone}</td>
-                      <td>{user.is_admin ? "Administrator" : user.is_senior ? "Senior staff" : user.is_junior ? "Junior staff" : "Client"}</td>
+                      <td>{user.rights ? user.rights.name : ""}</td>
                       <td>{user.is_active ? "Active" : "Inactive"}</td>
                       <td>
-                        <button className="btn btn-sm p-0 px-1 border-none btn-success"
-                          onClick={() => this.onEditUser(user)}><i className="fa fa-edit"></i> Edit</button>
-                        {user.id !== this.props.auth.user.id ?
+                        {this.props.rights.can_edit_user ?
                           <>
-                            {' | '}
-                            {user.is_active ?
-                              <button className="btn btn-sm p-0 px-1 border-none btn-secondary"
-                                onClick={() => this.props.updateUser(user.id, { is_active: false })}>Deactivate
-                        </button> :
-                              <button className="btn btn-sm p-0 px-1 border-none btn-primary"
-                                onClick={() => this.props.updateUser(user.id, { is_active: true })}>Activate
-                        </button>
+                            <button className="btn btn-sm btn-success mr-2"
+                              onClick={() => this.onEditUser(user)}>Edit</button>
+                            {user.id !== this.props.auth.user.id ?
+                              <button className="btn btn-sm btn-secondary"
+                                onClick={() => this.props.updateUser(user.id, { is_active: !user.is_active })}>{user.is_active ? 'Deactivate' : 'Activate'}
+                              </button>
+                              : null
                             }
-                          </> : null
+                          </> :
+                          <button className="btn btn-sm btn-secondary disabled">No Action</button>
                         }
                       </td>
                     </tr>
@@ -206,7 +197,9 @@ export class Users extends Component {
 const mapStateToProps = state => ({
   auth: state.auth,
   users: state.hospital.users,
+  groups: state.hospital.groups,
   common: state.common,
+  rights: state.auth.user.rights
 });
 
-export default connect(mapStateToProps, { getUsers, addUser, updateUser })(Users);
+export default connect(mapStateToProps, { getGroups, getUsers, addUser, updateUser })(Users);

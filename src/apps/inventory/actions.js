@@ -4,47 +4,12 @@ import Axios from "axios"
 
 export const inventoryTypes = {
   GET_STORES: 'GET_STORES',
-  ADD_STORE: 'ADD_STORE',
-  GET_STORE: 'GET_STORE',
-  UPDATE_STORE: 'UPDATE_STORE',
-  DELETE_STORE: 'DELETE_STORE',
-
   GET_CATEGORIES: 'GET_CATEGORIES',
-  ADD_CATEGORY: 'ADD_CATEGORY',
-  GET_CATEGORY: 'GET_CATEGORY',
-  UPDATE_CATEGORY: 'UPDATE_CATEGORY',
-  DELETE_CATEGORY: 'DELETE_CATEGORY',
-
   GET_UNITS: 'GET_UNITS',
-  ADD_UNIT: 'ADD_UNIT',
-  GET_UNIT: 'GET_UNIT',
-  UPDATE_UNIT: 'UPDATE_UNIT',
-  DELETE_UNIT: 'DELETE_UNIT',
-
   GET_PRODUCTS: 'GET_PRODUCTS',
-  ADD_PRODUCT: 'ADD_PRODUCT',
-  GET_PRODUCT: 'GET_PRODUCT',
-  UPDATE_PRODUCT: 'UPDATE_PRODUCT',
-  DELETE_PRODUCT: 'DELETE_PRODUCT',
-
   GET_REQUISITIONS: 'GET_REQUISITIONS',
-  ADD_REQUISITION: 'ADD_REQUISITION',
-  GET_REQUISITION: 'GET_REQUISITION',
-  UPDATE_REQUISITION: 'UPDATE_REQUISITION',
-  DELETE_REQUISITION: 'DELETE_REQUISITION',
-
   GET_SUPPLIERS: 'GET_SUPPLIERS',
-  GET_SUPPLIER: 'GET_SUPPLIER',
-  ADD_SUPPLIER: 'ADD_SUPPLIER',
-  UPDATE_SUPPLIER: 'UPDATE_SUPPLIER',
-  DELETE_SUPPLIER: 'DELETE_SUPPLIER',
-
   GET_ORDERS: 'GET_ORDERS',
-  GET_ORDER: 'GET_ORDER',
-  ADD_ORDER: 'ADD_ORDER',
-  UPDATE_ORDER: 'UPDATE_ORDER',
-  DELETE_ORDER: 'DELETE_ORDER',
-
 }
 
 //Stores
@@ -74,20 +39,6 @@ export const addStore = (data) => (dispatch, getState) => {
     })
     .finally(() => {
       dispatch({ type: commonTypes.DONE });
-    })
-}
-
-export const getStore = (id) => (dispatch, getState) => {
-  dispatch({ type: commonTypes.PROCESSING });
-  Axios.get(`${API_PATH}inventory/stores/${id}/`, tokenConfig(getState))
-    .then((res) => {
-      dispatch({ type: inventoryTypes.GET_STORE, payload: res.data });
-    })
-    .catch((err) => {
-      dispatch({ type: commonTypes.ERROR, payload: err });
-    })
-    .finally(() => {
-      dispatch({ type: commonTypes.DONE })
     })
 }
 
@@ -152,20 +103,6 @@ export const addCategory = (data) => (dispatch, getState) => {
     })
 }
 
-export const getCategory = (id) => (dispatch, getState) => {
-  dispatch({ type: commonTypes.PROCESSING });
-  Axios.get(`${API_PATH}inventory/categories/${id}/`, tokenConfig(getState))
-    .then((res) => {
-      dispatch({ type: inventoryTypes.GET_CATEGORY, payload: res.data });
-    })
-    .catch((err) => {
-      dispatch({ type: commonTypes.ERROR, payload: err });
-    })
-    .finally(() => {
-      dispatch({ type: commonTypes.DONE })
-    })
-}
-
 export const updateCategory = (id, data) => (dispatch, getState) => {
   dispatch({ type: commonTypes.PROCESSING });
   Axios.patch(`${API_PATH}inventory/categories/${id}/`, JSON.stringify(data), tokenConfig(getState))
@@ -224,20 +161,6 @@ export const addUnit = (data) => (dispatch, getState) => {
     })
     .finally(() => {
       dispatch({ type: commonTypes.DONE });
-    })
-}
-
-export const getUnit = (id) => (dispatch, getState) => {
-  dispatch({ type: commonTypes.PROCESSING });
-  Axios.get(`${API_PATH}inventory/units/${id}/`, tokenConfig(getState))
-    .then((res) => {
-      dispatch({ type: inventoryTypes.GET_UNIT, payload: res.data });
-    })
-    .catch((err) => {
-      dispatch({ type: commonTypes.ERROR, payload: err });
-    })
-    .finally(() => {
-      dispatch({ type: commonTypes.DONE })
     })
 }
 
@@ -302,20 +225,6 @@ export const addProduct = (data) => (dispatch, getState) => {
     })
 }
 
-export const getProduct = (id) => (dispatch, getState) => {
-  dispatch({ type: commonTypes.PROCESSING });
-  Axios.get(`${API_PATH}inventory/products/${id}/`, tokenConfig(getState))
-    .then((res) => {
-      dispatch({ type: inventoryTypes.GET_PRODUCT, payload: res.data });
-    })
-    .catch((err) => {
-      dispatch({ type: commonTypes.ERROR, payload: err });
-    })
-    .finally(() => {
-      dispatch({ type: commonTypes.DONE })
-    })
-}
-
 export const updateProduct = (id, data) => (dispatch, getState) => {
   dispatch({ type: commonTypes.PROCESSING });
   Axios.patch(`${API_PATH}inventory/products/${id}/`, JSON.stringify(data), tokenConfig(getState))
@@ -374,20 +283,6 @@ export const addRequisition = (data) => (dispatch, getState) => {
     })
     .finally(() => {
       dispatch({ type: commonTypes.DONE });
-    })
-}
-
-export const getRequisition = (id) => (dispatch, getState) => {
-  dispatch({ type: commonTypes.PROCESSING });
-  Axios.get(`${API_PATH}inventory/requisitions/${id}/`, tokenConfig(getState))
-    .then((res) => {
-      dispatch({ type: inventoryTypes.GET_REQUISITION, payload: res.data });
-    })
-    .catch((err) => {
-      dispatch({ type: commonTypes.ERROR, payload: err });
-    })
-    .finally(() => {
-      dispatch({ type: commonTypes.DONE })
     })
 }
 
@@ -451,20 +346,6 @@ export const addSupplier = (data) => (dispatch, getState) => {
     })
 }
 
-export const getSupplier = (id) => (dispatch, getState) => {
-  dispatch({ type: commonTypes.PROCESSING })
-  Axios.get(`${API_PATH}inventory/suppliers/${id}/`, tokenConfig(getState))
-    .then(res => {
-      dispatch({ type: inventoryTypes.GET_SUPPLIER, payload: res.data })
-    })
-    .catch((err) => {
-      dispatch({ type: commonTypes.ERROR, payload: err });
-    })
-    .finally(() => {
-      dispatch({ type: commonTypes.DONE })
-    })
-}
-
 export const updateSupplier = (id, data) => (dispatch, getState) => {
   dispatch({ type: commonTypes.PROCESSING })
   Axios.patch(`${API_PATH}inventory/suppliers/${id}/`, JSON.stringify(data), tokenConfig(getState))
@@ -515,20 +396,6 @@ export const addOrder = (data) => (dispatch, getState) => {
     .then(res => {
       dispatch(getOrders())
       dispatch({ type: commonTypes.SUCCESS, message: "Order details saved succesfully" })
-    })
-    .catch((err) => {
-      dispatch({ type: commonTypes.ERROR, payload: err });
-    })
-    .finally(() => {
-      dispatch({ type: commonTypes.DONE })
-    })
-}
-
-export const getOrder = (id) => (dispatch, getState) => {
-  dispatch({ type: commonTypes.PROCESSING })
-  Axios.get(`${API_PATH}inventory/orders/${id}/`, tokenConfig(getState))
-    .then(res => {
-      dispatch({ type: inventoryTypes.GET_ORDER, payload: res.data })
     })
     .catch((err) => {
       dispatch({ type: commonTypes.ERROR, payload: err });

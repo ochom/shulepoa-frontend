@@ -120,9 +120,10 @@ export class HospitalProfile extends Component {
                 </div>
               </div>
               <div className="card-footer">
-                <button type="submit" className="btn btn-sm btn-success"
-                  onSubmit={this.onSubmitHospital}>
-                  <i className="fa fa-check"></i> Update</button>
+                {this.props.rights.can_edit_hospital ?
+                  <button type="submit" className="btn btn-sm btn-success"
+                    onSubmit={this.onSubmitHospital}>
+                    <i className="fa fa-check"></i> Update</button> : null}
               </div>
             </form>
           </div>
@@ -139,6 +140,7 @@ export class HospitalProfile extends Component {
 const mapStateToProps = state => ({
   hospital: state.hospital,
   common: state.common,
+  rights: state.auth.user.rights
 });
 
 export default connect(mapStateToProps, { getHospital, addHospital, updateHospital })(HospitalProfile);

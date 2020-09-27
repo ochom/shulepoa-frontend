@@ -63,7 +63,7 @@ export class Schemes extends Component {
 
   render() {
 
-    const { patient, insurances } = this.props;
+    const { patient, insurances, rights } = this.props;
     const scheme_details =
       <Modal isOpen={this.state.showModal} size="md">
         <ModalHeader toggle={this.toggleModal}>
@@ -106,12 +106,13 @@ export class Schemes extends Component {
       <>
         {scheme_details}
         <div className="card">
-          <div className="card-header py-1 px-3">
-            <div className="py-1 px-2"> Patient Schemes</div>
-            <button
-              className="btn btn-sm"
-              onClick={this.onNewScheme}><i className="fa fa-plus-circle mr-2"></i> Add Insurance
-              </button>
+          <div className="card-header">
+            <div> Patient Schemes</div>
+            {rights.can_add_scheme ?
+              <button
+                className="btn btn-sm"
+                onClick={this.onNewScheme}><i className="fa fa-plus-circle mr-2"></i> Add Insurance
+              </button> : null}
           </div>
           <div className="card-body p-0 pb-2">
             <table className="table table-sm table-responsive-sm">
@@ -130,11 +131,9 @@ export class Schemes extends Component {
                     <td>{scheme.company.company_name}</td>
                     <td>{scheme.card_number}</td>
                     <td className="text-center">
-                      <button className="btn btn-sm mr-2 border-none btn-success"
-                        onClick={() => this.onEditScheme(scheme)}><i className="fa fa-edit"></i></button>
-                      {/* <button className="btn btn-sm border-none btn-danger"
-                        onClick={() => deleteData(scheme.id, this.props.deleteScheme)}>
-                        <i className="fa fa-trash"></i></button> */}
+                      {rights.can_delete_scheme ?
+                        <button className="btn btn-sm mr-2 border-none btn-success"
+                          onClick={() => this.onEditScheme(scheme)}><i className="fa fa-edit"></i></button> : null}
                     </td>
                   </tr>)}
               </tbody>
@@ -149,6 +148,7 @@ export class Schemes extends Component {
 const mapStateToProps = (state) => ({
   records: state.records,
   insurances: state.hospital.insurances,
+  rights: state.auth.user.rights
 });
 
 export default connect(mapStateToProps,

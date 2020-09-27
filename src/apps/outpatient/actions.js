@@ -71,7 +71,7 @@ export const updateAppointment = (id, data) => (dispatch, getState) => {
     .then(res => {
       dispatch(getAppointments())
       dispatch(getAppointment(id))
-      dispatch({ type: commonTypes.SUCCESS, payload: "Appointment details updated succesfully" })
+      dispatch({ type: commonTypes.SUCCESS, payload: "Appointment updated" })
     })
     .catch((err) => {
       dispatch({ type: commonTypes.ERROR, payload: err });

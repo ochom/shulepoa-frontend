@@ -135,18 +135,15 @@ export class Insurance extends Component {
     return (
       <div className="col-md-10 mx-auto mt-3">
         {insurance_details}
-        <div className="form-group my-2">
-          <input className="form-control" defaultValue=""
-            onChange={this.onSearch} />
-          <label><span role="img" aria-label="search">&#x1F50D;</span> Search...</label>
-        </div>
         <div className="card">
           <div className="card-header">
-            <div className=""> Insurance companies</div>
-            <button
-              className="btn btn-sm py-1 px-2 mr-auto"
-              onClick={this.onNewInsurance}><i className="fa fa-plus-circle mr-2"></i> Add Insurance
-              </button>
+            <div>Insurances</div>
+            {this.props.rights.can_add_insurance ?
+              <button
+                className="btn btn-sm"
+                onClick={this.onNewInsurance}><i className="fa fa-plus-circle"></i>  Add Insurance
+              </button> : null
+            }
           </div>
           <div className="card-body p-0">
             <table className="table table-sm table-striped table-bordered">
@@ -167,8 +164,11 @@ export class Insurance extends Component {
                     <td>{insurance.company_email}</td>
                     <td>{insurance.company_phone}</td>
                     <td>
-                      <button className="btn btn-sm btn-success"
-                        onClick={() => this.onEditInsurance(insurance)}><i className="fa fa-edit"></i> Edit</button>
+                      {this.props.rights.can_edit_insurance ?
+                        <button className="btn btn-sm btn-success"
+                          onClick={() => this.onEditInsurance(insurance)}><i className="fa fa-edit"></i> Edit</button>
+                        : <button className="btn btn-sm btn-secondary disabled">No Action</button>
+                      }
                     </td>
                   </tr>
                 )}
@@ -183,6 +183,7 @@ export class Insurance extends Component {
 
 const mapStateToProps = state => ({
   hospital: state.hospital,
+  rights: state.auth.user.rights
 });
 
 export default connect(mapStateToProps, { getInsurances, addInsurance, updateInsurance })(Insurance);

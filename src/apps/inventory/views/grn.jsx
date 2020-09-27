@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { getOrders } from '../actions'
+import ReactHTMLTableToExcel from '../../common/actions'
 
 export class GRN extends Component {
   state = {
@@ -18,12 +19,16 @@ export class GRN extends Component {
         <div className="card mt-3">
           <div className="card-header py-1 px-3">
             <div className="py-1 px-2">Supply History</div>
-            <button
-              className="btn btn-sm "><i className="fa fa-file-excel-o mr-2"></i> Export
-              </button>
+            <ReactHTMLTableToExcel
+              id="test-table-xls-button"
+              className="btn btn-sm"
+              table="data_table"
+              filename="tablexls"
+              sheet="tablexls"
+              buttonText="Export" />
           </div>
-          <div className="card-body p-0 pb-2">
-            <table className="table table-sm table-striped table-bordered">
+          <div className="card-body p-0">
+            <table className="table table-sm table-hover table-responsive-sm" id="data_table">
               <thead className="cu-text-primary">
                 <tr>
                   <th>#</th>
