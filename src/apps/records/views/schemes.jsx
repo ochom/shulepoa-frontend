@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
-import { addScheme, deleteScheme, getPatient, updateScheme } from '../actions';
+import { addScheme, deleteScheme, updateScheme } from '../actions';
 
 export class Schemes extends Component {
   constructor(props) {
@@ -13,10 +13,6 @@ export class Schemes extends Component {
       company_id: "",
       card_number: "",
     };
-  }
-
-  componentDidMount() {
-    this.props.getPatient(this.props.patient.id)
   }
 
   onChange = (e) => this.setState({ [e.target.name]: e.target.value });
@@ -152,5 +148,5 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps,
-  { getPatient, addScheme, updateScheme, deleteScheme }
+  { addScheme, updateScheme, deleteScheme }
 )(Schemes);

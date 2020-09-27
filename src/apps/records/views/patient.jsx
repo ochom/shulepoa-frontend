@@ -2,10 +2,9 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { getPatient } from '../actions'
 
-import Appointments from './appointments'
+import HealthFiles from './appointments'
 import Schemes from './schemes'
 import ServiceRequests from './service_requests'
-import Admissions from './admissions'
 
 class Patient extends Component {
   constructor(props) {
@@ -64,12 +63,9 @@ class Patient extends Component {
               </div>
               <div className="row col-9">
                 <div className="col-md-6 my-2">
-                  <Appointments patient_id={this.state.patient_id} />
+                  <HealthFiles patient_id={this.state.patient_id} />
                 </div>
                 <div className="col-md-6 my-2">
-                  <Admissions patient_id={this.state.patient_id} />
-                </div>
-                <div className="col-md-12 my-2">
                   <Schemes patient={patient} />
                 </div>
                 <div className="col-12 my-2">
@@ -77,7 +73,7 @@ class Patient extends Component {
                 </div>
               </div>
             </div>
-          </>
+          </ >
           : null}
       </div>
     )

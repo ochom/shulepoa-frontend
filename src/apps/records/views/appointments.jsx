@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { addAppointment, getAppointments } from '../../outpatient/actions';
-import { getPatient } from '../actions';
 import { Link } from 'react-router-dom';
 
 
@@ -53,5 +52,5 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps,
-  { getPatient, addAppointment, getAppointments }
+  { addAppointment, getAppointments }
 )(Appointments);
