@@ -36,8 +36,8 @@ export class Dashboard extends Component {
                 height="auto"
               /></div>
           </div>
-        </div >
-      </ >
+        </div>
+      </>
     )
   }
 }

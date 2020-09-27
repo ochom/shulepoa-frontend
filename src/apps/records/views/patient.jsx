@@ -77,7 +77,7 @@ class Patient extends Component {
                 </div>
               </div>
             </div>
-          </ >
+          </>
           : null}
       </div>
     )

@@ -120,7 +120,7 @@ export class Insurance extends Component {
                 <label>Phone Nunber<sup>*</sup></label>
               </div>
             </div>
-          </ModalBody >
+          </ModalBody>
           <ModalFooter>
             <button type="submit" className="btn btn-sm btn-success"
               onSubmit={this.onSubmit}>
@@ -130,7 +130,7 @@ export class Insurance extends Component {
               <i className="fa fa-close"></i> Cancel</button>
           </ModalFooter>
         </form>
-      </Modal >
+      </Modal>
 
     return (
       <div className="col-md-10 mx-auto mt-3">

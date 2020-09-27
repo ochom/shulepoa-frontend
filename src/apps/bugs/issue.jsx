@@ -40,7 +40,7 @@ class Bug extends Component {
         {bug ?
           <>
             <div className="list-group my-3 issues-list">
-              <div className="list-group-item" >
+              <div className="list-group-item">
                 <small className="time-posted">{new Date(bug.created).toLocaleDateString("en-us")}</small>
                 <b className="p-0 m-0">{bug.title}</b><br />
                 <small>{(users && users.find(user => user.id === bug.created_by)) ? users.find(user => user.id === bug.created_by).username : ""}</small>

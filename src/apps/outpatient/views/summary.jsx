@@ -181,7 +181,7 @@ export class Summary extends Component {
             </div>
           </div>
         </div>
-      </div >
+      </div>
     )
   }
 }

@@ -105,7 +105,7 @@ class Bugs extends Component {
         {bug_modal}
         <div className="col-md-10 mx-auto">
           <button className="btn btn-sm cu-bg-secondary"
-            onClick={this.newBug} >Add new issue</button>
+            onClick={this.newBug}>Add new issue</button>
           <div className="list-group my-3 issues-list">
             {bugs.map((bug, index) =>
               <div key={index} className="list-group-item">

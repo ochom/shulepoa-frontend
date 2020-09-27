@@ -89,7 +89,7 @@ export class Sampling extends Component {
               </div>
               <div className="card-body" style={{ maxHeight: "75vh", overflowY: "auto" }}>
                 {this.state.investigation_list.map((investigation, index) =>
-                  <div key={index} >
+                  <div key={index}>
                     <div className="form-row">
                       <div className="form-group col-8">
                         <input className="form-control form-control-sm" readOnly={true}

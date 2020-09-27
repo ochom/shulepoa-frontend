@@ -140,7 +140,7 @@ export class Deposit extends Component {
                 <label>Notes<sup>*</sup></label>
               </div>
             </div>
-          </ModalBody >
+          </ModalBody>
           <ModalFooter>
             <button type="submit" className="btn btn-sm btn-success"
               onSubmit={this.onSubmit}>
@@ -150,10 +150,10 @@ export class Deposit extends Component {
               <i className="fa fa-close"></i> Cancel</button>
           </ModalFooter>
         </form>
-      </Modal >
+      </Modal>
 
     return (
-      <div className="col-md-10 mx-auto mt-3" >
+      <div className="col-md-10 mx-auto mt-3">
         {deposit_details}
         <div className="card">
           <div className="card-header">
@@ -167,7 +167,7 @@ export class Deposit extends Component {
             <PaginatedTable cols={columns} rows={deposits} />
           </div>
         </div>
-      </div >
+      </div>
     )
   }
 }

@@ -179,8 +179,8 @@ export class LogBook extends Component {
               </div>
             </div>
           </div>
-        </div >
-      </div >
+        </div>
+      </div>
     )
   }
 }

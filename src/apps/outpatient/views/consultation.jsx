@@ -116,7 +116,7 @@ export class Consultation extends Component {
             </div>
           </div>
         }
-      </div >
+      </div>
     )
   }
 }

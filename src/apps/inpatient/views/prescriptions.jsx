@@ -158,7 +158,7 @@ export class Prescription extends Component {
                   </div>
                   <div className="form-group col-12">
                     <select className="form-control form-control-sm" name="dos_2_qnty" data-value={this.state.dos_2_qnty}
-                      required={true} value={this.state.dos_2_qnty} onChange={this.onChange} >
+                      required={true} value={this.state.dos_2_qnty} onChange={this.onChange}>
                       <option value={1}>Yes</option>
                       <option value={0}>No</option>
                     </select>
@@ -172,7 +172,7 @@ export class Prescription extends Component {
                 </div>
                 : null}
             </div>
-          </ModalBody >
+          </ModalBody>
           <ModalFooter>
             <Button type="submit" color="primary" size="sm"
               onClick={this.onSubmit}><i className="fa fa-check"></i> Submit</Button>
@@ -180,8 +180,7 @@ export class Prescription extends Component {
               <i className="fa fa-close"></i> Cancel</Button>
           </ModalFooter>
         </form>
-      </Modal >
-
+      </Modal>
 
     return (
       <>

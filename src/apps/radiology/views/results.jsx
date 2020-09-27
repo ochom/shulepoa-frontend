@@ -105,12 +105,12 @@ export class Results extends Component {
                 </div>
                 <div className="form-group col-12">
                   <textarea className="form-control form-control-sm" name="result" required={true}
-                    value={this.state.result} onChange={this.onChange} ></textarea>
+                    value={this.state.result} onChange={this.onChange}></textarea>
                   <label>Result <sup>*</sup></label>
                 </div>
                 <div className="form-group col-12">
                   <textarea className="form-control form-control-sm" name="analysis_comment"
-                    value={this.state.analysis_comment} onChange={this.onChange} ></textarea>
+                    value={this.state.analysis_comment} onChange={this.onChange}></textarea>
                   <label>Results Note:</label>
                 </div>
               </div>

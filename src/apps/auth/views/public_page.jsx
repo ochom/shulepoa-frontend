@@ -24,7 +24,7 @@ export class PublicPage extends Component {
             <h3 className="text-center text-primary mt-4">
               Well you are here because you registered as a user in this hospital
             but your application has not been approve by the Administrator</h3>
-          </div >
+          </div>
         </div>
       </>
     )

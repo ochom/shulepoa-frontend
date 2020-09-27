@@ -129,7 +129,7 @@ class Invoices extends Component {
           <button type="button" className="btn btn-sm btn-secondary"
             onClick={this.toggleModal}><i className="fa fa-close"></i> Cancel</button>
         </ModalFooter>
-      </Modal >
+      </Modal>
       : null
 
     const payment_modal = selected_invoice ?
@@ -145,7 +145,7 @@ class Invoices extends Component {
           <button type="button" className="btn btn-sm btn-secondary"
             onClick={this.toggleModal2}><i className="fa fa-close"></i> Cancel</button>
         </ModalFooter>
-      </Modal >
+      </Modal>
       : null
 
     return (

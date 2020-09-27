@@ -87,13 +87,13 @@ export class ServiceRequests extends Component {
               )}
             </tbody>
           </table>
-        </ModalBody >
+        </ModalBody>
         <ModalFooter>
           <button type="button" className="btn btn-sm btn-secondary"
             onClick={this.toggleModal}>
             <i className="fa fa-close"></i> Cancel</button>
         </ModalFooter>
-      </Modal >
+      </Modal>
 
     return (
       <>

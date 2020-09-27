@@ -123,7 +123,7 @@ export class Sampling extends Component {
                       </div>
                       <div className="form-group col-12">
                         <textarea className="form-control form-control-sm" name="sampling_comment"
-                          value={this.state.sampling_comment} onChange={this.onChange} ></textarea>
+                          value={this.state.sampling_comment} onChange={this.onChange}></textarea>
                         <label>Sampling Note:</label></div>
                       <div className="form-group col-12">
                         <button type="submit" className="btn btn-success"

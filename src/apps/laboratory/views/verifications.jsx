@@ -84,7 +84,7 @@ export class Verification extends Component {
                 </div>
                 <div className="form-group col-12">
                   <textarea className="form-control form-control-sm" name="verification_comment"
-                    value={this.state.verification_comment} onChange={this.onChange} ></textarea>
+                    value={this.state.verification_comment} onChange={this.onChange}></textarea>
                   <label>Verification Note:</label>
                 </div>
               </div>

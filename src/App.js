@@ -80,8 +80,8 @@ export class App extends Component {
             </div>
 
             <ToastContainer />
-          </Fragment >
-        </Router >
+          </Fragment>
+        </Router>
       );
     }
   }

@@ -86,8 +86,8 @@ export class Investigation extends Component {
                 </tbody>
               </table> : null}
           </div>
-        </ModalBody >
-      </Modal >
+        </ModalBody>
+      </Modal>
 
 
     return (

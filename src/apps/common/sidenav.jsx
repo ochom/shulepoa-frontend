@@ -6,7 +6,7 @@ class Sidenav extends Component {
   render() {
     return (
       <div>
-        < div className="sidenav" >
+        < div className="sidenav">
           <div className="sidenav-logo">Hosipoa</div>
           <div className="sidenav_body">
             <div className="list-group">
@@ -22,7 +22,7 @@ class Sidenav extends Component {
           <a href="https://lysofts.co.ke"
             className="copyright-text">
             <b>&copy; {new Date().getFullYear()} Lysofts Ke.</b></a>
-        </div >
+        </div>
       </div>
     )
   }

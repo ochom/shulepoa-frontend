@@ -305,7 +305,7 @@ export class Patients extends Component {
                 <label>Kin's ID Number</label>
               </div>
             </div>
-          </ModalBody >
+          </ModalBody>
           <ModalFooter>
             <button type="submit" className="btn btn-sm btn-success"
               onSubmit={this.onSubmitPatient}>
@@ -315,7 +315,7 @@ export class Patients extends Component {
               <i className="fa fa-close"></i> Cancel</button>
           </ModalFooter>
         </form>
-      </Modal >
+      </Modal>
 
     const book_appointment_view =
       <Modal isOpen={this.state.showModal3}>
@@ -353,7 +353,7 @@ export class Patients extends Component {
                 <label>Appointment Date<sup>*</sup></label>
               </div>
             </div>
-          </ModalBody >
+          </ModalBody>
           <ModalFooter>
             <button type="submit" className="btn btn-sm btn-success"
               onSubmit={this.onSubmitAppointment}>
@@ -363,7 +363,7 @@ export class Patients extends Component {
               <i className="fa fa-close"></i> Cancel</button>
           </ModalFooter>
         </form>
-      </Modal >
+      </Modal>
 
     const admission_modal =
       <Modal isOpen={this.state.showModal2}>

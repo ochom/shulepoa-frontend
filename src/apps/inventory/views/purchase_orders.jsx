@@ -135,12 +135,12 @@ export class PurchaseOrders extends Component {
               </tbody>
             </table>
           </div>
-        </ModalBody >
+        </ModalBody>
         <ModalFooter>
           <Button color="danger" size="sm" onClick={this.toggleSearchModal}>
             <i className="fa fa-close"></i> Cancel</Button>
         </ModalFooter>
-      </Modal >
+      </Modal>
 
     const order_modal_view =
       <Modal isOpen={this.state.showModal} size="md">
@@ -169,7 +169,7 @@ export class PurchaseOrders extends Component {
                 <label>Order Quantity</label>
               </div>
             </div>
-          </ModalBody >
+          </ModalBody>
           <ModalFooter>
             <Button type="submit" color="primary" size="sm"
               onSubmit={this.onSubmit}><i className="fa fa-check"></i> Submit</Button>
@@ -177,7 +177,7 @@ export class PurchaseOrders extends Component {
               <i className="fa fa-close"></i> Cancel</Button>
           </ModalFooter>
         </form>
-      </Modal >
+      </Modal>
 
     const supply_goods_modal_view =
       <Modal isOpen={this.state.supplyModal} size="md">
@@ -218,7 +218,7 @@ export class PurchaseOrders extends Component {
                 <label>Cost<sup>*</sup> </label>
               </div>
             </div>
-          </ModalBody >
+          </ModalBody>
           <ModalFooter>
             <Button type="submit" color="primary" size="sm"
               onSubmit={this.onSubmitSupply}><i className="fa fa-check"></i> Submit</Button>
@@ -226,7 +226,7 @@ export class PurchaseOrders extends Component {
               <i className="fa fa-close"></i> Cancel</Button>
           </ModalFooter>
         </form>
-      </Modal >
+      </Modal>
 
     return (
       <div className="col-md-10 mx-auto mt-3">

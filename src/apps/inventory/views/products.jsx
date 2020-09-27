@@ -146,7 +146,7 @@ export class Products extends Component {
               <div className="form-group col-12">
                 <select className="form-control form-control-sm" name="category_id"
                   required={true} data-value={this.state.category_id}
-                  onChange={this.onChange} value={this.state.category_id} >
+                  onChange={this.onChange} value={this.state.category_id}>
                   <option value=""></option>
                   {categories.map((cat, index) =>
                     <option key={index} value={cat.id}>{cat.name}</option>)}
@@ -187,7 +187,7 @@ export class Products extends Component {
                 <label>Minimum Required<sup>*</sup></label>
               </div>
             </div>
-          </ModalBody >
+          </ModalBody>
           <ModalFooter>
             <button type="submit" className="btn btn-sm btn-success"
               onSubmit={this.onSubmit}>
@@ -197,7 +197,7 @@ export class Products extends Component {
               <i className="fa fa-close"></i> Cancel</button>
           </ModalFooter>
         </form>
-      </Modal >
+      </Modal>
 
     const requisition_modal_view =
       <Modal isOpen={this.state.reqModal} size="md">
@@ -233,7 +233,7 @@ export class Products extends Component {
                 <label>Required BY<sup>*</sup></label>
               </div>
             </div>
-          </ModalBody >
+          </ModalBody>
           <ModalFooter>
             <button type="submit" className="btn btn-sm btn-success"
               onSubmit={this.onSubmitRequisition}>
@@ -243,7 +243,7 @@ export class Products extends Component {
               <i className="fa fa-close"></i> Cancel</button>
           </ModalFooter>
         </form>
-      </Modal >
+      </Modal>
     const columns = [
       {
         title: "",
@@ -315,7 +315,7 @@ export class Products extends Component {
             <PaginatedTable cols={columns} rows={products} />
           </div>
         </div>
-      </div >
+      </div>
     )
   }
 }

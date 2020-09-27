@@ -155,7 +155,7 @@ export class CashPoint extends Component {
                   )}
                 </tbody>
               </table>
-            </ModalBody >
+            </ModalBody>
             <ModalFooter className="p-0 pb-3">
               <div className="row col-12 py-2 mx-auto">
                 <div className="col-8">Total Payable Amount: </div>
@@ -180,7 +180,7 @@ export class CashPoint extends Component {
             </ModalFooter>
           </> :
           null}
-      </Modal >
+      </Modal>
 
     const confirm_dialog =
       <Modal isOpen={this.state.confDialog}>
@@ -219,11 +219,11 @@ export class CashPoint extends Component {
                 <i className="fa fa-check"></i> Yes, Continue</button>
             }
             <button type="button" className="btn btn-sm btn-secondary"
-              onClick={this.toggleConfirmDialog} >
+              onClick={this.toggleConfirmDialog}>
               <i className="fa fa-close"></i> Cancel</button>
           </ModalFooter>
         </form>
-      </Modal >
+      </Modal>
 
     return (
       <div className="col-md-10 mx-auto mt-3">

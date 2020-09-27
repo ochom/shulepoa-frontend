@@ -239,7 +239,7 @@ export class Drugs extends Component {
                 <label>Price<sup>*</sup></label>
               </div>
             </div>
-          </ModalBody >
+          </ModalBody>
           <ModalFooter>
             <button type="submit" className="btn btn-sm cu-bg-primary"
               onSubmit={this.onSubmit}>
@@ -248,7 +248,7 @@ export class Drugs extends Component {
               <i className="fa fa-close"></i> Cancel</Button>
           </ModalFooter>
         </form>
-      </Modal >
+      </Modal>
 
     const reorder_modal =
       <Modal isOpen={this.state.showModal2}>
@@ -293,10 +293,10 @@ export class Drugs extends Component {
       </Modal>
 
     return (
-      <div className="col-md-10 mx-auto mt-3" >
+      <div className="col-md-10 mx-auto mt-3">
         {service_details}
         {reorder_modal}
-        < div className="form-group col-12" >
+        < div className="form-group col-12">
           <input className="form-control form-control-sm" name="search"
             onChange={this.onSearch} value={this.state.search} />
           <label><span role="img" aria-label="search">&#x1F50D;</span> Search...</label>
@@ -349,7 +349,7 @@ export class Drugs extends Component {
             </table>
           </div>
         </div>
-      </div >
+      </div>
     )
   }
 }

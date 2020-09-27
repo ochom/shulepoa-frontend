@@ -119,7 +119,7 @@ export class Service extends Component {
               <div className="form-group col-6">
                 <select className="form-control form-control-sm"
                   name="department" onChange={this.onChange} data-value={this.state.department}
-                  value={this.state.department} required={true} >
+                  value={this.state.department} required={true}>
                   <option value=""></option>
                   {department_choices}
                 </select>
@@ -136,7 +136,7 @@ export class Service extends Component {
                 <label>Other descriptions</label>
               </div>
             </div>
-          </ModalBody >
+          </ModalBody>
           <ModalFooter>
             <button type="submit" className="btn btn-sm btn-success"
               onSubmit={this.onSubmit}>
@@ -146,7 +146,7 @@ export class Service extends Component {
               <i className="fa fa-close"></i> Cancel</button>
           </ModalFooter>
         </form>
-      </Modal >
+      </Modal>
 
     const columns = [
       {

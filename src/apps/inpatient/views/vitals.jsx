@@ -146,7 +146,7 @@ export class Vital extends Component {
                 <label>Nursing notes</label>
               </div>
             </div>
-          </ModalBody >
+          </ModalBody>
           <ModalFooter>
             <Button type="submit" color="primary" size="sm"
               onSubmit={this.onSubmit}>
@@ -155,7 +155,7 @@ export class Vital extends Component {
               <i className="fa fa-close"></i> Cancel</Button>
           </ModalFooter>
         </form>
-      </Modal >
+      </Modal>
 
     return (
       <>

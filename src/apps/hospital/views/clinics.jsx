@@ -87,7 +87,7 @@ export class Clinic extends Component {
                 <label>Appointment Fee<sup>*</sup></label>
               </div>
             </div>
-          </ModalBody >
+          </ModalBody>
           <ModalFooter>
             <button type="submit" className="btn btn-sm btn-success"
               onSubmit={this.onSubmit}>
@@ -97,7 +97,7 @@ export class Clinic extends Component {
               <i className="fa fa-close"></i> Cancel</button>
           </ModalFooter>
         </form>
-      </Modal >
+      </Modal>
     return (
       <div className="col-md-8 mx-auto mt-3">
         {clinic_details}

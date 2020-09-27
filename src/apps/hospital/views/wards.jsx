@@ -107,7 +107,7 @@ export class Wards extends Component {
               </div>
               <div className="form-group col-12">
                 <textarea className="form-control form-control-sm" name="description"
-                  onChange={this.onChange} value={this.state.description} ></textarea>
+                  onChange={this.onChange} value={this.state.description}></textarea>
                 <label>Description</label>
               </div>
             </div>
@@ -167,7 +167,7 @@ export class Wards extends Component {
                         : <button className="btn btn-sm btn-secondary"> No Action</button>
                       }
                     </td>
-                  </tr >
+                  </tr>
                 )}
               </tbody>
             </table>

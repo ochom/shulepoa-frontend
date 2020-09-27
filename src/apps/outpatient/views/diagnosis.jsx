@@ -105,7 +105,7 @@ export class Diagnosis extends Component {
                 <label>ICD 10</label>
               </div>
             </div>
-          </ModalBody >
+          </ModalBody>
           <ModalFooter>
             <Button type="submit" color="primary" size="sm"
               onClick={this.onSubmit}><i className="fa fa-check"></i> Submit</Button>
@@ -113,7 +113,7 @@ export class Diagnosis extends Component {
               <i className="fa fa-close"></i> Cancel</Button>
           </ModalFooter>
         </form>
-      </Modal >
+      </Modal>
 
 
     return (

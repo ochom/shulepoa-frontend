@@ -71,16 +71,16 @@ export class Review extends Component {
             <div className="form-row">
               <div className="form-group col-12">
                 <textarea className="form-control form-control-sm" name="condition" required={true}
-                  value={this.state.condition} onChange={this.onChange}  ></textarea>
+                  value={this.state.condition} onChange={this.onChange} ></textarea>
                 <label>Patient condition</label>
               </div>
               <div className="form-group col-12">
                 <textarea className="form-control form-control-sm" name="note" required={true}
-                  value={this.state.note} onChange={this.onChange} rows="7" ></textarea>
+                  value={this.state.note} onChange={this.onChange} rows="7"></textarea>
                 <label>Review Notes</label>
               </div>
             </div>
-          </ModalBody >
+          </ModalBody>
           <ModalFooter>
             <button type="submit" className="btn btn-sm btn-success"
               onClick={this.onSubmit}><i className="fa fa-check"></i> Submit</button>
@@ -88,7 +88,7 @@ export class Review extends Component {
               onClick={this.toggleModal}> <i className="fa fa-close"></i> Cancel</button>
           </ModalFooter>
         </form>
-      </Modal >
+      </Modal>
 
     return (
       <>

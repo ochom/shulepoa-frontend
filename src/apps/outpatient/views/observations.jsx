@@ -95,7 +95,7 @@ export class Observation extends Component {
               </div>
               <div className="form-group col-4">
                 <select className="form-control form-control-sm" name="period_units" data-value={this.state.period_units}
-                  required={true} value={this.state.period_units} onChange={this.onChange} >
+                  required={true} value={this.state.period_units} onChange={this.onChange}>
                   <option value=""></option>
                   {TIME_UNITS.map((unit, index) => <option key={index} value={unit}>{unit}</option>)}
                 </select>
@@ -108,11 +108,11 @@ export class Observation extends Component {
               </div>
               <div className="form-group col-12">
                 <textarea className="form-control form-control-sm" name="physical_examination_note"
-                  value={this.state.physical_examination_note} onChange={this.onChange} ></textarea>
+                  value={this.state.physical_examination_note} onChange={this.onChange}></textarea>
                 <label>Physical Examination Note</label>
               </div>
             </div>
-          </ModalBody >
+          </ModalBody>
           <ModalFooter>
             <Button type="submit" color="primary" size="sm"
               onClick={this.onSubmit}><i className="fa fa-check"></i> Submit</Button>
@@ -120,7 +120,7 @@ export class Observation extends Component {
               <i className="fa fa-close"></i> Cancel</Button>
           </ModalFooter>
         </form>
-      </Modal >
+      </Modal>
 
 
     return (

@@ -73,7 +73,7 @@ export class Requsitions extends Component {
                 <label>Dispatch Quantity <sup>*</sup></label>
               </div>
             </div>
-          </ModalBody >
+          </ModalBody>
           <ModalFooter>
             <button type="submit" className="btn btn-sm btn-success"
               onSubmit={this.onSubmit}>
@@ -83,14 +83,14 @@ export class Requsitions extends Component {
               <i className="fa fa-close"></i> Cancel</button>
           </ModalFooter>
         </form>
-      </Modal >
+      </Modal>
       : null
 
 
     return (
-      <div className="col-md-10 mx-auto mt-3" >
+      <div className="col-md-10 mx-auto mt-3">
         {requisition_modal_view}
-        < div className="card mt-3" >
+        < div className="card mt-3">
           <div className="card-header py-1 px-3">
             <div className="py-1 px-2">Item Requisitions</div>
           </div>
@@ -128,7 +128,7 @@ export class Requsitions extends Component {
             </table>
           </div>
         </div>
-      </div >
+      </div>
     )
   }
 }

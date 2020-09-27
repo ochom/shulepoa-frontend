@@ -17,7 +17,7 @@ class Topnav extends Component {
       <>
         <div className="topnav">
           <div className="topnav-title"><b>{this.props.page ? this.props.page : "Dashboard"}</b></div>
-          <div className="topnav-title right" >
+          <div className="topnav-title right">
             <button className="btn cu-text-primary" title="Main Menu"
               onClick={this.toggleMenu}><i className="fa fa-th"></i></button>
             <Dropdown isOpen={this.state.dropdown} className="btn"

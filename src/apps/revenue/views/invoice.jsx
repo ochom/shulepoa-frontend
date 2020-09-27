@@ -221,7 +221,7 @@ export class Invoice extends Component {
               </div>
               <div className="form-group col-12">
                 <textarea type="text" className="form-control form-control-sm"
-                  name="notes" value={this.state.notes} onChange={this.onChange} ></textarea>
+                  name="notes" value={this.state.notes} onChange={this.onChange}></textarea>
                 <label>Payment Notes</label>
               </div>
             </div>
@@ -239,7 +239,7 @@ export class Invoice extends Component {
 
     const upload_modal =
       uploaded_data ?
-        <Modal isOpen={this.state.showModal2} >
+        <Modal isOpen={this.state.showModal2}>
           <ModalHeader toggle={this.toggleModal2} className="cu-bg-primary">Uploaded Invoice</ModalHeader>
           <ModalBody className="p-0">
             <ul className="list-group">
@@ -268,7 +268,7 @@ export class Invoice extends Component {
             <button className="btn btn-sm btn-secondary"
               onClick={this.toggleModal2}><i className="fa fa-close"></i>  Cancel</button>
           </ModalFooter>
-        </Modal > :
+        </Modal> :
         null
 
     return (
@@ -278,7 +278,7 @@ export class Invoice extends Component {
             <>
               {payment_modal}
               {upload_modal}
-              < div className="row col-12 mx-auto mt-2" >
+              < div className="row col-12 mx-auto mt-2">
 
                 <div className="col-sm-3 mt-3">
                   <div className="patient_profile p-0 border border-light rounded ">
@@ -418,10 +418,10 @@ export class Invoice extends Component {
                     </div>
                   </div>
                 </div>
-              </div >
-            </ >
+              </div>
+            </>
             : null}
-      </div >
+      </div>
     )
   }
 }
