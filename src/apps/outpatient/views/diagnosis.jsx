@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
 import { deleteData } from '../../common/actions'
-import { addDiagnosis, deleteDiagnosis, getDiagnosis, updateDiagnosis } from '../actions'
+import { addDiagnosis, deleteDiagnosis, updateDiagnosis } from '../actions'
 
 export class Diagnosis extends Component {
   state = {
@@ -13,10 +13,6 @@ export class Diagnosis extends Component {
     selected_diagnosis: null,
     disease: "",
     icd_10: "",
-  }
-
-  componentDidMount() {
-    this.props.getDiagnosis()
   }
 
   onChange = (e) => this.setState({ [e.target.name]: e.target.value });
@@ -75,7 +71,7 @@ export class Diagnosis extends Component {
   }
 
   render() {
-    const { diagnosis, appointment, rights } = this.props;
+    const { appointment, rights } = this.props;
     const diagnosis_view =
       <Modal isOpen={this.state.showModal} size="md">
         <ModalHeader toggle={this.toggleModal}>
@@ -124,7 +120,7 @@ export class Diagnosis extends Component {
             <div className="py-1 px-2"><b>Disease diagnosis</b></div>
             {rights.can_add_diagnosis ?
               <button
-                className="btn btn-sm "
+                className="btn btn-sm"
                 onClick={this.onNewDiagnosis}><i className="fa fa-plus-circle mr-2"></i> Add
               </button> : null}
           </div>
@@ -139,7 +135,7 @@ export class Diagnosis extends Component {
                 </tr>
               </thead>
               <tbody>
-                {diagnosis.filter(diagnose => diagnose.appointment_id === appointment.id).map((diagnose, index) =>
+                {appointment.diagnosis.map((diagnose, index) =>
                   <tr key={index}>
                     <td>{index + 1}</td>
                     <td>{diagnose.disease}</td>
@@ -154,8 +150,8 @@ export class Diagnosis extends Component {
                         </> : null
                       }
                     </td>
-                  </tr>)
-                }
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>
@@ -166,7 +162,6 @@ export class Diagnosis extends Component {
 }
 export default connect(state => ({
   appointment: state.outpatient.appointment,
-  diagnosis: state.outpatient.diagnosis,
   common: state.common,
   rights: state.auth.user.rights
-}), { addDiagnosis, updateDiagnosis, getDiagnosis, deleteDiagnosis })(Diagnosis)
+}), { addDiagnosis, updateDiagnosis, deleteDiagnosis })(Diagnosis)

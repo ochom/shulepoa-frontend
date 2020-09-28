@@ -11,10 +11,6 @@ export class Investigation extends Component {
     search: "",
   }
 
-  componentDidMount = () => {
-    this.props.getServiceRequests();
-  }
-
   onChange = (e) => {
     var search_name = e.target.value;
     var search_result = this.props.services.filter(service =>
@@ -49,7 +45,7 @@ export class Investigation extends Component {
 
 
   render() {
-    const { service_requests, appointment, rights } = this.props
+    const { appointment, rights } = this.props
     const investigation_view =
       <Modal isOpen={this.state.showModal} size="md">
         <ModalHeader toggle={this.toggleModal}>Add investigation requests</ModalHeader>
@@ -112,7 +108,7 @@ export class Investigation extends Component {
                 </tr>
               </thead>
               <tbody>
-                {service_requests.filter(request => (request.department === 3 || request.department === 4) && request.appointment_id === appointment.id).map((request, index) =>
+                {appointment.service_requests.filter(request => (request.department === 3 || request.department === 4)).map((request, index) =>
                   <tr key={index}>
                     <td>{index + 1}</td>
                     <td>{request.service_name}</td>
@@ -147,7 +143,6 @@ export class Investigation extends Component {
 }
 export default connect(state => ({
   appointment: state.outpatient.appointment,
-  service_requests: state.revenue.service_requests,
   common: state.common,
   services: state.hospital.services,
   rights: state.auth.user.rights

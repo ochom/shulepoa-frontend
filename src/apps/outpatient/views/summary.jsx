@@ -1,19 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getObservations, getVitals, getDiagnosis } from '../actions'
-import { getServiceRequests } from '../../revenue/actions'
-import { getHospital, getUsers } from '../../hospital/actions'
-import { PrintPDF } from '../../common/actions'
+import { PrintPDF } from '../../common/actions';
 import { PrintHeader } from '../../common/layouts';
+import { getHospital, getUsers } from '../../hospital/actions';
+import { getServiceRequests } from '../../revenue/actions';
 
 export class Summary extends Component {
   componentDidMount() {
     this.props.getHospital();
     this.props.getUsers();
-    this.props.getObservations();
-    this.props.getVitals();
-    this.props.getDiagnosis();
-    this.props.getServiceRequests();
   }
 
   calculateBMI = (vital) => {
@@ -28,10 +23,8 @@ export class Summary extends Component {
   render() {
     const {
       hospital: { hospital_profile, users },
-      outpatient: { vitals, appointment, observations },
+      outpatient: { appointment },
       common: { CONSTANTS: { GENDERS } },
-      records: { patients },
-      revenue: { service_requests }
     } = this.props;
     return (
       <div className="card">
@@ -49,8 +42,8 @@ export class Summary extends Component {
               tittle="Appointment Summary" />
 
             <div className="col-12 mt-3">
-              <p className="p-0 m-0">Client: <b>{(patients.length > 0 && patients.find(patient => patient.id === appointment.patient_id)) ? patients.find(patient => patient.id === appointment.patient_id).fullname : ""}</b></p>
-              <p className="p-0 m-0">Sex: <b>{GENDERS[(patients.length > 0 && patients.find(patient => patient.id === appointment.patient_id)) ? patients.find(patient => patient.id === appointment.patient_id).sex : 0]}</b></p>
+              <p className="p-0 m-0">Client: <b>{appointment.patient.fullname}</b></p>
+              <p className="p-0 m-0">Sex: <b>{GENDERS[appointment.patient.sex]}</b></p>
               <p className="p-0 m-0">Visit Date: <b>{new Date(appointment.created).toLocaleString('en-uk')}</b></p>
             </div>
 
@@ -69,7 +62,7 @@ export class Summary extends Component {
                   </tr>
                 </thead>
                 <tbody>
-                  {vitals.filter(vital => vital.appointment_id === appointment.id).map((vital, index) =>
+                  {appointment.vitals.map((vital, index) =>
                     <tr key={index}>
                       <td>{vital.bp_systolic}/{vital.bp_diastolic}</td>
                       <td>{vital.pulse}</td>
@@ -100,7 +93,7 @@ export class Summary extends Component {
                   </tr>
                 </thead>
                 <tbody>
-                  {observations.filter(observation => observation.appointment_id === appointment.id).map((observation, index) =>
+                  {appointment.observations.map((observation, index) =>
                     <tr key={index}>
                       <td>{index + 1}</td>
                       <td>{observation.complaint}</td>
@@ -128,7 +121,7 @@ export class Summary extends Component {
                   </tr>
                 </thead>
                 <tbody>
-                  {service_requests.filter(request => (request.department === 3 || request.department === 4) && request.appointment_id === appointment.id).map((request, index) =>
+                  {appointment.service_requests.filter(request => (request.department === 3 || request.department === 4)).map((request, index) =>
                     <tr key={index}>
                       <td>{index + 1}</td>
                       <td>{request.service_name}</td>
@@ -154,7 +147,7 @@ export class Summary extends Component {
                   </tr>
                 </thead>
                 <tbody>
-                  {service_requests.filter(request => request.department === 5 && request.appointment_id === appointment.id).map((request, index) =>
+                  {appointment.service_requests.filter(request => request.department === 5).map((request, index) =>
                     <tr key={index}>
                       <td>{index + 1}</td>
                       <td>{request.service_name}</td>
@@ -189,11 +182,8 @@ export class Summary extends Component {
 export default connect(state => ({
   outpatient: state.outpatient,
   hospital: state.hospital,
-  records: state.records,
-  revenue: state.revenue,
   common: state.common,
 }), {
   getServiceRequests,
-  getHospital, getUsers,
-  getVitals, getObservations, getDiagnosis
+  getHospital, getUsers
 })(Summary)

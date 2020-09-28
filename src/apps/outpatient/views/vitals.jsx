@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
 import { deleteData } from '../../common/actions'
-import { addVital, deleteVital, getVitals, updateVital } from '../actions'
+import { addVital, deleteVital, updateVital } from '../actions'
 
 export class Vital extends Component {
   state = {
@@ -16,10 +16,6 @@ export class Vital extends Component {
     height: "",
     temperature: "",
     triage_note: "",
-  }
-
-  componentDidMount = () => {
-    this.props.getVitals();
   }
 
   onChange = (e) => this.setState({ [e.target.name]: e.target.value });
@@ -87,7 +83,7 @@ export class Vital extends Component {
   }
 
   render() {
-    const { appointment, vitals, rights } = this.props;
+    const { appointment, rights } = this.props;
     const vital_view =
       <Modal isOpen={this.state.showModal} size="lg">
         <ModalHeader toggle={this.toggleModal}>
@@ -182,7 +178,7 @@ export class Vital extends Component {
                 </tr>
               </thead>
               <tbody>
-                {vitals.filter(vital => vital.appointment_id === appointment.id).map((vital, index) =>
+                {appointment.vitals.map((vital, index) =>
                   <tr key={index}>
                     <td>{vital.bp_systolic}/{vital.bp_diastolic}bpm</td>
                     <td>{vital.pulse}bpm</td>
@@ -213,4 +209,4 @@ export default connect(state => ({
   vitals: state.outpatient.vitals,
   common: state.common,
   rights: state.auth.user.rights
-}), { getVitals, addVital, updateVital, deleteVital })(Vital)
+}), { addVital, updateVital, deleteVital })(Vital)

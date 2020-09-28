@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
 import xlsx from 'xlsx'
-import { deleteData } from '../../common/actions'
+import { deleteData, API_PATH } from '../../common/actions'
 import { addPayment, deletePayment, getInvoice, updatePayment, uploadInvoice, updateInvoice } from '../actions'
 import Items from './items'
 import { DateInput } from '../../common/layouts'
@@ -366,7 +366,7 @@ export class Invoice extends Component {
                       <button className="btn btn-danger m-1"
                         onClick={() => this.markAs("CLEARED")}>Mark as cleared</button>
                     }
-                    <a href={`http://localhost:8000/api/revenue/upload-download/${invoice.id}/`}
+                    <a href={`${API_PATH}revenue/upload-download/${invoice.id}/`}
                       className="btn btn-dark m-1" download>
                       <i className="fa fa-cloud-download"></i> Download PDF</a>
                   </div>

@@ -1,6 +1,8 @@
 import { API_PATH, commonTypes } from '../common/actions'
 import { tokenConfig } from '../auth/actions';
 import Axios from 'axios'
+import { getAppointment } from '../outpatient/actions';
+import { getAdmission } from '../inpatient/actions';
 
 export const revenueTypes = {
   GET_PAYMENT_QUEUE: 'GET_PAYMENT_QUEUE',
@@ -81,6 +83,13 @@ export const addServiceRequest = (data) => (dispatch, getState) => {
   Axios.post(`${API_PATH}revenue/service-requests/`, JSON.stringify(data), tokenConfig(getState))
     .then(res => {
       dispatch(getServiceRequests())
+      console.log(data);
+      if (data.appointment_id) {
+        dispatch(getAppointment(data.appointment_id))
+      }
+      if (data.admission_id) {
+        dispatch(getAdmission(data.admission_id))
+      }
       dispatch({ type: commonTypes.SUCCESS, payload: 'Request saved succesfully' })
     })
     .catch((err) => {

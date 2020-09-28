@@ -3,14 +3,10 @@ import { outpatientTypes } from './actions'
 const initialState = {
   appointments: [],
   appointment: null,
-  vitals: [],
-  observations: [],
-  investigations: [],
-  diagnosis: [],
-  prescriptions: [],
 };
 
 export default function (state = initialState, action) {
+  var app = state.appointment
   switch (action.type) {
     case outpatientTypes.GET_APPOINTMENTS:
       return {
@@ -24,41 +20,29 @@ export default function (state = initialState, action) {
         appointment: action.payload,
       };
 
-    case outpatientTypes.GET_VITALS:
+    case outpatientTypes.DELETE_VITAL:
+      var vitals = state.appointment.vitals.filter(obj => obj.id !== action.payload)
+      app.vitals = vitals
       return {
         ...state,
-        vitals: action.payload,
+        appointment: app,
       };
 
-    case outpatientTypes.GET_OBSERVATIONS:
+    case outpatientTypes.DELETE_OBSERVATION:
+      var observations = state.appointment.observations.filter(obj => obj.id !== action.payload)
+      app.observations = observations
       return {
         ...state,
-        observations: action.payload,
+        appointment: app,
       };
 
-    case outpatientTypes.GET_INVESTIGATIONS:
+    case outpatientTypes.DELETE_DIAGNOSIS:
+      var diagnosis = state.appointment.diagnosis.filter(obj => obj.id !== action.payload)
+      app.diagnosis = diagnosis
       return {
         ...state,
-        investigations: action.payload,
+        appointment: app,
       };
-
-    case outpatientTypes.GET_PRESCRIPTIONS:
-      return {
-        ...state,
-        prescriptions: action.payload,
-      };
-
-    case outpatientTypes.GET_DIAGNOSISS:
-      return {
-        ...state,
-        diagnosis: action.payload,
-      };
-
-    case outpatientTypes.SAVE_DISCHARGE:
-      return {
-        ...state,
-      };
-
 
     default:
       return state;

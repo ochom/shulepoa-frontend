@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
 import { deleteData } from '../../common/actions'
-import { addObservation, deleteObservation, getObservations, updateObservation } from '../actions'
+import { addObservation, deleteObservation, updateObservation } from '../actions'
 
 export class Observation extends Component {
   state = {
@@ -14,10 +14,6 @@ export class Observation extends Component {
     period_units: "",
     pre_med_note: "",
     physical_examination_note: "",
-  }
-
-  componentDidMount = () => {
-    this.props.getObservations();
   }
 
   onChange = (e) => this.setState({ [e.target.name]: e.target.value });
@@ -74,7 +70,7 @@ export class Observation extends Component {
 
   render() {
     const { TIME_UNITS } = this.props.common.CONSTANTS;
-    const { appointment, observations, rights } = this.props;
+    const { appointment, rights } = this.props;
     const observation_view =
       <Modal isOpen={this.state.showModal} size="md">
         <ModalHeader toggle={this.toggleModal}>
@@ -148,7 +144,7 @@ export class Observation extends Component {
                 </tr>
               </thead>
               <tbody>
-                {observations.filter(observation => observation.appointment_id === appointment.id).map((observation, index) =>
+                {appointment.observations.map((observation, index) =>
                   <tr key={index}>
                     <td>{index + 1}</td>
                     <td>{observation.complaint}</td>
@@ -176,7 +172,6 @@ export class Observation extends Component {
 }
 export default connect(state => ({
   appointment: state.outpatient.appointment,
-  observations: state.outpatient.observations,
   common: state.common,
   rights: state.auth.user.rights
-}), { getObservations, addObservation, updateObservation, deleteObservation })(Observation)
+}), { addObservation, updateObservation, deleteObservation })(Observation)
