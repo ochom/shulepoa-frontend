@@ -84,6 +84,44 @@
         margin-bottom: 0px
       }
     }
+
+    .myprogres-bar {
+      height: 5px;
+      width: 100vw;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 999999;
+      background-color: rgb(209, 207, 207);
+    }
+
+    .myprogres {
+      width: 0;
+      height: 100%;
+      background-color: red;
+      animation: increase 4s infinite ease-in;
+    }
+
+    @keyframes increase {
+      0% {
+        width: 0;
+        margin-left: 0;
+      }
+
+      40% {
+        background-color: yellow;
+      }
+
+      60% {
+        background-color: green;
+      }
+
+      100% {
+        width: 200px;
+        margin-left: 100%;
+        background-color: blue;
+      }
+    }
   </style>
 </head>
 

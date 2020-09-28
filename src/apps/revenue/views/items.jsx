@@ -42,5 +42,5 @@ export default function Items(props) {
     setrows(props.data)
   }, [props.data])
 
-  return <PaginatedTable cols={columns} rows={props.data} />
+  return <PaginatedTable cols={columns} rows={rows} />
 }

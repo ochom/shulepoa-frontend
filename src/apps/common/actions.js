@@ -35,7 +35,7 @@ export const PrintPDF = (input, document_name) => {
 
 export const loadICD10 = () => (dispatch, getState) => {
   var icd_10 = getState().common.icd_10
-  if (icd_10.length === 0) {
+  if (!icd_10 || icd_10.length === 0) {
     dispatch({ type: commonTypes.PROCESSING })
     Axios.get(`https://gist.githubusercontent.com/cryocaustik/b86de96e66489ada97c25fc25f755de0/raw/b31a549638a609004e9a45f8933c3f37bdf4c27d/icd10_codes.json`)
       .then(res => {

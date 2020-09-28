@@ -147,6 +147,7 @@ export const deleteServiceRequest = (id) => (dispatch, getState) => {
 
 //Invoice
 export const getInvoices = () => (dispatch, getState) => {
+  dispatch({ type: commonTypes.PROCESSING });
   Axios.get(`${API_PATH}revenue/invoices/`, tokenConfig(getState))
     .then(res => {
       dispatch({ type: revenueTypes.GET_INVOICES, payload: res.data })

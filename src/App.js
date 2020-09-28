@@ -47,7 +47,7 @@ export class App extends Component {
 
 
   render() {
-    const { auth: { isLoading }, common: { isProcessing } } = this.props;
+    const { auth: { isLoading }, common: { isProcessing, silent_processing } } = this.props;
     if (isLoading) {
       return (
         <Loader />
@@ -73,12 +73,11 @@ export class App extends Component {
               <Route path="/auth" component={Auth} />
               <PrivateRoute path="/issues" component={Bugs} />
             </Switch>
-            <div id="processing" style={{ display: isProcessing || isLoading ? "block" : "none" }}>
-              <h1 className="text-light text-center m-0" style={{ fontSize: "8vw", paddingTop: "30vh" }}>
-                <i className="fa fa-spinner fa-spin"></i>
-              </h1>
-            </div>
-
+            {(isProcessing || isLoading || silent_processing) ?
+              <div className="myprogres-bar">
+                <div className="myprogres"></div>
+              </div> : null
+            }
             <ToastContainer />
           </Fragment>
         </Router>
