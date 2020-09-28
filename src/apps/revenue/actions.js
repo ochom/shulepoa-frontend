@@ -18,7 +18,6 @@ export const revenueTypes = {
   GET_DEPOSITS: 'GET_DEPOSITS'
 }
 
-
 export const getPaymentQueue = () => (dispatch, getState) => {
   dispatch({ type: commonTypes.SILENT_PROCESSING });
   Axios.get(`${API_PATH}revenue/payment-queue/`, tokenConfig(getState))
@@ -313,6 +312,7 @@ export const deletePayment = (id) => (dispatch, getState) => {
 
 // Deposits
 export const getDeposits = () => (dispatch, getState) => {
+  dispatch({ type: commonTypes.PROCESSING });
   Axios.get(`${API_PATH}revenue/deposits/`, tokenConfig(getState))
     .then(res => {
       dispatch({ type: revenueTypes.GET_DEPOSITS, payload: res.data })
