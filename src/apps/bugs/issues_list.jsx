@@ -3,7 +3,7 @@ import { connect } from "react-redux"
 import { Link } from 'react-router-dom'
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
 import { addBug, deleteBug, getBug, getBugs, updateBug } from './actions'
-import { confirmAlert } from 'react-confirm-alert'
+import moment from 'moment'
 
 
 class Bugs extends Component {
@@ -41,36 +41,13 @@ class Bugs extends Component {
     this.props.addBug(data)
     this.toggleModal()
   }
-
-
-  onDelete = (id) => {
-    confirmAlert({
-      customUI: ({ onClose }) => {
-        return (
-          <div className='custom-ui'>
-            <div className="card">
-              <div className="card-header">Delete</div>
-              <div className="card-body">
-                <p>You want to delete this file?</p>
-              </div>
-              <div className="card-footer">
-                <button className="btn btn-sm btn-danger"
-                  onClick={() => {
-                    this.props.deleteBug(id);
-                    onClose();
-                  }}>Yes, Delete it!
-                </button>
-                <button className="btn btn-sm btn-secondary ml-2" onClick={onClose}>No</button>
-              </div>
-            </div>
-          </div>
-        );
-      }
-    });
+  
+  getTime = (date) => {
+    return moment(date).fromNow();
   }
 
   render() {
-    const { users, bugs, auth } = this.props;
+    const { bugs, } = this.props;
     const bug_modal =
       <Modal isOpen={this.state.modal}>
         <ModalHeader toggle={this.toggleModal}>
@@ -80,15 +57,15 @@ class Bugs extends Component {
           <ModalBody>
             <div className="row">
               <div className="form-group col-12">
-                <label>Title</label>
                 <input className="form-control" required={true} name="title"
                   value={this.state.title} onChange={this.onChange} />
+                <label>Title</label>
               </div>
               <div className="form-group col-12">
-                <label>Describe the issue</label>
                 <textarea className="form-control" required={true} name="description"
                   value={this.state.description} onChange={this.onChange}
                   style={{ minHeight: "200px" }}></textarea>
+                <label>Describe the issue</label>
               </div>
             </div>
           </ModalBody>
@@ -103,24 +80,31 @@ class Bugs extends Component {
     return (
       <div>
         {bug_modal}
-        <div className="col-md-10 mx-auto">
+        <div className="col-md-8 mx-auto">
           <button className="btn btn-sm cu-bg-secondary"
             onClick={this.newBug}>Add new issue</button>
           <div className="list-group my-3 issues-list">
-            {bugs.map((bug, index) =>
-              <div key={index} className="list-group-item">
-                <small className="time-posted">{new Date(bug.created).toLocaleDateString("en-us")}</small>
-                <Link to={`issues/${bug.id}`} className="p-0 m-0">{bug.title}</Link><br />
-                <small className="p-0 m-0">{(users && users.find(user => user.id === bug.created_by)) ? users.find(user => user.id === bug.created_by).username : ""}</small>
-                {/* <small className="p-0 m-0">George, <i>Ombo Hospital</i></small> */}
-                <p className="">{bug.description}</p>
-                {bug.is_resolved ?
-                  <button className="btn btn-sm btn-success mr-2 disabled">Resolved</button> :
-                  <button className="btn btn-sm btn-warning mr-2 disabled">Resolved</button>
-                }
-                {(auth.user && auth.user.is_superuser) ? <button className="btn btn-sm btn-danger" onClick={() => this.onDelete(bug.id)}>delete</button> : null}
-              </div>
-            )}
+            <div className="list-group">
+              {bugs.map((bug, index) =>
+                <Link to={`issues/${bug.id}`}
+                  key={index}
+                  className="list-group-item border list-group-item-action flex-column align-items-start">
+                  <div className="d-flex w-100 justify-content-between">
+                    <h5 className="mb-1">{bug.title}</h5>
+                    <small>{this.getTime(new Date(bug.created))}</small>
+                  </div>
+                  <p className="mb-1">{bug.description}</p>
+                  <small>
+                    {bug.is_resolved ?
+                      <span className="status-resolved">Resolved</span> :
+                      <span className="status-open">Active</span>
+                    }
+                  </small>
+                  <small>{bug.creator.username}</small>
+                  <small>{bug.replies.length} Replies</small>
+                </Link>
+              )}
+            </div>
           </div>
         </div>
       </div>

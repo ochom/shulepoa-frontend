@@ -16,6 +16,7 @@
     "html2pdf.js": "^0.9.2",
     "jspdf": "^1.5.3",
     "lz-string": "^1.4.4",
+    "moment": "^2.29.0",
     "react": "^16.13.1",
     "react-confirm-alert": "^2.6.2",
     "react-dom": "^16.13.1",

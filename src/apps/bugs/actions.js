@@ -62,7 +62,6 @@ const updateBug = (id, data) => (dispatch, getState) => {
   Axios.patch(`${API_PATH}bugs/${id}/`, JSON.stringify(data), tokenConfig(getState))
     .then(res => {
       dispatch(getBugs())
-      //dispatch({ type: bugTypes.ADD_BUG, payload: res.data })
     })
     .catch(err => {
       dispatch({ type: commonTypes.ERROR, payload: err })
@@ -87,28 +86,11 @@ const deleteBug = (id) => (dispatch, getState) => {
 }
 
 
-
-
-const getReplies = (bug_id) => (dispatch, getState) => {
-  dispatch({ type: commonTypes.PROCESSING })
-  Axios.get(`${API_PATH}${bug_id}/replies/`, tokenConfig(getState))
-    .then(res => {
-      dispatch({ type: bugTypes.GET_REPLIES, payload: res.data })
-    })
-    .catch(err => {
-      dispatch({ type: commonTypes.ERROR, payload: err })
-    })
-    .finally(() => {
-      dispatch({ type: commonTypes.DONE })
-    })
-}
-
 const addReply = (data) => (dispatch, getState) => {
   dispatch({ type: commonTypes.PROCESSING })
   Axios.post(`${API_PATH}replies/`, JSON.stringify(data), tokenConfig(getState))
     .then(res => {
-      dispatch(getReplies(data.bug_id))
-      //dispatch({ type: bugTypes.ADD_BUG, payload: res.data })
+      dispatch(getBug(data.bug))
     })
     .catch(err => {
       dispatch({ type: commonTypes.ERROR, payload: err })
@@ -122,5 +104,5 @@ const addReply = (data) => (dispatch, getState) => {
 
 export {
   getBugs, addBug, getBug, updateBug, deleteBug,
-  getReplies, addReply
+  addReply
 }
