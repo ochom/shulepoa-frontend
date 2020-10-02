@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { getBug, addReply } from './actions'
+import { getBug, addReply } from '../actions'
 import moment from 'moment'
 
 class Bug extends Component {

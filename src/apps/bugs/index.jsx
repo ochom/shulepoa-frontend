@@ -3,8 +3,8 @@ import { connect } from "react-redux"
 import { Route } from 'react-router-dom'
 import Sidenav from '../common/sidenav'
 import Topnav from '../common/topnav'
-import Bug from './issue'
-import Bugs from './issues_list'
+import Bug from './views/issue'
+import Bugs from './views/issues'
 import { getUsers } from '../hospital/actions'
 
 

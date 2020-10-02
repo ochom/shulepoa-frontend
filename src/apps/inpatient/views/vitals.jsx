@@ -98,52 +98,76 @@ export class Vital extends Component {
             <div className="cu-bg-primary py-1 px-3 my-2 rounded">Hypertension Screening/Blood Pressure</div>
             <div className="row col-12 mx-auto">
               <div className="form-group col-md-4">
-                <input className="form-control form-control-sm"
-                  name="bp_systolic" onChange={this.onChange} value={this.state.bp_systolic}
+                <input
+                  type="number"
+                  className="form-control form-control-sm"
+                  min="50" max="200"
+                  required={true}
+                  name="bp_systolic"
+                  onChange={this.onChange}
+                  value={this.state.bp_systolic}
                 />
                 <label>BP Systolic</label>
               </div>
               <div className="form-group col-md-4">
-                <input className="form-control form-control-sm"
+                <input
+                  type="number"
+                  className="form-control form-control-sm"
+                  min="50" max="150"
+                  required={true}
                   name="bp_diastolic" onChange={this.onChange} value={this.state.bp_diastolic}
                 />
                 <label>BP Diastolic</label>
               </div>
               <div className="form-group col-md-4">
-                <input className="form-control form-control-sm"
+                <input
+                  type="number"
+                  className="form-control form-control-sm"
+                  min="50" max="200"
+                  required={true}
                   name="pulse" onChange={this.onChange} value={this.state.pulse}
                 />
                 <label>Pulse (Heart Rate)</label>
               </div>
             </div>
-            <div className="cu-bg-primary py-1 px-3 my-2 rounded">Physical Vitals</div>
+            <div className="cu-bg-primary py-1 px-3 my-2 rounded">Vitals</div>
             <div className="row col-12 mx-auto">
               <div className="form-group col-md-4">
-                <input className="form-control form-control-sm" required={true}
+                <input
+                  type="number"
+                  className="form-control form-control-sm"
+                  min="20" max="60" step=".1"
+                  required={true}
                   name="temperature" onChange={this.onChange} value={this.state.temperature}
                 />
                 <label>Temperature <small>(<sup>o</sup>C)</small></label>
               </div>
               <div className="form-group col-md-4">
-                <input className="form-control form-control-sm"
+                <input
+                  type="number"
+                  className="form-control form-control-sm"
+                  min="1" max="500" step=".01"
                   name="mass" onChange={this.onChange} value={this.state.mass}
                 />
                 <label>Mass <small>(Kg)</small> </label>
               </div>
               <div className="form-group col-md-4">
-                <input className="form-control form-control-sm"
+                <input
+                  type="number"
+                  className="form-control form-control-sm"
+                  min="0.2" max="3" step=".01"
                   name="height" onChange={this.onChange} value={this.state.height}
                 />
                 <label>Height (m)</label>
               </div>
             </div>
-            <div className="cu-bg-primary py-1 px-3 my-2 rounded">Nursing/Vitals Notes</div>
+            <div className="cu-bg-primary py-1 px-3 my-2 rounded">Notes</div>
             <div className="row col-12 mx-auto">
               <div className="form-group col-12">
                 <textarea className="form-control form-control-sm"
                   name="triage_note" onChange={this.onChange} value={this.state.triage_note}>
                 </textarea>
-                <label>Nursing notes</label>
+                <label>Notes</label>
               </div>
             </div>
           </ModalBody>

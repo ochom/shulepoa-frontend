@@ -5,6 +5,7 @@ import { getPatient } from '../actions'
 import HealthFiles from './appointments'
 import Schemes from './schemes'
 import ServiceRequests from './service_requests'
+import Admissions from './admissions'
 
 class Patient extends Component {
   constructor(props) {
@@ -66,6 +67,9 @@ class Patient extends Component {
                   <HealthFiles patient_id={this.state.patient_id} />
                 </div>
                 <div className="col-md-6 my-2">
+                  <Admissions />
+                </div>
+                <div className="col-12 my-2">
                   <Schemes patient={patient} />
                 </div>
                 <div className="col-12 my-2">

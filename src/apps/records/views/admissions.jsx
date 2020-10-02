@@ -1,18 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addAdmission, getAdmissions } from '../../inpatient/actions'
 import { Link } from 'react-router-dom';
 
 
 export class Admissions extends Component {
 
-  componentDidMount() {
-    this.props.getAdmissions()
-  }
-
   render() {
-    const { inpatient: { admissions }, patient_id } = this.props
-
+    const { patient: { admissions } } = this.props
     return (
       <>
         <div className="card">
@@ -29,11 +23,11 @@ export class Admissions extends Component {
                 </tr>
               </thead>
               <tbody>
-                {admissions.filter(app => app.patient_id === parseInt(patient_id)).map((app, index) =>
+                {admissions.map((admission, index) =>
                   <tr key={index}>
-                    <td>{app.ward.name}</td>
-                    <td>{new Date(app.created).toLocaleDateString("en-UK")}</td>
-                    <td><Link to={`/inpatient/admissions/${app.id}`}
+                    <td>{admission.ward.name}</td>
+                    <td>{new Date(admission.created).toLocaleDateString("en-UK")}</td>
+                    <td><Link to={`/inpatient/admissions/${admission.id}`}
                       className="btn btn-sm btn-primary">View</Link></td>
                   </tr>
                 )}
@@ -47,10 +41,7 @@ export class Admissions extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  inpatient: state.inpatient,
-  wards: state.hospital.wards
+  patient: state.records.patient,
 });
 
-export default connect(mapStateToProps,
-  { addAdmission, getAdmissions }
-)(Admissions);
+export default connect(mapStateToProps)(Admissions);

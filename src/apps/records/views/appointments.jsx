@@ -1,17 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addAppointment, getAppointments } from '../../outpatient/actions';
 import { Link } from 'react-router-dom';
 
 
 export class Appointments extends Component {
-
-  componentDidMount() {
-    this.props.getAppointments()
-  }
-
   render() {
-    const { outpatient: { appointments }, patient_id } = this.props
+    const { patient: { appointments } } = this.props
 
     return (
       <>
@@ -29,7 +23,7 @@ export class Appointments extends Component {
                 </tr>
               </thead>
               <tbody>
-                {appointments.filter(app => app.patient_id === parseInt(patient_id)).map((app, index) =>
+                {appointments.map((app, index) =>
                   <tr key={index}>
                     <td>{app.clinic.name}</td>
                     <td>{new Date(app.created).toLocaleDateString("en-UK")}</td>
@@ -47,10 +41,7 @@ export class Appointments extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  outpatient: state.outpatient,
-  clinics: state.hospital.clinics
+  patient: state.records.patient,
 });
 
-export default connect(mapStateToProps,
-  { addAppointment, getAppointments }
-)(Appointments);
+export default connect(mapStateToProps)(Appointments);

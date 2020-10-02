@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from "react-redux"
 import { Link } from 'react-router-dom'
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
-import { addBug, deleteBug, getBug, getBugs, updateBug } from './actions'
+import { addBug, deleteBug, getBug, getBugs, updateBug } from '../actions'
 import moment from 'moment'
 
 
@@ -41,7 +41,7 @@ class Bugs extends Component {
     this.props.addBug(data)
     this.toggleModal()
   }
-  
+
   getTime = (date) => {
     return moment(date).fromNow();
   }
@@ -100,8 +100,8 @@ class Bugs extends Component {
                       <span className="status-open">Active</span>
                     }
                   </small>
-                  <small>{bug.creator.username}</small>
-                  <small>{bug.replies.length} Replies</small>
+                  <small>{bug.creator.username}</small><br />
+                  <small>Replies({bug.replies.length})</small>
                 </Link>
               )}
             </div>
