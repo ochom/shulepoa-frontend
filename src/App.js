@@ -8,26 +8,18 @@ import PrivateRoute from './apps/auth/views/private_route';
 import Profile from './apps/auth/views/profile';
 import public_page from './apps/auth/views/public_page';
 import Bugs from './apps/bugs/index';
-import { loadICD10 } from './apps/common/actions';
 import Dashboard from './apps/common/index';
-import Hospital from './apps/hospital';
-import inpatient from './apps/inpatient';
-import Inventory from './apps/inventory';
-import laboratory from './apps/laboratory';
-import outpatient from './apps/outpatient';
-import pharmacy from './apps/pharmacy';
-import radiology from './apps/radiology';
-import Records from './apps/records/index';
-import Revenue from './apps/revenue';
 import { Loader } from './apps/common/layouts';
+import Inventory from './apps/inventory';
+import Organization from './apps/organization';
+import Records from './apps/records/index';
 
 export class App extends Component {
 
   state = { isLoading: true }
 
   componentDidMount() {
-    this.props.loadUser();
-    this.props.loadICD10()
+    this.props.loadUser()
   }
 
   componentDidUpdate(nextProps) {
@@ -58,14 +50,14 @@ export class App extends Component {
           <Fragment>
             <Switch>
               <PrivateRoute exact path="/" component={Dashboard} />
-              <PrivateRoute path="/hospital" component={Hospital} />
+              <PrivateRoute path="/administrator" component={Organization} />
               <PrivateRoute path="/records" component={Records} />
-              <PrivateRoute path="/revenue" component={Revenue} />
-              <PrivateRoute path="/outpatient" component={outpatient} />
-              <PrivateRoute path="/pharmacy" component={pharmacy} />
-              <PrivateRoute path="/laboratory" component={laboratory} />
-              <PrivateRoute path="/radiology" component={radiology} />
-              <PrivateRoute path="/inpatient" component={inpatient} />
+              <PrivateRoute path="/revenue" component={Records} />
+              <PrivateRoute path="/outpatient" component={Records} />
+              <PrivateRoute path="/pharmacy" component={Records} />
+              <PrivateRoute path="/laboratory" component={Records} />
+              <PrivateRoute path="/radiology" component={Records} />
+              <PrivateRoute path="/inpatient" component={Records} />
               <PrivateRoute path="/inventory" component={Inventory} />
               <Route exact path="/public/page" component={public_page} />
               <PrivateRoute path="/profile" component={Profile} />
@@ -89,4 +81,4 @@ export class App extends Component {
 export default connect(state => ({
   auth: state.auth,
   common: state.common
-}), { loadUser, loadICD10 })(App);
+}), { loadUser })(App);

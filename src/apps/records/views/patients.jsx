@@ -2,12 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
-import { addAdmission } from '../../inpatient/actions';
-import { addPatient, getPatients, updatePatient } from '../actions';
-import { addAppointment } from '../../outpatient/actions';
+import { addStudent, getStudents, updateStudent } from '../actions';
 import PaginatedTable from '../../common/pagination';
 
-export class Patients extends Component {
+export class Students extends Component {
   state = {
     showModal: false,
     showModal2: false,
@@ -32,7 +30,7 @@ export class Patients extends Component {
   }
 
   componentDidMount() {
-    this.props.getPatients()
+    this.props.getStudents()
   }
 
   onChange = (e) => this.setState({ [e.target.name]: e.target.value });
@@ -40,7 +38,7 @@ export class Patients extends Component {
   toggleModal2 = () => this.setState({ showModal2: !this.state.showModal2 });
   toggleModal3 = () => this.setState({ showModal3: !this.state.showModal3 });
 
-  onNewPatient = () => {
+  onNewStudent = () => {
     this.setState({
       selected_patient: null,
       fullname: "", id_type: "", id_no: "",
@@ -53,7 +51,7 @@ export class Patients extends Component {
     this.toggleModal();
   }
 
-  onEditPatient = (data) => {
+  onEditStudent = (data) => {
     this.setState({
       selected_patient: data,
       fullname: data.fullname, id_type: data.id_type, id_no: data.id_no,
@@ -66,7 +64,7 @@ export class Patients extends Component {
     this.toggleModal();
   }
 
-  onSubmitPatient = (e) => {
+  onSubmitStudent = (e) => {
     e.preventDefault();
     const {
       selected_patient,
@@ -87,9 +85,9 @@ export class Patients extends Component {
       kin_name, kin_phone, kin_relationship, kin_id,
     }
     if (selected_patient) {
-      this.props.updatePatient(selected_patient.id, data);
+      this.props.updateStudent(selected_patient.id, data);
     } else {
-      this.props.addPatient(data)
+      this.props.addStudent(data)
     }
 
     this.toggleModal();
@@ -162,9 +160,7 @@ export class Patients extends Component {
   }
 
   render() {
-    const { common: { CONSTANTS: { GENDERS, ID_TYPES, KIN_RELATIONSHIPS,
-      MARITAL_STATUSES, COUNTRIES } },
-      hospital: { wards, clinics },
+    const { common: { GENDERS, ID_TYPES, KIN_RELATIONSHIPS, },
       records: { patients }
     } = this.props;
 
@@ -172,11 +168,11 @@ export class Patients extends Component {
       <Modal isOpen={this.state.showModal} size="lg">
         <ModalHeader toggle={this.toggleModal}>
           {this.state.selected_patient ?
-            <span><i className="fa fa-edit"></i> Edit Patient Details</span> :
-            <span><i className="fa fa-plus-circle"></i> Register Patient</span>
+            <span><i className="fa fa-edit"></i> Edit Student Details</span> :
+            <span><i className="fa fa-plus-circle"></i> Register Student</span>
           }
         </ModalHeader>
-        <form onSubmit={this.onSubmitPatient}>
+        <form onSubmit={this.onSubmitStudent}>
           <ModalBody>
             {/* Personal Details */}
             <div className="bg-secondary text-warning py-1 px-3 mb-2 rounded">Personal Details</div>
@@ -215,20 +211,6 @@ export class Patients extends Component {
                   name="id_no" onChange={this.onChange} value={this.state.id_no} required={true} />
                 <label>ID NO<sup>*</sup></label>
               </div>
-              <div className="form-group col-sm-12 col-md-4">
-                <select className="form-control form-control-sm"
-                  name="marital_status" onChange={this.onChange} data-value={this.state.marital_status}
-                  value={this.state.marital_status} required={true}>
-                  <option value=""></option>
-                  {MARITAL_STATUSES.map((MARITAL_STATUS, index) => <option key={index} value={index}>{MARITAL_STATUS}</option>)}
-                </select>
-                <label>Marital Status<sup>*</sup></label>
-              </div>
-              <div className="form-group col-sm-12 col-md-4">
-                <input className="form-control form-control-sm"
-                  name="occupation" onChange={this.onChange} value={this.state.occupation} />
-                <label>Occupation<sup>*</sup></label>
-              </div>
             </div>
             {/* Contact Information */}
             <div className="bg-secondary text-warning py-1 px-3 mb-2 rounded">Contacts and Adress</div>
@@ -244,15 +226,6 @@ export class Patients extends Component {
                   name="postal_address" onChange={this.onChange} value={this.state.postal_address}
                 />
                 <label>Postal Address</label>
-              </div>
-              <div className="form-group col-sm-12 col-md-4">
-                <select className="form-control form-control-sm"
-                  name="country" onChange={this.onChange} data-value={this.state.country}
-                  value={this.state.country} required={true}>
-                  <option value=""></option>
-                  {COUNTRIES.map((country, index) => <option key={index} value={country}>{country}</option>)}
-                </select>
-                <label>Country<sup>*</sup></label>
               </div>
               <div className="form-group col-sm-12 col-md-4">
                 <input className="form-control form-control-sm"
@@ -307,7 +280,7 @@ export class Patients extends Component {
           </ModalBody >
           <ModalFooter>
             <button type="submit" className="btn btn-sm btn-success"
-              onSubmit={this.onSubmitPatient}>
+              onSubmit={this.onSubmitStudent}>
               <i className="fa fa-check"></i> Save</button>{' '}
             <button type="button" className="btn btn-sm btn-secondary"
               onClick={this.toggleModal}>
@@ -316,105 +289,6 @@ export class Patients extends Component {
         </form>
       </Modal >
 
-    const book_appointment_view =
-      <Modal isOpen={this.state.showModal3}>
-        <ModalHeader toggle={this.toggleModal3}>Book apoointment :: {this.state.fullname}</ModalHeader>
-        <form onSubmit={this.onSubmitAppointment}>
-          <ModalBody>
-            <div className="row mx-auto">
-              <div className="form-group col-12">
-                <input type="text" className="form-control form-control-sm"
-                  value={this.state.fullname} readOnly={true} />
-                <label>Patient Name</label>
-              </div>
-              <div className="form-group col-6">
-                <input type="text" className="form-control form-control-sm"
-                  value={GENDERS[this.state.sex]} readOnly={true} />
-                <label>Sex</label>
-              </div>
-              <div className="form-group col-6">
-                <input type="text" className="form-control form-control-sm"
-                  value={this.getAge()} readOnly={true} />
-                <label>Age</label>
-              </div>
-              <div className="form-group col-12">
-                <select className="form-control form-control-sm" data-value={this.state.clinic_id}
-                  name="clinic_id" onChange={this.onChange} value={this.state.clinic_id} required={true}>
-                  <option value=""></option>
-                  {clinics.map((clinic, index) => <option key={index} value={clinic.id}>{clinic.name}</option>)}
-                </select>
-                <label>Clinic to visit</label>
-              </div>
-              <div className="form-group col-12">
-                <input type="text" className="form-control form-control-sm"
-                  name="date" onChange={this.onChange} value={this.state.date} required={true}
-                  onFocus={(e) => e.target.type = 'date'} onBlur={(e) => !e.target.value ? e.target.type = 'text' : 'date'} />
-                <label>Appointment Date<sup>*</sup></label>
-              </div>
-            </div>
-          </ModalBody >
-          <ModalFooter>
-            <button type="submit" className="btn btn-sm btn-success"
-              onSubmit={this.onSubmitAppointment}>
-              <i className="fa fa-check"></i> Submit</button>
-            <button type="button" className="btn btn-sm btn-secondary"
-              onClick={this.toggleModal3}>
-              <i className="fa fa-close"></i> Cancel</button>
-          </ModalFooter>
-        </form>
-      </Modal >
-
-    const admission_modal =
-      <Modal isOpen={this.state.showModal2}>
-        <ModalHeader toggle={this.toggleModal2}>Admit :: {this.state.fullname}</ModalHeader>
-        <form onSubmit={this.onSubmitAdmission}>
-          <ModalBody>
-            <div className="row mx-auto">
-              <div className="form-group col-12">
-                <input type="text" className="form-control form-control-sm"
-                  value={this.state.fullname} readOnly={true} />
-                <label>Patient Name</label>
-              </div>
-              <div className="form-group col-6">
-                <input type="text" className="form-control form-control-sm"
-                  value={GENDERS[this.state.sex]} readOnly={true} />
-                <label>Sex</label>
-              </div>
-              <div className="form-group col-6">
-                <input type="text" className="form-control form-control-sm"
-                  value={this.getAge()} readOnly={true} />
-                <label>Age</label>
-              </div>
-              <div className="form-group col-12">
-                <select type="text" className="form-control form-control-sm" name="ward_id" onChange={this.onChange}
-                  value={this.state.ward_id} data-value={this.state.ward_id} required={true}>
-                  <option value=""></option>
-                  {wards.map((ward, index) => <option key={index} value={ward.id}>{ward.name}</option>)}
-                </select>
-                <label>Ward</label>
-              </div>
-              <div className="form-group col-12">
-                <textarea
-                  type="text"
-                  name="admission_notes"
-                  className="form-control form-control-sm"
-                  onChange={this.onChange}
-                  rows="6"
-                  value={this.state.admission_notes}
-                  required={true}>
-                </textarea>
-                <label>Admission Notes</label>
-              </div>
-            </div>
-          </ModalBody>
-          <ModalFooter>
-            <button type="submit" className="btn btn-sm btn-success">
-              <i className="fa fa-check"></i> Submit</button>{' '}
-            <button type="button" className="btn btn-sm btn-secondary" onClick={this.toggleModal2}>
-              <i className="fa fa-close"></i> Cancel</button>
-          </ModalFooter>
-        </form>
-      </Modal>
 
     const columns = [
       {
@@ -452,7 +326,7 @@ export class Patients extends Component {
         render: rowData => {
           return <>
             <button className="btn btn-sm btn-success mr-2"
-              onClick={() => this.onEditPatient(rowData)}><i className="fa fa-edit"></i> Edit</button>
+              onClick={() => this.onEditStudent(rowData)}><i className="fa fa-edit"></i> Edit</button>
             {rowData.is_booked ?
               <button className="btn btn-sm btn-secondary disabled mr-2"><i className="fa fa-user-md"></i> Booked</button> :
               <button className="btn btn-sm btn-primary mr-2"
@@ -473,15 +347,13 @@ export class Patients extends Component {
     return (
       <div className="col-md-10 mx-auto">
         {patient_details}
-        {admission_modal}
-        {book_appointment_view}
         <div className="card">
           <div className="card-header">
-            <div>Patients</div>
+            <div>Students</div>
             <button
               className="btn btn-sm"
-              onClick={this.onNewPatient}>
-              <i className="fa fa-plus-circle mr-2"></i> Add Patient</button>
+              onClick={this.onNewStudent}>
+              <i className="fa fa-plus-circle mr-2"></i> Add Student</button>
           </div>
           <div className="card-bodyp-0">
             <PaginatedTable cols={columns} rows={patients} />
@@ -498,4 +370,4 @@ const mapStateToProps = state => ({
   hospital: state.hospital
 });
 
-export default connect(mapStateToProps, { getPatients, addPatient, updatePatient, addAdmission, addAppointment })(Patients);
+export default connect(mapStateToProps, { getStudents, addStudent, updateStudent })(Students);

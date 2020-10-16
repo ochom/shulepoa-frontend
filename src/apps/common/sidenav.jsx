@@ -7,7 +7,7 @@ class Sidenav extends Component {
     return (
       <div>
         < div className="sidenav">
-          <div className="sidenav-logo">Hosipoa</div>
+          <div className="sidenav-logo">Shulepoa</div>
           <div className="sidenav_body">
             <div className="list-group">
               <Link to="/" className="list-group-item">

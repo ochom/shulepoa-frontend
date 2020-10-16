@@ -3,30 +3,26 @@ import { connect } from 'react-redux'
 import { Link, Route, Redirect } from 'react-router-dom'
 import Sidenav from '../common/sidenav'
 import Topnav from '../common/topnav'
-import { getClinics, getServices, getInsurances, getWards } from '../hospital/actions'
-import Patient from './views/patient'
+import { getClasses, getClassrooms } from '../organization/actions'
 import Patients from './views/patients'
 
 export class Records extends Component {
 
   componentDidMount() {
-    this.props.getClinics();
-    this.props.getInsurances();
-    this.props.getServices();
-    this.props.getWards()
+    this.props.getClasses()
+    this.props.getClassrooms()
   }
 
   render() {
     const { user } = this.props
-    if (!user.rights.can_view_records) {
-      return <Redirect to="/" />
-    }
+    // if (!user.rights.can_view_records) {
+    //   return <Redirect to="/" />
+    // }
     const menu_list =
       <div className="list-group">
-        <Link to="/records" className="list-group-item"><i className="fa fa-angle-right"></i> Patient Listing</Link>
-        <Link to="/outpatient" className="list-group-item"><i className="fa fa-angle-right"></i> Clinic Patients</Link>
-        <Link to="/inpatient" className="list-group-item"><i className="fa fa-angle-right"></i> Admitted Patients</Link>
-        <Link to="/records/reports" className="list-group-item"><i className="fa fa-angle-right"></i> Reports</Link>
+        <Link to="/records" className="list-group-item"><i className="fa fa-angle-right"></i> Students</Link>
+        <Link to="/records/staff" className="list-group-item"><i className="fa fa-angle-right"></i> Staff</Link>
+        <Link to="/records/classlist" className="list-group-item"><i className="fa fa-angle-right"></i> Class Lists</Link>
       </div>
     return (
       <>
@@ -39,7 +35,9 @@ export class Records extends Component {
               render={({ match: { url } }) => (
                 <>
                   <Route path={`${url}`} component={Patients} exact />
-                  <Route path={`${url}/patients/:patient_id`} component={Patient} />
+                  <Route path={`${url}/student/:id`} component={Patients} />
+                  <Route path={`${url}/staff`} component={Patients} exact />
+                  <Route path={`${url}/staff/:id`} component={Patients} />
                 </>
               )}
             />
@@ -52,5 +50,5 @@ export class Records extends Component {
 
 export default connect(state => ({
   user: state.auth.user
-}), { getClinics, getServices, getInsurances, getWards })(Records);
+}), { getClasses, getClassrooms })(Records);
 

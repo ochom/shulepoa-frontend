@@ -5,7 +5,7 @@ import Sidenav from '../common/sidenav'
 import Topnav from '../common/topnav'
 import Bug from './views/issue'
 import Bugs from './views/issues'
-import { getUsers } from '../hospital/actions'
+import { getUsers } from '../organization/actions'
 
 
 class Issues extends Component {

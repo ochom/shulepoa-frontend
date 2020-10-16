@@ -1,47 +1,38 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
-import { addWard, getWards, updateWard } from '../actions';
+import { addClassroom, getClassrooms, updateClassroom } from '../actions';
 
-export class Wards extends Component {
+export class Classrooms extends Component {
   state = {
     showModal: false,
-    selected_ward: null,
+    selected_classroom: null,
     name: "",
-    bed_capacity: "",
-    admission_fee: "",
-    daily_fee: "",
     description: "",
   }
 
   componentDidMount() {
-    this.props.getWards()
+    this.props.getClassrooms()
   }
 
   toggleModal = () => this.setState({ showModal: !this.state.showModal });
 
   onChange = (e) => this.setState({ [e.target.name]: e.target.value })
 
-  onNewWard = () => {
+  onNewClassroom = () => {
     this.setState({
-      selected_ward: null,
+      selected_classroom: null,
       name: "",
-      bed_capacity: "",
-      admission_fee: "",
-      daily_fee: "",
       description: "",
     })
     this.toggleModal();
   }
 
-  onEditWard = (ward) => {
+  onEditClassroom = (classroom) => {
     this.setState({
-      selected_ward: ward,
-      name: ward.name,
-      bed_capacity: ward.bed_capacity,
-      admission_fee: ward.admission_fee,
-      daily_fee: ward.daily_fee,
-      description: ward.description,
+      selected_classroom: classroom,
+      name: classroom.name,
+      description: classroom.description,
     })
     this.toggleModal();
   }
@@ -49,38 +40,32 @@ export class Wards extends Component {
   onSubmit = (e) => {
     e.preventDefault();
     const {
-      selected_ward,
+      selected_classroom,
       name,
-      bed_capacity,
-      admission_fee,
-      daily_fee,
       description
     } = this.state;
     const data = {
-      selected_ward,
+      selected_classroom,
       name,
-      bed_capacity,
-      admission_fee,
-      daily_fee,
       description
     }
-    if (selected_ward) {
-      this.props.updateWard(selected_ward.id, data);
+    if (selected_classroom) {
+      this.props.updateClassroom(selected_classroom.id, data);
     } else {
-      this.props.addWard(data);
+      this.props.addClassroom(data);
     }
     this.toggleModal();
   }
 
   render() {
-    const { hospital: { wards } } = this.props;
+    const { organization: { classrooms } } = this.props;
 
-    const ward_details_view =
+    const classroom_details_view =
       <Modal isOpen={this.state.showModal}>
         <ModalHeader toggle={this.toggleModal}>
-          {this.state.selected_ward ?
-            <span><i className="fa fa-edit"></i> Update Ward</span> :
-            <span><i className="fa fa-plus-circle"></i> Reister Ward</span>}
+          {this.state.selected_classroom ?
+            <span><i className="fa fa-edit"></i> Update Classroom</span> :
+            <span><i className="fa fa-plus-circle"></i> Reister Classroom</span>}
         </ModalHeader>
         <form onSubmit={this.onSubmit}>
           <ModalBody>
@@ -88,22 +73,7 @@ export class Wards extends Component {
               <div className="form-group col-12">
                 <input className="form-control form-control-sm" name="name" required={true}
                   onChange={this.onChange} value={this.state.name} />
-                <label>Ward Name<sup>*</sup></label>
-              </div>
-              <div className="form-group col-12">
-                <input className="form-control form-control-sm" name="bed_capacity" required={true}
-                  onChange={this.onChange} value={this.state.bed_capacity} />
-                <label>Bed Capacity<sup>*</sup></label>
-              </div>
-              <div className="form-group col-6">
-                <input className="form-control form-control-sm" name="admission_fee" required={true}
-                  onChange={this.onChange} value={this.state.admission_fee} />
-                <label>Admission Fee (Ksh)<sup>*</sup></label>
-              </div>
-              <div className="form-group col-6">
-                <input className="form-control form-control-sm" name="daily_fee" required={true}
-                  onChange={this.onChange} value={this.state.daily_fee} />
-                <label>Daily Accomodation Fee (ksh)<sup>*</sup></label>
+                <label>Classroom Name<sup>*</sup></label>
               </div>
               <div className="form-group col-12">
                 <textarea className="form-control form-control-sm" name="description"
@@ -124,15 +94,15 @@ export class Wards extends Component {
       </Modal>
 
     return (
-      <div className="col-md-10 mx-auto mt-3">
-        {ward_details_view}
+      <div className="col-md-8 mx-auto mt-3">
+        {classroom_details_view}
         <div className="card">
           <div className="card-header">
-            <div>Wards</div>
-            {this.props.rights.can_add_ward ?
+            <div>Classrooms</div>
+            {this.props.rights.can_add_classroom ?
               <button
                 className="btn btn-sm"
-                onClick={this.onNewWard}><i className="fa fa-plus-circle"></i>  Add Ward
+                onClick={this.onNewClassroom}><i className="fa fa-plus-circle"></i>  Add Classroom
               </button> :
               null}
           </div>
@@ -141,29 +111,21 @@ export class Wards extends Component {
               <thead className="">
                 <tr>
                   <th>#</th>
-                  <th>Ward Name</th>
-                  <th>Beds</th>
-                  <th>Active</th>
-                  <th>Adm. Fee</th>
-                  <th>Daily. Fee</th>
+                  <th>Name</th>
                   <th>Description</th>
                   <th className="text-center">Action</th>
                 </tr>
               </thead>
               <tbody>
-                {wards.map((ward, index) =>
+                {classrooms.map((classroom, index) =>
                   <tr key={index}>
                     <td>{index + 1}</td>
-                    <td>{ward.name}</td>
-                    <td>{ward.bed_capacity}</td>
-                    <td>{ward.admissions}</td>
-                    <td>{ward.admission_fee}</td>
-                    <td>{ward.daily_fee}</td>
-                    <td>{ward.description}</td>
+                    <td>{classroom.name}</td>
+                    <td>{classroom.description}</td>
                     <td className="text-center">
-                      {this.props.rights.can_edit_ward ?
+                      {this.props.rights.can_edit_classroom ?
                         <button className="btn btn-sm btn-success mr-2"
-                          onClick={() => this.onEditWard(ward)}><i className="fa fa-edit"></i> Edit</button>
+                          onClick={() => this.onEditClassroom(classroom)}><i className="fa fa-edit"></i> Edit</button>
                         : <button className="btn btn-sm btn-secondary"> No Action</button>
                       }
                     </td>
@@ -179,6 +141,6 @@ export class Wards extends Component {
 }
 
 export default connect(state => ({
-  hospital: state.hospital,
+  organization: state.organization,
   rights: state.auth.user.rights
-}), { getWards, addWard, updateWard })(Wards)
+}), { getClassrooms, addClassroom, updateClassroom })(Classrooms)

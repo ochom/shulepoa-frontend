@@ -152,7 +152,7 @@ class PaginatedTable extends Component {
         <div className="row col-12 mx-auto">
           <div className="form-group col-md-6 col-lg-4">
             <input type="text" className="form-control form-control-sm" value={search} onChange={this.onSearch} />
-            <label>Search...</label>
+            <label><span role="img" aria-label="search">&#x1F50D;</span> Search...</label>
           </div>
           <div className="form-group col-md-6 col-lg-8">
             <span>Showing: Page <b>{currentIndex + 1} </b> of <b>{totalPages}</b></span>

@@ -114,7 +114,7 @@ export class Users extends Component {
               </div>
               <div className="form-group col-12 my-2">
                 <select className="form-control form-control-sm"
-                  name="group" onChange={this.onChange} value={this.state.group}
+                  name="group" onChange={this.onChange} value={this.state.group} data-value={this.state.group}
                   required={true}>
                   <option value=""></option>
                   {this.props.groups.map((group, index) => <option value={group.id} key={index}>{group.name}</option>)}
@@ -196,8 +196,8 @@ export class Users extends Component {
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  users: state.hospital.users,
-  groups: state.hospital.groups,
+  users: state.organization.users,
+  groups: state.organization.groups,
   common: state.common,
   rights: state.auth.user.rights
 });

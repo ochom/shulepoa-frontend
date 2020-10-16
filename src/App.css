@@ -2,8 +2,8 @@
   --theme-dark:rgb(19, 18, 18);
   --theme-light:rgb(53, 41, 41);
   --theme-white:rgb(255, 255, 255);
-  --theme-primary:rgb(17, 88, 3);
-  --theme-secondary:rgb(13, 145, 1);
+  --theme-primary:rgb(55, 46, 99);
+  --theme-secondary:rgb(231, 21, 221);
 }
 
 *{
@@ -262,12 +262,11 @@ table>tbody>tr>td>.btn{
   align-items: center;
   align-content: center;
   height: 50px;
-  content: "Hosipoa";
-  color: lime;
+  color: var(--theme-secondary);
   font-size: 1.5em;
   font-weight: bold;
   font-style: italic;
-  padding-left: 10px;
+  padding-left: 20px;
 }
 
 .sidenav_body{
