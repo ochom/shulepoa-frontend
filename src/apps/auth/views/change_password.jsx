@@ -55,7 +55,7 @@ export class Change extends Component {
       return (
         <div className="py-5">
           <div className="pb-3 text-center">
-            <img src="/static/hosipoa_logo.png" alt="HP" />
+            <img src="/static/logo.png" alt="HP" />
             <h5><b>Change your password.</b></h5>
           </div>
           <form onSubmit={this.onSubmmit}>

@@ -1,14 +1,14 @@
 {
-  "short_name": "Hosipoa",
-  "name": "Hospital Management System",
+  "short_name": "Shulepoa",
+  "name": "School Management System",
   "icons": [
     {
-      "src": "hosipoa_logo.png",
+      "src": "logo.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "hosipoa_logo.png",
+      "src": "logo.png",
       "type": "image/png",
       "sizes": "512x512"
     }
