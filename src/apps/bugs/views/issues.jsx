@@ -115,6 +115,6 @@ class Bugs extends Component {
 
 export default connect(state => ({
   auth: state.auth,
-  users: state.hospital.users,
+  users: state.organization.users,
   bugs: state.bugs.bugs
 }), { getBugs, addBug, getBug, updateBug, deleteBug })(Bugs)
