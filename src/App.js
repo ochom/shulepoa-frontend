@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
+import Academics from './apps/academics';
 import Auth from './apps/auth';
 import { loadUser } from './apps/auth/actions';
 import PrivateRoute from './apps/auth/views/private_route';
@@ -52,7 +53,7 @@ export class App extends Component {
               <PrivateRoute exact path="/" component={Dashboard} />
               <PrivateRoute path="/administrator" component={Organization} />
               <PrivateRoute path="/records" component={Records} />
-              <PrivateRoute path="/revenue" component={Records} />
+              <PrivateRoute path="/academics" component={Academics} />
               <PrivateRoute path="/outpatient" component={Records} />
               <PrivateRoute path="/pharmacy" component={Records} />
               <PrivateRoute path="/laboratory" component={Records} />

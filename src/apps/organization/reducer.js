@@ -9,11 +9,6 @@ const initialState = {
   classrooms: [],
   subjects: [],
 
-
-  clinics: [],
-  insurances: [],
-  services: [],
-  departments: [],
   groups: [],
   users: [],
 };
@@ -49,8 +44,6 @@ export default function (state = initialState, action) {
         ...state,
         subjects: action.payload,
       };
-
-
 
 
     case orgTypes.GET_CLINICS:

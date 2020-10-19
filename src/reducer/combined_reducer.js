@@ -5,6 +5,7 @@ import common from '../apps/common/reducer';
 import organization from '../apps/organization/reducer';
 import inventory from '../apps/inventory/reducer';
 import records from '../apps/records/reducer';
+import academics from '../apps/academics/reducer'
 
 export default combineReducers({
   common,
@@ -13,4 +14,5 @@ export default combineReducers({
   records,
   organization,
   inventory,
+  academics,
 });

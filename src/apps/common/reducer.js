@@ -2,25 +2,17 @@ import { commonTypes } from './actions';
 
 const initialState = {
   GENDERS: [
-    (0, 'Female'),
-    (1, 'Male'),
-    (2, 'Inter-sex'),
-  ],
-  ID_TYPES: [
-    (0, 'Birth Certificate'),
-    (1, 'National ID'),
-    (2, 'Alien ID'),
-    (3, 'Military ID'),
-    (4, 'Passport'),
+    ('Female'),
+    ('Male')
   ],
   KIN_RELATIONSHIPS: [
-    (0, 'Father'),
-    (1, 'Mother'),
-    (2, 'Brother'),
-    (3, 'Sister'),
-    (4, 'Husband'),
-    (5, 'Wife'),
-    (6, 'Guardian'),
+    ('Father'),
+    ('Mother'),
+    ('Brother'),
+    ('Sister'),
+    ('Husband'),
+    ('Wife'),
+    ('Guardian'),
   ],
   status: null,
   message: null

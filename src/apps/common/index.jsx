@@ -9,7 +9,7 @@ export class Dashboard extends Component {
     const menus =
       <div className="list-group">
         <Link className="list-group-item" to="/records"><i className="fa fa-users"></i> Records</Link>
-        <Link className="list-group-item" to="/outpatient"><i className="fa fa-pencil-square-o"></i> Examination</Link>
+        <Link className="list-group-item" to="/academics"><i className="fa fa-pencil-square-o"></i> Academics</Link>
         <Link className="list-group-item" to="/outpatient"><i className="fa fa-stethoscope"></i> Clinic</Link>
         <Link className="list-group-item" to="/inpatient"><i className="fa fa-calendar"></i> Calendar &amp; Timetable</Link>
         <Link className="list-group-item" to="/laboratory"><i className="fa fa-book"></i> Library</Link>
