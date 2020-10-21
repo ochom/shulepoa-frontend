@@ -9,6 +9,7 @@ import PrivateRoute from './apps/auth/views/private_route';
 import Profile from './apps/auth/views/profile';
 import public_page from './apps/auth/views/public_page';
 import Bugs from './apps/bugs/index';
+import Clinic from './apps/clinic/index';
 import Dashboard from './apps/common/index';
 import { Loader } from './apps/common/layouts';
 import Inventory from './apps/inventory';
@@ -54,7 +55,7 @@ export class App extends Component {
               <PrivateRoute path="/administrator" component={Organization} />
               <PrivateRoute path="/records" component={Records} />
               <PrivateRoute path="/academics" component={Academics} />
-              <PrivateRoute path="/outpatient" component={Records} />
+              <PrivateRoute path="/clinic" component={Clinic} />
               <PrivateRoute path="/pharmacy" component={Records} />
               <PrivateRoute path="/laboratory" component={Records} />
               <PrivateRoute path="/radiology" component={Records} />

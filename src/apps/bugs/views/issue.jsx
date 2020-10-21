@@ -74,7 +74,6 @@ class Bug extends Component {
   }
 }
 export default connect(state => ({
-  users: state.hospital.users,
   bug: state.bugs.bug,
   replies: state.bugs.replies
 }), { getBug, addReply })(Bug)
